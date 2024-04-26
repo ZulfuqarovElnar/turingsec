@@ -7,19 +7,20 @@ import SpinnerLoader from "../../components/component/SpinnerLoader";
 
 export default function WorkLayout() {
   const [load, setLoad] = useState(false);
-  setTimeout(() => {
-    setLoad(true);
-  }, 1000);
   const navigate = useNavigate();
   const { currentUser } = useCurrentUser();
-  // Add loading state
+
   useEffect(() => {
-    console.log(currentUser, load);
-    if (!currentUser?.activated && load) {
+    setTimeout(() => {
+      setLoad(true);
+    }, 1000);
+  }, []); // useEffect sadece ilk renderde çalışsın diye boş dependency array kullanıldı
+
+  useEffect(() => {
+    if (currentUser && load) {
       navigate("/");
-      // setLoad(true);
     }
-  }, [currentUser, load]);
+  }, [currentUser, load, navigate]); // currentUser veya load değiştiğinde useEffect tekrar çalışsın
 
   // Render the component only if currentUser is defined and activated
   if (!load) {

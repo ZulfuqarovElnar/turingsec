@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 export default function QueryContext({
   children,
 }: {

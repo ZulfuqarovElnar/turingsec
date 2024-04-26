@@ -3,30 +3,46 @@ import Box from "../../components/component/Worker/Box";
 
 export default function Dashboard() {
   const [lengthres, setLengthres] = useState(0);
+
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(
-        "https://turingsec-production-de02.up.railway.app/api/auth/programs",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${
-              JSON.parse(localStorage.getItem("user")).accessToken
-            }`,
-          },
-        }
-      );
+      const userString = localStorage.getItem("user");
 
-      if (!res.ok) {
-        throw new Error("Wrong response");
+      if (!userString) {
+        // Handle case where user data is not found in localStorage
+        console.error("User data not found in localStorage");
+        return;
       }
-      const data = await res.json();
-      setLengthres(data.length);
+
+      const user = JSON.parse(userString);
+      const accessToken = user.accessToken || ''; // Fallback value if accessToken is null
+
+      try {
+        const res = await fetch(
+          "http://localhost:5000/api/auth/programs",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        if (!res.ok) {
+          throw new Error("Wrong response");
+        }
+
+        const data = await res.json();
+        setLengthres(data.length);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
 
     fetchData();
   }, []);
+  
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
       <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">

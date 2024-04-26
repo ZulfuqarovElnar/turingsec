@@ -95,10 +95,10 @@ export default function Profile() {
       try {
         // Perform asynchronous operations here
         const res = await fetch(
-          `https://turingsec-production-de02.up.railway.app/api/background-image-for-hacker/download/${currentUser?.id}`
+          `http://localhost:5000/api/background-image-for-hacker/download/${currentUser?.hackerId}`
         );
         const res2 = await fetch(
-          `https://turingsec-production-de02.up.railway.app/api/image-for-hacker/download/${currentUser?.id}`
+          `http://localhost:5000/api/image-for-hacker/download/${currentUser?.hackerId}`
         );
         console.log(res2);
         console.log(res);
