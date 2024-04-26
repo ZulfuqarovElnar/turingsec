@@ -53,17 +53,17 @@
     useEffect(() => {
       async function fetchUser() {
         try {
-          const userString = localStorage.getItem("user");
+          const userString = localStorage.getItem("userId");
           if (userString) {
-            const user = JSON.parse(userString);
-            console.log(user);
+            const userId = JSON.parse(userString);
+            console.log(userId);
       
             const res = await fetch(
               `http://localhost:5000/api/auth/current-user`,
               {
                 method: "GET",
                 headers: {
-                  Authorization: `Bearer ${user.accessToken}`,
+                  Authorization: `Bearer ${userId.accessToken}`,
                 },
               }
             );
