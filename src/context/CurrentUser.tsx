@@ -82,7 +82,7 @@
               localStorage.setItem("fetchUserError", res.statusText);
             }
           }
-        } catch (error) {
+        } catch (error: any) {
           setCurrentUser(undefined);
           console.error("Error parsing user data from localStorage:", error);
       
