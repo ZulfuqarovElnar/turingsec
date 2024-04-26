@@ -1,0 +1,487 @@
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+.tag {
+  position: relative;
+  display: block;
+}
+.tag::after {
+  content: "";
+  display: block;
+  margin: auto;
+  margin-top: 5px;
+  transition: all 0.5s;
+  width: 0;
+  height: 2px;
+  background-color: #ffde31;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.curve::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100vh;
+  height: 100vh;
+  background-color: white;
+  border-radius: 50%;
+  transform-origin: bottom;
+  overflow: hidden;
+  transform: translate(-50%, -20%) scale(4);
+}
+
+@media (max-width: 1024px) {
+  .curve::before {
+    transform: translate(-50%) scale(4);
+  }
+}
+
+.curve * {
+  z-index: 4;
+}
+/* .fill {
+  background-image: linear-gradient(180deg, white, #c9c9f0, white);
+} */
+.back {
+  background-image: url("/assets/images/world.jpeg");
+  background-size: cover; /* Image will fit without distortion */
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.hexagon {
+  width: 30px; /* Adjust size as needed */
+  height: 35px; /* Adjust size as needed */
+  position: relative;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  /* This clip-path creates a hexagon shape */
+  overflow: hidden;
+}
+
+.hexagon6 {
+  width: 35px; /* Adjust size as needed */
+  height: 38px; /* Adjust size as needed */
+  /* position: relative; */
+  background-color: #ff7f50;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  /* This clip-path creates a hexagon shape */
+  overflow: hidden;
+}
+.hexagon6 img {
+  /* width: 100%; */
+
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  /* position: absolute; */
+
+  height: auto;
+  display: block;
+}
+
+.hexagon5 {
+  width: 60px; /* Adjust size as needed */
+  height: 70px; /* Adjust size as needed */
+  /* position: relative; */
+  background-color: #ff7f50;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  /* This clip-path creates a hexagon shape */
+  overflow: hidden;
+}
+.hexagon5 img {
+  /* width: 100%; */
+
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  /* position: absolute; */
+
+  height: auto;
+  display: block;
+}
+
+.hexagon7 {
+  width: 60px; /* Adjust size as needed */
+  height: 70px; /* Adjust size as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* position: relative; */
+  background-color: "black";
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  /* This clip-path creates a hexagon shape */
+  overflow: hidden;
+}
+.hexagon7 img {
+  /* width: 100%; */
+  min-width: 80px;
+  min-height: 90px;
+  object-fit: cover;
+  object-position: center;
+
+  /* position: absolute; */
+
+  display: block;
+}
+.hexagon4 {
+  width: 116px; /* Adjust size as needed */
+  height: 130px; /* Adjust size as needed */
+  /* position: relative; */
+  background-color: #ff7f50;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  /* This clip-path creates a hexagon shape */
+  overflow: hidden;
+}
+.hexagon4 img {
+  /* width: 100%; */
+
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  /* position: absolute; */
+
+  height: auto;
+  display: block;
+}
+
+.hexagon3 {
+  width: 54px; /* Adjust size as needed */
+  height: 51px; /* Adjust size as needed */
+  position: relative;
+  background-color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  /* This clip-path creates a hexagon shape */
+  overflow: hidden;
+}
+.hexagon3 img {
+  /* width: 100%; */
+  position: absolute;
+
+  height: auto;
+  display: block;
+}
+.hexagon img {
+  width: 100%;
+  position: absolute;
+
+  height: auto;
+  display: block;
+}
+
+.hexagon2 {
+  width: 400px; /* Adjust size as needed */
+  height: 450px; /* Adjust size as needed */
+  position: relative;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  /* This clip-path creates a hexagon shape */
+  overflow: hidden;
+}
+
+.hexagon2 img {
+  width: 100%;
+  position: absolute;
+
+  height: auto;
+  display: block;
+}
+@media (max-width: 640px) {
+  .curve::before {
+    transform: translate(-50%) scale(1);
+  }
+  .hexagon {
+    width: 30px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+  }
+}
+
+/* Styles for the scroll-to-top button */
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.scroll-to-top:hover {
+  background-color: #cccccc;
+}
+
+/* Animation for the scroll-to-top button */
+@keyframes arrow-float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.arrow-animation {
+  animation: arrow-float 1s infinite;
+}
+
+.animated-text {
+  /* font-size: 34px;
+  font-weight: 600;
+  */
+  /* min-width: 650px; */
+}
+
+.animated-text span {
+  position: relative;
+  /* height: 605px; */
+}
+
+.animated-text span::before {
+  content: "Increase Your Reputation";
+  color: #ff7f50;
+  animation: words 30s infinite;
+}
+
+.animated-text span::after {
+  content: "";
+  position: absolute;
+
+  /* width: calc(100% + 8px); */
+
+  width: 8px;
+  height: calc(100% + 8px);
+  /* height: 20px; */
+  background-color: #31688f;
+  border-left: 2px solid #ff7f50;
+  right: -2px;
+  top: 0px;
+  animation: cursor 0.8s infinite, typing 30s steps(14) infinite;
+}
+
+@keyframes cursor {
+  to {
+    border-left: 2px solid white;
+  }
+}
+
+@keyframes words {
+  0% {
+    content: "Increase Your Reputation";
+  }
+  20% {
+    content: "Become More Experienced";
+  }
+  21%,
+  40% {
+    content: "Reduce Cyber Threats";
+  }
+  41%,
+  60% {
+    content: "Turn Threats Into Art";
+  }
+  61%,
+  80% {
+    content: "Reward";
+  }
+  81%,
+  100% {
+    content: "Increase Your Reputation";
+  }
+}
+
+@keyframes typing {
+  10%,
+  15%,
+  30%,
+  35%,
+  50%,
+  55%,
+  70%,
+  75%,
+  90%,
+  95% {
+    width: 0;
+  }
+  5%,
+  20%,
+  25%,
+  40%,
+  45%,
+  60%,
+  65%,
+  80%,
+  85% {
+    width: calc(100% + 8px);
+  }
+}
+button {
+  color: white;
+}
+html,
+body {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .react-selector-container {
+    width: 30px; /* Adjust as needed */
+  }
+}
+
+@media (max-width: 640px) {
+  .react-selector-container {
+    width: 25px; /* Adjust as needed */
+  }
+}
+.point {
+  display: block;
+}
+
+.point::before {
+  content: "•";
+  display: inline-block;
+  margin: auto;
+  width: 20px;
+  height: 100%;
+  position: relative;
+  top: 5px;
+  right: -4px;
+  font-size: 30px;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0px; /* Set the width of the scrollbar */
+}
+
+.bluescroll::-webkit-scrollbar {
+  width: 5px;
+  background-color: #00467c;
+}
+
+.bluescroll::-webkit-scrollbar-thumb {
+  background: #2342e3; /* Color of the scrollbar handle */
+}
+
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none; /* Remove default outline */
+  border: none;
+  display: none;
+  background-color: transparent;
+}
+input[type="radio"] + label:before {
+  content: "";
+  display: inline-block;
+  min-width: 20px; /* Adjust as needed */
+  min-height: 20px; /* Adjust as needed */
+  border-radius: 50%; /* Make it circular */
+  cursor: pointer;
+  border: 2px solid #ffde31; /* Border color */
+  background-color: transparent; /* Set background color */
+  margin-right: 5px; /* Adjust as needed */
+}
+input[type="radio"]:checked + label:before {
+  background-color: #ffde31; /* Change background color when checked */
+}
