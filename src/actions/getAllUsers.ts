@@ -1,7 +1,7 @@
 export async function getAllUsers() {
   try {
     const res = await fetch(
-      "https://turingsec-production-de02.up.railway.app/api/auth/allUsers",
+      "http://localhost:5000/api/auth/allUsers",
       {
         method: "GET",
       }
