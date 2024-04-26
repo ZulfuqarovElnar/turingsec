@@ -1,30 +1,45 @@
 import { Link, useLocation } from "react-router-dom";
-import { useCurrentUser } from "../../../context/CurrentUser";
+import { useCurrentUser, CurrentUser  } from "../../../context/CurrentUser";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const url = `/${useLocation().pathname.split("/")[2]}`;
-  const { currentUser } = useCurrentUser();
+  const { currentUser, isAuthenticated } = useCurrentUser()  as CurrentUser;
   const [userImage, setUserImage] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Perform asynchronous operations here
+        if (isAuthenticated) {
+          const res = await fetch(
+            `http://localhost:5000/api/image-for-hacker/download/${currentUser?.hackerId}`
+          );
 
-        const res = await fetch(
-          `https://turingsec-production-de02.up.railway.app/api/image-for-hacker/download/${currentUser?.id}`
-        );
 
-        setUserImage(res.url);
 
-        // const data = await res.json();
+          if (res.status === 404) {
+            // HackerId tapılmadı ya da şəkil yoxdursa, default şəkil yüklə
+            setUserImage("/assets/images/default_profile_image.jpg");
+          } else {
+            // Response'dan şəkil yüklə
+            const data = await res.json();
+            setUserImage(data.url);
+          }
+        } else {
+          // Kullanıcı giriş yapmamışsa, default şəkli yüklə
+          setUserImage("/assets/images/default_profile_image.jpg");
+        }
       } catch (error) {
         console.log(error);
+        // Şəkil yüklənməsində səhv baş verərsə
+        // Default şəkli yüklə
+        setUserImage("/assets/images/default_profile_image.jpg");
       }
     };
 
-    fetchData(); // Immediately invoke the async function
-  }, [currentUser?.id]);
+    fetchData();
+  }, [currentUser?.hackerId, isAuthenticated]);
+
 
   return (
     <div className="bg-[#023059] py-14   z-30 md:w-[270px] w-[74px] left-0 fixed h-screen">

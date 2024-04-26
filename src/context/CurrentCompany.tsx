@@ -10,6 +10,8 @@ interface CurrentCompany {
   email?: string;
   id?: string;
   name?: string;
+  accessToken?: string;
+  currentCompany?: any;
 }
 
 // Create the context
@@ -42,7 +44,7 @@ const CurrentCompanyProvider = ({ children }: { children: ReactNode }) => {
           const companyy = JSON.parse(companyString);
 
           const res = await fetch(
-            `https://turingsec-production-de02.up.railway.app/api/companies/current-user`,
+            `http://localhost:5000/api/companies/current-user`,
             {
               method: "GET",
               headers: {
@@ -53,6 +55,7 @@ const CurrentCompanyProvider = ({ children }: { children: ReactNode }) => {
 
           if (res.ok) {
             const updatedUser = await res.json();
+            console.log("Response Data:", updatedUser)
 
             const { email, id, company_name } = updatedUser;
 
