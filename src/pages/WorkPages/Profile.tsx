@@ -90,28 +90,28 @@ export default function Profile() {
       status: "Accepted",
     },
   ];
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Perform asynchronous operations here
-        const res = await fetch(
-          `http://localhost:5000/api/background-image-for-hacker/download/${currentUser?.hackerId}`
-        );
-        const res2 = await fetch(
-          `http://localhost:5000/api/image-for-hacker/download/${currentUser?.hackerId}`
-        );
-        console.log(res2);
-        console.log(res);
-        setUserImage(res2.url);
-        setBackgroundImage(res.url);
-        // const data = await res.json();
+        if (currentUser?.hackerId) {
+          const res = await fetch(
+            `http://localhost:5000/api/background-image-for-hacker/download/${currentUser?.hackerId}`
+          );
+          const res2 = await fetch(
+            `http://localhost:5000/api/image-for-hacker/download/${currentUser?.hackerId}`
+          );
+          setUserImage(res2.url);
+          setBackgroundImage(res.url);
+        }
       } catch (error) {
         console.log(error);
       }
     };
-
-    fetchData(); // Immediately invoke the async function
-  }, [currentUser?.id]);
+  
+    fetchData();
+  }, [currentUser?.hackerId]);
+  
   const navigate = useNavigate();
 
   return (
@@ -215,7 +215,7 @@ export default function Profile() {
         </h2>
         <div className=" rounded-[20px] overflow-hidden">
           {fakeData.map((data, i) => (
-            <ProfileLine data={data} index={i} />
+            <ProfileLine key={i} data={data} index={i} />
           ))}
         </div>
         <div>
@@ -244,7 +244,7 @@ export default function Profile() {
         <Button
           className="hover:scale-110 transition-all duration-300  rounded-xl  w-[200px] h-[50px] sm:h-[50px]   sm:w-[200px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5] mt-8 gap-4"
           onClick={() => {
-            localStorage.removeItem("user");
+            localStorage.removeItem("userId");
             toast.success("logout");
             setTimeout(() => {
               window.location.href = "/";
