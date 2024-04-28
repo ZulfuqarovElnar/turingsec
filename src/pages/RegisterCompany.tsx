@@ -44,13 +44,12 @@ export default function RegisterCompanyPage() {
   async function onSubmit(values: z.infer<typeof formSchemaHackerLogin>) {
     try {
       const response = await fetch(
-        "https://turingsec-production-de02.up.railway.app/api/companies/login",
+        "http://localhost:5000/api/companies/login",
         {
-          method: "POST", // Fixed syntax: method should be a string
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          // mode: "no-cors",
           body: JSON.stringify({
             email: values.email,
             password: values.password,
@@ -71,20 +70,25 @@ export default function RegisterCompanyPage() {
 
       toast.success("You succesfully logged in as a company!");
       setTimeout(() => {
-        window.location.href = "/company/dashboard";
+        navigate("/company/dashboard");
       }, 1000);
       // Assuming result.body is an object, you can destructure the properties
-      const { userId, access_token } = result;
-
+      const { access_token, companyId } = result.data;
+      // Check if access_token and companyId are available
+      if (!access_token || !companyId) {
+        toast.error("Invalid response from server. Please try againnnnnnnnnnn.");
+        return;
+      }
       localStorage.setItem(
         "company",
         JSON.stringify({
-          id: userId as string,
-          accessToken: access_token as string,
+          id: companyId,
+          accessToken: access_token,
         })
       );
 
-      // navigate("/work/dashboard");
+
+      navigate("/work/dashboard");
     } catch (error) {
       toast.error("Something bad");
       // Handle any general error that occurred during the fetch or processing
@@ -192,3 +196,5 @@ export default function RegisterCompanyPage() {
     </div>
   );
 }
+
+

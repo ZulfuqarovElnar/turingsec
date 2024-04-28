@@ -57,7 +57,8 @@ const CurrentCompanyProvider = ({ children }: { children: ReactNode }) => {
             const updatedUser = await res.json();
             console.log("Response Data:", updatedUser)
 
-            const { email, id, company_name } = updatedUser;
+            const { email, id, company_name } = updatedUser.data;
+
 
             setCurrentCompany({
               email,
@@ -92,3 +93,6 @@ const CurrentCompanyProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export { useCurrentCompany, CurrentCompanyProvider };
+
+
+
