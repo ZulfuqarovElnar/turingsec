@@ -244,13 +244,7 @@ export default function Navbar() {
             />
           </Link>
         )}
-        {!currentUser?.activated && !currentCompany && (
-          <img
-            src="/assets/images/newuserlogo.svg"
-            alt="usericon"
-            className="w-[54px] cursor-pointer"
-          />
-        )}
+        
 
         {/* <button className=" " onClick={toggleDarkMode}>
           {darkMode ? <CgSun /> : <BsFillMoonStarsFill />}

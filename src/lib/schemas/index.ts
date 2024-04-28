@@ -19,10 +19,10 @@ export const formSchemaHackerRegister = z
     lastname: z.string().min(2, { message: "Last name is too short" }),
     username: z.string().min(2, { message: "Username is too short" }),
     email: z.string().email({ message: "Please enter a valid email" }),
-    password: z.string().min(8, { message: "Password is too short" }),
+    password: z.string().min(2, { message: "Password is too short" }),
     passwordConfirmation: z
       .string()
-      .min(8, { message: "Password is too short" }),
+      .min(2, { message: "Password is too short" }),
 
     // country: z.string().min(2, { message: "Country is too short" }),
     country: z.object({
@@ -36,7 +36,7 @@ export const formSchemaHackerRegister = z
   });
 export const formSchemaHackerLogin = z.object({
   email: z.string().email({ message: "Please enter a valid email" }),
-  password: z.string().min(8, { message: "Password is too short" }),
+  password: z.string().min(2, { message: "Password is too short" }),
 });
 
 export const formSchemaProfileUpdate = z.object({

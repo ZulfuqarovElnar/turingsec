@@ -22,7 +22,7 @@ export async function getAllCompany() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJZdXphbW1hZCIsInJvbGVzIjpbIlJPTEVfSEFDS0VSIl0sImlhdCI6MTcxNDI0NTQ2NSwiZXhwIjoxNzE0MjQ5MDY1fQ.r-l0L9fnUSqbYlNCPgpV18b79aY7WwnDWThi5WsKeMDATlj3ZThwRyBareJYZFZTQLQtzf7Ce-IhxbD9OkKwyg`,
         },
       }
     );

@@ -47,7 +47,6 @@ export default function MainPage() {
       {/* <Company /> */}
       <div className="fill bg-[#061723]">
         <InfoPart />
-
         <ShortInfo ref={elementRef} />
         <LeaderBoard />
         <HowItWorks />
