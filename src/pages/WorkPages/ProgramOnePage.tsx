@@ -184,7 +184,7 @@ export default function ProgramOnePage() {
                   </div>
 
                   <p className="sm:text-[18px] text-[16px] font-[600]">
-                    Yellow
+                    Low
                   </p>
                 </div>
                 <div className={`flex items-center gap-4 `}>
@@ -237,7 +237,7 @@ export default function ProgramOnePage() {
                   ></div>
                 </div>
 
-                <p className="sm:text-[18px] text-[16px] font-[600]">Yellow</p>
+                <p className="sm:text-[18px] text-[16px] font-[600]">Low</p>
               </div>
               <div className={`flex items-center gap-4 `}>
                 <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">

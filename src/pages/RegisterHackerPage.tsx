@@ -72,20 +72,20 @@ export default function RegisterHackerPage() {
       console.log("Login successful:", result);
   
       toast.success("You successfully logged in as a hacker!");
-  
-      // Save user data to local storage
-      const { userId, access_token } = result;
-      localStorage.setItem(
-        "user",
-        JSON.stringify({
-          userId: userId,
-          accessToken: access_token,
-        })
-      );
-  
       setTimeout(() => {
         navigate("/work/dashboard");
       }, 1000);
+
+      // const { userId, access_token } = result;
+      const userId = result.data.userInfo.userId;
+      const access_token = result.data.accessToken;
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: userId,
+          accessToken: access_token,
+        })
+      );
     } catch (error) {
       toast.error("Something bad");
       console.error("An error occurred:", error);
