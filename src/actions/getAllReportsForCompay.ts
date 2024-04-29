@@ -1,14 +1,21 @@
 export async function getAllReportsForCompany() {
   try {
+    const companyDataString=localStorage.getItem("company")
+    if (!companyDataString) {
+      throw new Error("Company data not found in localStorage");
+    }
+
+    const companyData = JSON.parse(companyDataString);
+
+    // Check if company data contains accessToken
+    const accessToken = companyData.accessToken;
     const res = await fetch(
       `https://turingsec-production-de02.up.railway.app/api/bug-bounty-reports/reports/company`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("company")).accessToken
-          }`,
+          Authorization: `Bearer ${accessToken}}`,
         },
       }
     );

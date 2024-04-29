@@ -2,7 +2,7 @@ export async function getAllCompany() {
   try {
     // Retrieve user data from localStorage
     const userDataString = localStorage.getItem("user");
-
+    console.log(`${userDataString} yes`)
     if (!userDataString) {
       throw new Error("User data not found in localStorage");
     }
