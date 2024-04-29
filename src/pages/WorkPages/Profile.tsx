@@ -5,11 +5,27 @@ import { useCurrentUser } from "../../context/CurrentUser";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
+interface UserData {
+  backgroundImageId: string | null;
+  bio: string | null;
+  city: string | null;
+  country: string;
+  first_name: string;
+  github: string | null;
+  id: number;
+  imageId: string | null;
+  last_name: string;
+  linkedin: string | null;
+  twitter: string | null;
+  userId: number;
+  website: string | null;
+}
+
 export default function Profile() {
   const { currentUser } = useCurrentUser();
   const [userImage, setUserImage] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
-
+  const [userDate, setUserDate] = useState<UserData | null>(null);
 
   const fakeData = [
     {
@@ -96,19 +112,36 @@ export default function Profile() {
       try {
         const userDataString = localStorage.getItem("user");
         console.log("userData:", userDataString);
-
+  
         if (userDataString) {
           const userData = JSON.parse(userDataString);
-          const { userId } = userData;
-          if (userId && currentUser?.userId) {
-            const res = await fetch(
-              `http://localhost:5000/api/background-image-for-hacker/download/${currentUser?.hackerId}`
+          const { id} = userData;
+  
+          if (id) {
+            const res = await fetch(`http://localhost:5000/api/hacker/${id}`);
+            const responseData = await res.json();
+            const fetchedData = responseData.data;
+            console.log("User data from hacker API:", fetchedData);
+            setUserDate(fetchedData as UserData);
+          } else {
+            console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
+          }
+  
+          if (id) {
+            const res1 = await fetch(
+              `http://localhost:5000/api/background-image-for-hacker/download/${id}`
             );
+            
+            const backgroundImageBlob = await res1.blob();
+  
             const res2 = await fetch(
-              `http://localhost:5000/api/image-for-hacker/download/${currentUser?.hackerId}`
+              `http://localhost:5000/api/image-for-hacker/download/${id}`
             );
-            setUserImage(res2.url);
-            setBackgroundImage(res.url);
+            
+            const userImageBlob = await res2.blob();
+  
+            setUserImage(URL.createObjectURL(userImageBlob));
+            setBackgroundImage(URL.createObjectURL(backgroundImageBlob));
           } else {
             console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
           }
@@ -119,19 +152,9 @@ export default function Profile() {
         console.log(error);
       }
     };
-
+  
     fetchData();
   }, [currentUser?.userId]);
-  const userData = localStorage.getItem("user");
-  console.log("userData:", userData);
-  
-  if (userData !== null) {
-    // localStorage'ta "user" anahtarı var, kullanıcı verilerini alabilirsiniz
-    console.log("Kullanıcı oturum açmış.");
-  } else {
-    // localStorage'ta "user" anahtarı yok, bu durumda kullanıcı oturum açmamış demektir
-    console.log("Kullanıcı oturum açmamış.");
-  }
   
   
   const navigate = useNavigate();
@@ -159,8 +182,8 @@ export default function Profile() {
           <img
             src={
               backgroundImage
-                ? backgroundImage
-                : "/assets/images/profilebackgroundimage.png"
+              ? backgroundImage
+              :"/assets/images/profilebackgroundimage.png"
             }
             alt=""
             className="w-full h-full object-cover object-center absolute inset-0"
@@ -179,15 +202,15 @@ export default function Profile() {
                 alt=""
               />
             </div>
-            <div className="">
+              <div className="">
               <div className="flex justify-between mb-4 md:mb-0 md:block">
                 <h2 className="font-[600] sm:text-[25px] text-[20px]">
-                  {currentUser?.username || "Username"}
+                  {userDate?.first_name || "Username"}
                 </h2>
                 <div className="flex items-center gap-2">
                   <img src="/assets/flag.svg" className="w-[18px] " />
                   <p className="text-[16px] font-[400]">
-                    {currentUser?.city || "city"}
+                  {userDate?.country || "city"}
                   </p>
                 </div>
               </div>
