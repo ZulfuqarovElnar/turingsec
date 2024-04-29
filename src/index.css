@@ -485,3 +485,8 @@ input[type="radio"] + label:before {
 input[type="radio"]:checked + label:before {
   background-color: #ffde31; /* Change background color when checked */
 }
+
+.CircularProgressbar{
+  border-radius: 50%;
+  background-color: #102160;
+}

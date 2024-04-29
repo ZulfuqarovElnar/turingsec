@@ -76,7 +76,9 @@ export default function RegisterHackerPage() {
         navigate("/work/dashboard");
       }, 1000);
 
-      const { userId, access_token } = result;
+      // const { userId, access_token } = result;
+      const userId = result.data.userInfo.userId;
+      const access_token = result.data.accessToken;
       localStorage.setItem(
         "user",
         JSON.stringify({

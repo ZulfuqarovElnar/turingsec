@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Box from "../../components/component/Worker/Box";
-
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+const percentage = 66;
 export default function Dashboard() {
   const [lengthres, setLengthres] = useState(0);
 
@@ -16,7 +18,7 @@ export default function Dashboard() {
 
       const user = JSON.parse(userString);
       const accessToken = user.accessToken || ''; // Fallback value if accessToken is null
-
+      
       try {
         const res = await fetch(
           "http://localhost:5000/api/auth/programs",
@@ -69,14 +71,97 @@ export default function Dashboard() {
           <Box text="Max Bounty" />
           <Box text="Total Bounty" data={lengthres} />
           <Box text="Average Bounty" />
-          <Box text="Submitted Bounty" />
-          <Box text="Collaborated Bounty" />
-          <Box text="Closed Bounty" />
+          <Box text="Submitted Reports" />
+          <Box text="Collaborated Reports" />
+          <Box text="Closed Reports" />
         </div>
-        <div className="my-8 grid gap-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 lg:grid-rows-[215px] md:grid-rows-[215px,215px] grid-rows-[215px,215px,215px]">
-          <Box text="Report Bounty" />
+        <div className="flex flex-sm-col items-center justify-around border-[3px] rounded-[20px] border-[#2451F5] py-[40px] px-[20px]">
+          {/* <Box text="Report Bounty" />
           <Box text="Accepted invitations for Bug Bounty" />
-          <Box text="Accepted invitations for Bug Bounty" />
+          <Box text="Accepted invitations for Bug Bounty" /> */}
+         <div style={{ width: 100 }} className="text-center">
+         <CircularProgressbar
+            value={percentage}
+            text={`${percentage}%`}
+            styles={buildStyles({
+              strokeLinecap: 'round',
+              textSize: '16px',
+              pathColor: `#2451F5`,
+              textColor: '#fff',
+              trailColor: '#102160',
+              backgroundColor: '#102160',
+            })}/>
+            <p className="my-2 text-[16px] font-[600]">Success Rate</p>
+          </div>
+          
+          <div className={`flex items-center `}>
+              <div className="flex flex-col items-center" >
+                <div className="flex items-center gap-4 my-5">
+                  <div className="bg-[#00467C] h-[8px] w-[80px] rounded-full">
+                    <div
+                        className={`bg-[#FFDE31] h-[8px] w-[60px] rounded-full`}
+                    ></div>
+                  </div>
+                  <p className="sm:text-[18px] text-[14px] font-[500]">
+                        Low
+                  </p>
+                </div>
+                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#2451F5] rounded-full">6</div>
+              </div>
+          </div>
+
+          <div className={`flex items-center `}>
+              <div className="flex flex-col items-center" >
+                <div className="flex items-center gap-4 my-5">
+                <div className="bg-[#00467C] h-[8px] w-[80px] rounded-full">
+                    <div
+                      className={`bg-[#2342E3] h-[8px] w-[60px] rounded-full`}
+                    ></div>
+                  </div>
+
+                  <p className="sm:text-[18px] text-[14px] font-[500]">
+                    Medium
+                  </p>
+                </div>
+                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#2451F5] rounded-full">6</div>
+              </div>
+          </div>
+
+          <div className={`flex items-center `}>
+              <div className="flex flex-col items-center" >
+                <div className="flex items-center gap-4 my-5">
+                <div className="bg-[#00467C] h-[8px] w-[80px] rounded-full">
+                    <div
+                      className={`bg-[#5AFF31] h-[8px] w-[60px] rounded-full`}
+                    ></div>
+                  </div>
+
+                  <p className="sm:text-[18px] text-[14px] font-[500]">High</p>
+                
+                </div>
+                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#2451F5] rounded-full">6</div>
+              </div>
+          </div>
+
+          <div className={`flex items-center `}>
+              <div className="flex flex-col items-center" >
+                <div className="flex items-center gap-4 my-5">
+                <div className="bg-[#00467C] h-[8px] w-[80px] rounded-full">
+                    <div
+                      className={`bg-[#E32323] h-[8px] w-[60px] rounded-full`}
+                    ></div>
+                  </div>
+
+                  <p className="sm:text-[18px] text-[14px] font-[500]">
+                    Critical
+                  </p>
+                </div>
+                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#2451F5] rounded-full">6</div>
+              </div>
+          </div>
+          
+          
+          
         </div>
       </div>
     </div>
