@@ -17,8 +17,9 @@ export default function Dashboard() {
       }
 
       const user = JSON.parse(userString);
-      const accessToken = user.accessToken || ''; // Fallback value if accessToken is null
       
+      const accessToken = user.accessToken || '';
+
       try {
         const res = await fetch(
           "http://localhost:5000/api/auth/programs",

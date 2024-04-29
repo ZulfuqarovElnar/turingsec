@@ -119,7 +119,7 @@ export default function TabContentProfile() {
       console.log(imageRealSrc, ele.accessToken);
       formData.append("file", imageRealSrcUser);
       const res2 = await fetch(
-        "https://turingsec-production-de02.up.railway.app/api/image-for-hacker/upload",
+        "http://localhost:5000/api/image-for-hacker/upload",
         {
           method: "POST",
           headers: {
@@ -131,7 +131,7 @@ export default function TabContentProfile() {
       const formData2 = new FormData();
       formData2.append("file", imageRealSrc);
       const res3 = await fetch(
-        "https://turingsec-production-de02.up.railway.app/api/background-image-for-hacker/upload",
+        "http://localhost:5000/api/background-image-for-hacker/upload",
         {
           method: "POST",
           headers: {
@@ -147,7 +147,7 @@ export default function TabContentProfile() {
       // const data3 = await res2.json();
       // console.log(data3);
       const res = await fetch(
-        "https://turingsec-production-de02.up.railway.app/api/auth/update-profile",
+        "http://localhost:5000/api/auth/update-profile",
         {
           method: "POST",
           headers: {

@@ -50,6 +50,7 @@
   "devDependencies": {
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.43",
+    "@types/react-circular-progressbar": "^1.1.0",
     "@types/react-dom": "^18.2.17",
     "@types/react-portal": "^4.0.7",
     "@types/react-select-country-list": "^2.2.3",

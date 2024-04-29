@@ -74,8 +74,15 @@ export default function SignupAsHacker() {
       console.log("Registration successful:", result);
 
       toast.success("Activation code sent to email");
-      const { userId, access_token } = result;
-      localStorage.setItem("user", JSON.stringify({ id: userId, accessToken: access_token }));
+      const { userId, access_token,username } = result;
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          username: username,
+          userId: userId,
+          accessToken: access_token,
+        })
+      );  
       navigate("/");
     } catch (error: any) {
       toast.error("An error occurred while registering");

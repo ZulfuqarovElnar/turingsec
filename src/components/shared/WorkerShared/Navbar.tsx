@@ -4,41 +4,40 @@ import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const url = `/${useLocation().pathname.split("/")[2]}`;
-  const { currentUser, isAuthenticated } = useCurrentUser()  as CurrentUser;
+  const { isAuthenticated } = useCurrentUser()  as CurrentUser;
   const [userImage, setUserImage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (isAuthenticated) {
-          const res = await fetch(
-            `http://localhost:5000/api/image-for-hacker/download/${currentUser?.hackerId}`
+        const userDataString = localStorage.getItem("user");
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          const { id} = userData;
+        if (id) {
+          const res2 = await fetch(
+            `http://localhost:5000/api/image-for-hacker/download/${id}`
           );
-
-
-
-          if (res.status === 404) {
-            // HackerId tapılmadı ya da şəkil yoxdursa, default şəkil yüklə
-            setUserImage("/assets/images/default_profile_image.jpg");
-          } else {
-            // Response'dan şəkil yüklə
-            const data = await res.json();
-            setUserImage(data.url);
-          }
+  
+          const userImageBlob = await res2.blob();
+          setUserImage(URL.createObjectURL(userImageBlob));
         } else {
-          // Kullanıcı giriş yapmamışsa, default şəkli yüklə
+          // Kullanıcı giriş yapmamışsa veya currentUser.id yoksa, varsayılan resmi yükle
           setUserImage("/assets/images/default_profile_image.jpg");
+        }} else {
+          console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
         }
       } catch (error) {
         console.log(error);
-        // Şəkil yüklənməsində səhv baş verərsə
-        // Default şəkli yüklə
+        // Resim yüklenirken hata olursa, varsayılan resmi yükle
         setUserImage("/assets/images/default_profile_image.jpg");
       }
     };
-
+  
     fetchData();
-  }, [currentUser?.hackerId, isAuthenticated]);
+  }, []);
+  
+  
 
 
   return (
