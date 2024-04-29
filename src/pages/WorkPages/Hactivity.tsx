@@ -102,6 +102,7 @@ export default function Hactivity() {
         <div className="mt-8 rounded-[20px] overflow-hidden">
           {fakeData.map((data, i) => (
             <HactivityLine
+              key={i} //last addition
               data={data}
               index={i}
               page={page}

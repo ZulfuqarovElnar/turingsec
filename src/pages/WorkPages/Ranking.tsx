@@ -166,7 +166,7 @@ export default function Ranking() {
         />
         <div className="mt-8 rounded-[20px] overflow-hidden">
           {fakeData.map((data, i) => (
-            <RankingLine data={data} index={i} />
+            <RankingLine data={data} index={i} key={i} /> //last addition "key"
           ))}
         </div>
       </div>
