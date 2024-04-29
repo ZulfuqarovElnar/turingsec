@@ -61,35 +61,37 @@ export default function RegisterHackerPage() {
           hackerId: currentUser?.hackerId,
         }),
       });
-
+  
       if (!response.ok) {
         toast.error("Invalid username or password");
         console.error("Error logging in:", response.statusText);
         return;
       }
-
+  
       const result = await response.json();
       console.log("Login successful:", result);
-
+  
       toast.success("You successfully logged in as a hacker!");
-      setTimeout(() => {
-        navigate("/work/dashboard");
-      }, 1000);
-
+  
+      // Save user data to local storage
       const { userId, access_token } = result;
       localStorage.setItem(
         "user",
         JSON.stringify({
-          id: userId,
+          userId: userId,
           accessToken: access_token,
         })
       );
+  
+      setTimeout(() => {
+        navigate("/work/dashboard");
+      }, 1000);
     } catch (error) {
       toast.error("Something bad");
       console.error("An error occurred:", error);
     }
   }
-
+  
   return (
     <div className="flex flex-col justify-between xl:pb-40 pb-4 sm:py-28 text-white lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16 mt-[52px] py-20 px-8">
       <div className="lg:w-[60%] w-auto">

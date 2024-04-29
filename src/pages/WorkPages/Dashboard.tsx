@@ -15,7 +15,7 @@ export default function Dashboard() {
       }
 
       const user = JSON.parse(userString);
-      const accessToken = user.accessToken || ''; // Fallback value if accessToken is null
+      const accessToken = user.accessToken || '';
 
       try {
         const res = await fetch(

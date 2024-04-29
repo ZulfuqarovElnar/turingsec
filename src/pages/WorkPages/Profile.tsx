@@ -9,7 +9,7 @@ export default function Profile() {
   const { currentUser } = useCurrentUser();
   const [userImage, setUserImage] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
-  console.log(currentUser);
+
 
   const fakeData = [
     {
@@ -94,23 +94,45 @@ export default function Profile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (currentUser?.hackerId) {
-          const res = await fetch(
-            `http://localhost:5000/api/background-image-for-hacker/download/${currentUser?.hackerId}`
-          );
-          const res2 = await fetch(
-            `http://localhost:5000/api/image-for-hacker/download/${currentUser?.hackerId}`
-          );
-          setUserImage(res2.url);
-          setBackgroundImage(res.url);
+        const userDataString = localStorage.getItem("user");
+        console.log("userData:", userDataString);
+
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          const { userId } = userData;
+          if (userId && currentUser?.userId) {
+            const res = await fetch(
+              `http://localhost:5000/api/background-image-for-hacker/download/${currentUser?.hackerId}`
+            );
+            const res2 = await fetch(
+              `http://localhost:5000/api/image-for-hacker/download/${currentUser?.hackerId}`
+            );
+            setUserImage(res2.url);
+            setBackgroundImage(res.url);
+          } else {
+            console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
+          }
+        } else {
+          console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
         }
       } catch (error) {
         console.log(error);
       }
     };
-  
+
     fetchData();
-  }, [currentUser?.hackerId]);
+  }, [currentUser?.userId]);
+  const userData = localStorage.getItem("user");
+  console.log("userData:", userData);
+  
+  if (userData !== null) {
+    // localStorage'ta "user" anahtarı var, kullanıcı verilerini alabilirsiniz
+    console.log("Kullanıcı oturum açmış.");
+  } else {
+    // localStorage'ta "user" anahtarı yok, bu durumda kullanıcı oturum açmamış demektir
+    console.log("Kullanıcı oturum açmamış.");
+  }
+  
   
   const navigate = useNavigate();
 
@@ -244,7 +266,7 @@ export default function Profile() {
         <Button
           className="hover:scale-110 transition-all duration-300  rounded-xl  w-[200px] h-[50px] sm:h-[50px]   sm:w-[200px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5] mt-8 gap-4"
           onClick={() => {
-            localStorage.removeItem("userId");
+            localStorage.removeItem("user");
             toast.success("logout");
             setTimeout(() => {
               window.location.href = "/";
