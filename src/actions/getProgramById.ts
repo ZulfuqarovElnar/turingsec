@@ -17,7 +17,7 @@ export async function getProgramById(id: string) {
     }
 
     const res = await fetch(
-      `https://turingsec-production-de02.up.railway.app/api/auth/programsById/${id}`,
+      `http://localhost:5000/api/auth/programsById/${id}`,
       {
         method: "GET",
         headers: {
@@ -27,14 +27,15 @@ export async function getProgramById(id: string) {
       }
     );
 
-    console.log(res);
+    // console.log(res);
 
     if (!res.ok) {
       throw new Error("Wrong response");
     }
 
     const data = await res.json();
-    return data;
+    console.log(data.data)
+    return data.data;
   } catch (err: any) {
     console.log(err);
     throw new Error(err.message);

@@ -4,8 +4,8 @@ import { Label } from "../../components/ui/label";
 import { useGetAllCompany } from "../../queryies/useGetAllCompany";
 
 export default function Programs() {
-  const { data, isPending, isError } = useGetAllCompany();
-  console.log(data);
+  const { data, isError } = useGetAllCompany();
+  console.log(data)
 
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
@@ -35,7 +35,7 @@ export default function Programs() {
           </Label>
         </div>
         <div className="grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-          {isPending && <p>Loading...</p>}
+          {/* {isPending && <p>Loading...</p>} */}
           {isError && <p>Error</p>}
           {data?.map((program: any) => (
             <ProgramBox key={program.id} {...program} />
