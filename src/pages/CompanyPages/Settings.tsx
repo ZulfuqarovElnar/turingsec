@@ -2,7 +2,7 @@ import { useState } from "react";
 import TabContentClose from "../../components/shared/WorkerShared/TabContentClose";
 import TabContentEmail from "../../components/shared/WorkerShared/TabContentEmail";
 import TabContentPassword from "../../components/shared/WorkerShared/TabContentPassword";
-import TabContentProfile from "../../components/shared/WorkerShared/TabContentProfile";
+// import TabContentProfile from "../../components/shared/WorkerShared/TabContentProfile";
 import { Separator } from "../../components/ui/separator";
 import {
   Tabs,

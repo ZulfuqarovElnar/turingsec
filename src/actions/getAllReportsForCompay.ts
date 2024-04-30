@@ -24,7 +24,7 @@ export async function getAllReportsForCompany() {
       throw new Error("Wrong response");
     }
     const data = await res.json();
-    return data;
+    return data.data;
   } catch (err: any) {
     console.log(err);
     throw new Error(err.message);

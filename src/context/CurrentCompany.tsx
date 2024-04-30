@@ -42,20 +42,21 @@ const CurrentCompanyProvider = ({ children }: { children: ReactNode }) => {
         const companyString = localStorage.getItem("company");
         if (companyString) {
           const companyy = JSON.parse(companyString);
-
+          const comToken=companyy.accessToken
+          // console.log(comToken)
           const res = await fetch(
             `http://localhost:5000/api/companies/current-user`,
             {
               method: "GET",
               headers: {
-                Authorization: `Bearer ${companyy.accessToken}`,
+                Authorization: `Bearer ${comToken}`,
               },
             }
           );
-
+          // console.log(res)
           if (res.ok) {
             const updatedUser = await res.json();
-            console.log("Response Data:", updatedUser)
+            // console.log("Response Data:", updatedUser)
 
             const { email, id, company_name } = updatedUser.data;
 
@@ -65,7 +66,12 @@ const CurrentCompanyProvider = ({ children }: { children: ReactNode }) => {
               id,
               name: company_name,
             });
-          } else {
+          } else if (res.status === 401) {
+            // Handle unauthorized error (token expired or invalid)
+            console.error("Unauthorized: Token expired or invalid");
+            // Potential solution: Redirect to login page or refresh token
+          }
+           else {
             // Handle error if the fetch fails
             setCurrentCompany(undefined);
             console.error("Error fetching user data:", res.statusText);
@@ -79,12 +85,10 @@ const CurrentCompanyProvider = ({ children }: { children: ReactNode }) => {
 
     fetchUser();
   }, []); // Only run the effect once on component mount
-
   // Value object for the context provider
   const contextValue = {
     currentCompany,
   };
-
   return (
     <CurrentCompanyContext.Provider value={contextValue}>
       {children}
