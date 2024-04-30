@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import Select from "react-select";
 
+
 // import ReactCountryFlag from "react-country-flag";
 import { Toaster, toast } from "react-hot-toast";
 import countryList from "react-select-country-list";
@@ -24,7 +25,22 @@ import InputCompany from "../../component/Company/InputCompany";
 import { Label } from "../../ui/label";
 import { Textarea } from "../../ui/textarea";
 import { useCurrentUser } from "../../../context/CurrentUser";
-import { set } from "date-fns";
+interface UserData {
+  first_name: string;
+  last_name: string;
+  website: string;
+  bio: string;
+  username: string;
+  city: string;
+  linkedin: string;
+  twitter: string;
+  github: string;
+  country: string;
+  backgroundImageId: string;
+  imageId: string;
+}
+
+
 const breakpoints = [1040, 1224];
 
 const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
@@ -34,51 +50,99 @@ export default function TabContentProfile() {
   const [imageSrcUser, setImageSrcUser] = useState("");
   const [imageRealSrc, setImageRealSrc] = useState("");
   const [imageRealSrcUser, setImageRealSrcUser] = useState("");
-
+  const [userDate, setUserDate] = useState<UserData | null>(null);
+  // const [userImage, setUserImage] = useState("");
+  // const [backgroundImage, setBackgroundImage] = useState("");
+  
   const form = useForm<z.infer<typeof formSchemaProfileUpdate>>({
     resolver: zodResolver(formSchemaProfileUpdate),
     defaultValues: {
-      firstname: "",
-      lastname: "",
-      website: "",
-      bio: "",
-      username: "",
-
-      city: "",
-      linkedin: "",
-      twitter: "",
-      github: "",
-
-      country: {
-        value: "",
-        label: "Select Country...",
-      },
+      firstname: userDate?.first_name || "",
+      lastname: userDate?.last_name || "",
+      website: userDate?.website || "",
+      bio: userDate?.bio || "",
+      username: userDate?.username || "",
+      city: userDate?.city || "",
+      linkedin: userDate?.linkedin || "",
+      twitter: userDate?.twitter || "",
+      github: userDate?.github || "",
+      country: userDate?.country
+        ? { value: userDate?.country, label: userDate?.country }
+        : { value: "", label: "Select Country..." },
     },
   });
   const options = useMemo(() => countryList().getData(), []);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userDataString = localStorage.getItem("user");
+        console.log("userData:", userDataString);
+  
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          const { id } = userData;
+  
+          if (id) {
+            const res = await fetch(`http://localhost:5000/api/hacker/${id}`);
+            const responseData = await res.json();
+            const fetchedData = responseData.data;
+            console.log("User data from hacker API:", fetchedData);
+            setUserDate(fetchedData as UserData);
+            } else {
+              console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
+            }
+          if (id) {
+            // const res1 = await fetch(
+            //   `http://localhost:5000/api/background-image-for-hacker/download/${id}`
+            // );
+            
+            // const backgroundImageBlob = await res1.blob();
+  
+            // const res2 = await fetch(
+            //   `http://localhost:5000/api/image-for-hacker/download/${id}`
+            // );
+            
+            // const userImageBlob = await res2.blob();
+  
+            // setUserImage(URL.createObjectURL(userImageBlob));
+            // setBackgroundImage(URL.createObjectURL(backgroundImageBlob));
+          } else {
+            console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
+          }
+        } else {
+          console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
+  }, [currentUser?.userId]);
 
   useEffect(() => {
     if (currentUser) {
       const country = options.filter(
         (a) => a.value === currentUser.hacker?.country
       );
-
-      form.setValue("firstname", currentUser.first_name);
-      form.setValue("lastname", currentUser.last_name);
-      form.setValue("username", currentUser.username);
-      form.setValue("website", currentUser.hacker?.website);
-      form.setValue("bio", currentUser.hacker?.bio);
-
-      form.setValue("city", currentUser.hacker?.city);
-      form.setValue("linkedin", currentUser.hacker?.linkedin);
-      form.setValue("twitter", currentUser.hacker?.twitter);
-      form.setValue("github", currentUser.hacker?.github);
+  
+      form.setValue("firstname", currentUser.first_name || "");
+      form.setValue("lastname", currentUser.last_name || "");
+      form.setValue("username", currentUser.username || "");
+      form.setValue("website", currentUser.hacker?.website || "");
+      form.setValue("bio", currentUser.hacker?.bio || "");
+      form.setValue("city", currentUser.hacker?.city || "");
+      form.setValue("linkedin", currentUser.hacker?.linkedin || "");
+      form.setValue("twitter", currentUser.hacker?.twitter || "");
+      form.setValue("github", currentUser.hacker?.github || "");
       form.setValue("country", {
-        value: country[0].value,
-        label: country[0].label,
+        value: country[0]?.value || "",
+        label: country[0]?.label || "Select Country...",
       });
     }
   }, [currentUser]);
+  
   const handleFileChange = (e) => {
     console.log(e);
     const file = e.target.files[0];
@@ -102,19 +166,20 @@ export default function TabContentProfile() {
     if (file) {
       reader.readAsDataURL(file);
     }
-  };
-
+  }
+  
+  
   async function onSubmit(data: z.infer<typeof formSchemaProfileUpdate>) {
     if (!imageSrc || !imageSrcUser) {
       toast.error("Please upload images");
       return;
     }
-
+  
     console.log(data, imageSrc, imageSrcUser);
     try {
       const ele = JSON.parse(localStorage.getItem("user") || "");
       console.log(ele.accessToken);
-
+  
       const formData = new FormData();
       console.log(imageRealSrc, ele.accessToken);
       formData.append("file", imageRealSrcUser);
@@ -144,8 +209,8 @@ export default function TabContentProfile() {
       console.log(
         "jooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooggggfi"
       );
-      // const data3 = await res2.json();
-      // console.log(data3);
+      const data3 = await res2.json(); // Parsing response JSON
+      console.log(data3);
       const res = await fetch(
         "http://localhost:5000/api/auth/update-profile",
         {
@@ -174,8 +239,6 @@ export default function TabContentProfile() {
       if (!res.ok || !res2.ok || !res3.ok) {
         throw new Error("Please try again later");
       }
-      const data3 = await res2.json();
-      console.log(data3);
       toast.success("Profile Updated");
       setTimeout(() => {
         window.location.href = "/";
@@ -185,6 +248,7 @@ export default function TabContentProfile() {
       console.log(err);
     }
   }
+  
   return (
     <div className="mt-4">
       <h2 className="sm:text-[23px] text-[16px] font-[600] mb-8 ">
@@ -205,31 +269,33 @@ export default function TabContentProfile() {
                 <FormField
                   control={form.control}
                   name="firstname"
+                  
                   render={({ field }) => (
                     <FormItem>
-                      <FormControl>
-                        <InputCompany
-                          type="text"
-                          placeholder="Enter First Name"
-                          {...field}
-                          className="xl:min-w-[250px]"
-                        />
-                      </FormControl>
-
-                      <FormMessage />
+                        <FormControl>
+                            <InputCompany
+                                type="text"
+                                placeholder="Enter First Name"
+                                {...field}
+                                defaultValue={userDate?.first_name || ''}
+                                className="xl:min-w-[250px]"
+                            />
+                        </FormControl>
+                        <FormMessage />
                     </FormItem>
-                  )}
-                />
+                )}
+                />                
                 <FormField
                   control={form.control}
                   name="lastname"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormControl>
                         <InputCompany
                           type="text"
                           placeholder="Enter Last Name"
                           {...field}
+                          defaultValue={userDate?.last_name || ""}
                           className="xl:min-w-[250px]"
                         />
                       </FormControl>
@@ -247,13 +313,14 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="username"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormControl>
                       <InputCompany
                         type="text"
                         placeholder="Username"
                         {...field}
+                        defaultValue={userDate?.first_name || ""}
                         className="xl:min-w-[350px] scale-r-125"
                       />
                     </FormControl>
@@ -270,13 +337,14 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="website"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormControl>
                       <InputCompany
                         type="text"
                         placeholder="Bughunter.az"
                         {...field}
+                        defaultValue={userDate?.website || ""}
                         className="xl:min-w-[350px] scale-r-125"
                       />
                     </FormControl>
@@ -380,6 +448,7 @@ export default function TabContentProfile() {
                           {...field}
                           placeholder="Select Country"
                           options={options}
+                          defaultValue={options.find((option) => option.value === userDate?.country)}
                           styles={{
                             control: (styles) => ({
                               ...styles,
@@ -446,13 +515,14 @@ export default function TabContentProfile() {
                 <FormField
                   control={form.control}
                   name="city"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormControl>
                         <InputCompany
                           type="text"
                           placeholder="City"
                           {...field}
+                          defaultValue={userDate?.city || ""}
                           className="xl:min-w-[250px]"
                         />
                       </FormControl>
@@ -470,13 +540,14 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="bio"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormControl>
                       <Textarea
                         placeholder="bio"
-                        className="bg-transparent text-white placeholder:text-white border focus-visible:border-none focus-visible:outline-none xl:w-[620px] lg:h-[170px] sm:h-[100px] lg:w-[350px] w-full"
                         {...field}
+                        className="bg-transparent text-white placeholder:text-white border focus-visible:border-none focus-visible:outline-none xl:w-[620px] lg:h-[170px] sm:h-[100px] lg:w-[350px] w-full"
+                        defaultValue={userDate?.bio || ""}
                       />
                     </FormControl>
 
@@ -492,13 +563,14 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="linkedin"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormControl>
                       <InputCompany
                         type="text"
                         placeholder="Bughunter.az"
                         {...field}
+                        defaultValue={userDate?.linkedin || ""}
                         className="xl:min-w-[350px] scale-r-125"
                       />
                     </FormControl>
@@ -515,13 +587,14 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="twitter"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormControl>
                       <InputCompany
                         type="text"
                         placeholder="Bughunter.az"
                         {...field}
+                        defaultValue={userDate?.twitter || ""}
                         className="xl:min-w-[350px] scale-r-125"
                       />
                     </FormControl>
@@ -538,13 +611,14 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="github"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormControl>
                       <InputCompany
                         type="text"
                         placeholder="Bughunter.az"
                         {...field}
+                        defaultValue={userDate?.github || ""}
                         className="xl:min-w-[350px] scale-r-125"
                       />
                     </FormControl>

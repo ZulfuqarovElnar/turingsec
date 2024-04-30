@@ -1,10 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import { useCurrentUser, CurrentUser  } from "../../../context/CurrentUser";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const url = `/${useLocation().pathname.split("/")[2]}`;
-  const { isAuthenticated } = useCurrentUser()  as CurrentUser;
   const [userImage, setUserImage] = useState("");
 
   useEffect(() => {
@@ -43,18 +41,22 @@ export default function Navbar() {
   return (
     <div className="bg-[#023059] py-14   z-30 md:w-[270px] w-[74px] left-0 fixed h-screen">
       <ul className="">
-        <Link className="hidden md:block px-10 " to={"/"}>
-          <img src="/assets/images/newlogo.png" alt="logo" width={200} />
-        </Link>
-        <Link to={"/"} className="block md:hidden">
-          <img
-            src="/assets/newsmalllogo.png"
-            alt="logo"
-            width={45}
-            className="m-auto"
-          />
-        </Link>
-        <div className="mt-10 ">
+        <li>
+          <Link className="hidden md:block px-10 " to={"/"}>
+            <img src="/assets/images/newlogo.png" alt="logo" width={200} />
+          </Link>
+        </li>
+        <li>
+          <Link to={"/"} className="block md:hidden">
+            <img
+              src="/assets/newsmalllogo.png"
+              alt="logo"
+              width={45}
+              className="m-auto"
+            />
+          </Link>
+        </li>
+        <li className="mt-10">
           <Link
             to={"dashboard"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600]  ${
@@ -68,6 +70,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Dashboard</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"programs"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -81,6 +85,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Programs</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"hactivity"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -94,6 +100,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Hactivity</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"ranking"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -107,6 +115,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Ranking</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"report"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -120,6 +130,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Report</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"profile"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -134,8 +146,10 @@ export default function Navbar() {
             </div>
             <p className="hidden md:block">Profile</p>
           </Link>
-        </div>
-        <div className="mt-14">
+        </li>
+      </ul>
+      <ul>
+        <li>
           <Link
             to={"notifications"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -149,6 +163,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Notifications</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"inbox"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -162,6 +178,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Inbox</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"settings"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -175,7 +193,7 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Settings</p>
           </Link>
-        </div>
+        </li>
       </ul>
     </div>
   );

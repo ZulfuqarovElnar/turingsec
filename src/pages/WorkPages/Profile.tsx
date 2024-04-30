@@ -115,7 +115,7 @@ export default function Profile() {
   
         if (userDataString) {
           const userData = JSON.parse(userDataString);
-          const { id} = userData;
+          const { id } = userData;
   
           if (id) {
             const res = await fetch(`http://localhost:5000/api/hacker/${id}`);
@@ -208,7 +208,7 @@ export default function Profile() {
                   {userDate?.first_name || "Username"}
                 </h2>
                 <div className="flex items-center gap-2">
-                  <img src="/assets/flag.svg" className="w-[18px] " />
+                  <img src="/assets/flag.svg" className="w-[18px] " alt="Profil resmi"/>
                   <p className="text-[16px] font-[400]">
                   {userDate?.country || "city"}
                   </p>
@@ -268,22 +268,30 @@ export default function Profile() {
             Contact
           </h2>
           <ul className="space-y-4 max-w-[100px]">
-            <a href="#" className="flex items-center gap-3">
-              <img src="/assets/github.svg" alt="" />
-              <p className="text-[18px] font-[600]">Github</p>
-            </a>
-            <a href="#" className="flex items-center gap-3">
-              <img src="/assets/twitter.svg" alt="" />
-              <p className="text-[18px] font-[600]">Twitter</p>
-            </a>
-            <a href="#" className="flex items-center gap-3">
-              <img src="/assets/website.svg" alt="" />
-              <p className="text-[18px] font-[600]">Website</p>
-            </a>
-            <a href="#" className="flex items-center gap-3">
-              <img src="/assets/linkedin.svg" alt="" />
-              <p className="text-[18px] font-[600]">Linkedin</p>
-            </a>
+            <li>
+              <a href="#" className="flex items-center gap-3">
+                <img src="/assets/github.svg" alt="" />
+                <p className="text-[18px] font-[600]">Github</p>
+              </a>
+            </li>
+            <li>
+              <a href="#" className="flex items-center gap-3">
+                <img src="/assets/twitter.svg" alt="" />
+                <p className="text-[18px] font-[600]">Twitter</p>
+              </a>
+            </li>
+            <li>
+              <a href="#" className="flex items-center gap-3">
+                <img src="/assets/website.svg" alt="" />
+                <p className="text-[18px] font-[600]">Website</p>
+              </a>
+            </li>
+            <li>
+              <a href="#" className="flex items-center gap-3">
+                <img src="/assets/linkedin.svg" alt="" />
+                <p className="text-[18px] font-[600]">Linkedin</p>
+              </a>
+            </li>
           </ul>
         </div>
         <Button
