@@ -6,7 +6,7 @@ import { TiThMenu } from "react-icons/ti";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCurrentUser } from "../../context/CurrentUser";
-import { Button } from "../ui/button";
+// import { Button } from "../ui/button";
 import { useCurrentCompany } from "../../context/CurrentCompany";
 export default function Navbar() {
   const { currentUser } = useCurrentUser();

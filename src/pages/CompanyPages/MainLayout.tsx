@@ -18,7 +18,7 @@ export default function MainLayout() {
   useEffect(() => {
     console.log(currentCompany, load);
     if (!currentCompany?.id && load) {
-      navigate("/");
+      navigate("/company/dashboard");
       // setLoad(true);
     }
   }, [currentCompany, load]);

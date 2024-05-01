@@ -1,8 +1,9 @@
 import ReportElement from "../../components/component/Company/ReportElement";
 import { useGetReportsForCompanies } from "../../queryies/useGetReportsForCompany";
+import { Link } from "react-router-dom";
 
 export default function ReportCompany() {
-  const { data, isPending, isError } = useGetReportsForCompanies();
+  const { data, isError } = useGetReportsForCompanies();
   console.log(data);
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
@@ -26,16 +27,19 @@ export default function ReportCompany() {
           Incoming Reports
         </h2>
         <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4 ">
-          {isPending && <p>Loading...</p>}
+          {/* {isPending && <p>Loading...</p>} */}
           {isError && <p>Error</p>}
           {data &&
-            data.map((report) => (
-              <ReportElement
-                key={report.id}
-                name={report.user.username}
-                img={report.userImgUrl}
+            data.map((report,index) => (
+              <Link to={`single-report/${index+1}`} key={index}>
+                <ReportElement
+                  key={index}
+              
+                  name={report.user.username}
+                  img={report.userImgUrl}
                 // onClick={() => navigate(`/work/report/${report.id}`)}
-              />
+                /></Link>
+             
             ))}
         </div>
       </div>

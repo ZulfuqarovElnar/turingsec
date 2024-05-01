@@ -1,6 +1,6 @@
 import InputCompany from "../../components/component/Company/InputCompany";
-import Box from "../../components/component/Worker/Box";
-import { Input } from "../../components/ui/input";
+// import Box from "../../components/component/Worker/Box";
+// import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 
 export default function ProgramCompany() {

@@ -22,7 +22,7 @@ export async function getProgramById(id: string) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
+          // Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -34,7 +34,7 @@ export async function getProgramById(id: string) {
     }
 
     const data = await res.json();
-    console.log(data.data)
+    // console.log(data.data)
     return data.data;
   } catch (err: any) {
     console.log(err);

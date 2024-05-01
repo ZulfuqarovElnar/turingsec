@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import LevelBar from "../../components/component/LevelBar";
+// import LevelBar from "../../components/component/LevelBar";
 
 import { Button } from "../../components/ui/button";
 import { Label } from "../../components/ui/label";
@@ -9,20 +9,20 @@ import {
   PopoverTrigger,
 } from "../../components/ui/popover";
 import { cn } from "../../lib/utils";
-import { format, set } from "date-fns";
+import { format} from "date-fns";
 import { Calendar } from "../../components/ui/calendar";
 import { Textarea } from "../../components/ui/textarea";
 import { useCurrentCompany } from "../../context/CurrentCompany";
 import toast from "react-hot-toast";
 import Modal from "../../components/component/Modal";
 import { useGetCompanyProgram } from "../../queryies/useGetCompanyProgram";
-import { Input } from "../../components/ui/input";
+// import { Input } from "../../components/ui/input";
 
 export default function ProgramCreatePage() {
   const { currentCompany } = useCurrentCompany();
   const [fromdate, setFromDate] = React.useState<Date>();
   const [todate, setToDate] = React.useState<Date>();
-  const [page, setPage] = React.useState(1);
+  // const [page, setPage] = React.useState(1);
   const [isOpen, setIsOpen] = React.useState(false);
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -65,11 +65,11 @@ export default function ProgramCreatePage() {
   ]);
 
   const { data } = useGetCompanyProgram();
-  console.log(data);
+  // console.log(data);
   useEffect(() => {
-    console.log(data, "sdsdsd");
+    // console.log(data, "sdsdsd");
     if (data?.length > 0) {
-      console.log("flllllllll,");
+      // console.log("flllllllll,");
       setInfo(data[0]?.notes);
       setPolicy(data[0]?.policy);
       setFromDate(new Date(data[0]?.fromDate));
@@ -94,6 +94,9 @@ export default function ProgramCreatePage() {
   }, [data]);
   async function createProgram() {
     try {
+       
+
+
       if (!info) {
         return toast.error("Please fill in the information");
       }
@@ -124,33 +127,35 @@ export default function ProgramCreatePage() {
       criticalElement.map((element) => {
         allElement.push({ level: "critical", ...element });
       });
+      const companyString = localStorage.getItem("company");
+      if (companyString) {
+        const companyy = JSON.parse(companyString);
 
-      const res = await fetch(
-        "https://turingsec-production-de02.up.railway.app/api/bug-bounty-programs",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              "Bearer " +
-              JSON.parse(localStorage.getItem("company")).accessToken,
-          },
+        const res = await fetch(
+          "http://localhost:5000/api/bug-bounty-programs",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                `Bearer ${companyy.accessToken}`,
+            },
 
-          body: JSON.stringify({
-            notes: info,
-            policy,
-            fromDate: fromdate,
-            toDate: todate,
-            assetTypes: allElement,
-          }),
+            body: JSON.stringify({
+              notes: info,
+              policy,
+              fromDate: fromdate,
+              toDate: todate,
+              assetTypes: allElement,
+            }),
+          }
+        );
+        if (res.ok) {
+          return toast.success("Program Updated Successfully");
+        } else {
+          return toast.error("Failed to create program");
         }
-      );
-      if (res.ok) {
-        return toast.success("Program Updated Successfully");
-      } else {
-        return toast.error("Failed to create program");
-      }
-      console.log(res);
+        }
     } catch (e) {
       console.log(e);
     }
@@ -278,6 +283,7 @@ export default function ProgramCreatePage() {
           </div>
         </div>
         <div>
+          
           <div className="rounded-2xl overflow-hidden">
             <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between">
               <div className="flex items-center gap-4">
@@ -285,6 +291,7 @@ export default function ProgramCreatePage() {
                 <p className="text-[#FFEC86]">Active Campaign</p>
               </div>
             </div>
+
             <div className="bg-[#0A273D] px-6 pt-6 pb-10">
               <div className="flex justify-between lg:mt-4 mb-4  xl:w-[70%] flex-col  lg:flex-row">
                 <div className="flex items-center gap-4 mb-4 lg:mb-0">
@@ -463,7 +470,7 @@ export default function ProgramCreatePage() {
                 </div>
                 <div className="flex-1 text-center block lg:hidden ">
                   {lowElement.map((element) => (
-                    <div>
+                    <div >
                       <p className="sm:text-[18px] text-[16px] font-[600]">
                         {element.assetType}
                       </p>
