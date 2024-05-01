@@ -283,6 +283,7 @@ export default function ProgramCreatePage() {
           </div>
         </div>
         <div>
+          
           <div className="rounded-2xl overflow-hidden">
             <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between">
               <div className="flex items-center gap-4">
@@ -290,6 +291,7 @@ export default function ProgramCreatePage() {
                 <p className="text-[#FFEC86]">Active Campaign</p>
               </div>
             </div>
+
             <div className="bg-[#0A273D] px-6 pt-6 pb-10">
               <div className="flex justify-between lg:mt-4 mb-4  xl:w-[70%] flex-col  lg:flex-row">
                 <div className="flex items-center gap-4 mb-4 lg:mb-0">

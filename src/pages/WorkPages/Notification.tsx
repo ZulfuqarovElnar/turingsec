@@ -1,6 +1,6 @@
 import NotificationBox from "../../components/component/NotificationBox";
 import NotificationMessage from "../../components/component/NotificationMessage";
-import Box from "../../components/component/Worker/Box";
+// import Box from "../../components/component/Worker/Box";
 
 export default function Notification() {
   return (

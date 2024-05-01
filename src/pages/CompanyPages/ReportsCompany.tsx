@@ -1,5 +1,6 @@
 import ReportElement from "../../components/component/Company/ReportElement";
 import { useGetReportsForCompanies } from "../../queryies/useGetReportsForCompany";
+import { Link } from "react-router-dom";
 
 export default function ReportCompany() {
   const { data, isError } = useGetReportsForCompanies();
@@ -29,13 +30,16 @@ export default function ReportCompany() {
           {/* {isPending && <p>Loading...</p>} */}
           {isError && <p>Error</p>}
           {data &&
-            data.map((report) => (
-              <ReportElement
-                key={report.id}
-                name={report.user.username}
-                img={report.userImgUrl}
+            data.map((report,index) => (
+              <Link to={`single-report/${index+1}`} key={index}>
+                <ReportElement
+                  key={index}
+              
+                  name={report.user.username}
+                  img={report.userImgUrl}
                 // onClick={() => navigate(`/work/report/${report.id}`)}
-              />
+                /></Link>
+             
             ))}
         </div>
       </div>
