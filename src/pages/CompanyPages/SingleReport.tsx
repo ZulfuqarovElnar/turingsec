@@ -7,8 +7,7 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import Line from "../../components/shared/WorkerShared/Line";
 import RadioInput from "../../components/component/RadioInput";
-import { Textarea } from "../../components/ui/textarea";
-import { useGetProgramById } from "../../queryies/useGetProgramById";
+import { useGetReportsForCompanies } from '../../queryies/useGetReportsForCompany';
 // import { useGetCompanyById } from "../../queryies/useGetCompanyById";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -19,7 +18,19 @@ import AddCollabrateModal from "../../components/shared/WorkerShared/AddCollabra
 import { useCurrentUser } from "../../context/CurrentUser";
 
 export default function ProgramSubmitPage() {
-  const { programId } = useParams();
+  const { id } = useParams();
+  const { data, isError } = useGetReportsForCompanies();
+  console.log("id: " + id)
+  let filteredReport;
+  data.forEach((user) => {
+    user.reports.forEach((report) => {
+      if (report.id === parseInt(id)) {
+        filteredReport = report;
+      }
+    });
+  });
+  console.log(filteredReport)
+ 
   const [methodName, setMethodName] = useState<string>("");
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
   const [proofConceptDescription, setProofConceptDescription] =
@@ -71,12 +82,12 @@ export default function ProgramSubmitPage() {
   
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
-      <AddCollabrateModal
+      {/* <AddCollabrateModal
         isOpen={openModal}
         setOpen={setOpenModal}
         collabrates={collabrates}
         setCollabrates={setCollabrates}
-      />
+      /> */}
       
       <div className="bg-[#1E1E1E] lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
         <div className="lg:flex my-4  gap-6 relative hidden mb-16">
@@ -135,7 +146,7 @@ export default function ProgramSubmitPage() {
                 <div className="lg:-[40%] w-full">
                 <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
                     <Input
-                    value={'ExampleCompany Mobile App'}
+                    value={filteredReport.asset}
                       type="text"
                       placeholder="Max Bounty"
                       className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6"
@@ -188,7 +199,7 @@ export default function ProgramSubmitPage() {
                 <div className="lg:-[40%] w-full">
                 <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
                     <Input
-                    value={"SQL Injection"}
+                    value={filteredReport.weakness}
                       type="text"
                       placeholder="Max Bounty"
                       className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6"
@@ -477,7 +488,7 @@ export default function ProgramSubmitPage() {
                   type="text"
                   placeholder="Method name"
                   className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0  focus-visible:ring-offset-0 border-2 border-[#2451F5]  placeholder:text-white py-6 mt-4"
-                  value={ "POST"}
+                  value={ filteredReport.methodName}
                   onChange={(e) => setMethodName(e.target.value)}
                 />
               </div>
@@ -499,7 +510,7 @@ export default function ProgramSubmitPage() {
                     type="text"
                     placeholder="Injecting SQL code into the login form's username field allows unauthorized access to sensitive data."
                     className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6"
-                    value={"Injecting SQL code into the login form's username field allows unauthorized access to sensitive data."}
+                    value={filteredReport.proofOfConcept}
                     onChange={(e) => setProofConceptTitle(e.target.value)}
                   />
                 </div>

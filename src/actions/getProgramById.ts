@@ -1,7 +1,7 @@
 export async function getProgramById(id: string) {
   try {
     // Retrieve user data from localStorage
-    const userDataString = localStorage.getItem("user");
+    const userDataString = localStorage.getItem("company");
 
     if (!userDataString) {
       throw new Error("User data not found in localStorage");
