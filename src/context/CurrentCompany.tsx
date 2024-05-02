@@ -41,15 +41,15 @@ const CurrentCompanyProvider = ({ children }: { children: ReactNode }) => {
       try {
         const companyString = localStorage.getItem("company");
         if (companyString) {
-          const companyy = JSON.parse(companyString);
-          const comToken=companyy.accessToken
-          // console.log(comToken)
+          const company = JSON.parse(companyString);
+
           const res = await fetch(
             `http://localhost:5000/api/companies/current-user`,
             {
               method: "GET",
               headers: {
-                Authorization: `Bearer ${comToken}`,
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${company.accessToken}`,
               },
             }
           );

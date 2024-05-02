@@ -27,16 +27,14 @@ export async function getProgramById(id: string) {
       }
     );
 
-    // console.log(res);
-
     if (!res.ok) {
       throw new Error("Wrong response");
     }
 
     const data = await res.json();
-    // console.log(data.data)
+    console.log(data.data)
     return data.data;
-  } catch (err: any) {
+  } catch (err) {
     console.log(err);
     throw new Error(err.message);
   }

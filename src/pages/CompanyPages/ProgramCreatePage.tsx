@@ -131,15 +131,16 @@ export default function ProgramCreatePage() {
       if (companyString) {
         const companyy = JSON.parse(companyString);
 
-        const res = await fetch(
-          "http://localhost:5000/api/bug-bounty-programs",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization:
-                `Bearer ${companyy.accessToken}`,
-            },
+      const res = await fetch(
+        "http://localhost:5000/api/bug-bounty-programs",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer " +
+              JSON.parse(localStorage.getItem("company")).accessToken,
+          },
 
             body: JSON.stringify({
               notes: info,

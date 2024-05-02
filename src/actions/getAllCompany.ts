@@ -17,7 +17,7 @@ export async function getAllCompany() {
     }
 
     const res = await fetch(
-      "http://localhost:5000/api/companies",
+      "http://localhost:5000/api/bug-bounty-programs",
       {
         method: "GET",
         headers: {

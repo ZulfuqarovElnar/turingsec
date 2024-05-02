@@ -13,6 +13,15 @@ import {
 } from "../../../components/ui/popover";
 import ReportLine from "../../component/Company/ReportLine";
 import { useGetUserReports } from "../../../queryies/useGetUserReports";
+
+interface Report {
+  lastActivity: string;
+  ID: string;
+  ReportTitle: string;
+  Program: string;
+  Reward: string;
+  Status: string;
+}
 const fakeData = [
   {
     lastActivity: "Name",
@@ -100,10 +109,12 @@ export default function TabContentAll() {
   const [todate, setToDate] = React.useState<Date>();
   const [page, setPage] = React.useState(1);
   const { data, isLoading } = useGetUserReports();
-  const [reports, setReports] = React.useState([]);
+  const [reports, setReports] = React.useState(fakeData);
+  
   React.useEffect(() => {
-    if (!data) return;
-    const dat = data.map((item) => {
+    if (!data || !Array.isArray(data)) return; // Check if data is undefined or not an array
+  
+    const dat: Report[] = data.map((item: any) => {
       return {
         lastActivity: item.lastActivity,
         ID: "0000",
@@ -113,25 +124,14 @@ export default function TabContentAll() {
         Status: item?.status ? item?.status : "pending",
       };
     });
-    setReports([
-      {
-        lastActivity: "Name",
-        ID: "0000",
-        ReportTitle: "title name",
-        Program: "name",
-        Reward: "name",
-        Status: "name",
-      },
-
-      ...dat,
-    ]);
     console.log(dat);
   }, [data]);
-  console.log();
+  
+
   return (
-    <div className="w-full mt-8  ">
-      <div className="flex gap-3 lg:items-center  w-full flex-col lg:flex-row xl:w-[80%]">
-        <Label className="flex  bg-[#2451F5] rounded-2xl px-4 flex-1">
+    <div className="w-full mt-8">
+      <div className="flex gap-3 lg:items-center w-full flex-col lg:flex-row xl:w-[80%]">
+        <Label className="flex bg-[#2451F5] rounded-2xl px-4 flex-1">
           <img src="/assets/search.svg" alt="" />
           <Input
             type="text"
@@ -157,7 +157,6 @@ export default function TabContentAll() {
                   <span className="text-white">YYYY-MM-DD</span>
                 )}
                 <img src="/assets/calendar.svg" alt="" className="ml-6 mr-4" />
-                {/* <CalendarIcon className="mr-2 h-4 w-4" /> */}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0 dark">
@@ -189,7 +188,6 @@ export default function TabContentAll() {
                   <span className="text-white">YYYY-MM-DD</span>
                 )}
                 <img src="/assets/calendar.svg" alt="" className="ml-6 mr-4" />
-                {/* <CalendarIcon className="mr-2 h-4 w-4" /> */}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0 dark">
@@ -207,7 +205,7 @@ export default function TabContentAll() {
       <div className="mt-10 rounded-2xl overflow-hidden">
         <div>
           {reports.map((data, i) => (
-            <ReportLine data={data} index={i} page={page} setPage={setPage} />
+            <ReportLine key={i} data={data} index={i} page={page} setPage={setPage} />
           ))}
         </div>
       </div>

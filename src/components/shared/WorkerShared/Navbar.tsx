@@ -1,11 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import { useCurrentUser, CurrentUser  } from "../../../context/CurrentUser";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const url = `/${useLocation().pathname.split("/")[2]}`;
-  const { isAuthenticated } = useCurrentUser()  as CurrentUser;
-  const [userImage, setUserImage] = useState("");
+  const [userImage, setUserImage] = useState("/assets/images/default_profile_image.jpg");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,48 +11,59 @@ export default function Navbar() {
         const userDataString = localStorage.getItem("user");
         if (userDataString) {
           const userData = JSON.parse(userDataString);
-          const { id} = userData;
-        if (id) {
-          const res2 = await fetch(
-            `http://localhost:5000/api/image-for-hacker/download/${id}`
-          );
-  
-          const userImageBlob = await res2.blob();
-          setUserImage(URL.createObjectURL(userImageBlob));
+          const { id } = userData;
+          if (id) {
+            const res2 = await fetch(`http://localhost:5000/api/image-for-hacker/download/${id}`);
+            if (res2.ok) {
+              const userImageBlob = await res2.blob();
+              setUserImage(URL.createObjectURL(userImageBlob));
+            } else {
+              // If image not found, set default image
+              setUserImage("/assets/images/default_profile_image.jpg");
+            }
+          } else {
+            // If user id not found, set default image
+            setUserImage("/assets/images/default_profile_image.jpg");
+          }
         } else {
-          // Kullanıcı giriş yapmamışsa veya currentUser.id yoksa, varsayılan resmi yükle
-          setUserImage("/assets/images/default_profile_image.jpg");
-        }} else {
           console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
+          // If user data not found, set default image
+          setUserImage("/assets/images/default_profile_image.jpg");
         }
       } catch (error) {
         console.log(error);
-        // Resim yüklenirken hata olursa, varsayılan resmi yükle
+        // If any error occurs, set default image
         setUserImage("/assets/images/default_profile_image.jpg");
       }
     };
-  
+
     fetchData();
   }, []);
+
+
   
   
 
 
   return (
-    <div className="bg-[#023059] py-14   z-30 md:w-[270px] w-[74px] left-0 fixed h-screen">
+    <div className="bg-[#023059] py-14 z-30 md:w-[270px] w-[74px] left-0 fixed h-screen">
       <ul className="">
-        <Link className="hidden md:block px-10 " to={"/"}>
-          <img src="/assets/images/newlogo.png" alt="logo" width={200} />
-        </Link>
-        <Link to={"/"} className="block md:hidden">
-          <img
-            src="/assets/newsmalllogo.png"
-            alt="logo"
-            width={45}
-            className="m-auto"
-          />
-        </Link>
-        <div className="mt-10 ">
+        <li>
+          <Link className="hidden md:block px-10 " to={"/"}>
+            <img src="/assets/images/newlogo.png" alt="logo" width={200} />
+          </Link>
+        </li>
+        <li>
+          <Link to={"/"} className="block md:hidden">
+            <img
+              src="/assets/newsmalllogo.png"
+              alt="logo"
+              width={45}
+              className="m-auto"
+            />
+          </Link>
+        </li>
+        <li className="mt-10">
           <Link
             to={"dashboard"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600]  ${
@@ -68,6 +77,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Dashboard</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"programs"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -81,6 +92,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Programs</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"hactivity"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -94,6 +107,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Hactivity</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"ranking"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -107,6 +122,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Ranking</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"report"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -120,6 +137,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Report</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"profile"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -134,8 +153,10 @@ export default function Navbar() {
             </div>
             <p className="hidden md:block">Profile</p>
           </Link>
-        </div>
-        <div className="mt-14">
+        </li>
+      </ul>
+      <ul>
+        <li>
           <Link
             to={"notifications"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -149,6 +170,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Notifications</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"inbox"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -162,6 +185,8 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Inbox</p>
           </Link>
+        </li>
+        <li>
           <Link
             to={"settings"}
             className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
@@ -175,7 +200,7 @@ export default function Navbar() {
             />
             <p className="hidden md:block">Settings</p>
           </Link>
-        </div>
+        </li>
       </ul>
     </div>
   );

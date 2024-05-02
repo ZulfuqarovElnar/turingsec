@@ -1,6 +1,7 @@
 import { Button } from "../../ui/button";
 import { findDays } from "../../../helpers/findDays";
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
 export default function ProgramBox({
   fromDate,
@@ -12,6 +13,21 @@ export default function ProgramBox({
   id: string;
 }) {
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
+
+  const handleSeeDetails = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/auth/programsById/${id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch program details');
+      }
+      const data = await response.json();
+      // Navigate to details page with program data
+      navigate(`${id}`, { state: { program: data } });
+    } catch (error) {
+      setError(error.message);
+    }
+  };
   return (
     <div className=" rounded-xl overflow-hidden">
       <div className="bg-[#023059]  p-0 pb-10 rounded-2xl  relative flex-col">
@@ -59,7 +75,7 @@ export default function ProgramBox({
           </div>
           <Button
             className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-transparent text-white  border-2 border-[#2451F5] font-[600] hover:bg-transparent flex gap-4 px-4 w-full mt-6"
-            onClick={() => navigate(`${id}`)}
+            onClick={handleSeeDetails}
           >
             See Details
           </Button>

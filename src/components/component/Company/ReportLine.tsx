@@ -1,4 +1,3 @@
-import { Divide } from "lucide-react";
 
 export default function ReportLine({ data, index, page, setPage }) {
   return (
