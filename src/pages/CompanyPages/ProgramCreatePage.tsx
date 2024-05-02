@@ -94,8 +94,6 @@ export default function ProgramCreatePage() {
   }, [data]);
   async function createProgram() {
     try {
-       
-
 
       if (!info) {
         return toast.error("Please fill in the information");
@@ -128,8 +126,10 @@ export default function ProgramCreatePage() {
         allElement.push({ level: "critical", ...element });
       });
       const companyString = localStorage.getItem("company");
-      if (companyString) {
-        const companyy = JSON.parse(companyString);
+      const programString = localStorage.getItem("programId");
+      if (companyString && programString) {
+        const company = JSON.parse(companyString);
+        const programId = JSON.parse(programString);
 
       const res = await fetch(
         "http://localhost:5000/api/bug-bounty-programs",
@@ -139,28 +139,31 @@ export default function ProgramCreatePage() {
             "Content-Type": "application/json",
             Authorization:
               "Bearer " +
-              JSON.parse(localStorage.getItem("company")).accessToken,
+              company.accessToken,
           },
-
-            body: JSON.stringify({
-              notes: info,
-              policy,
-              fromDate: fromdate,
-              toDate: todate,
-              assetTypes: allElement,
-            }),
-          }
-        );
-        if (res.ok) {
-          return toast.success("Program Updated Successfully");
-        } else {
-          return toast.error("Failed to create program");
+          body: JSON.stringify({
+            notes: info,
+            policy,
+            fromDate: fromdate,
+            toDate: todate,
+            assetTypes: allElement,
+            programId: programId.id,
+            companyId: company.id,
+            prohibits: [ { "prohibitAdded": "string" } ]
+          }),
         }
-        }
+      );
+      if (res.ok) {
+        return toast.success("Program Updated Successfully");
+      } else {
+        return toast.error("Failed to create program");
+      }
+      }
     } catch (e) {
       console.log(e);
     }
   }
+
   function onSubmitAddRewarModal(data) {
     if (data.level === "easy") {
       setLowElement([
@@ -175,7 +178,7 @@ export default function ProgramCreatePage() {
       ]);
     }
     if (data.level === "high") {
-      setHighElement([
+      setHighElement([ 
         ...highElement,
         { assetType: data.type, price: data.reward },
       ]);
