@@ -178,7 +178,7 @@ export default function ProgramCreatePage() {
       ]);
     }
     if (data.level === "high") {
-      setHighElement([
+      setHighElement([ 
         ...highElement,
         { assetType: data.type, price: data.reward },
       ]);
