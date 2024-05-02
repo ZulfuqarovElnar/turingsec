@@ -82,16 +82,13 @@ export default function ProgramSubmitPage() {
 
   const mutation = useSendReport(programId);
   async function submitReport() {
-    console.log(
-      collabrates.map((item) => {
-        return {
-          hackerUsername: item?.username,
-          collaborationPercentage: item?.value,
-        };
-      })
-    );
-    console.log(collabrates, "dfdfdfopdfodp");
     try {
+      // localStorage'den kullanıcı verilerini al
+      const userString = localStorage.getItem("user");
+      const userData = userString ? JSON.parse(userString) : null;
+      // Kullanıcı verilerinden sadece kimliği al
+      const userId = userData ? userData.id : null;
+  
       if (!searchParams.get("line")) {
         return toast.error("Asset is required");
       }
@@ -113,7 +110,7 @@ export default function ProgramSubmitPage() {
       if (percent !== 100) {
         return toast.error("Collaboration percentage should be 100%");
       }
-
+  
       const response = await mutation.mutateAsync({
         asset: searchParams.get("line")!,
         weakness: searchParams.get("line")!,
@@ -127,25 +124,27 @@ export default function ProgramSubmitPage() {
             collaborationPercentage: item?.value,
           };
         }),
+        userId: userId, // Kullanıcı kimliği ekleniyor
       });
+  
       console.log(response);
       console.log("responsedplfffffffffff");
-      // Check if mutation was successful
-      if (!response) {
+      
+      // Mutation başarılı olduğunda işlemler
+      if (response) {
+        toast.success("Report submitted successfully");
+        setTimeout(() => {
+          window.location.href = "/work/dashboard";
+        }, 1000);
+      } else {
         console.log("ldlgf;lg;lgfpp[");
         throw new Error("Wrong response");
       }
-
-      toast.success("Report submitted successfully");
-      setTimeout(() => {
-        window.location.href = "/work/dashboard";
-      }, 1000);
     } catch (err) {
       console.log(err);
       toast.error("Report submission failed");
     }
   }
-
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
       <AddCollabrateModal
