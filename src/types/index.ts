@@ -5,5 +5,13 @@ export interface Report {
   methodName: string;
   proofOfConcept: string;
   discoveryDetails: string;
-  collaborators: [];
+  lastActivity: string;
+  reportTitle: string;
+  rewardsStatus: string;
+  vulnerabilityUrl: string;
+  userId: 1;
+  collaboratorDTO: {
+      hackerUsername: string;
+      collaborationPercentage: number;
+  }[];
 }
