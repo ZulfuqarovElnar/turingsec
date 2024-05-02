@@ -208,7 +208,7 @@ export default function ProgramSubmitPage() {
             </div>
             <div className="xl:w-[60%] w-full">
               <h2 className="sm:text-[18px] text-[16px] font-[600]">
-                {/* {data?.first_name + " " + data?.last_name} */} 
+                {/* {data?.first_name + " " + data?.last_name} */}
               </h2>
               <p className="sm:text-[18px] text-[16px] font-[600]">
                 Business title
@@ -830,7 +830,7 @@ export default function ProgramSubmitPage() {
               Add Collaborate
             </Button>
           </div>
-          {/* <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-4">
             {collabrates.map((item, i) => {
               return (
                 <CollabrateBox
@@ -846,7 +846,7 @@ export default function ProgramSubmitPage() {
                 />
               );
             })}
-          </div> */}
+          </div>
         </div>
 
         <div className="mt-4 flex gap-4  justify-end flex-col-reverse md:flex-row items-end">

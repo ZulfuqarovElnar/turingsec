@@ -67,29 +67,11 @@ export default function ProgramOnePage() {
   }, [programData]);
   console.log(easyAssets);
   const navigate = useNavigate();
-  // const handleSubmit = () => {
-  //   navigate("submit");
-  // };
-
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/bug-bounty-reports/submit?bugBountyProgramId=${programId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ programId: programId }),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to submit report");
-      }
-      // Assuming success, navigate to success page or display a success message
-      navigate("/report-submitted");
-    } catch (error) {
-      console.error("Error submitting report:", error);
-      // Handle error here, display an error message to the user, etc.
-    }
+  const handleSubmit = () => {
+    navigate("submit");
   };
+
+  
 
 
   return (

@@ -54,15 +54,18 @@ export default function CollabrateBox({
     setCollabrates((prev) => prev.filter((item) => !(item.id == id)));
   }
   useEffect(() => {
-    setCollabrates((prev) =>
-      prev.map((item) => {
-        if (item.id == id) {
-          return { ...item, value: value };
-        }
-        return item;
-      })
-    );
-  }, [value]);
+    if (id !== undefined && value !== null) {
+      setCollabrates((prev) =>
+        prev.map((item) => {
+          if (item.id === id) {
+            return { ...item, value: value };
+          }
+          return item;
+        })
+      );
+    }
+  }, [value, id]);
+  
 
   return (
     <div className="bg-[#0A273D]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
