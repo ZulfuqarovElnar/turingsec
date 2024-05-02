@@ -13,7 +13,7 @@ export default function WeaknessLine({ text }: { text: string }) {
   return (
     <div
       className={`h-[70px] bg-[#2B5D83] flex flex-col justify-center px-8 border-b border-black cursor-pointer
-      hover:opacity-70 transition-all duration-300 ease-in-out ${
+      hover:opacity-70 transition-all duration-300 ease-in-out  ${
         line === text ? "opacity-70" : ""
       }`}
       onClick={handleClick}
