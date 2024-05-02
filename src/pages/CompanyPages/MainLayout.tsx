@@ -8,21 +8,24 @@ import { useCurrentCompany } from "../../context/CurrentCompany";
 
 export default function MainLayout() {
   const [load, setLoad] = useState(false);
-  setTimeout(() => {
-    setLoad(true);
-  }, 1000);
   const navigate = useNavigate();
   const { currentCompany } = useCurrentCompany();
 
-  // Add loading state
+  // Component mount edildiğinde load durumunu true yap
   useEffect(() => {
-    console.log(currentCompany, load);
-    if (!currentCompany?.id && load) {
-      navigate("/");
-      // setLoad(true);
-    }
-  }, [currentCompany, load]);
+    setLoad(true);
+  }, []);
 
+  // currentCompany ve load durumuna göre yönlendirme yap
+  useEffect(() => {
+    if (currentCompany !== undefined && load) {
+      if (!currentCompany?.id) {
+        navigate("/company/dashboard");
+      }
+    }
+  }, [currentCompany, load, navigate]);
+
+  // Eğer bileşen yüklenmediyse, yükleme ekranını göster
   if (!load) {
     return (
       <div className="flex items-center justify-center bg-[#1E1E1E] h-screen">
@@ -31,6 +34,7 @@ export default function MainLayout() {
     );
   }
 
+  // Bileşen yüklendiyse, ana içeriği göster
   return (
     <div className="font-sans relative md:ml-[270px] ml-[74px] flex">
       <CompanyNavbar />

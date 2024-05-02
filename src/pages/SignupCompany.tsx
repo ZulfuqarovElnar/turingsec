@@ -77,7 +77,7 @@ export default function SignupCompanyPage() {
     });
     try {
       const res = await fetch(
-        "https://turingsec-production-de02.up.railway.app/api/companies/register",
+        "http://localhost:5000/api/companies/register",
         {
           method: "POST",
           headers: {

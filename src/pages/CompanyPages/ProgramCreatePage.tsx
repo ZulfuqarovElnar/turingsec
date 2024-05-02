@@ -126,7 +126,7 @@ export default function ProgramCreatePage() {
       });
 
       const res = await fetch(
-        "https://turingsec-production-de02.up.railway.app/api/bug-bounty-programs",
+        "http://localhost:5000/api/bug-bounty-programs",
         {
           method: "POST",
           headers: {

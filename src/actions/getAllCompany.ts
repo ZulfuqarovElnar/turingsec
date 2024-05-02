@@ -2,13 +2,13 @@ export async function getAllCompany() {
   try {
     // Retrieve user data from localStorage
     const userDataString = localStorage.getItem("user");
-    console.log(`${userDataString} yes`)
+    // console.log(userDataString)
     if (!userDataString) {
       throw new Error("User data not found in localStorage");
     }
 
     const userData = JSON.parse(userDataString);
-
+   
     // Check if user data contains accessToken
     const accessToken = userData.accessToken;
 
@@ -17,12 +17,12 @@ export async function getAllCompany() {
     }
 
     const res = await fetch(
-      "http://localhost:5000/api/companies",
+      "http://localhost:5000/api/bug-bounty-programs",
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJZdXphbW1hZCIsInJvbGVzIjpbIlJPTEVfSEFDS0VSIl0sImlhdCI6MTcxNDI0NTQ2NSwiZXhwIjoxNzE0MjQ5MDY1fQ.r-l0L9fnUSqbYlNCPgpV18b79aY7WwnDWThi5WsKeMDATlj3ZThwRyBareJYZFZTQLQtzf7Ce-IhxbD9OkKwyg`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -31,7 +31,8 @@ export async function getAllCompany() {
       throw new Error("Wrong response");
     }
     const data = await res.json();
-    return data;
+  
+    return data.data;
   } catch (err: any) {
     console.log(err);
     throw new Error(err.message);

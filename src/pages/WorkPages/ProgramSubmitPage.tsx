@@ -7,7 +7,7 @@ import RadioInput from "../../components/component/RadioInput";
 import { Textarea } from "../../components/ui/textarea";
 import { useGetProgramById } from "../../queryies/useGetProgramById";
 import { useParams } from "react-router";
-import { useGetCompanyById } from "../../queryies/useGetCompanyById";
+// import { useGetCompanyById } from "../../queryies/useGetCompanyById";
 import { useEffect, useState } from "react";
 import { useSendReport } from "../../queryies/useSendReport";
 import toast from "react-hot-toast";
@@ -42,9 +42,9 @@ export default function ProgramSubmitPage() {
   useEffect(() => {
     setCollabrates((prev) => [currentUser]);
   }, [currentUser]);
-  const { data, isPending, isError } = useGetCompanyById(
-    programData?.companyId
-  );
+  // const { data, isPending, isError } = useGetCompanyById(
+  //   programData?.companyId
+  // );
   const fakeDATA = [
     {
       label: "Max Bounty",
@@ -85,8 +85,8 @@ export default function ProgramSubmitPage() {
     console.log(
       collabrates.map((item) => {
         return {
-          hackerUsername: item.username,
-          collaborationPercentage: item.value,
+          hackerUsername: item?.username,
+          collaborationPercentage: item?.value,
         };
       })
     );
@@ -123,8 +123,8 @@ export default function ProgramSubmitPage() {
         discoveryDetails: proofConceptDescription,
         collaborators: collabrates.map((item) => {
           return {
-            hackerUsername: item.username,
-            collaborationPercentage: item.value,
+            hackerUsername: item?.username,
+            collaborationPercentage: item?.value,
           };
         }),
       });
@@ -208,7 +208,7 @@ export default function ProgramSubmitPage() {
             </div>
             <div className="xl:w-[60%] w-full">
               <h2 className="sm:text-[18px] text-[16px] font-[600]">
-                {data?.first_name + " " + data?.last_name}
+                {/* {data?.first_name + " " + data?.last_name} */} 
               </h2>
               <p className="sm:text-[18px] text-[16px] font-[600]">
                 Business title
@@ -830,22 +830,23 @@ export default function ProgramSubmitPage() {
               Add Collaborate
             </Button>
           </div>
-          <div className="flex-1 space-y-4">
+          {/* <div className="flex-1 space-y-4">
             {collabrates.map((item, i) => {
               return (
                 <CollabrateBox
+                  key={item?.id} // Assuming item.id is a unique identifier
                   percent={percent}
                   globalPercentage={globalPercent}
                   setPercent={setPercent}
-                  username={item.username}
-                  city={item.hacker.city || "city"}
+                  username={item?.username}
+                  city={item?.hacker.city || "city"}
                   index={i}
                   setCollabrates={setCollabrates}
-                  id={item.id}
+                  id={item?.id}
                 />
               );
             })}
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-4 flex gap-4  justify-end flex-col-reverse md:flex-row items-end">

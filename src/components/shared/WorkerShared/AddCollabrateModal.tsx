@@ -3,34 +3,37 @@ import React, { useEffect, useState } from "react";
 export default function AddCollabrateModal({
   isOpen,
   setOpen,
-  allUsers,
+  allUsers = [], // Provide a default value of an empty array
   collabrates,
   setCollabrates,
 }) {
   function OnClose() {
     setOpen(false);
   }
-  const [users, setUsers] = useState<[]>(allUsers);
-  const [search, setSearch] = useState("");
-  useEffect(() => {
-    console.log(search);
 
-    const filteredUsers2 = allUsers?.filter(
+  const [users, setUsers] = useState(allUsers);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    if (!Array.isArray(allUsers)) {
+      // Check if allUsers is not an array, if so, return
+      return;
+    }
+
+    const filteredUsers2 = allUsers.filter(
       (item) => !collabrates.some((collab) => collab.id === item.id)
     );
-    console.log(filteredUsers2, collabrates);
-    const filteredUsers = filteredUsers2?.filter((item) =>
+    const filteredUsers = filteredUsers2.filter((item) =>
       item.username.includes(search)
     );
-
-    console.log(filteredUsers, "sldslds");
     setUsers(filteredUsers);
   }, [search, allUsers, collabrates]);
+
   function handleAddCollabrated(item) {
-    console.log("a");
     setCollabrates((prev) => [...prev, item]);
     setOpen(false);
   }
+
   return (
     <>
       {isOpen && (
@@ -48,31 +51,28 @@ export default function AddCollabrateModal({
               className="bg-slate-700 text-white focus-visible:outline-none focus-visible:ring-offset-0 px-3 py-1 rounded-2xl"
             />
             <div className="mt-4 border space-y-2 text-white py-4 h-[400px] overflow-scroll scrollbar-hide">
-              {users?.map((item, i) => {
-                console.log(item);
-                return (
-                  <div
-                    className="flex items-center bg-[#0A273D] p-4 cursor-pointer rounded-2xl"
-                    key={i}
-                    onClick={() => handleAddCollabrated(item)}
-                  >
-                    <div className="hexagon5 m-auto md:m-0 ">
-                      <img src={"/assets/images/profileimage.jpeg"} alt="" />
-                    </div>
-                    <div className="flex-1 ml-4">
-                      <h3 className="text-[18px] font-[600]">
-                        {item.username}
-                      </h3>
-                      <div className="flex items-center gap-2">
-                        <img src="/assets/flag.svg" className="w-[18px] " />
-                        <p className="text-[16px] font-[400]">
-                          {item.hacker.city || "city"}
-                        </p>
-                      </div>
+              {users.map((item, i) => (
+                <div
+                  className="flex items-center bg-[#0A273D] p-4 cursor-pointer rounded-2xl"
+                  key={i}
+                  onClick={() => handleAddCollabrated(item)}
+                >
+                  <div className="hexagon5 m-auto md:m-0 ">
+                    <img src={"/assets/images/profileimage.jpeg"} alt="" />
+                  </div>
+                  <div className="flex-1 ml-4">
+                    <h3 className="text-[18px] font-[600]">
+                      {item?.username}
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <img src="/assets/flag.svg" className="w-[18px] " />
+                      <p className="text-[16px] font-[400]">
+                        {item?.hacker.city || "city"}
+                      </p>
                     </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
 
             {/* Close button */}

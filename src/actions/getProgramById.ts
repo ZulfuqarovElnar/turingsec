@@ -1,7 +1,7 @@
-export async function getProgramById(id: string) {
+export async function getProgramById(programId: string) {
   try {
     // Retrieve user data from localStorage
-    const userDataString = localStorage.getItem("user");
+    const userDataString = localStorage.getItem("programId");
 
     if (!userDataString) {
       throw new Error("User data not found in localStorage");
@@ -17,7 +17,7 @@ export async function getProgramById(id: string) {
     }
 
     const res = await fetch(
-      `https://turingsec-production-de02.up.railway.app/api/auth/programsById/${id}`,
+      `http://localhost:5000/api/auth/programsById/${programId}`,
       {
         method: "GET",
         headers: {
@@ -27,15 +27,14 @@ export async function getProgramById(id: string) {
       }
     );
 
-    console.log(res);
-
     if (!res.ok) {
       throw new Error("Wrong response");
     }
 
     const data = await res.json();
-    return data;
-  } catch (err: any) {
+    console.log(data.data);
+    return data.data;
+  } catch (err) {
     console.log(err);
     throw new Error(err.message);
   }

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const url = `/${useLocation().pathname.split("/")[2]}`;
-  const [userImage, setUserImage] = useState("");
+  const [userImage, setUserImage] = useState("/assets/images/default_profile_image.jpg");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -11,35 +11,42 @@ export default function Navbar() {
         const userDataString = localStorage.getItem("user");
         if (userDataString) {
           const userData = JSON.parse(userDataString);
-          const { id} = userData;
-        if (id) {
-          const res2 = await fetch(
-            `http://localhost:5000/api/image-for-hacker/download/${id}`
-          );
-  
-          const userImageBlob = await res2.blob();
-          setUserImage(URL.createObjectURL(userImageBlob));
+          const { id } = userData;
+          if (id) {
+            const res2 = await fetch(`http://localhost:5000/api/image-for-hacker/download/${id}`);
+            if (res2.ok) {
+              const userImageBlob = await res2.blob();
+              setUserImage(URL.createObjectURL(userImageBlob));
+            } else {
+              // If image not found, set default image
+              setUserImage("/assets/images/default_profile_image.jpg");
+            }
+          } else {
+            // If user id not found, set default image
+            setUserImage("/assets/images/default_profile_image.jpg");
+          }
         } else {
-          // Kullanıcı giriş yapmamışsa veya currentUser.id yoksa, varsayılan resmi yükle
-          setUserImage("/assets/images/default_profile_image.jpg");
-        }} else {
           console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
+          // If user data not found, set default image
+          setUserImage("/assets/images/default_profile_image.jpg");
         }
       } catch (error) {
         console.log(error);
-        // Resim yüklenirken hata olursa, varsayılan resmi yükle
+        // If any error occurs, set default image
         setUserImage("/assets/images/default_profile_image.jpg");
       }
     };
-  
+
     fetchData();
   }, []);
+
+
   
   
 
 
   return (
-    <div className="bg-[#023059] py-14   z-30 md:w-[270px] w-[74px] left-0 fixed h-screen">
+    <div className="bg-[#023059] py-14 z-30 md:w-[270px] w-[74px] left-0 fixed h-screen">
       <ul className="">
         <li>
           <Link className="hidden md:block px-10 " to={"/"}>

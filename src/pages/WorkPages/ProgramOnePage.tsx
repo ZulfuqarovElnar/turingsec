@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router";
 import LevelBar from "../../components/component/LevelBar";
 
 import { Button } from "../../components/ui/button";
-import { useGetCompanyById } from "../../queryies/useGetCompanyById";
+//import { useGetCompanyById } from "../../queryies/useGetCompanyById";
 import { useGetProgramById } from "../../queryies/useGetProgramById";
 import { useEffect, useState } from "react";
 import { set } from "date-fns";
@@ -15,12 +15,18 @@ export default function ProgramOnePage() {
     isPending: programPending,
     isError: programError,
   } = useGetProgramById(programId);
-
+  useEffect(() => {
+    localStorage.setItem(
+      "programId",
+      JSON.stringify({
+        id: programId,
+      })
+    );
+  }, [programId]);
   console.log(programData);
-  console.log(programData);
-  const { data, isPending, isError } = useGetCompanyById(
-    programData?.companyId
-  );
+  // const { data, isPending, isError } = useGetCompanyById(
+  //   programData?.companyId
+  // );
   const [easyAssets, setEasyAssets] = useState([]);
   const [mediumAssets, setMediumAssets] = useState([]);
   const [highAssets, setHighAssets] = useState([]);
@@ -40,6 +46,7 @@ export default function ProgramOnePage() {
       const criticalAssets = programData.assetTypes.filter(
         (asset) => asset.level === "critical"
       );
+      
 
       // Calculate the lengths of all arrays
       const lengths = [
@@ -60,6 +67,31 @@ export default function ProgramOnePage() {
   }, [programData]);
   console.log(easyAssets);
   const navigate = useNavigate();
+  // const handleSubmit = () => {
+  //   navigate("submit");
+  // };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/bug-bounty-reports/submit?bugBountyProgramId=${programId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ programId: programId }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to submit report");
+      }
+      // Assuming success, navigate to success page or display a success message
+      navigate("/report-submitted");
+    } catch (error) {
+      console.error("Error submitting report:", error);
+      // Handle error here, display an error message to the user, etc.
+    }
+  };
+
+
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
       <div className="bg-[url('/assets/images/programimage.jpeg')] h-[100px]  bg-center bg-cover  relative w-full">
@@ -72,7 +104,7 @@ export default function ProgramOnePage() {
           </div>
           <div className="xl:w-[60%] w-full">
             <h2 className="sm:text-[18px] text-[16px] font-[600]">
-              {data?.first_name + " " + data?.last_name}
+              {/* {data?.first_name + " " + data?.last_name} */}
             </h2>
             <p className="sm:text-[18px] text-[16px] font-[600]">
               Business title
@@ -104,7 +136,7 @@ export default function ProgramOnePage() {
           <div className="flex-1 ">
             <Button
               className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-[#2451F5] text-white  border-2 border-[#2451F5] font-[600] hover:bg-[#2451F5] flex gap-4 px-4 w-[160px] ml-auto"
-              onClick={() => navigate("submit")}
+              onClick={handleSubmit}
             >
               <p>Submit Report</p>
               <img src="/assets/sendbutton.svg" alt="" className="  " />
@@ -118,7 +150,7 @@ export default function ProgramOnePage() {
             </div>
             <div className="xl:w-[60%] w-full">
               <h2 className="sm:text-[18px] text-[16px] font-[600]">
-                {data?.first_name + " " + data?.last_name}
+                {/* {data?.first_name + " " + data?.last_name} */}
               </h2>
               <p className="sm:text-[18px] text-[16px] font-[600]">
                 Business title

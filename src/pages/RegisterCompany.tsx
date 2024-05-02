@@ -88,7 +88,7 @@ export default function RegisterCompanyPage() {
       );
 
 
-      navigate("/work/dashboard");
+      navigate("/company/dashboard");
     } catch (error) {
       toast.error("Something bad");
       // Handle any general error that occurred during the fetch or processing
