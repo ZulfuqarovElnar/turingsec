@@ -9,7 +9,7 @@ export async function sendReport(report: Report, id: string) {
       "sending reportkdlfkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
     );
     const res = await fetch(
-      `https://turingsec-production-de02.up.railway.app/api/bug-bounty-reports/submit?bugBountyProgramId=${id}`,
+      `http://localhost:5000/api/bug-bounty-reports/submit?bugBountyProgramId=${id}`,
       {
         method: "POST",
         headers: {
