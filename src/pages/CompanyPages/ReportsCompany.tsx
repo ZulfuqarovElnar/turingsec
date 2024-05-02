@@ -29,13 +29,18 @@ export default function ReportCompany() {
         <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4 ">
           {/* {isPending && <p>Loading...</p>} */}
           {isError && <p>Error</p>}
-          {data && Array.isArray(data) && data.map((report) => (
-            <ReportElement
-              key={report.id}
-              name={report.user.username}
-              img={report.userImgUrl}
-              // onClick={() => navigate(`/work/report/${report.id}`)}
-            />
+         
+          {data && Array.isArray(data) && data.map((user) => (
+            user.reports.map((report) => (
+                <Link to={`single-report/${report.id}`}>
+                <ReportElement
+                  key={report.id}
+                  name={user.user.username}
+                  img={user.userImgUrl}
+                />
+                </Link>
+               
+            ))
           ))}
 
         </div>
