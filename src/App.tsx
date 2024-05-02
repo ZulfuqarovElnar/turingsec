@@ -40,6 +40,8 @@ import SignupCompanyPage from "./pages/SignupCompany";
 import RegisterCompanyPage from "./pages/RegisterCompany";
 import CompanySettings from "./pages/CompanyPages/Settings";
 
+import SingleReport from "./pages/CompanyPages/SingleReport";
+
 function App() {
   function ScrollToTop() {
     const { pathname } = useLocation();
@@ -95,7 +97,8 @@ function App() {
           {/* <Route path="programs" element={<ProgramCompany />} /> */}
           <Route path="programs" element={<ProgramCreatePage />} />
           <Route path="settings" element={<CompanySettings />} />
-          <Route path="report" element={<ReportCompany />} />
+          <Route path="report" element={<ReportCompany />}/>
+          <Route path="report/single-report/:id" element={<SingleReport/>} />
           <Route path="profile" element={<CompanyProfile />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />

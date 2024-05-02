@@ -18,10 +18,9 @@ export default function MainLayout() {
 
   // currentCompany ve load durumuna göre yönlendirme yap
   useEffect(() => {
-    if (currentCompany !== undefined && load) {
-      if (!currentCompany?.id) {
-        navigate("/company/dashboard");
-      }
+    console.log(currentCompany, load);
+    if (!currentCompany?.id && load) {
+      navigate("/company/dashboard");
     }
   }, [currentCompany, load, navigate]);
 

@@ -19,12 +19,13 @@ export async function getAllReportsForCompany() {
         },
       }
     );
-    console.log(res);
+   console.log(res)
     if (!res.ok) {
       throw new Error("Wrong response");
     }
     const data = await res.json();
-    return data;
+    console.log(data.data)
+    return data.data;
   } catch (err: any) {
     console.log(err);
     throw new Error(err.message);

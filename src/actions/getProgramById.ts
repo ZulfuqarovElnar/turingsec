@@ -1,7 +1,7 @@
-export async function getProgramById(programId: string) {
+export async function getProgramById(id: string) {
   try {
     // Retrieve user data from localStorage
-    const userDataString = localStorage.getItem("programId");
+    const userDataString = localStorage.getItem("user");
 
     if (!userDataString) {
       throw new Error("User data not found in localStorage");
@@ -17,12 +17,12 @@ export async function getProgramById(programId: string) {
     }
 
     const res = await fetch(
-      `http://localhost:5000/api/auth/programsById/${programId}`,
+      `http://localhost:5000/api/auth/programsById/${id}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
+          // Authorization: `Bearer ${accessToken}`,
         },
       }
     );
@@ -32,7 +32,7 @@ export async function getProgramById(programId: string) {
     }
 
     const data = await res.json();
-    console.log(data.data);
+    console.log(data.data)
     return data.data;
   } catch (err) {
     console.log(err);

@@ -1,5 +1,6 @@
 export async function getCompanyById(id: string) {
   try {
+     
     console.log(id);
     const res = await fetch(
       `http://localhost:5000/api/companies/${id}`,
@@ -7,10 +8,11 @@ export async function getCompanyById(id: string) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          
         },
       }
     );
-    console.log(res);
+    // console.log(res);
     if (!res.ok) {
       throw new Error("Wrong response");
     }
