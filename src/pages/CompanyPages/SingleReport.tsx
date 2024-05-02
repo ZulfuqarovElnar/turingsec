@@ -5,6 +5,7 @@ import { useCurrentCompany } from '../../context/CurrentCompany';
 export default function SingleReport() {
     const { currentCompany } = useCurrentCompany();
     const { id } = useParams();
+    
     console.log("id:" + id)
     const { data: reportData }= useGetReportById(`${id}`)
     console.log(reportData.asset)
