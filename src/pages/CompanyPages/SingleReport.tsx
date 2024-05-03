@@ -30,7 +30,7 @@ filteredReport = report;
 }
 });
 });
-console.log(filteredReport)
+console.log(useGetReportsForCompanies())
 
 const [methodName, setMethodName] = useState<string>("");
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");

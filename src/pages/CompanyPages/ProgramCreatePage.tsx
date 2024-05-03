@@ -139,8 +139,7 @@ export default function ProgramCreatePage() {
           headers: {
             "Content-Type": "application/json",
             Authorization:
-              "Bearer " +
-              company.accessToken,
+              "Bearer " +company.accessToken,
           },
           body: JSON.stringify({
             notes: info,
@@ -148,7 +147,7 @@ export default function ProgramCreatePage() {
             fromDate: fromdate,
             toDate: todate,
             assetTypes: allElement,
-            programId: programId.id,
+            programId: 1,
             companyId: company.id,
             prohibits: prohibits 
           }),
