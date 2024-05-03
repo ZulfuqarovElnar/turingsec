@@ -330,6 +330,45 @@ export default function ProgramOnePage() {
           {" "}
           {programData?.policy}
         </div>
+        <div className="bg-[#001D34] mt-7 h-[70px] flex items-center px-8 justify-between">
+            <div className="flex items-center gap-4">
+              <img src="/assets/stricty.svg" alt="" />
+              <p className="">Stricty Prohibet</p>
+            </div>
+          </div>
+        <div className="bg-[#0A273D] h-[365px] rounded-xl p-4 flex flex-wrap">
+        <ul className="w-1/2">
+          {programData?.prohibits
+            .slice(0, Math.ceil(programData?.prohibits.length / 2))
+            .map((item, index) => (
+              <li className=" flex items-center gap-2 py-3 px-2" key={index}>
+                <div className="min-w-[40px]">
+                  <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5] ">
+                    <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#0A273D]">
+                      {index + 1}
+                    </div>
+                  </div>
+                </div>
+                {item.prohibitAdded}</li>
+            ))}
+        </ul>
+        <ul className="w-1/2">
+          {programData?.prohibits
+            .slice(Math.ceil(programData?.prohibits.length / 2))
+            .map((item, index) => (
+              <li className="flex items-start gap-2 py-4 px-3" key={index}>
+                <div className="min-w-[40px]">
+                  <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5] ">
+                    <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#0A273D]">
+                      {index + 1 + Math.ceil(programData?.prohibits.length / 2)}
+                    </div>
+                  </div>
+                </div>{item.prohibitAdded}</li>
+            ))}
+        </ul>
+      </div>
+
+
       </div>
     </div>
   );

@@ -130,6 +130,7 @@ export default function ProgramCreatePage() {
       if (companyString && programString) {
         const company = JSON.parse(companyString);
         const programId = JSON.parse(programString);
+        const prohibits = stricty.map(element => ({ prohibitAdded: element }));
 
       const res = await fetch(
         "http://localhost:5000/api/bug-bounty-programs",
@@ -149,7 +150,7 @@ export default function ProgramCreatePage() {
             assetTypes: allElement,
             programId: programId.id,
             companyId: company.id,
-            prohibits: [ { "prohibitAdded": "string" } ]
+            prohibits: prohibits 
           }),
         }
       );
