@@ -72,7 +72,7 @@
               const updatedUser = await res.json();
               console.log(updatedUser);
       
-              setCurrentUser(updatedUser);
+              setCurrentUser(updatedUser.data);
             } else {
               // Handle error if the fetch fails
               setCurrentUser(undefined);

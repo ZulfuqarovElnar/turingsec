@@ -20,14 +20,13 @@ export default function AddCollabrateModal({
       return;
     }
 
-    const filteredUsers2 = allUsers.filter(
-      (item) => !collabrates.some((collab) => collab.id === item.id)
+    // Filter users based on search input
+    const filteredUsers = allUsers.filter((item) =>
+      item.username.toLowerCase().includes(search.toLowerCase())
     );
-    const filteredUsers = filteredUsers2.filter((item) =>
-      item.username.includes(search)
-    );
+
     setUsers(filteredUsers);
-  }, [search, allUsers, collabrates]);
+  }, [search, allUsers]);
 
   function handleAddCollabrated(item) {
     setCollabrates((prev) => [...prev, item]);
@@ -39,9 +38,9 @@ export default function AddCollabrateModal({
       {isOpen && (
         <div className="fixed inset-0 z-[10000000] flex items-center justify-center overflow-auto bg-black bg-opacity-50">
           <div className="relative bg-white w-96 p-8 rounded-md text-black">
-            {/* Modal content */}
+           
             <h2 className="font-[600] sm:text-[18px] text-[16px]">
-              Add Collabrated
+              Add Collaborated
             </h2>
             <input
               type="text"
@@ -67,7 +66,7 @@ export default function AddCollabrateModal({
                     <div className="flex items-center gap-2">
                       <img src="/assets/flag.svg" className="w-[18px] " />
                       <p className="text-[16px] font-[400]">
-                        {item?.hacker.city || "city"}
+                        {item?.city || "city"}
                       </p>
                     </div>
                   </div>
@@ -75,7 +74,7 @@ export default function AddCollabrateModal({
               ))}
             </div>
 
-            {/* Close button */}
+            
             <button
               className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
               onClick={OnClose}

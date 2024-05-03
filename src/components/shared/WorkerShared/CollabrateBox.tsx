@@ -51,7 +51,7 @@ export default function CollabrateBox({
   function handleDelete() {
     console.log("kdffldfkdlfkdl", id);
     setPercent((percent) => percent - Number(value));
-    setCollabrates((prev) => prev.filter((item) => !(item.id == id)));
+    setCollabrates((prev) => prev.filter((item) => item && item.id === id));
   }
   useEffect(() => {
     if (id !== undefined && value !== null) {
