@@ -838,7 +838,7 @@ export default function ProgramSubmitPage() {
                   globalPercentage={globalPercent}
                   setPercent={setPercent}
                   username={item?.username}
-                  city={item?.hacker.city || "city"}
+                  city={item?.city || "city"}
                   index={i}
                   setCollabrates={setCollabrates}
                   id={item?.id}
