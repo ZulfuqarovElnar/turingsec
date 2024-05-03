@@ -21,7 +21,7 @@ import { Textarea } from '../../components/ui/textarea';
 export default function ProgramSubmitPage() {
 const { id } = useParams();
 const { data, isError } = useGetReportsForCompanies();
-console.log("id: " + id)
+// console.log("id: " + id)
 let filteredReport;
 data.forEach((user) => {
 user.reports.forEach((report) => {
@@ -43,41 +43,14 @@ const [methodName, setMethodName] = useState<string>("");
 
           const [openModal, setOpenModal] = useState(false);
           const { currentUser } = useCurrentUser();
-          const [collabrates, setCollabrates] = useState([]);
-          useEffect(() => {
-          setCollabrates((prev) => [currentUser]);
-          }, [currentUser]);
+          
           // const { data, isPending, isError } = useGetCompanyById(
           // programData?.companyId
           // );
-          const fakeDATA = [
-          {
-          label: "Max Bounty",
-          value: 1000,
-          },
-          {
-          label: "Total Bounty",
-          value: 1000,
-          },
-          {
-          label: "Average Bounty",
-          value: 1000,
-          },
-          {
-          label: "Submitted Bounty",
-          value: 1000,
-          },
-          {
-          label: "Collaborated Bounty",
-          value: 1000,
-          },
-          {
-          label: "Closed Bounty",
-          value: 1000,
-          },
-          ];
+          
           const [allAssets, setAllAssets] = useState<string[]>([]);
-
+          const collaborators=filteredReport.collaborators
+          console.log(collaborators)
 
 
 
@@ -192,7 +165,7 @@ const [methodName, setMethodName] = useState<string>("");
 
                         <div className="lg:-[40%] w-full">
                           <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                            <Input value={"Weakness"} type="text" placeholder="Max Bounty"
+                            <Input value="Weakness" type="text" placeholder="Max Bounty"
                               className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                           </Label>
                         </div>
@@ -348,7 +321,7 @@ const [methodName, setMethodName] = useState<string>("");
 
                           <div
                             className='sm:text-[16px] text-[14px] font-[500] h-[60px] flex justify-between items-center px-8'>
-                            <div className='flex-1 flex justify-center'>Name</div>
+                            <div className='flex-1 flex justify-center'>{filteredReport.methodName}</div>
                             <div className='flex-1 flex justify-center'>
                               <RadioInput name="attackvector1" value="High" id="Network" label="Network"
                                 checked={true} />
@@ -386,7 +359,7 @@ const [methodName, setMethodName] = useState<string>("");
 
                           <Input type="text" placeholder="Title"
                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white mt-5 py-6"
-                            value={"Vulnurability URL"} />
+                            value={filteredReport.vulnerabilityUrl} />
 
                           <Textarea type="text" placeholder="Description"
                             className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-5 " />
@@ -398,7 +371,7 @@ const [methodName, setMethodName] = useState<string>("");
                           Impact
                         </h2>
                         <div className="w-full mt-4">
-                        <Textarea type="text"
+                        <Textarea
                             className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-5 "
                           />
                         </div>
@@ -422,7 +395,7 @@ const [methodName, setMethodName] = useState<string>("");
                           Time Spent
                         </div>
                         <div className="w-full">
-                          <Input value={'2024-05-02T20:03:19.968Z'} type="text" placeholder="Time spend"
+                            <Input value={filteredReport.lastActivity} type="text" placeholder="Time spend"
                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6" />
                         </div>
                       </div>
@@ -435,53 +408,35 @@ const [methodName, setMethodName] = useState<string>("");
                   </div>
                   <div className="flex-1 w-full flex gap-[50px]">
                     {/* HACKERS */}
-                  <div className="bg-[#0A273D]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
-                    <div className="flex items-center">
-                      <div className="hexagon5 m-auto md:m-0 ">
-                        <img src={"/assets/images/profileimage.jpeg"} alt="" />
-                      </div>
-                    <div className="flex-1 ml-4">
-                      <h3 className="text-[18px] font-[600]">Username</h3>
-                        <div className="flex items-center gap-2">
-                          <img src="/assets/flag.svg" className="w-[18px] " />
-                          <p className="text-[16px] font-[400]">Baku</p>
-                        </div>
-                    </div>
-                  </div>
-                <div className="bg-[#001D34] rounded-l-xl rounded-r-xl overflow-hidden flex">
-                  <input type="number"
-                    className="w-[50px] py-1 px-3 bg-[#001D34] border-r border-white text-white focus:outline-none focus-visible:ring-0" value={56}
-                  />
-                  <div className="bg-[#001D34] w-[50px]   flex items-center justify-center "
-                  >
-                    %
-                  </div>
-                </div>
-              </div>
 
-              <div className="bg-[#0A273D]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
-                    <div className="flex items-center">
-                      <div className="hexagon5 m-auto md:m-0 ">
-                        <img src={"/assets/images/profileimage.jpeg"} alt="" />
-                      </div>
-                    <div className="flex-1 ml-4">
-                      <h3 className="text-[18px] font-[600]">Username</h3>
-                        <div className="flex items-center gap-2">
-                          <img src="/assets/flag.svg" className="w-[18px] " />
-                          <p className="text-[16px] font-[400]">Baku</p>
+                  {collaborators.map((c)=>(
+                    <div className="bg-[#0A273D]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
+                      <div className="flex items-center">
+                        <div className="hexagon5 m-auto md:m-0 ">
+                          <img src={"/assets/images/profileimage.jpeg"} alt="" />
                         </div>
+                        <div className="flex-1 ml-4">
+                          <h3 className="text-[18px] font-[600]">{c.hackerUsername}</h3>
+                          <div className="flex items-center gap-2">
+                            <img src="/assets/flag.svg" className="w-[18px] " />
+                            <p className="text-[16px] font-[400]">Baku</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="bg-[#001D34] rounded-l-xl rounded-r-xl overflow-hidden flex">
+                        <input type="number"
+                          className="w-[50px] py-1 px-3 bg-[#001D34] border-r border-white text-white focus:outline-none focus-visible:ring-0" value={c.collaborationPercentage}
+                        />
+                        <div className="bg-[#001D34] w-[50px]   flex items-center justify-center "
+                        >
+                          %
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                <div className="bg-[#001D34] rounded-l-xl rounded-r-xl overflow-hidden flex">
-                  <input type="number"
-                    className="w-[50px] py-1 px-3 bg-[#001D34] border-r border-white text-white focus:outline-none focus-visible:ring-0" value={56}
-                  />
-                  <div className="bg-[#001D34] w-[50px]   flex items-center justify-center "
-                  >
-                    %
-                  </div>
-                </div>
-              </div>
+
+                  ))}
+
+               
 
                     
 
