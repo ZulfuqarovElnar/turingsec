@@ -30,7 +30,7 @@ filteredReport = report;
 }
 });
 });
-console.log(filteredReport)
+console.log(useGetReportsForCompanies())
 
 const [methodName, setMethodName] = useState<string>("");
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
@@ -112,7 +112,7 @@ const [methodName, setMethodName] = useState<string>("");
                       <div className="flex items-center gap-4 flex-col lg:flex-row">
                         <div className="lg:-[40%] w-full">
                           <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                            <Input value={filteredReport.asset} type="text" placeholder="Max Bounty"
+                            <Input value="Asset" type="text" placeholder="Max Bounty"
                               className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                           </Label>
                         </div>
@@ -200,7 +200,7 @@ const [methodName, setMethodName] = useState<string>("");
                       </div>
                       <div className=" items-center gap-4">
                         <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
-                          Severity calculation method
+                          Calculation: 7/10
                         </h2>
                       </div>
                       <div className="mt-4">
@@ -213,18 +213,18 @@ const [methodName, setMethodName] = useState<string>("");
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                              <RadioInput name="attackvector" value="Network" id="Network" label="Network"
+                              <RadioInput name="attackvector" value="Network" id="Network" label="High"
                                 checked={true} />
                             </div>
                           </div>
                           <div
                             className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                             <div className="min-w-[200px] mt-2 xl:mt-0">
-                              Attack complexity
+                              Scope
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                              <RadioInput name="attackcomplexity" value="Low" id="Low3" label="Low" checked={true} />
+                              <RadioInput name="attackcomplexity" value="Unchanged" id="Low3" label="High" checked={true} />
 
 
                             </div>
@@ -235,22 +235,22 @@ const [methodName, setMethodName] = useState<string>("");
                           <div
                             className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                             <div className="min-w-[200px] mt-2 xl:mt-0">
-                              Attack vector
+                              Attack complexity
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                              <RadioInput name="attackvector" value="Network" id="Network" label="Network"
+                              <RadioInput name="attackvector" value="High" id="Network" label="Low"
                                 checked={true} />
                             </div>
                           </div>
                           <div
                             className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                             <div className="min-w-[200px] mt-2 xl:mt-0">
-                              Attack complexity
+                              Confidentially
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                              <RadioInput name="attackcomplexity" value="Low" id="Low2" label="Low" checked={true} />
+                              <RadioInput name="attackcomplexity" value="Low" id="Low2" label="High" checked={true} />
 
 
                             </div>
@@ -261,22 +261,22 @@ const [methodName, setMethodName] = useState<string>("");
                           <div
                             className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                             <div className="min-w-[200px] mt-2 xl:mt-0">
-                              Attack vector
+                              User interactions
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                              <RadioInput name="attackvector" value="Network" id="Network" label="Network"
+                              <RadioInput name="attackvector" value="Network" id="Network" label="High"
                                 checked={true} />
                             </div>
                           </div>
                           <div
                             className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                             <div className="min-w-[200px] mt-2 xl:mt-0">
-                              Attack complexity
+                              Integrity
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                              <RadioInput name="attackcomplexity" value="Low" id="Low4" label="Low" checked={true} />
+                              <RadioInput name="attackcomplexity" value="Low" id="Low4" label="High" checked={true} />
 
 
                             </div>
@@ -287,18 +287,18 @@ const [methodName, setMethodName] = useState<string>("");
                           <div
                             className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                             <div className="min-w-[200px] mt-2 xl:mt-0">
-                              Attack vector
+                                Privileges required
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                              <RadioInput name="attackvector" value="Network" id="Network" label="Network"
+                              <RadioInput name="attackvector" value="Network" id="Network" label="High"
                                 checked={true} />
                             </div>
                           </div>
                           <div
                             className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                             <div className="min-w-[200px] mt-2 xl:mt-0">
-                              Attack complexity
+                              Availability
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
@@ -314,25 +314,25 @@ const [methodName, setMethodName] = useState<string>("");
                           <div
                             className='rounded-xl sm:text-[16px] text-[14px] font-[500] bg-[#001D34] h-[60px] flex justify-center items-center mt-3 px-8'>
                             <div className='flex-1 flex justify-center'>Method Name</div>
-                            <div className='flex-1 flex justify-center'>Method Name</div>
-                            <div className='flex-1 flex justify-center'>Method Name</div>
-                            <div className='flex-1 flex justify-center'>Method Name</div>
+                            <div className='flex-1 flex justify-center'>Confidentially</div>
+                            <div className='flex-1 flex justify-center'>Integrity</div>
+                            <div className='flex-1 flex justify-center'>Availability</div>
                           </div>
 
                           <div
                             className='sm:text-[16px] text-[14px] font-[500] h-[60px] flex justify-between items-center px-8'>
                             <div className='flex-1 flex justify-center'>{filteredReport.methodName}</div>
                             <div className='flex-1 flex justify-center'>
-                              <RadioInput name="attackvector1" value="High" id="Network" label="Network"
+                              <RadioInput name="attackvector1" value="High" id="Network" label="High"
                                 checked={true} />
                             </div>
                             <div className='flex-1 flex justify-center'>
-                              <RadioInput name="attackvector2" value="High" id="Network" label="Network"
+                              <RadioInput name="attackvector2" value="Low" id="Network" label="High"
                                 checked={true} />
                             </div>
 
                             <div className='flex-1 flex justify-center'>
-                              <RadioInput name="attackvector3" value="High" id="Network" label="Network"
+                              <RadioInput name="attackvector3" value="High" id="Network" label="High"
                                 checked={true} />
                             </div>
                           </div>
@@ -361,7 +361,7 @@ const [methodName, setMethodName] = useState<string>("");
                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white mt-5 py-6"
                             value={filteredReport.vulnerabilityUrl} />
 
-                          <Textarea type="text" placeholder="Description"
+                            <Textarea type="text" placeholder="Description" value={filteredReport.discoveryDetails}
                             className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-5 " />
                           </div>
 
