@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function ReportCompany() {
   const { data, isError } = useGetReportsForCompanies();
-  console.log(data);
+  // console.log(data);
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
       <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
@@ -32,7 +32,7 @@ export default function ReportCompany() {
          
           {data && Array.isArray(data) && data.map((user) => (
             user.reports.map((report) => (
-                <Link to={`single-report/${report.id}`}>
+                <Link to={`single-report/${report.id}`} key={report.id}>
                 <ReportElement
                   key={report.id}
                   name={user.user.username}
