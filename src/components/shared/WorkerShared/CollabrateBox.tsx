@@ -55,16 +55,16 @@ export default function CollabrateBox({
   }
   useEffect(() => {
     if (id !== undefined && value !== null) {
-      setCollabrates((prev) =>
-        prev.map((item) => {
-          if (item.id === id) {
-            return { ...item, value: value };
-          }
-          return item;
-        })
-      );
+        setCollabrates((prev) =>
+          prev.map((item) => {
+            if (item && item.id === id) {
+              return { ...item, value: value };
+            }
+            return item;
+          })
+        );
     }
-  }, [value, id]);
+}, [value, id]);
   
 
   return (
