@@ -24,12 +24,13 @@ export default function ProgramSubmitPage() {
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
   const [proofConceptDescription, setProofConceptDescription] =
     useState<string>("");
+  const [description, setDesciptions] = useState<string>("");
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [lastActivityDes,setLastActivity]=useState<string>("");
   const [globalPercent, setGlobalPercent] = useState<number>(100);
   const [percent, setPercent] = useState<number>(0);
   const { data: allUsers } = useGetAllUsers();
-  console.log(allUsers);
+  console.log(searchParams.get('weaknessLine'));
   const {
     data: programData,
     isPending: programPending,
@@ -71,6 +72,56 @@ export default function ProgramSubmitPage() {
       value: 1000,
     },
   ];
+
+  const fakeAssetsData = [
+    {
+      label: "Harware",
+      value: 1000,
+    },
+    {
+      label: "AndroidPlayStore",
+      value: 1000,
+    },
+    {
+      label: "OtherAsset",
+      value: 1000,
+    },
+    {
+      label: "losAppStore",
+      value: 1000,
+    },{
+      label: "Domain",
+      value: 1000,
+    },{
+      label: "API",
+      value: 1000,
+    }
+  ];
+
+  const fakeWeaknessData = [
+    {
+      label: "Access Control",
+      value: 1000,
+    },
+    {
+      label: "AII CAPECs",
+      value: 1000,
+    },
+    {
+      label: "AII CWEs",
+      value: 1000,
+    },
+    {
+      label: "Cryptographic Issues",
+      value: 1000,
+    },{
+      label: "Insecure Interaction Between Components",
+      value: 1000,
+    },{
+      label: "Memory Corruption",
+      value: 1000,
+    }
+  ]
   const [allAssets, setAllAssets] = useState<string[]>([]);
 
   useEffect(() => {
@@ -113,15 +164,19 @@ export default function ProgramSubmitPage() {
   
       const response = await mutation.mutateAsync({
         asset: searchParams.get("line")!,
-        weakness: searchParams.get("line")!,
+        weakness: searchParams.get("weaknessLine"),
         severity: "severity",
         methodName: methodName,
         proofOfConcept: proofConceptTitle,
-        discoveryDetails: proofConceptDescription,
-        collaborators: collabrates.map((item) => {
+        discoveryDetails: description,
+        lastActivity: lastActivityDes,
+        reportTitle: '',
+        rewardsStatus: '',
+        vulnerabilityUrl: proofConceptDescription,
+        collaboratorDTO: collabrates.map((item) => {
           return {
-            hackerUsername: item?.username,
-            collaborationPercentage: item?.value,
+            hackerUsername: "yuzammed",
+            collaborationPercentage: percent,
           };
         }),
         userId: userId, // Kullanıcı kimliği ekleniyor
@@ -134,7 +189,7 @@ export default function ProgramSubmitPage() {
       if (response) {
         toast.success("Report submitted successfully");
         setTimeout(() => {
-          window.location.href = "/work/dashboard";
+          //window.location.href = "/work/dashboard";
         }, 1000);
       } else {
         console.log("ldlgf;lg;lgfpp[");
@@ -251,7 +306,7 @@ export default function ProgramSubmitPage() {
           <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
             1
           </div>
-          <div className=" rounded-xl overflow-hidden  flex-1">
+          <div className=" rounded-xl  flex-1">
             <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
               Asset
             </div>
@@ -312,10 +367,10 @@ export default function ProgramSubmitPage() {
                         return { ...provided, color };
                       },
                     }}
-                    options={fakeDATA}
+                    options={fakeAssetsData}
                     isSearchable={false}
                     isClearable={true}
-                    placeholder=" Period"
+                    placeholder="Asset type"
                   />
                 </div>
               </div>
@@ -380,7 +435,7 @@ export default function ProgramSubmitPage() {
                     options={fakeDATA}
                     isSearchable={false}
                     isClearable={true}
-                    placeholder=" Period"
+                    placeholder="Choose your own template"
                   />
                 </div>
               </div>
@@ -452,10 +507,10 @@ export default function ProgramSubmitPage() {
                         return { ...provided, color };
                       },
                     }}
-                    options={fakeDATA}
+                    options={fakeWeaknessData}
                     isSearchable={false}
                     isClearable={true}
-                    placeholder=" Period"
+                    placeholder="Weakness type"
                   />
                 </div>
               </div>
@@ -753,7 +808,7 @@ export default function ProgramSubmitPage() {
               </div>
               <div>
                 <h2 className="sm:text-[18px] text-[16px] font-[600] mt-4">
-                  Impact
+                  URL
                 </h2>
                 <div className="w-full mt-4">
                   <Input
@@ -762,6 +817,19 @@ export default function ProgramSubmitPage() {
                     className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white py-6"
                     value={proofConceptDescription}
                     onChange={(e) => setProofConceptDescription(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <h2 className="sm:text-[18px] text-[16px] font-[600] mt-4">
+                  Descriptions
+                </h2>
+                <div className="w-full mt-4">
+                  <Textarea
+                    placeholder="Descriptions"
+                    className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white py-6"
+                    onChange={(e) => setDesciptions(e.target.value)}
                   />
                 </div>
               </div>
@@ -813,6 +881,7 @@ export default function ProgramSubmitPage() {
                     type="text"
                     placeholder="Time spend"
                     className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6"
+                    onChange={(e) => setLastActivity(e.target.value)}
                   />
                 </div>
               </div>
