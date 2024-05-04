@@ -30,7 +30,7 @@ filteredReport = report;
 }
 });
 });
-console.log(useGetReportsForCompanies())
+console.log(filteredReport);
 
 const [methodName, setMethodName] = useState<string>("");
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
@@ -43,14 +43,14 @@ const [methodName, setMethodName] = useState<string>("");
 
           const [openModal, setOpenModal] = useState(false);
           const { currentUser } = useCurrentUser();
-          
+
           // const { data, isPending, isError } = useGetCompanyById(
           // programData?.companyId
           // );
-          
+
           const [allAssets, setAllAssets] = useState<string[]>([]);
-          const collaborators=filteredReport.collaborators
-          console.log(collaborators)
+            const collaborators=filteredReport.collaborators
+            console.log(collaborators)
 
 
 
@@ -112,7 +112,7 @@ const [methodName, setMethodName] = useState<string>("");
                       <div className="flex items-center gap-4 flex-col lg:flex-row">
                         <div className="lg:-[40%] w-full">
                           <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                            <Input value="Asset" type="text" placeholder="Max Bounty"
+                            <Input value="Hardware" type="text" placeholder="Max Bounty"
                               className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                           </Label>
                         </div>
@@ -144,7 +144,7 @@ const [methodName, setMethodName] = useState<string>("");
                       <div className="flex items-center gap-4 flex-col lg:flex-row">
                         <div className=" w-full">
                           <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                            <Input type="text" placeholder="Max Bounty"
+                            <Input type="text" placeholder="Max Bounty" value={'Choose your own template'}
                               className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                           </Label>
                         </div>
@@ -165,7 +165,7 @@ const [methodName, setMethodName] = useState<string>("");
 
                         <div className="lg:-[40%] w-full">
                           <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                            <Input value="Weakness" type="text" placeholder="Max Bounty"
+                            <Input value={'Access Control'} type="text" placeholder="Max Bounty" 
                               className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                           </Label>
                         </div>
@@ -224,7 +224,8 @@ const [methodName, setMethodName] = useState<string>("");
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                              <RadioInput name="attackcomplexity" value="Unchanged" id="Low3" label="High" checked={true} />
+                              <RadioInput name="attackcomplexity" value="Unchanged" id="Low3" label="High"
+                                checked={true} />
 
 
                             </div>
@@ -239,8 +240,7 @@ const [methodName, setMethodName] = useState<string>("");
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                              <RadioInput name="attackvector" value="High" id="Network" label="Low"
-                                checked={true} />
+                              <RadioInput name="attackvector" value="High" id="Network" label="Low" checked={true} />
                             </div>
                           </div>
                           <div
@@ -287,7 +287,7 @@ const [methodName, setMethodName] = useState<string>("");
                           <div
                             className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                             <div className="min-w-[200px] mt-2 xl:mt-0">
-                                Privileges required
+                              Privileges required
                             </div>
                             <div
                               className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
@@ -323,17 +323,14 @@ const [methodName, setMethodName] = useState<string>("");
                             className='sm:text-[16px] text-[14px] font-[500] h-[60px] flex justify-between items-center px-8'>
                             <div className='flex-1 flex justify-center'>{filteredReport.methodName}</div>
                             <div className='flex-1 flex justify-center'>
-                              <RadioInput name="attackvector1" value="High" id="Network" label="High"
-                                checked={true} />
+                              <RadioInput name="attackvector1" value="High" id="Network" label="High" checked={true} />
                             </div>
                             <div className='flex-1 flex justify-center'>
-                              <RadioInput name="attackvector2" value="Low" id="Network" label="High"
-                                checked={true} />
+                              <RadioInput name="attackvector2" value="Low" id="Network" label="Low" checked={true} />
                             </div>
 
                             <div className='flex-1 flex justify-center'>
-                              <RadioInput name="attackvector3" value="High" id="Network" label="High"
-                                checked={true} />
+                              <RadioInput name="attackvector3" value="High" id="Network" label="High" checked={true} />
                             </div>
                           </div>
                         </div>
@@ -350,23 +347,34 @@ const [methodName, setMethodName] = useState<string>("");
                       Proof of Concept
                     </div>
                     <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
-                      <div className="flex items-center gap-4 flex-col lg:flex-row">
+                      <div className="flex items-center gap-4 flex-col lg:flex-col">
                         <div className="w-full">
+                          <h2 className="sm:text-[18px] text-[16px] font-[600] mt-4">
+                            Title
+                          </h2>
                           <Input type="text" placeholder="Title"
-                            className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6"
+                            className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6 mt-2"
                             value={filteredReport.proofOfConcept} onChange={(e)=> setProofConceptTitle(e.target.value)}
                           />
+                        </div>
+                        <div className="w-full">
 
-                          <Input type="text" placeholder="Title"
-                            className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white mt-5 py-6"
+                          <h2 className="sm:text-[18px] text-[16px] font-[600] mt-4">
+                            URL
+                          </h2>
+                          <Input type="text" placeholder="URL"
+                            className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white mt-2 py-6"
                             value={filteredReport.vulnerabilityUrl} />
+                        </div>
+                        <div className="w-full">
 
-                            <Textarea type="text" placeholder="Description" value={filteredReport.discoveryDetails}
-                            className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-5 " />
-                          </div>
-
-                      </div>
-                      <div>
+                          <h2 className="sm:text-[18px] text-[16px] font-[600] mt-4">
+                            Descriptions
+                          </h2>
+                          <Textarea type="text" placeholder="Description" value={filteredReport.discoveryDetails}
+                            className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-2 " />
+                          </div></div>
+                      {/* <div>
                         <h2 className="sm:text-[18px] text-[16px] font-[400] mt-4">
                           Impact
                         </h2>
@@ -375,7 +383,7 @@ const [methodName, setMethodName] = useState<string>("");
                             className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-5 "
                           />
                         </div>
-                      </div>
+                      </div> */}
 
                       
                     </div>
@@ -395,7 +403,7 @@ const [methodName, setMethodName] = useState<string>("");
                           Time Spent
                         </div>
                         <div className="w-full">
-                            <Input value={filteredReport.lastActivity} type="text" placeholder="Time spend"
+                            <Input value={'24 Hours'} type="text" placeholder="Time spend"
                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6" />
                         </div>
                       </div>

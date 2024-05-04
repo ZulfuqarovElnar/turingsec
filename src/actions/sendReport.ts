@@ -34,12 +34,7 @@ export async function sendReport(report: Report, id: string) {
           rewardsStatus: report.rewardsStatus,
           vulnerabilityUrl: report.vulnerabilityUrl,
           userId: report.userId, 
-          collaboratorDTO: [
-            {
-              hackerUsername: "string",
-              collaborationPercentage: 0
-            }
-          ]
+          collaboratorDTO: report.collaboratorDTO
         }),
       }
     );
