@@ -200,7 +200,7 @@ console.log(filteredReport);
                       </div>
                       <div className=" items-center gap-4">
                         <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
-                          Calculation: 7/10
+                          Calculation: {filteredReport.severity}
                         </h2>
                       </div>
                       <div className="mt-4">
