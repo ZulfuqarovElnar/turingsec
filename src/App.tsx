@@ -41,6 +41,7 @@ import RegisterCompanyPage from "./pages/RegisterCompany";
 import CompanySettings from "./pages/CompanyPages/Settings";
 
 import SingleReport from "./pages/CompanyPages/SingleReport";
+import SingleReportUser from "./pages/WorkPages/SingleReportUser";
 
 function App() {
   function ScrollToTop() {
@@ -83,6 +84,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Setting />} />
           <Route path="report" element={<Report />} />
+          <Route path="report/single-report/:id" element={<SingleReportUser />} />
           <Route path="programs/:programId" element={<ProgramOnePage />} />
           <Route
             path="programs/:programId/submit"

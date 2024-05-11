@@ -1,26 +1,26 @@
 import { useParams } from 'react-router-dom';
-import { useGetReportById } from '../../queryies/useGetReportById';
-import { useCurrentCompany } from '../../context/CurrentCompany';
-import Select from "react-select";
-import { Button } from "../../components/ui/button";
+// import { useGetReportById } from '../../queryies/useGetReportById';
+// import { useCurrentCompany } from '../../context/CurrentCompany';
+// import Select from "react-select";
+// import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import Line from "../../components/shared/WorkerShared/Line";
 import RadioInput from "../../components/component/RadioInput";
 import { useGetReportsForCompanies } from '../../queryies/useGetReportsForCompany';
 // import { useGetCompanyById } from "../../queryies/useGetCompanyById";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { useSearchParams } from "react-router-dom";
-import WeaknessLine from "../../components/component/WeaknessLine";
-import CollabrateBox from "../../components/shared/WorkerShared/CollabrateBox";
-import AddCollabrateModal from "../../components/shared/WorkerShared/AddCollabrateModal";
-import { useCurrentUser } from "../../context/CurrentUser";
+import { useState } from "react";
+// import toast from "react-hot-toast";
+// import { useSearchParams } from "react-router-dom";
+// import WeaknessLine from "../../components/component/WeaknessLine";
+// import CollabrateBox from "../../components/shared/WorkerShared/CollabrateBox";
+// import AddCollabrateModal from "../../components/shared/WorkerShared/AddCollabrateModal";
+// import { useCurrentUser } from "../../context/CurrentUser";
 import { Textarea } from '../../components/ui/textarea';
 
-export default function ProgramSubmitPage() {
+export default function SingleReport() {
 const { id } = useParams();
-const { data, isError } = useGetReportsForCompanies();
+const { data } = useGetReportsForCompanies();
 // console.log("id: " + id)
 let filteredReport;
 data.forEach((user) => {
@@ -32,17 +32,17 @@ filteredReport = report;
 });
 console.log(filteredReport);
 
-const [methodName, setMethodName] = useState<string>("");
+// const [methodName, setMethodName] = useState<string>("");
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
-    const [proofConceptDescription, setProofConceptDescription] =
-    useState<string>("");
-      const [searchParams, setSearchParams] = useSearchParams();
+    // const [proofConceptDescription, setProofConceptDescription] =
+    // useState<string>("");
+      // const [searchParams, setSearchParams] = useSearchParams();
 
-      const [globalPercent, setGlobalPercent] = useState<number>(100);
-        const [percent, setPercent] = useState<number>(0);
+      // const [globalPercent, setGlobalPercent] = useState<number>(100);
+      //   const [percent, setPercent] = useState<number>(0);
 
-          const [openModal, setOpenModal] = useState(false);
-          const { currentUser } = useCurrentUser();
+      //     const [openModal, setOpenModal] = useState(false);
+      //     const { currentUser } = useCurrentUser();
 
           // const { data, isPending, isError } = useGetCompanyById(
           // programData?.companyId
@@ -200,7 +200,7 @@ const [methodName, setMethodName] = useState<string>("");
                       </div>
                       <div className=" items-center gap-4">
                         <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
-                          Calculation: 7/10
+                          Calculation: {filteredReport.severity}
                         </h2>
                       </div>
                       <div className="mt-4">

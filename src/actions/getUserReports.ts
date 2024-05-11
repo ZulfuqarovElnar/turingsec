@@ -11,6 +11,7 @@ export async function getUserReports() {
 
     // Check if company data contains accessToken
     const accessToken = userData.accessToken;
+ 
 
     if (!accessToken) {
       throw new Error("Access token not found in company data");
@@ -27,12 +28,13 @@ export async function getUserReports() {
         },
       }
     );
-    
+   
     if (!res.ok) {
       throw new Error("Wrong response");
     }
     const data = await res.json();
-    return data;
+    console.log(data.data)
+    return data.data;
     // console.log(data)
   } catch (err: any) {
     console.log(err);

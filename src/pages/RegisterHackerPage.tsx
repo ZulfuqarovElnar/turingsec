@@ -25,6 +25,7 @@ type LoginFormValues = {
 
 export default function RegisterHackerPage() {
   const { currentUser } = useCurrentUser();
+  
   const { currentCompany } = useCurrentCompany();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(formSchemaHackerLogin),
@@ -69,6 +70,9 @@ export default function RegisterHackerPage() {
       }
   
       const result = await response.json();
+      if(result.OK){
+        return result
+      }
       console.log("Login successful:", result);
   
       toast.success("You successfully logged in as a hacker!");

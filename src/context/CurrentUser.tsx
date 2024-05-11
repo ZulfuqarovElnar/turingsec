@@ -46,9 +46,9 @@
   // Context provider component
   const CurrentUserProvider = ({ children }: { children: ReactNode }) => {
     // State to hold the current user
-    const [currentUser, setCurrentUser] = useState<CurrentUser | undefined>(
-      undefined
-    );
+    const [currentUser, setCurrentUser] = useState<
+     CurrentUser | undefined
+    >(undefined);
 
     useEffect(() => {
       async function fetchUser() {

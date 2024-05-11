@@ -17,6 +17,8 @@ import CollabrateBox from "../../components/shared/WorkerShared/CollabrateBox";
 import { useGetAllUsers } from "../../queryies/useGetAllUsers";
 import AddCollabrateModal from "../../components/shared/WorkerShared/AddCollabrateModal";
 import { useCurrentUser } from "../../context/CurrentUser";
+import {useRef} from 'react';
+import { parseCvss3Vector } from 'vuln-vects';
 
 export default function ProgramSubmitPage() {
   const { programId } = useParams();
@@ -30,6 +32,7 @@ export default function ProgramSubmitPage() {
   const [globalPercent, setGlobalPercent] = useState<number>(100);
   const [percent, setPercent] = useState<number>(0);
   const { data: allUsers } = useGetAllUsers();
+  const severityRef = useRef(null)
   console.log(searchParams.get('weaknessLine'));
   const {
     data: programData,
@@ -134,6 +137,10 @@ export default function ProgramSubmitPage() {
   const mutation = useSendReport(programId);
   async function submitReport() {
     try {
+      const radios = severityRef.current.querySelectorAll('input[type="radio"]:checked');
+      const values = Array.from(radios).map(radio => radio.value);
+      const severity = parseCvss3Vector('AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H').baseScore;
+      alert(severity)
       // localStorage'den kullanıcı verilerini al
       const userString = localStorage.getItem("user");
       const userData = userString ? JSON.parse(userString) : null;
@@ -165,7 +172,7 @@ export default function ProgramSubmitPage() {
       const response = await mutation.mutateAsync({
         asset: searchParams.get("line")!,
         weakness: searchParams.get("weaknessLine"),
-        severity: "severity",
+        severity: `${severity}`,
         methodName: methodName,
         proofOfConcept: proofConceptTitle,
         discoveryDetails: description,
@@ -596,7 +603,7 @@ export default function ProgramSubmitPage() {
                   placeholder=" Period"
                 />
               </div>
-              <div className="mt-4">
+              <div className="mt-4"  ref={severityRef}>
                 <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Attack vector
@@ -604,25 +611,25 @@ export default function ProgramSubmitPage() {
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
                     <RadioInput
                       name="attackvector"
-                      value="Network"
+                      value="AV:N"
                       id="Network"
                       label="Network"
                     />
                     <RadioInput
                       name="attackvector"
-                      value="Adjacent"
+                      value="AV:A"
                       id="Adjacent"
                       label="Adjacent"
                     />
                     <RadioInput
                       name="attackvector"
-                      value="Local"
+                      value="AV:L"
                       id="Local"
                       label="Local"
                     />
                     <RadioInput
                       name="attackvector"
-                      value="Physical"
+                      value="AV:P"
                       id="Physical"
                       label="Physical"
                     />
@@ -635,13 +642,13 @@ export default function ProgramSubmitPage() {
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
                     <RadioInput
                       name="attackcomplexity"
-                      value="Low"
+                      value="AC:L"
                       id="Low1"
                       label="Low"
                     />
                     <RadioInput
                       name="attackcomplexity"
-                      value="High"
+                      value="AC:H"
                       id="High1"
                       label="High"
                     />
@@ -654,15 +661,21 @@ export default function ProgramSubmitPage() {
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
                     <RadioInput
                       name="Privilegesrequired"
-                      value="None"
+                      value="PR:N"
                       id="None"
                       label="None"
                     />
                     <RadioInput
                       name="Privilegesrequired"
-                      value="Low"
+                      value="PR:L"
                       id="Low2"
                       label="Low"
+                    />
+                    <RadioInput
+                      name="Privilegesrequired"
+                      value="PR:H"
+                      id="High"
+                      label="High"
                     />
                   </div>
                 </div>
@@ -673,13 +686,13 @@ export default function ProgramSubmitPage() {
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
                     <RadioInput
                       name="Userinteractions"
-                      value="None"
+                      value="UI:N"
                       id="None1"
                       label="None"
                     />
                     <RadioInput
                       name="Userinteractions"
-                      value="Required"
+                      value="UI:R"
                       id="Required"
                       label="Required"
                     />
@@ -690,13 +703,13 @@ export default function ProgramSubmitPage() {
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
                     <RadioInput
                       name="Scope"
-                      value="Unchanged"
+                      value="S:U"
                       id="Unchanged"
                       label="Unchanged"
                     />
                     <RadioInput
                       name="Scope"
-                      value="Changed"
+                      value="S:C"
                       id="Changed"
                       label="Changed"
                     />
@@ -709,19 +722,19 @@ export default function ProgramSubmitPage() {
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
                     <RadioInput
                       name="Confidentiality"
-                      value="None"
+                      value="C:N"
                       id="None3"
                       label="None"
                     />
                     <RadioInput
                       name="Confidentiality"
-                      value="Low"
+                      value="C:L"
                       id="Low3"
                       label="Low"
                     />
                     <RadioInput
                       name="Confidentiality"
-                      value="High"
+                      value="C:H"
                       id="High4"
                       label="High"
                     />
@@ -732,19 +745,19 @@ export default function ProgramSubmitPage() {
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
                     <RadioInput
                       name="Integrity"
-                      value="None"
+                      value="I:N"
                       id="None5"
                       label="None"
                     />
                     <RadioInput
                       name="Integrity"
-                      value="Low"
+                      value="I:L"
                       id="Low5"
                       label="Low"
                     />
                     <RadioInput
                       name="Integrity"
-                      value="High"
+                      value="I:H"
                       id="High5"
                       label="High"
                     />
@@ -752,24 +765,24 @@ export default function ProgramSubmitPage() {
                 </div>
                 <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
-                    Confidentiality
+                    Availability 
                   </div>
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
                     <RadioInput
                       name="Availability"
-                      value="None"
+                      value="A:N"
                       id="None6"
                       label="None"
                     />
                     <RadioInput
                       name="Availability"
-                      value="Low"
+                      value="A:L"
                       id="Low6"
                       label="Low"
                     />
                     <RadioInput
                       name="Availability"
-                      value="High"
+                      value="A:H"
                       id="High6"
                       label="High"
                     />

@@ -1,12 +1,24 @@
-import TabContentAll from "../../components/shared/WorkerShared/TabContentAll";
+// import TabContentAll from "../../components/shared/WorkerShared/TabContentAll";
 import {
   Tabs,
-  TabsContent,
+  // TabsContent,
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
+import { useGetUserReports } from "../../queryies/useGetUserReports";
+import { useGetUserData } from "../../queryies/useGetUserData";
+import ReportElement from "../../components/component/Company/ReportElement";
+import { Link } from "react-router-dom";
+
+ 
 
 export default function Report() {
+  const { data } = useGetUserReports();
+  console.log(data)
+  const currentUser=useGetUserData()
+  console.log(currentUser.data)
+  
+
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative min-h-screen">
       <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
@@ -75,12 +87,41 @@ export default function Report() {
               Accepted
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="All">
+          
+          {/* <TabsContent value="All">
             <TabContentAll />
-          </TabsContent>
-          <TabsContent value="password">Change your password here.</TabsContent>
+          </TabsContent> */}
+          
+          {/* <TabsContent value="password">Change your password here.</TabsContent> */}
         </Tabs>
+        <div className=" mt-7 flex gap-3 lg:items-center w-full flex-col lg:flex-row xl:w-[80%]">
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex bg-[#2451F5] rounded-2xl px-4 flex-1">
+            <img src="/assets/search.svg" alt="" />
+            <input type="text" className="flex h-10 w-full border border-input px-3 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" placeholder="Search" />
+            <img src="/assets/x.svg" alt="" className="cursor-pointer" />
+          </label>
+        </div>
+
+        
       </div>
+      <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3  py-16">
+        <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4 ">
+          {data && Array.isArray(data) && data.map((company) => (
+            company.reports.map((report) => (
+              <Link to={`single-report/${report.id}`} key={report.id}>
+                <ReportElement
+                  key={report.id}
+                  name={currentUser.data.username}
+                  img="img"
+                />
+              </Link>
+            ))
+          ))}
+        </div>
+        
+      </div>
+      
+      
     </div>
   );
 }

@@ -26,6 +26,7 @@ export default function ReportCompany() {
         <h2 className="sm:text-[25px] font-[700] text-[20px] mb-6">
           Incoming Reports
         </h2>
+        
         <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4 ">
           {/* {isPending && <p>Loading...</p>} */}
           {isError && <p>Error</p>}
