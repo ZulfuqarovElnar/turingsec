@@ -39,7 +39,6 @@ export default function ProgramSubmitPage() {
     isPending: programPending,
     isError: programError,
   } = useGetProgramById(programId);
-  console.log(programData);
   const [openModal, setOpenModal] = useState(false);
   const { currentUser } = useCurrentUser();
   const [collabrates, setCollabrates] = useState([]);
@@ -91,7 +90,6 @@ export default function ProgramSubmitPage() {
       const radios = severityRef.current.querySelectorAll('input[type="radio"]:checked');
       const values = Array.from(radios).map(radio => radio.value);
       const severity = parseCvss3Vector('AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H').baseScore;
-      alert(severity)
       // localStorage'den kullanıcı verilerini al
       const userString = localStorage.getItem("user");
       const userData = userString ? JSON.parse(userString) : null;
@@ -128,18 +126,17 @@ export default function ProgramSubmitPage() {
         proofOfConcept: proofConceptTitle,
         discoveryDetails: description,
         lastActivity: lastActivityDes,
-        reportTitle: '',
-        rewardsStatus: '',
+        reportTitle: 'report title',
+        rewardsStatus: 'reward status',
         vulnerabilityUrl: proofConceptDescription,
-        collaboratorDTO: collabrates.map(item => ({
-            hackerUsername: "yuzammed",
+        collaboratorDTO: {
+            hackerUsername: "yuzanmed",
             collaborationPercentage: percent,
-        })),
-        userId: userId, // Kullanıcı kimliği ekleniyor
+        },
+        ownPercentage: percent
       });
   
       console.log(response);
-      console.log("responsedplfffffffffff");
       
       // Mutation başarılı olduğunda işlemler
       if (response) {

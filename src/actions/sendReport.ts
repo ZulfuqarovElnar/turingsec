@@ -33,15 +33,29 @@ export async function sendReport(report: Report, id: string) {
           rewardsStatus: report.rewardsStatus,
           vulnerabilityUrl: report.vulnerabilityUrl,
           methodName: report.methodName,
-          userId: report.userId, 
+          ownPercentage: 100, 
           collaboratorDTO: report.collaboratorDTO
         }),
       }
     );
 
-    console.log(res);
     if (!res.ok) {
-      console.log(res);
+      console.log(
+        {
+          asset: report.asset,
+          weakness: report.weakness,
+          severity: report.severity,
+          proofOfConcept: report.proofOfConcept,
+          discoveryDetails: report.discoveryDetails,
+          lastActivity: report.lastActivity,
+          reportTitle: report.reportTitle,
+          rewardsStatus: report.rewardsStatus,
+          vulnerabilityUrl: report.vulnerabilityUrl,
+          methodName: report.methodName,
+          ownPercentage: 100, 
+          collaboratorDTO: report.collaboratorDTO
+        }
+      );
       throw new Error("Wrong response");
     }
 
@@ -50,4 +64,7 @@ export async function sendReport(report: Report, id: string) {
     console.log(err);
     throw new Error(err.message);
   }
+
+
+  
 }
