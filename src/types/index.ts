@@ -9,7 +9,7 @@ export interface Report {
   reportTitle: string;
   rewardsStatus: string;
   vulnerabilityUrl: string;
-  userId: 1;
+  ownPercentage: number;
   collaboratorDTO: {
       hackerUsername: string;
       collaborationPercentage: number;
