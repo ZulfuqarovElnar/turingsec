@@ -2,7 +2,7 @@ import { Report } from "../types";
 
 export async function sendReport(report: Report, id: string) {
   console.log(report);
-  console.log(id);
+  console.log("id: " + id);
   
   // User bilgilerini localStorage'dan al
   const userDataString = localStorage.getItem("user");
@@ -26,13 +26,13 @@ export async function sendReport(report: Report, id: string) {
           asset: report.asset,
           weakness: report.weakness,
           severity: report.severity,
-          methodName: report.methodName,
           proofOfConcept: report.proofOfConcept,
           discoveryDetails: report.discoveryDetails,
           lastActivity: report.lastActivity,
           reportTitle: report.reportTitle,
           rewardsStatus: report.rewardsStatus,
           vulnerabilityUrl: report.vulnerabilityUrl,
+          methodName: report.methodName,
           userId: report.userId, 
           collaboratorDTO: report.collaboratorDTO
         }),

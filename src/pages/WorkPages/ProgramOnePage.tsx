@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from "react-router";
-import LevelBar from "../../components/component/LevelBar";
+// import LevelBar from "../../components/component/LevelBar";
 
 import { Button } from "../../components/ui/button";
 //import { useGetCompanyById } from "../../queryies/useGetCompanyById";
 import { useGetProgramById } from "../../queryies/useGetProgramById";
 import { useEffect, useState } from "react";
-import { set } from "date-fns";
+// import { set } from "date-fns";
 
 export default function ProgramOnePage() {
   const { programId } = useParams();

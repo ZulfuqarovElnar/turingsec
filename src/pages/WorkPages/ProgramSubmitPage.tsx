@@ -50,80 +50,30 @@ export default function ProgramSubmitPage() {
   //   programData?.companyId
   // );
   const fakeDATA = [
-    {
-      label: "Max Bounty",
-      value: 1000,
-    },
-    {
-      label: "Total Bounty",
-      value: 1000,
-    },
-    {
-      label: "Average Bounty",
-      value: 1000,
-    },
-    {
-      label: "Submitted Bounty",
-      value: 1000,
-    },
-    {
-      label: "Collaborated Bounty",
-      value: 1000,
-    },
-    {
-      label: "Closed Bounty",
-      value: 1000,
-    },
+    { label: "Max Bounty", value: 1000,},
+    { label: "Total Bounty", value: 1000,},
+    { label: "Average Bounty", value: 1000,},
+    { label: "Submitted Bounty", value: 1000,},
+    { label: "Collaborated Bounty", value: 1000,},
+    { label: "Closed Bounty", value: 1000,},
   ];
 
   const fakeAssetsData = [
-    {
-      label: "Harware",
-      value: 1000,
-    },
-    {
-      label: "AndroidPlayStore",
-      value: 1000,
-    },
-    {
-      label: "OtherAsset",
-      value: 1000,
-    },
-    {
-      label: "losAppStore",
-      value: 1000,
-    },{
-      label: "Domain",
-      value: 1000,
-    },{
-      label: "API",
-      value: 1000,
-    }
+    { label: "Harware", value: 1000,},
+    { label: "AndroidPlayStore", value: 1000,},
+    { label: "OtherAsset", value: 1000,},
+    { label: "losAppStore", value: 1000,},
+    { label: "Domain", value: 1000,},
+    { label: "API", value: 1000,}
   ];
 
   const fakeWeaknessData = [
-    {
-      label: "Access Control",
-      value: 1000,
-    },
-    {
-      label: "AII CAPECs",
-      value: 1000,
-    },
-    {
-      label: "AII CWEs",
-      value: 1000,
-    },
-    {
-      label: "Cryptographic Issues",
-      value: 1000,
-    },{
-      label: "Insecure Interaction Between Components",
-      value: 1000,
-    },{
-      label: "Memory Corruption",
-      value: 1000,
-    }
+    { label: "Access Control", value: 1000,},
+    { label: "AII CAPECs", value: 1000,},
+    { label: "AII CWEs", value: 1000,},
+    { label: "Cryptographic Issues", value: 1000,},
+    { label: "Insecure Interaction Between Components", value: 1000,},
+    { label: "Memory Corruption", value: 1000,}
   ]
   const [allAssets, setAllAssets] = useState<string[]>([]);
 
@@ -135,6 +85,7 @@ export default function ProgramSubmitPage() {
   }, [programData]);
 
   const mutation = useSendReport(programId);
+ 
   async function submitReport() {
     try {
       const radios = severityRef.current.querySelectorAll('input[type="radio"]:checked');
@@ -170,7 +121,7 @@ export default function ProgramSubmitPage() {
       }
   
       const response = await mutation.mutateAsync({
-        asset: searchParams.get("line")!,
+        asset: searchParams.get("line"),
         weakness: searchParams.get("weaknessLine"),
         severity: `${severity}`,
         methodName: methodName,
@@ -180,12 +131,10 @@ export default function ProgramSubmitPage() {
         reportTitle: '',
         rewardsStatus: '',
         vulnerabilityUrl: proofConceptDescription,
-        collaboratorDTO: collabrates.map((item) => {
-          return {
+        collaboratorDTO: collabrates.map(item => ({
             hackerUsername: "yuzammed",
             collaborationPercentage: percent,
-          };
-        }),
+        })),
         userId: userId, // Kullanıcı kimliği ekleniyor
       });
   

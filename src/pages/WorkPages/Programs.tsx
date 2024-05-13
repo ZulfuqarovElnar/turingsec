@@ -38,7 +38,7 @@ export default function Programs() {
           {/* {isPending && <p>Loading...</p>} */}
           {isError && <p>Error</p>}
           {data?.map((program: any) => (
-            <ProgramBox key={program.id} {...program} />
+            <ProgramBox key={program.id} fromDate={program.fromDate}  toDate={program.toDate} id={program.companyId}/>
           ))}
         </div>
       </div>
