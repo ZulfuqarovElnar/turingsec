@@ -9,14 +9,26 @@ import { useGetUserReports } from "../../queryies/useGetUserReports";
 import { useGetUserData } from "../../queryies/useGetUserData";
 import ReportElement from "../../components/component/Company/ReportElement";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
  
 
 export default function Report() {
   const { data } = useGetUserReports();
-  console.log(data)
-  const currentUser=useGetUserData()
-  console.log(currentUser.data)
+  // console.log(data)
+  // const currentUser=useGetUserData()
+  // console.log(currentUser.data)
+  const [searchQuery, setSearchQuery] = useState("");
+
+ 
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+ 
+  const filteredData = (data && Array.isArray(data)) ? data.filter((company) =>
+    company.companyName.toLowerCase().includes(searchQuery.toLowerCase())
+  ):[];
+  // console.log(filteredData)
   
 
   return (
@@ -88,16 +100,12 @@ export default function Report() {
             </TabsTrigger>
           </TabsList>
           
-          {/* <TabsContent value="All">
-            <TabContentAll />
-          </TabsContent> */}
-          
-          {/* <TabsContent value="password">Change your password here.</TabsContent> */}
+        
         </Tabs>
         <div className=" mt-7 flex gap-3 lg:items-center w-full flex-col lg:flex-row xl:w-[80%]">
           <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex bg-[#2451F5] rounded-2xl px-4 flex-1">
             <img src="/assets/search.svg" alt="" />
-            <input type="text" className="flex h-10 w-full border border-input px-3 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" placeholder="Search" />
+            <input type="text" className="flex h-10 w-full border border-input px-3 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" placeholder="Search" onChange={handleSearchInputChange} />
             <img src="/assets/x.svg" alt="" className="cursor-pointer" />
           </label>
         </div>
@@ -106,12 +114,12 @@ export default function Report() {
       </div>
       <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3  py-16">
         <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4 ">
-          {data && Array.isArray(data) && data.map((company) => (
+          {data && Array.isArray(filteredData) && filteredData.map((company) => (
             company.reports.map((report) => (
               <Link to={`single-report/${report.id}`} key={report.id}>
                 <ReportElement
                   key={report.id}
-                  name={currentUser.data.username}
+                  name={company.companyName}
                   img="img"
                 />
               </Link>
