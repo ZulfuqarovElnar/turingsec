@@ -10,12 +10,12 @@ export async function sendReport(report: Report, id: string) {
   
   // AccessToken ve id'yi al
   const accessToken = userData?.accessToken;
-  const userId = userData?.id;
+  // const userId = userData?.id;
 
   try {
     console.log("sending report...");
     const res = await fetch(
-      `http://localhost:5000/api/bug-bounty-reports/submit?bugBountyProgramId=${id}`,
+      `http://localhost:5000/api/bug-bounty-reports/manualReport?bugBountyProgramId=${id}`,
       {
         method: "POST",
         headers: {
@@ -23,18 +23,37 @@ export async function sendReport(report: Report, id: string) {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({
-          asset: report.asset,
-          weakness: report.weakness,
-          severity: report.severity,
-          proofOfConcept: report.proofOfConcept,
-          discoveryDetails: report.discoveryDetails,
           lastActivity: report.lastActivity,
-          reportTitle: report.reportTitle,
           rewardsStatus: report.rewardsStatus,
-          vulnerabilityUrl: report.vulnerabilityUrl,
+          reportTemplate: report.reportTemplate,
+          ownPercentage: 100,
+          collaboratorPayload: report.collaboratorPayload.map(collaborator => ({
+            hackerUsername: collaborator.hackerUsername,
+            collaborationPercentage: collaborator.collaborationPercentage
+          })),
+
+          reportAssetPayload: {
+            assetName: report.reportAssetPayload.assetName,
+            assetType: report.reportAssetPayload.assetType
+          },
+
+          weakness: {
+            type: report.weakness.type,
+            name: report.weakness.name
+          },
+          proofOfConcept: {
+            title: report.proofOfConcept.title,
+            vulnerabilityUrl: report.proofOfConcept.vulnerabilityUrl,
+            description: report.proofOfConcept.description
+          },
+
+          discoveryDetails: {
+            timeSpend: report.discoDetails.timeSpend,
+          },
+
           methodName: report.methodName,
-          ownPercentage: 100, 
-          collaboratorDTO: report.collaboratorDTO
+          severity: report.severity,
+     
         }),
       }
     );
@@ -42,18 +61,36 @@ export async function sendReport(report: Report, id: string) {
     if (!res.ok) {
       console.log(
         {
-          asset: report.asset,
-          weakness: report.weakness,
-          severity: report.severity,
-          proofOfConcept: report.proofOfConcept,
-          discoveryDetails: report.discoveryDetails,
           lastActivity: report.lastActivity,
-          reportTitle: report.reportTitle,
           rewardsStatus: report.rewardsStatus,
-          vulnerabilityUrl: report.vulnerabilityUrl,
+          reportTemplate: report.reportTemplate,
+          ownPercentage: 100,
+          collaboratorPayload: report.collaboratorPayload.map(collaborator => ({
+            hackerUsername: collaborator.hackerUsername,
+            collaborationPercentage: collaborator.collaborationPercentage
+          })),
+
+          reportAssetPayload: {
+            assetName: report.reportAssetPayload.assetName,
+            assetType: report.reportAssetPayload.assetType
+          },
+
+          weakness: {
+            type: report.weakness.type,
+            name: report.weakness.name
+          },
+          proofOfConcept: {
+            title: report.proofOfConcept.title,
+            vulnerabilityUrl: report.proofOfConcept.vulnerabilityUrl,
+            description: report.proofOfConcept.description
+          },
+
+          discoveryDetails: {
+            timeSpend: report.discoDetails.timeSpend,
+          },
+
           methodName: report.methodName,
-          ownPercentage: 100, 
-          collaboratorDTO: report.collaboratorDTO
+          severity: report.severity,
         }
       );
       throw new Error("Wrong response");

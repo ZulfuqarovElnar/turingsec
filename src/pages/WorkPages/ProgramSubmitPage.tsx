@@ -119,21 +119,34 @@ export default function ProgramSubmitPage() {
       }
   
       const response = await mutation.mutateAsync({
-        asset: searchParams.get("line"),
-        weakness: searchParams.get("weaknessLine"),
-        severity: `${severity}`,
-        methodName: methodName,
-        proofOfConcept: proofConceptTitle,
-        discoveryDetails: description,
         lastActivity: lastActivityDes,
-        reportTitle: 'report title',
         rewardsStatus: 'reward status',
-        vulnerabilityUrl: proofConceptDescription,
-        collaboratorDTO: {
-            hackerUsername: "yuzanmed",
-            collaborationPercentage: percent,
+        reportTemplate: 'report Template111',
+        ownPercentage: percent,
+        collaboratorPayload: [
+          {
+            hackerUsername: "Username",
+            collaborationPercentage: percent
+          }
+        ],
+        reportAssetPayload: {
+          assetName: searchParams.get("line"),
+          assetType: searchParams.get("line"),
         },
-        ownPercentage: percent
+        weakness: {
+          type: searchParams.get("weaknessLine"),
+          name: searchParams.get("weaknessLine"),
+        },
+        proofOfConcept: {
+          title: proofConceptTitle,
+          vulnerabilityUrl: proofConceptDescription,
+          description: description,
+        },
+        discoDetails: {
+          timeSpend: lastActivityDes,
+        },
+        methodName: methodName,
+        severity: `${severity}`,
       });
   
       console.log(response);
