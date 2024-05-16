@@ -3,7 +3,7 @@ export async function getUserData() {
 
         const userDataString = localStorage.getItem("user");
         if (!userDataString) {
-            throw new Error("Company data not found in localStorage");
+            throw new Error("User data not found in localStorage");
         }
 
         const userData = JSON.parse(userDataString);
@@ -23,14 +23,14 @@ export async function getUserData() {
 
         if (res.ok) {
             const currentUser = await res.json();
-            // console.log(currentUser);
+         
             return currentUser.data;
 
         } else {
             // Handle error if the fetch fails
-            console.error("Error fetching company program data:", res.statusText);
+            console.error("Error fetching user program data:", res.statusText);
         }
     } catch (error) {
-        console.error("Error parsing company data from localStorage:", error);
+        console.error("Error parsing user data from localStorage:", error);
     }
 }

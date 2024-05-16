@@ -19,8 +19,10 @@ import AddCollabrateModal from "../../components/shared/WorkerShared/AddCollabra
 import { useCurrentUser } from "../../context/CurrentUser";
 import {useRef} from 'react';
 import { parseCvss3Vector } from 'vuln-vects';
+import { useGetUserData } from "../../queryies/useGetUserData";
 
 export default function ProgramSubmitPage() {
+ 
   const { programId } = useParams();
   const [methodName, setMethodName] = useState<string>("");
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
@@ -32,98 +34,54 @@ export default function ProgramSubmitPage() {
   const [globalPercent, setGlobalPercent] = useState<number>(100);
   const [percent, setPercent] = useState<number>(0);
   const { data: allUsers } = useGetAllUsers();
+  const {data: currentUser}=useGetUserData()
+ 
   const severityRef = useRef(null)
-  console.log(searchParams.get('weaknessLine'));
+  // console.log(searchParams.get('weaknessLine'));
   const {
     data: programData,
     isPending: programPending,
     isError: programError,
   } = useGetProgramById(programId);
-  console.log(programData);
   const [openModal, setOpenModal] = useState(false);
-  const { currentUser } = useCurrentUser();
+  const userData= useGetUserData();
+ 
   const [collabrates, setCollabrates] = useState([]);
+ 
+  
   useEffect(() => {
-    setCollabrates((prev) => [currentUser]);
+    setCollabrates((prev) =>[currentUser]);
   }, [currentUser]);
+  console.log(collabrates)
   // const { data, isPending, isError } = useGetCompanyById(
   //   programData?.companyId
   // );
+ 
   const fakeDATA = [
-    {
-      label: "Max Bounty",
-      value: 1000,
-    },
-    {
-      label: "Total Bounty",
-      value: 1000,
-    },
-    {
-      label: "Average Bounty",
-      value: 1000,
-    },
-    {
-      label: "Submitted Bounty",
-      value: 1000,
-    },
-    {
-      label: "Collaborated Bounty",
-      value: 1000,
-    },
-    {
-      label: "Closed Bounty",
-      value: 1000,
-    },
+    { label: "Max Bounty", value: 1000,},
+    { label: "Total Bounty", value: 1000,},
+    { label: "Average Bounty", value: 1000,},
+    { label: "Submitted Bounty", value: 1000,},
+    { label: "Collaborated Bounty", value: 1000,},
+    { label: "Closed Bounty", value: 1000,},
   ];
 
   const fakeAssetsData = [
-    {
-      label: "Harware",
-      value: 1000,
-    },
-    {
-      label: "AndroidPlayStore",
-      value: 1000,
-    },
-    {
-      label: "OtherAsset",
-      value: 1000,
-    },
-    {
-      label: "losAppStore",
-      value: 1000,
-    },{
-      label: "Domain",
-      value: 1000,
-    },{
-      label: "API",
-      value: 1000,
-    }
+    { label: "Harware", value: 1000,},
+    { label: "AndroidPlayStore", value: 1000,},
+    { label: "OtherAsset", value: 1000,},
+    { label: "losAppStore", value: 1000,},
+    { label: "Domain", value: 1000,},
+    { label: "API", value: 1000,}
   ];
 
   const fakeWeaknessData = [
-    {
-      label: "Access Control",
-      value: 1000,
-    },
-    {
-      label: "AII CAPECs",
-      value: 1000,
-    },
-    {
-      label: "AII CWEs",
-      value: 1000,
-    },
-    {
-      label: "Cryptographic Issues",
-      value: 1000,
-    },{
-      label: "Insecure Interaction Between Components",
-      value: 1000,
-    },{
-      label: "Memory Corruption",
-      value: 1000,
-    }
+    { label: "Access Control", value: 1000,},
+    { label: "AII CAPECs", value: 1000,},
+    { label: "AII CWEs", value: 1000,},
+    { label: "Cryptographic Issues", value: 1000,},
+    { label: "Insecure Interaction Between Components", value: 1000,},
+    { label: "Memory Corruption", value: 1000,}
   ]
   const [allAssets, setAllAssets] = useState<string[]>([]);
 
@@ -135,12 +93,12 @@ export default function ProgramSubmitPage() {
   }, [programData]);
 
   const mutation = useSendReport(programId);
+ 
   async function submitReport() {
     try {
       const radios = severityRef.current.querySelectorAll('input[type="radio"]:checked');
       const values = Array.from(radios).map(radio => radio.value);
       const severity = parseCvss3Vector('AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H').baseScore;
-      alert(severity)
       // localStorage'den kullanıcı verilerini al
       const userString = localStorage.getItem("user");
       const userData = userString ? JSON.parse(userString) : null;
@@ -170,29 +128,43 @@ export default function ProgramSubmitPage() {
       }
   
       const response = await mutation.mutateAsync({
-        asset: searchParams.get("line")!,
-        weakness: searchParams.get("weaknessLine"),
-        severity: `${severity}`,
-        methodName: methodName,
-        proofOfConcept: proofConceptTitle,
-        discoveryDetails: description,
         lastActivity: lastActivityDes,
-        reportTitle: '',
-        rewardsStatus: '',  
-        bugBountyProgramId: programId,
-        ownPercentage: 1,
-        vulnerabilityUrl: proofConceptDescription,
-        collaboratorDTO: collabrates.map((item) => {
-          return {
-            hackerUsername: "yuzammed",
-            collaborationPercentage: percent,
-          };
-        }),
-        userId: userId, // Kullanıcı kimliği ekleniyor
-      });
+        rewardsStatus: 'reward status',
+        reportTemplate: 'report Template111',
+        ownPercentage: percent,
+        // collaboratorPayload: [
+        //   {
+        //     hackerUsername: "Username",
+        //     collaborationPercentage: percent
+        //   }
+        // ],
+        collaboratorPayload: collabrates.map(collabrate => ({
+          hackerUsername: collabrate.username,
+          collaborationPercentage: collabrate.collaborationPercentage
+        })),
+        reportAssetPayload: {
+          assetName: searchParams.get("line"),
+          assetType: searchParams.get("line"),
+        },
+        weakness: {
+          type: searchParams.get("weaknessLine"),
+          name: searchParams.get("weaknessLine"),
+        },
+        proofOfConcept: {
+          title: proofConceptTitle,
+          vulnerabilityUrl: proofConceptDescription,
+          description: description,
+        },
+        discoDetails: {
+          timeSpend: lastActivityDes,
+        },
+        methodName: methodName,
+        severity: `${severity}`,
+      }
+    );
   
       console.log(response);
-      console.log("responsedplfffffffffff");
+  
       
       // Mutation başarılı olduğunda işlemler
       if (response) {

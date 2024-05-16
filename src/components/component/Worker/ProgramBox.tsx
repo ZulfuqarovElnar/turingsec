@@ -14,10 +14,29 @@ export default function ProgramBox({
 }) {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  console.log("id: " + id)
+   
 
   const handleSeeDetails = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/companies/${id}`);
+      const userDataString = localStorage.getItem("user")
+      if (!userDataString) {
+        throw new Error("User not found in localStorage");
+      }
+
+      const userData = JSON.parse(userDataString);
+
+      // Check if user data contains accessToken
+      const accessToken = userData.accessToken;
+      const response = await fetch(`http://localhost:5000/api/auth/programsById/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+        )
       if (!response.ok) {
         throw new Error('Failed to fetch program details');
       }

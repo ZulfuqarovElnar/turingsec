@@ -56,7 +56,8 @@
           const userString = localStorage.getItem("userId");
           if (userString) {
             const userId = JSON.parse(userString);
-            console.log(userId);
+       
+            console.log("id:" + userId);
       
             const res = await fetch(
               `http://localhost:5000/api/auth/current-user`,

@@ -17,7 +17,7 @@ export async function getAllCompany() {
     }
 
     const res = await fetch(
-      "http://localhost:5000/api/companies",
+      "http://localhost:5000/api/auth/programs",
       {
         method: "GET",
         headers: {
@@ -26,7 +26,7 @@ export async function getAllCompany() {
         },
       }
     );
-
+    console.log(res)
     if (!res.ok) {
       throw new Error("Wrong response");
     }

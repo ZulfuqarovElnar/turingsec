@@ -10,12 +10,9 @@ export interface Report {
   reportTitle: string;
   rewardsStatus: string;
   vulnerabilityUrl: string;
-  userId: number;
-  bugBountyProgramId: number;
   ownPercentage: number;
-  collaborators: {
-    id: number;
-    hackerUsername: string;
-    collaborationPercentage: number;
+  collaboratorDTO: {
+      hackerUsername: string;
+      collaborationPercentage: number;
   }[];
 }
