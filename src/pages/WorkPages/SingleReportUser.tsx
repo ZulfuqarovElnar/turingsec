@@ -373,7 +373,7 @@ export default function SingleReportUser() {
                                     Time Spent
                                 </div>
                                 <div className="w-full">
-                                    <Input value={'24'} type="text" placeholder="Time spend"
+                                    <Input value={filteredReport.discoveryDetails.timeSpend} type="text" placeholder="Time spend"
                                         className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                 </div>
                             </div>
