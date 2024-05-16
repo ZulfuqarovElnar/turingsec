@@ -32,6 +32,9 @@ export default function ProgramOnePage() {
   const [highAssets, setHighAssets] = useState([]);
   const [criticalAssets, setCriticalAssets] = useState([]);
   const [maxlength, setMaxlength] = useState(0);
+  const [outScope, setOutScope] = useState([]);
+  const [inScope, setInScope] = useState([]);
+
   useEffect(() => {
     if (programData) {
       const easyAssets = programData.assetTypes.filter(
@@ -63,6 +66,8 @@ export default function ProgramOnePage() {
       // Find the maximum length
       const maxLength = Math.max(...lengths);
       setMaxlength(maxLength);
+      setOutScope(programData.outOfScope);
+      setInScope(programData.inScope);
     }
   }, [programData]);
   console.log(easyAssets);
@@ -368,7 +373,40 @@ export default function ProgramOnePage() {
         </ul>
       </div>
 
-
+        <div className="mt-10">
+          <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between">
+            <div className="flex items-center gap-4">
+              <img src="/assets/stroke.svg" alt="" />
+              <p className="">Scope</p>
+            </div>
+          </div>
+          <div className="bg-[#0A273D] p-8 rounded-xl">
+              <div className="gap-12 flex  flex-col lg:flex-row">
+                <div>
+                  <h3 className="mb-6">Out of Scope</h3>
+                <div className="list-disc ml-6">
+                  {outScope.map((item, index) => (
+                    <div className="flex gap-4 mt-4">
+                      <div className="bg-yellow-500 min-w-[8px] h-[8px] rounded-full mt-2"></div>
+                      <span key={index}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+                </div>
+                <div>
+                  <h3 className="mb-6">In of Scope</h3>
+                  <div className="list-disc ml-6">
+                    {inScope.map((item, index) => (
+                      <div className="flex gap-4 mt-4">
+                        <div className="bg-yellow-500 min-w-[8px] h-[8px] rounded-full mt-2"></div>
+                        <span  key={index}>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   );

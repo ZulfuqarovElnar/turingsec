@@ -17,7 +17,7 @@ export default function ProgramBox({
 
   const handleSeeDetails = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/programsById/${id}`);
+      const response = await fetch(`http://localhost:5000/api/companies/${id}`);
       if (!response.ok) {
         throw new Error('Failed to fetch program details');
       }

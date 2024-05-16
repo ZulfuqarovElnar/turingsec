@@ -1,4 +1,5 @@
 export interface Report {
+  id: number;
   asset: string;
   weakness: string;
   severity: string;
@@ -9,9 +10,12 @@ export interface Report {
   reportTitle: string;
   rewardsStatus: string;
   vulnerabilityUrl: string;
-  userId: 1;
-  collaboratorDTO: {
-      hackerUsername: string;
-      collaborationPercentage: number;
+  userId: number;
+  bugBountyProgramId: number;
+  ownPercentage: number;
+  collaborators: {
+    id: number;
+    hackerUsername: string;
+    collaborationPercentage: number;
   }[];
 }

@@ -178,7 +178,9 @@ export default function ProgramSubmitPage() {
         discoveryDetails: description,
         lastActivity: lastActivityDes,
         reportTitle: '',
-        rewardsStatus: '',
+        rewardsStatus: '',  
+        bugBountyProgramId: programId,
+        ownPercentage: 1,
         vulnerabilityUrl: proofConceptDescription,
         collaboratorDTO: collabrates.map((item) => {
           return {

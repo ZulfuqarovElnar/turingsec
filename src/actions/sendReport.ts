@@ -34,6 +34,8 @@ export async function sendReport(report: Report, id: string) {
           rewardsStatus: report.rewardsStatus,
           vulnerabilityUrl: report.vulnerabilityUrl,
           userId: report.userId, 
+          bugBountyProgramId: report.bugBountyProgramId,
+          ownPercentage: report.ownPercentage,
           collaboratorDTO: report.collaboratorDTO
         }),
       }
