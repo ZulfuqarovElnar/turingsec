@@ -138,8 +138,7 @@ export default function ProgramCreatePage() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization:
-              "Bearer " +company.accessToken,
+            Authorization: `Bearer ${company.accessToken}`
           },
           body: JSON.stringify({
             notes: info,
@@ -147,9 +146,11 @@ export default function ProgramCreatePage() {
             fromDate: fromdate,
             toDate: todate,
             assetTypes: allElement,
-            programId: 1,
+            programId: programId.id,
             companyId: company.id,
-            prohibits: prohibits 
+            prohibits: prohibits,
+            inScope: inScope,
+            outOfScope: outScope
           }),
         }
       );

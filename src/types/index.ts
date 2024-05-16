@@ -1,4 +1,5 @@
 export interface Report {
+  id: number;
   asset: string;
   weakness: string;
   severity: string;
