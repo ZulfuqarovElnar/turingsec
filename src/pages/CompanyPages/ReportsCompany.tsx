@@ -40,7 +40,6 @@ export default function ReportCompany() {
                   img={user.userImgUrl}
                 />
                 </Link>
-               
             ))
           ))}
 

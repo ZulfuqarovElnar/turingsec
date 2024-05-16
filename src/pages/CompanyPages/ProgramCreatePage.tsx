@@ -30,16 +30,19 @@ export default function ProgramCreatePage() {
   const [policy, setPolicy] = React.useState("");
   const [info, setInfo] = React.useState("");
   const [lowElement, setLowElement] = React.useState<
-    { assetType: string; price: string }[]
+    {assetName:string; assetType: string; price: string }[]
   >([]);
   const [mediumElement, setMediumElement] = React.useState<
-    { assetType: string; price: string }[]
+    {assetName:string; assetType: string; price: string }[]
+
   >([]);
   const [highElement, setHighElement] = React.useState<
-    { assetType: string; price: string }[]
+    {assetName:string; assetType: string; price: string }[]
+
   >([]);
   const [criticalElement, setCriticalElement] = React.useState<
-    { assetType: string; price: string }[]
+    {assetName:string; assetType: string; price: string }[]
+
   >([]);
 
   const [strictyTest, setStrictyTest] = React.useState("");
@@ -168,25 +171,29 @@ export default function ProgramCreatePage() {
     if (data.level === "easy") {
       setLowElement([
         ...lowElement,
-        { assetType: data.type, price: data.reward },
+        {assetName:data.rewName, assetType: data.type, price: data.reward },
       ]);
+
     }
     if (data.level === "medium") {
       setMediumElement([
         ...mediumElement,
-        { assetType: data.type, price: data.reward },
+        {assetName:data.rewName, assetType: data.type, price: data.reward },
+
       ]);
     }
     if (data.level === "high") {
       setHighElement([ 
         ...highElement,
-        { assetType: data.type, price: data.reward },
+        {assetName:data.rewName, assetType: data.type, price: data.reward },
+
       ]);
     }
     if (data.level === "critical") {
       setCriticalElement([
         ...criticalElement,
-        { assetType: data.type, price: data.reward },
+        {assetName:data.rewName, assetType: data.type, price: data.reward },
+        
       ]);
     }
   }
@@ -456,6 +463,7 @@ export default function ProgramCreatePage() {
               <LevelBar color="#5AFF31" level={60} label="High" />
               <LevelBar color="#E32323" level={60} label="Critical" /> */}
               <p className="flex-1 text-center">Level</p>
+              <p className="flex-1 text-center hidden lg:block">Asset Name</p>
               <p className="flex-1 text-center hidden lg:block">Asset Type</p>
               <p className="flex-1 text-center hidden lg:block">Price</p>
             </div>
@@ -476,6 +484,9 @@ export default function ProgramCreatePage() {
                   {lowElement.map((element) => (
                     <div >
                       <p className="sm:text-[18px] text-[16px] font-[600]">
+                        {element.assetName}
+                      </p>
+                      <p className="sm:text-[18px] text-[16px] font-[600]">
                         {element.assetType}
                       </p>
                       <p className="sm:text-[18px] text-[16px] font-[600]">
@@ -485,6 +496,13 @@ export default function ProgramCreatePage() {
                   ))}
                 </div>
 
+                <div className="flex-1 text-center lg:block hidden  ">
+                  {lowElement.map((element) => (
+                    <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {element.assetName}
+                    </p>
+                  ))}
+                </div>
                 <div className="flex-1 text-center lg:block hidden  ">
                   {lowElement.map((element) => (
                     <p className="sm:text-[18px] text-[16px] font-[600]">
@@ -520,12 +538,22 @@ export default function ProgramCreatePage() {
                   {mediumElement.map((element) => (
                     <div>
                       <p className="sm:text-[18px] text-[16px] font-[600]">
+                        {element.assetName}
+                      </p>
+                      <p className="sm:text-[18px] text-[16px] font-[600]">
                         {element.assetType}
                       </p>
                       <p className="sm:text-[18px] text-[16px] font-[600]">
                         {element.price}
                       </p>
                     </div>
+                  ))}
+                </div>
+                <div className="flex-1 text-center hidden lg:block">
+                  {mediumElement.map((element) => (
+                    <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {element.assetName}
+                    </p>
                   ))}
                 </div>
                 <div className="flex-1 text-center hidden lg:block">
@@ -561,6 +589,9 @@ export default function ProgramCreatePage() {
                   {highElement.map((element) => (
                     <div>
                       <p className="sm:text-[18px] text-[16px] font-[600]">
+                        {element.assetName}
+                      </p>
+                      <p className="sm:text-[18px] text-[16px] font-[600]">
                         {element.assetType}
                       </p>
                       <p className="sm:text-[18px] text-[16px] font-[600]">
@@ -569,6 +600,14 @@ export default function ProgramCreatePage() {
                     </div>
                   ))}
                 </div>
+                <div className="flex-1 text-center hidden lg:block">
+                  {highElement.map((element) => (
+                    <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {element.assetName}
+                    </p>
+                  ))}
+                </div>
+                
                 <div className="flex-1 text-center hidden lg:block">
                   {highElement.map((element) => (
                     <p className="sm:text-[18px] text-[16px] font-[600]">
@@ -604,12 +643,22 @@ export default function ProgramCreatePage() {
                   {criticalElement.map((element) => (
                     <div>
                       <p className="sm:text-[18px] text-[16px] font-[600]">
+                        {element.assetName}
+                      </p>
+                      <p className="sm:text-[18px] text-[16px] font-[600]">
                         {element.assetType}
                       </p>
                       <p className="sm:text-[18px] text-[16px] font-[600]">
                         {element.price}
                       </p>
                     </div>
+                  ))}
+                </div>
+                <div className="flex-1 text-center hidden lg:block">
+                  {criticalElement.map((element) => (
+                    <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {element.assetName}
+                    </p>
                   ))}
                 </div>
                 <div className="flex-1 text-center hidden lg:block">

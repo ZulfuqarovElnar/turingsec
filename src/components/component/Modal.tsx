@@ -4,14 +4,16 @@ const Modal = ({ isOpen, onClose, onSubmit }) => {
   const [type, setType] = useState("");
   const [reward, setReward] = useState("");
   const [level, setLevel] = useState("");
+  const [rewName, setName] = useState("");
 
   const handleAddReward = (e) => {
     e.preventDefault();
     // Add validation logic if needed
-    onSubmit({ type, reward, level });
+    onSubmit({ rewName,type, reward, level });
     setType("");
     setReward("");
     setLevel("");
+    setName("");
     onClose();
   };
 
@@ -28,6 +30,14 @@ const Modal = ({ isOpen, onClose, onSubmit }) => {
               className="flex flex-col gap-4 mt-4"
               onSubmit={handleAddReward}
             >
+              <input
+                type="text"
+                placeholder="Name"
+                value={rewName}
+                onChange={(e) => setName(e.target.value)}
+                className="border border-gray-200 p-2 rounded-md"
+                required
+              />
               <input
                 type="text"
                 placeholder="Type"
@@ -51,7 +61,7 @@ const Modal = ({ isOpen, onClose, onSubmit }) => {
                 required
               >
                 <option value="">Select Level</option>
-                <option value="easy">Easy</option>
+                <option value="easy">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
                 <option value="critical">Critical</option>
