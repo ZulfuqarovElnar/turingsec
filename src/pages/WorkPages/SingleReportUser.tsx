@@ -144,7 +144,7 @@ export default function SingleReportUser() {
 
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input value={'Access Control'} type="text" placeholder="Max Bounty"
+                                        <Input value={filteredReport.weakness.type} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -153,7 +153,7 @@ export default function SingleReportUser() {
 
 
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.weakness} type="text" placeholder="Max Bounty"
+                                        <Input value={filteredReport.weakness.name} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -333,7 +333,7 @@ export default function SingleReportUser() {
                                     </h2>
                                     <Input type="text" placeholder="Title"
                                         className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6 mt-2"
-                                        value={filteredReport.proofOfConcept} onChange={(e) => setProofConceptTitle(e.target.value)}
+                                        value={filteredReport.proofOfConcept.title} onChange={(e) => setProofConceptTitle(e.target.value)}
                                     />
                                 </div>
                                 <div className="w-full">
@@ -343,14 +343,14 @@ export default function SingleReportUser() {
                                     </h2>
                                     <Input type="text" placeholder="URL"
                                         className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white mt-2 py-6"
-                                        value={filteredReport.vulnerabilityUrl} />
+                                        value={filteredReport.proofOfConcept.vulnerabilityUrl} />
                                 </div>
                                 <div className="w-full">
 
                                     <h2 className="sm:text-[18px] text-[16px] font-[600] mt-4">
                                         Descriptions
                                     </h2>
-                                    <Textarea type="text" placeholder="Description" value={filteredReport.discoveryDetails}
+                                    <Textarea type="text" placeholder="Description" value={filteredReport.proofOfConcept.description}
                                         className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-2 " />
                                 </div></div>
                     
@@ -373,7 +373,7 @@ export default function SingleReportUser() {
                                     Time Spent
                                 </div>
                                 <div className="w-full">
-                                    <Input value={'24 Hours'} type="text" placeholder="Time spend"
+                                    <Input value={'24'} type="text" placeholder="Time spend"
                                         className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                 </div>
                             </div>

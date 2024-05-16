@@ -1,8 +1,8 @@
 import { Report } from "../types";
 
 export async function sendReport(report: Report, id: string) {
-  console.log(report);
-  console.log("id: " + id);
+  // console.log(report);
+  // console.log("id: " + id);
   
   // User bilgilerini localStorage'dan al
   const userDataString = localStorage.getItem("user");
@@ -55,6 +55,7 @@ export async function sendReport(report: Report, id: string) {
           severity: report.severity,
      
         }),
+        
       }
     );
 

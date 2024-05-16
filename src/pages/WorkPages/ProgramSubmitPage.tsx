@@ -19,8 +19,10 @@ import AddCollabrateModal from "../../components/shared/WorkerShared/AddCollabra
 import { useCurrentUser } from "../../context/CurrentUser";
 import {useRef} from 'react';
 import { parseCvss3Vector } from 'vuln-vects';
+import { useGetUserData } from "../../queryies/useGetUserData";
 
 export default function ProgramSubmitPage() {
+ 
   const { programId } = useParams();
   const [methodName, setMethodName] = useState<string>("");
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
@@ -32,22 +34,29 @@ export default function ProgramSubmitPage() {
   const [globalPercent, setGlobalPercent] = useState<number>(100);
   const [percent, setPercent] = useState<number>(0);
   const { data: allUsers } = useGetAllUsers();
+  const {data: currentUser}=useGetUserData()
+ 
   const severityRef = useRef(null)
-  console.log(searchParams.get('weaknessLine'));
+  // console.log(searchParams.get('weaknessLine'));
   const {
     data: programData,
     isPending: programPending,
     isError: programError,
   } = useGetProgramById(programId);
   const [openModal, setOpenModal] = useState(false);
-  const { currentUser } = useCurrentUser();
+  const userData= useGetUserData();
+ 
   const [collabrates, setCollabrates] = useState([]);
+ 
+  
   useEffect(() => {
-    setCollabrates((prev) => [currentUser]);
+    setCollabrates((prev) =>[currentUser]);
   }, [currentUser]);
+  console.log(collabrates)
   // const { data, isPending, isError } = useGetCompanyById(
   //   programData?.companyId
   // );
+ 
   const fakeDATA = [
     { label: "Max Bounty", value: 1000,},
     { label: "Total Bounty", value: 1000,},
@@ -123,12 +132,16 @@ export default function ProgramSubmitPage() {
         rewardsStatus: 'reward status',
         reportTemplate: 'report Template111',
         ownPercentage: percent,
-        collaboratorPayload: [
-          {
-            hackerUsername: "Username",
-            collaborationPercentage: percent
-          }
-        ],
+        // collaboratorPayload: [
+        //   {
+        //     hackerUsername: "Username",
+        //     collaborationPercentage: percent
+        //   }
+        // ],
+        collaboratorPayload: collabrates.map(collabrate => ({
+          hackerUsername: collabrate.username,
+          collaborationPercentage: collabrate.value
+        })),
         reportAssetPayload: {
           assetName: searchParams.get("line"),
           assetType: searchParams.get("line"),
@@ -147,9 +160,11 @@ export default function ProgramSubmitPage() {
         },
         methodName: methodName,
         severity: `${severity}`,
-      });
+      }
+    );
   
       console.log(response);
+  
       
       // Mutation başarılı olduğunda işlemler
       if (response) {
