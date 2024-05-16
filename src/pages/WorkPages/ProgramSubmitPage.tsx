@@ -140,7 +140,7 @@ export default function ProgramSubmitPage() {
         // ],
         collaboratorPayload: collabrates.map(collabrate => ({
           hackerUsername: collabrate.username,
-          collaborationPercentage: collabrate.value
+          collaborationPercentage: collabrate.collaborationPercentage
         })),
         reportAssetPayload: {
           assetName: searchParams.get("line"),

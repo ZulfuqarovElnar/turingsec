@@ -58,7 +58,7 @@ export default function CollabrateBox({
         setCollabrates((prev) =>
           prev.map((item) => {
             if (item && item.id === id) {
-              return { ...item, value: value };
+              return { ...item, collaborationPercentage: value };
             }
             return item;
           })

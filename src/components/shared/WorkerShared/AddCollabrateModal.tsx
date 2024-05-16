@@ -30,7 +30,8 @@ export default function AddCollabrateModal({
   }, [search, allUsers]);
 
   function handleAddCollabrated(item) {
-    setCollabrates((prev) => [...prev, item]);
+    const newItem = { ...item, id: item.userId };
+    setCollabrates((prev) => [...prev, newItem]);
     setOpen(false);
     console.log(collabrates)
   }
