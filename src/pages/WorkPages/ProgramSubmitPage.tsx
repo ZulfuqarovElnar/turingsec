@@ -56,7 +56,11 @@ export default function ProgramSubmitPage() {
   // const { data, isPending, isError } = useGetCompanyById(
   //   programData?.companyId
   // );
- 
+  const [selectedOption, setSelectedOption] = useState('with');
+
+  const handleSev = (e)=>{
+    console.log(e)
+  }
   const fakeDATA = [
     { label: "Max Bounty", value: 1000,},
     { label: "Total Bounty", value: 1000,},
@@ -516,7 +520,7 @@ export default function ProgramSubmitPage() {
             </div>
             <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
               <div className="flex justify-between lg:items-center mb-4 xl:w-[70%] w-full flex-col lg:flex-row gap-4 ">
-                <RadioInput
+                <RadioInput 
                   name="test1"
                   value="test1"
                   id="test1"
@@ -527,7 +531,6 @@ export default function ProgramSubmitPage() {
                   value="test2"
                   id="test2"
                   label="Submit report with severity"
-                  checked={true}
                 />
               </div>
               <div className=" items-center gap-4">
@@ -577,7 +580,7 @@ export default function ProgramSubmitPage() {
                   placeholder=" Period"
                 />
               </div>
-              <div className="mt-4"  ref={severityRef}>
+              <div className="mt-4 severity" id="withSev" ref={severityRef}>
                 <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Attack vector
@@ -769,6 +772,39 @@ export default function ProgramSubmitPage() {
                   value={methodName}
                   onChange={(e) => setMethodName(e.target.value)}
                 />
+              </div>
+              <div className="mt-4 severity" id="withoutSev">
+              <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                  <div className="min-w-[200px] mt-2 xl:mt-0">
+                    manual
+                  </div>
+                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                    <RadioInput
+                      name="attackvector"
+                      value="AV:N"
+                      id="Network"
+                      label="Network"
+                    />
+                    <RadioInput
+                      name="attackvector"
+                      value="AV:A"
+                      id="Adjacent"
+                      label="Adjacent"
+                    />
+                    <RadioInput
+                      name="attackvector"
+                      value="AV:L"
+                      id="Local"
+                      label="Local"
+                    />
+                    <RadioInput
+                      name="attackvector"
+                      value="AV:P"
+                      id="Physical"
+                      label="Physical"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
