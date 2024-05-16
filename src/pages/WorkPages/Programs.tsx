@@ -5,8 +5,7 @@ import { useGetAllCompany } from "../../queryies/useGetAllCompany";
 
 export default function Programs() {
   const { data, isError } = useGetAllCompany();
-  console.log(data)
-
+ 
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
       <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">

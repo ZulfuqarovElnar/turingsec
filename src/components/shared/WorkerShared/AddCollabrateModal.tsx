@@ -13,6 +13,7 @@ export default function AddCollabrateModal({
 
   const [users, setUsers] = useState(allUsers);
   const [search, setSearch] = useState("");
+  
 
   useEffect(() => {
     if (!Array.isArray(allUsers)) {
@@ -29,8 +30,10 @@ export default function AddCollabrateModal({
   }, [search, allUsers]);
 
   function handleAddCollabrated(item) {
-    setCollabrates((prev) => [...prev, item]);
+    const newItem = { ...item, id: item.userId };
+    setCollabrates((prev) => [...prev, newItem]);
     setOpen(false);
+    console.log(collabrates)
   }
 
   return (

@@ -23,7 +23,7 @@ export default function ProgramOnePage() {
       })
     );
   }, [programId]);
-  console.log(programData);
+ 
   // const { data, isPending, isError } = useGetCompanyById(
   //   programData?.companyId
   // );
@@ -65,7 +65,7 @@ export default function ProgramOnePage() {
       setMaxlength(maxLength);
     }
   }, [programData]);
-  console.log(easyAssets);
+ 
   const navigate = useNavigate();
   const handleSubmit = () => {
     navigate("submit");
