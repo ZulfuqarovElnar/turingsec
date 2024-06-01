@@ -97,7 +97,6 @@ export default function ProgramCreatePage() {
   }, [data]);
   async function createProgram() {
     try {
-
       if (!info) {
         return toast.error("Please fill in the information");
       }
@@ -115,58 +114,73 @@ export default function ProgramCreatePage() {
       ) {
         return toast.error("Please fill in the reward");
       }
-      const allElement: {}[] = [];
-      lowElement.map((element) => {
-        allElement.push({ level: "easy", ...element });
-      });
-      mediumElement.map((element) => {
-        allElement.push({ level: "medium", ...element });
-      });
-      highElement.map((element) => {
-        allElement.push({ level: "hard", ...element });
-      });
-      criticalElement.map((element) => {
-        allElement.push({ level: "critical", ...element });
-      });
+  
+      const transformAssets = (elements) => {
+        return elements.map((element) => ({
+          type: element.assetType,
+          names: [element.assetName]
+        }));
+      };
+  
+      const asset = {
+        lowAsset: {
+          price: lowElement.length > 0 ? parseFloat(lowElement[0].price) : 0,
+          assets: transformAssets(lowElement)
+        },
+        mediumAsset: {
+          price: mediumElement.length > 0 ? parseFloat(mediumElement[0].price) : 0,
+          assets: transformAssets(mediumElement)
+        },
+        highAsset: {
+          price: highElement.length > 0 ? parseFloat(highElement[0].price) : 0,
+          assets: transformAssets(highElement)
+        },
+        criticalAsset: {
+          price: criticalElement.length > 0 ? parseFloat(criticalElement[0].price) : 0,
+          assets: transformAssets(criticalElement)
+        }
+      };
+  
       const companyString = localStorage.getItem("company");
       const programString = localStorage.getItem("programId");
       if (companyString && programString) {
         const company = JSON.parse(companyString);
         const programId = JSON.parse(programString);
         const prohibits = stricty.map(element => ({ prohibitAdded: element }));
-
-      const res = await fetch(
-        "http://localhost:5000/api/bug-bounty-programs",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${company.accessToken}`
-          },
-          body: JSON.stringify({
-            notes: info,
-            policy,
-            fromDate: fromdate,
-            toDate: todate,
-            assetTypes: allElement,
-            programId: programId.id,
-            companyId: company.id,
-            prohibits: prohibits,
-            inScope: inScope,
-            outOfScope: outScope
-          }),
+  
+        const res = await fetch(
+          "http://localhost:5000/api/bug-bounty-programs",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${company.accessToken}`
+            },
+            body: JSON.stringify({
+              notes: info,
+              policy,
+              fromDate: fromdate.toISOString().split('T')[0], // format to "YYYY-MM-DD"
+              toDate: todate.toISOString().split('T')[0], // format to "YYYY-MM-DD"
+              asset,
+              programId: programId.id,
+              companyId: company.id,
+              prohibits: prohibits,
+              inScope: inScope,
+              outOfScope: outScope
+            }),
+          }
+        );
+        if (res.ok) {
+          return toast.success("Program Updated Successfully");
+        } else {
+          return toast.error("Failed to create program");
         }
-      );
-      if (res.ok) {
-        return toast.success("Program Updated Successfully");
-      } else {
-        return toast.error("Failed to create program");
-      }
       }
     } catch (e) {
       console.log(e);
     }
   }
+  
 
   function onSubmitAddRewarModal(data) {
     if (data.level === "easy") {
