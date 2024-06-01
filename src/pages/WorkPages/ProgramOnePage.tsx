@@ -15,6 +15,7 @@ export default function ProgramOnePage() {
     isPending: programPending,
     isError: programError,
   } = useGetProgramById(programId);
+
   useEffect(() => {
     localStorage.setItem(
       "programId",
@@ -23,10 +24,7 @@ export default function ProgramOnePage() {
       })
     );
   }, [programId]);
- 
-  // const { data, isPending, isError } = useGetCompanyById(
-  //   programData?.companyId
-  // );
+
   const [easyAssets, setEasyAssets] = useState([]);
   const [mediumAssets, setMediumAssets] = useState([]);
   const [highAssets, setHighAssets] = useState([]);
@@ -36,7 +34,7 @@ export default function ProgramOnePage() {
   const [inScope, setInScope] = useState([]);
 
   useEffect(() => {
-    if (programData) {
+    if (programData && programData.assetTypes) {
       const easyAssets = programData.assetTypes.filter(
         (asset) => asset.level === "easy"
       );
@@ -49,7 +47,11 @@ export default function ProgramOnePage() {
       const criticalAssets = programData.assetTypes.filter(
         (asset) => asset.level === "critical"
       );
-      
+
+      setEasyAssets(easyAssets);
+      setMediumAssets(mediumAssets);
+      setHighAssets(highAssets);
+      setCriticalAssets(criticalAssets);
 
       // Calculate the lengths of all arrays
       const lengths = [
@@ -58,25 +60,20 @@ export default function ProgramOnePage() {
         highAssets.length,
         criticalAssets.length,
       ];
-      setEasyAssets(easyAssets);
-      setMediumAssets(mediumAssets);
-      setHighAssets(highAssets);
-      setCriticalAssets(criticalAssets);
 
       // Find the maximum length
       const maxLength = Math.max(...lengths);
       setMaxlength(maxLength);
+
       setOutScope(programData.outOfScope);
       setInScope(programData.inScope);
     }
   }, [programData]);
- 
+
   const navigate = useNavigate();
   const handleSubmit = () => {
     navigate("submit");
   };
-
-  
 
 
   return (
@@ -385,7 +382,7 @@ export default function ProgramOnePage() {
                 <div>
                   <h3 className="mb-6">Out of Scope</h3>
                 <div className="list-disc ml-6">
-                  {outScope.map((item, index) => (
+                  {programData?.outOfScope.map((item, index) => (
                     <div className="flex gap-4 mt-4">
                       <div className="bg-yellow-500 min-w-[8px] h-[8px] rounded-full mt-2"></div>
                       <span key={index}>{item}</span>
@@ -396,7 +393,7 @@ export default function ProgramOnePage() {
                 <div>
                   <h3 className="mb-6">In of Scope</h3>
                   <div className="list-disc ml-6">
-                    {inScope.map((item, index) => (
+                    {programData?.inScope.map((item, index) => (
                       <div className="flex gap-4 mt-4">
                         <div className="bg-yellow-500 min-w-[8px] h-[8px] rounded-full mt-2"></div>
                         <span  key={index}>{item}</span>
