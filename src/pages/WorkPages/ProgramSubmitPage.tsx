@@ -35,6 +35,7 @@ export default function ProgramSubmitPage() {
   const [percent, setPercent] = useState<number>(0);
   const { data: allUsers } = useGetAllUsers();
   const {data: currentUser}=useGetUserData()
+  const [selectedAsset, setSelectedAsset] = useState(null);
  
   const severityRef = useRef(null)
   // console.log(searchParams.get('weaknessLine'));
@@ -147,8 +148,8 @@ export default function ProgramSubmitPage() {
           collaborationPercentage: collabrate.collaborationPercentage
         })),
         reportAssetPayload: {
-          assetName: searchParams.get("line"),
-          assetType: searchParams.get("line"),
+          assetName: selectedAsset?.names || "", 
+          assetType: selectedAsset?.type || "",
         },
         weakness: {
           type: searchParams.get("weaknessLine"),
@@ -321,7 +322,6 @@ export default function ProgramSubmitPage() {
                         border: "none",
                         color: "white",
                         borderRadius: "20px",
-
                         width: "100%",
                         height: "50px",
                         padding: "0 10px",
@@ -331,9 +331,7 @@ export default function ProgramSubmitPage() {
                       }),
                       option: (provided, state) => ({
                         ...provided,
-                        backgroundColor: state.isFocused
-                          ? "#2451F5"
-                          : "#2451F5",
+                        backgroundColor: state.isFocused ? "#2451F5" : "#2451F5",
                         ":hover": { backgroundColor: "rgb(14 165 233)" },
                         color: state.isFocused ? "white" : "white",
                       }),
@@ -352,7 +350,15 @@ export default function ProgramSubmitPage() {
                         return { ...provided, color };
                       },
                     }}
-                    options={fakeAssetsData}
+                    options={[
+                      ...(programData?.asset?.lowAsset?.assets || []),
+                      ...(programData?.asset?.mediumAsset?.assets || []),
+                      ...(programData?.asset?.highAsset?.assets || []),
+                      ...(programData?.asset?.criticalAsset?.assets || []),
+                    ].map((asset) => ({
+                      label: asset.type,
+                      value: asset.type,
+                    }))}
                     isSearchable={false}
                     isClearable={true}
                     placeholder="Asset type"
@@ -360,9 +366,14 @@ export default function ProgramSubmitPage() {
                 </div>
               </div>
               <div className="overflow-y-scroll mt-4 bluescroll max-h-[280px]">
-                {allAssets?.map((item: string) => (
-                  <Line text={item} />
-                ))}
+                {[
+                  ...(programData?.asset?.lowAsset?.assets || []),
+                  ...(programData?.asset?.mediumAsset?.assets || []),
+                  ...(programData?.asset?.highAsset?.assets || []),
+                  ...(programData?.asset?.criticalAsset?.assets || []),
+                ].flatMap((asset: any) => asset.names.map((name: string, index: number) => (
+                  <Line key={`${asset.id}-${index}`} text={name} asset={asset} />
+                )))}
               </div>
             </div>
           </div>

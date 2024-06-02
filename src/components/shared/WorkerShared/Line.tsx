@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 
-export default function Line({ text }: { text: string }) {
+export default function Line({ text, asset }: { text: string; asset: any }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const line = searchParams.get("line");
 
