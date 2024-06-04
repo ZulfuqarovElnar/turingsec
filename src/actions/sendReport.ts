@@ -6,16 +6,16 @@ export async function sendReport(report: Report, id: string) {
   const userDataString = localStorage.getItem("user");
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const accessToken = userData?.accessToken;
-   
   try {
     console.log("sending report...");
     console.log(report.attachments)
+ 
     const formData = new FormData();
     // Append attachments
     
-    report.attachments.forEach((attachment, index) => {
-      formData.append(`files[${index}]`, attachment);
-    });
+    for (let i = 0; i < report.attachments.length; i++) {
+      formData.append("files", report.attachments[i]);
+    }
     
     const reportPayload = {
       lastActivity: report.lastActivity,
@@ -48,6 +48,10 @@ export async function sendReport(report: Report, id: string) {
       methodName: report.methodName,
       severity: report.severity,
     };
+
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
     // reportPayload
     const jsonBlob = new Blob([JSON.stringify(reportPayload)], { type: 'application/json' });
     formData.append('reportPayload', jsonBlob);

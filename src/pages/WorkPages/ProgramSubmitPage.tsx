@@ -30,7 +30,8 @@ export default function ProgramSubmitPage() {
     useState<string>("");
   const [description, setDesciptions] = useState<string>("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const [lastActivityDes,setLastActivity]=useState<string>("");
+  const [lastActivityDes, setLastActivity]=useState<string>("");
+  // const [reportTemplate, setReportTemplate]=useState<string>("");
   const [globalPercent, setGlobalPercent] = useState<number>(100);
   const [percent, setPercent] = useState<number>(0);
   const { data: allUsers } = useGetAllUsers();
@@ -38,7 +39,7 @@ export default function ProgramSubmitPage() {
   const [selectedAsset, setSelectedAsset] = useState(null);
  
   const severityRef = useRef(null)
-  // console.log(searchParams.get('weaknessLine'));
+ 
   const {
     data: programData,
     isPending: programPending,
@@ -55,9 +56,7 @@ export default function ProgramSubmitPage() {
     setCollabrates((prev) =>[currentUser]);
   }, [currentUser]);
   console.log(collabrates)
-  // const { data, isPending, isError } = useGetCompanyById(
-  //   programData?.companyId
-  // );
+  
   const [selectedOption, setSelectedOption] = useState('with');
 
   const handleSev = (e)=>{
@@ -110,7 +109,7 @@ export default function ProgramSubmitPage() {
   }, [programData]);
 
   const mutation = useSendReport(programId);
- 
+  
   async function submitReport() {
     try {
       const radios = severityRef.current.querySelectorAll('input[type="radio"]:checked');
@@ -400,6 +399,7 @@ export default function ProgramSubmitPage() {
               <div className="flex items-center gap-4 flex-col lg:flex-row">
                 <div className=" w-full">
                   <Select
+                  id="reportTemplate"
                     styles={{
                       control: (provided, state) => ({
                         ...provided,
@@ -902,7 +902,7 @@ export default function ProgramSubmitPage() {
                   </label>
                   {attachments.length > 0 && (
                     <div className="mt-2 text-gray-700">
-                      <p>Selected files:</p>
+                      
                       <ul>
                         {attachments.map((file, index) => (
                           <li key={index}>{file.name}</li>
