@@ -48,6 +48,7 @@ export default function ProgramSubmitPage() {
   const userData= useGetUserData();
  
   const [collabrates, setCollabrates] = useState([]);
+  
  
   
   useEffect(() => {
@@ -89,6 +90,17 @@ export default function ProgramSubmitPage() {
     { label: "Memory Corruption", value: 1000,}
   ]
   const [allAssets, setAllAssets] = useState<string[]>([]);
+  const [attachments, setAttachments] = useState<File[]>([]);
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>)=>{
+    let file = e.target.files?.[0];
+    console.log(file)
+    if (file) {
+      setAttachments((prev) => [...prev,file])
+    }
+    console.log(attachments)
+  }
+
+
 
   useEffect(() => {
     if (programData) {
@@ -131,25 +143,22 @@ export default function ProgramSubmitPage() {
       if (percent !== 100) {
         return toast.error("Collaboration percentage should be 100%");
       }
+      if (attachments.length === 0) {
+        return toast.error("Attachment is required");
+      }
   
       const response = await mutation.mutateAsync({
         lastActivity: lastActivityDes,
         rewardsStatus: 'reward status',
         reportTemplate: 'report Template111',
         ownPercentage: percent,
-        // collaboratorPayload: [
-        //   {
-        //     hackerUsername: "Username",
-        //     collaborationPercentage: percent
-        //   }
-        // ],
         collaboratorPayload: collabrates.map(collabrate => ({
           hackerUsername: collabrate.username,
-          collaborationPercentage: collabrate.collaborationPercentage
+          collaborationPercentage: collabrates.length>1 ?collabrate.collaborationPercentage : 100 ,
         })),
         reportAssetPayload: {
-          assetName: selectedAsset?.names || "", 
-          assetType: selectedAsset?.type || "",
+          assetName: selectedAsset?.names || "asse", 
+          assetType: selectedAsset?.type || "asse",
         },
         weakness: {
           type: searchParams.get("weaknessLine"),
@@ -160,9 +169,10 @@ export default function ProgramSubmitPage() {
           vulnerabilityUrl: proofConceptDescription,
           description: description,
         },
-        discoDetails: {
+        discoveryDetails: {
           timeSpend: lastActivityDes,
         },
+        attachments: attachments,
         methodName: methodName,
         severity: `${severity}`,
       }
@@ -888,8 +898,19 @@ export default function ProgramSubmitPage() {
                       className="w-[15px] m-0"
                     />
                     <p className="text-[14px]">Add attachments</p>
-                    <input type="file" className="hidden" id="attachFile" />
+                    <input onInput={handleInput} type="file" className="hidden" id="attachFile" />
                   </label>
+                  {attachments.length > 0 && (
+                    <div className="mt-2 text-gray-700">
+                      <p>Selected files:</p>
+                      <ul>
+                        {attachments.map((file, index) => (
+                          <li key={index}>{file.name}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
 
                   <p className="mt-4">
                     You can attach up to 20 files. Please keep individual upload
