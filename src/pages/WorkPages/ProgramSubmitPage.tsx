@@ -31,7 +31,7 @@ export default function ProgramSubmitPage() {
   const [description, setDesciptions] = useState<string>("");
   const [searchParams, setSearchParams] = useSearchParams();
   const [lastActivityDes, setLastActivity]=useState<string>("");
-  // const [reportTemplate, setReportTemplate]=useState<string>("");
+  const [reportTemplate, setReportTemplate]=useState<string>("");
   const [globalPercent, setGlobalPercent] = useState<number>(100);
   const [percent, setPercent] = useState<number>(0);
   const { data: allUsers } = useGetAllUsers();
@@ -55,13 +55,13 @@ export default function ProgramSubmitPage() {
   useEffect(() => {
     setCollabrates((prev) =>[currentUser]);
   }, [currentUser]);
-  console.log(collabrates)
+  
   
   const [selectedOption, setSelectedOption] = useState('with');
 
-  const handleSev = (e)=>{
-    console.log(e)
-  }
+  // const handleSev = (e)=>{
+  //   console.log(e)
+  // }
   const fakeDATA = [
     { label: "Max Bounty", value: 1000,},
     { label: "Total Bounty", value: 1000,},
@@ -92,11 +92,11 @@ export default function ProgramSubmitPage() {
   const [attachments, setAttachments] = useState<File[]>([]);
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>)=>{
     let file = e.target.files?.[0];
-    console.log(file)
+    
     if (file) {
       setAttachments((prev) => [...prev,file])
     }
-    console.log(attachments)
+  
   }
 
 
@@ -112,8 +112,10 @@ export default function ProgramSubmitPage() {
   
   async function submitReport() {
     try {
-      const radios = severityRef.current.querySelectorAll('input[type="radio"]:checked');
-      const values = Array.from(radios).map(radio => radio.value);
+      const radios =document.querySelector('input[type="radio"]:checked');
+      const severityValue= radios.value;
+ 
+      console.log(severityValue)
       const severity = parseCvss3Vector('AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H').baseScore;
       // localStorage'den kullanıcı verilerini al
       const userString = localStorage.getItem("user");
@@ -142,6 +144,9 @@ export default function ProgramSubmitPage() {
       if (percent !== 100) {
         return toast.error("Collaboration percentage should be 100%");
       }
+      if (!severityValue) {
+        return toast.error("Severity value is required");
+      }
       if (attachments.length === 0) {
         return toast.error("Attachment is required");
       }
@@ -149,7 +154,7 @@ export default function ProgramSubmitPage() {
       const response = await mutation.mutateAsync({
         lastActivity: lastActivityDes,
         rewardsStatus: 'reward status',
-        reportTemplate: 'report Template111',
+        reportTemplate: 'rep',
         ownPercentage: percent,
         collaboratorPayload: collabrates.map(collabrate => ({
           hackerUsername: collabrate.username,
@@ -174,12 +179,18 @@ export default function ProgramSubmitPage() {
         attachments: attachments,
         methodName: methodName,
         severity: `${severity}`,
+        severityValue: severityValue,
+        attackVector: "attac",
+        attackComplexity: "attackCompl",
+        privilegesRequired: "privile",
+        userInteractions: "userInteg",
+        scope: "scope",
+        confidentiality: "confideng",
+        integrity: "integr",
+        availability: "aviali"
       }
     );
-  
-      console.log(response);
-  
-      
+
       // Mutation başarılı olduğunda işlemler
       if (response) {
         toast.success("Report submitted successfully");
@@ -399,7 +410,7 @@ export default function ProgramSubmitPage() {
               <div className="flex items-center gap-4 flex-col lg:flex-row">
                 <div className=" w-full">
                   <Select
-                  id="reportTemplate"
+                  
                     styles={{
                       control: (provided, state) => ({
                         ...provided,
@@ -442,6 +453,7 @@ export default function ProgramSubmitPage() {
                     isSearchable={false}
                     isClearable={true}
                     placeholder="Choose your own template"
+                  
                   />
                 </div>
               </div>
@@ -543,13 +555,13 @@ export default function ProgramSubmitPage() {
               <div className="flex justify-between lg:items-center mb-4 xl:w-[70%] w-full flex-col lg:flex-row gap-4 ">
                 <RadioInput 
                   name="test1"
-                  value="test1"
+                  value="manual"
                   id="test1"
                   label="Submit report without severity"
                 />
                 <RadioInput
                   name="test1"
-                  value="test2"
+                  value="CVSS"
                   id="test2"
                   label="Submit report with severity"
                 />

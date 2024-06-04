@@ -32,7 +32,7 @@ export async function getProgramById(id: string) {
     }
 
     const data = await res.json();
-    console.log(data.data)
+ 
     return data.data;
   } catch (err) {
     console.log(err);
