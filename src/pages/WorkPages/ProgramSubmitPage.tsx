@@ -161,8 +161,8 @@ export default function ProgramSubmitPage() {
           collaborationPercentage: collabrates.length>1 ?collabrate.collaborationPercentage : 100 ,
         })),
         reportAssetPayload: {
-          assetName: selectedAsset?.names || "asse", 
-          assetType: selectedAsset?.type || "asse",
+          assetName: selectedAsset?.name || "default name",
+          assetType: selectedAsset?.type || "default type",
         },
         weakness: {
           type: searchParams.get("weaknessLine"),
@@ -334,7 +334,7 @@ export default function ProgramSubmitPage() {
                   </Label>
                 </div>
                 <div className="lg:-[40%] w-full">
-                  <Select
+                <Select
                     styles={{
                       control: (provided, state) => ({
                         ...provided,
@@ -382,6 +382,19 @@ export default function ProgramSubmitPage() {
                     isSearchable={false}
                     isClearable={true}
                     placeholder="Asset type"
+                    onChange={(selectedOption) => {
+                      const selectedAsset = [
+                        ...(programData?.asset?.lowAsset?.assets || []),
+                        ...(programData?.asset?.mediumAsset?.assets || []),
+                        ...(programData?.asset?.highAsset?.assets || []),
+                        ...(programData?.asset?.criticalAsset?.assets || [])
+                      ].find((asset) => asset.type === selectedOption?.value);
+
+                      setSelectedAsset({
+                        name: selectedAsset?.names[0] || '',
+                        type: selectedAsset?.type || ''
+                      });
+                    }}
                   />
                 </div>
               </div>

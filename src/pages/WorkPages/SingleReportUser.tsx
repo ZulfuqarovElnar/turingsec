@@ -91,14 +91,14 @@ export default function SingleReportUser() {
                             <div className="flex items-center gap-4 flex-col lg:flex-row">
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input value="Hardware" type="text" placeholder="Max Bounty"
+                                        <Input value={filteredReport.asset.assetName} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
 
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.asset} type="text" placeholder="Max Bounty"
+                                        <Input value={filteredReport.asset.assetType} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
