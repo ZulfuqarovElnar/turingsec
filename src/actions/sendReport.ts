@@ -1,108 +1,161 @@
+import { json } from "stream/consumers";
 import { Report } from "../types";
+import { AttackVector } from "vuln-vects/dist/cvss3-enums";
 
 export async function sendReport(report: Report, id: string) {
-  // console.log(report);
-  // console.log("id: " + id);
-  
-  // User bilgilerini localStorage'dan al
+
   const userDataString = localStorage.getItem("user");
   const userData = userDataString ? JSON.parse(userDataString) : null;
-  
-  // AccessToken ve id'yi al
   const accessToken = userData?.accessToken;
-  // const userId = userData?.id;
-
   try {
     console.log("sending report...");
-    const res = await fetch(
-      `http://localhost:5000/api/bug-bounty-reports/manualReport?bugBountyProgramId=${id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          lastActivity: report.lastActivity,
-          rewardsStatus: report.rewardsStatus,
-          reportTemplate: report.reportTemplate,
-          ownPercentage: 100,
-          collaboratorPayload: report.collaboratorPayload.map(collaborator => ({
-            hackerUsername: collaborator.hackerUsername,
-            collaborationPercentage: collaborator.collaborationPercentage
-          })),
+    
+    
+    //Manual
+    if(report.severityValue === 'manual'){
+      const formData = new FormData();
+      // Append attachments
 
-          reportAssetPayload: {
-            assetName: report.reportAssetPayload.assetName,
-            assetType: report.reportAssetPayload.assetType
-          },
-
-          weakness: {
-            type: report.weakness.type,
-            name: report.weakness.name
-          },
-          proofOfConcept: {
-            title: report.proofOfConcept.title,
-            vulnerabilityUrl: report.proofOfConcept.vulnerabilityUrl,
-            description: report.proofOfConcept.description
-          },
-
-          discoveryDetails: {
-            timeSpend: report.discoDetails.timeSpend,
-          },
-
-          methodName: report.methodName,
-          severity: report.severity,
-     
-        }),
-        
+      for (let i = 0; i < report.attachments.length; i++) {
+        formData.append("files", report.attachments[i]);
       }
-    );
+      const reportPayload = {
+        lastActivity: report.lastActivity,
+        rewardsStatus: report.rewardsStatus,
+        reportTemplate: report.reportTemplate,
+        ownPercentage: 100,
+        collaboratorPayload: report.collaboratorPayload.map(collaborator => ({
+          hackerUsername: collaborator.hackerUsername,
+          collaborationPercentage: collaborator.collaborationPercentage
+        })),
+        reportAssetPayload: {
+          assetName: report.reportAssetPayload.assetName,
+          assetType: report.reportAssetPayload.assetType
+        },
 
-    if (!res.ok) {
-      console.log(
+        weakness: {
+          type: report.weakness.type,
+          name: report.weakness.name
+        },
+        proofOfConcept: {
+          title: report.proofOfConcept.title,
+          vulnerabilityUrl: report.proofOfConcept.vulnerabilityUrl,
+          description: report.proofOfConcept.description
+        },
+
+        discoveryDetails: {
+          timeSpend: report.discoveryDetails.timeSpend,
+        },
+
+        methodName: report.methodName,
+        severity: report.severity,
+      };
+
+      // reportPayload
+      const jsonBlob = new Blob([JSON.stringify(reportPayload)], { type: 'application/json' });
+      formData.append('reportPayload', jsonBlob);
+      const res = await fetch(
+        `http://localhost:5000/api/bug-bounty-reports/manualReport?bugBountyProgramId=${id}`,
         {
-          lastActivity: report.lastActivity,
-          rewardsStatus: report.rewardsStatus,
-          reportTemplate: report.reportTemplate,
-          ownPercentage: 100,
-          collaboratorPayload: report.collaboratorPayload.map(collaborator => ({
-            hackerUsername: collaborator.hackerUsername,
-            collaborationPercentage: collaborator.collaborationPercentage
-          })),
+          method: "POST",
+          headers: {
 
-          reportAssetPayload: {
-            assetName: report.reportAssetPayload.assetName,
-            assetType: report.reportAssetPayload.assetType
+            Authorization: `Bearer ${accessToken}`,
           },
-
-          weakness: {
-            type: report.weakness.type,
-            name: report.weakness.name
-          },
-          proofOfConcept: {
-            title: report.proofOfConcept.title,
-            vulnerabilityUrl: report.proofOfConcept.vulnerabilityUrl,
-            description: report.proofOfConcept.description
-          },
-
-          discoveryDetails: {
-            timeSpend: report.discoDetails.timeSpend,
-          },
-
-          methodName: report.methodName,
-          severity: report.severity,
+          body: formData,
         }
       );
-      throw new Error("Wrong response");
+
+      if (!res.ok) {
+        console.log(formData);
+        throw new Error("Wrong response");
+      }
+      return res;
     }
 
-    return res;
+
+    //End of Manual
+    else{
+      const formData = new FormData();
+      // Append attachments
+
+      for (let i = 0; i < report.attachments.length; i++) {
+        formData.append("files", report.attachments[i]);
+      }
+      const reportPayload = {
+        lastActivity: report.lastActivity,
+        rewardsStatus: report.rewardsStatus,
+        reportTemplate: report.reportTemplate,
+        ownPercentage: 100,
+        collaboratorPayload: report.collaboratorPayload.map(collaborator => ({
+          hackerUsername: collaborator.hackerUsername,
+          collaborationPercentage: collaborator.collaborationPercentage
+        })),
+        reportAssetPayload: {
+          assetName: report.reportAssetPayload.assetName,
+          assetType: report.reportAssetPayload.assetType
+        },
+
+        weakness: {
+          type: report.weakness.type,
+          name: report.weakness.name
+        },
+        proofOfConcept: {
+          title: report.proofOfConcept.title,
+          vulnerabilityUrl: report.proofOfConcept.vulnerabilityUrl,
+          description: report.proofOfConcept.description
+        },
+
+        discoveryDetails: {
+          timeSpend: report.discoveryDetails.timeSpend,
+        },
+
+        methodName: report.methodName,
+        severity: report.severity,
+        attackVector: report.attackVector,
+        attackComplexity: report.attackComplexity,
+        privilegesRequired: report.privilegesRequired,
+        userInteractions: report.userInteractions,
+        scope: report.scope,
+        confidentiality: report.confidentiality,
+        integrity: report.integrity,
+        availability: report.availability,
+      };
+
+      // reportPayload
+      const jsonBlob = new Blob([JSON.stringify(reportPayload)], { type: 'application/json' });
+      formData.append('reportPayload', jsonBlob);
+   
+      const res = await fetch(
+        `http://localhost:5000/api/bug-bounty-reports/CVSSReport?bugBountyProgramId=${id}`,
+        {
+          method: "POST",
+          headers: {
+
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+        }
+      );
+
+      if (!res.ok) {
+        console.log(formData);
+        throw new Error("Wrong response");
+      }
+      return res;
+
+    }
+
+
+    
+    
   } catch (err: any) {
     console.log(err);
     throw new Error(err.message);
   }
 
 
-  
+
 }
+
+ 

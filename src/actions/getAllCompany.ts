@@ -23,8 +23,6 @@ export async function getAllCompany() {
       },
     });
 
-    console.log("Response Status:", res.status);
-    console.log("Response Headers:", res.headers);
 
     if (!res.ok) {
       const errorText = await res.text();
