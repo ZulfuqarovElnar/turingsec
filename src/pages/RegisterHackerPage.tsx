@@ -50,7 +50,7 @@ export default function RegisterHackerPage() {
 
   async function onSubmit(values: LoginFormValues) {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
+      const response = await fetch("https://turingsec-production-2363.up.railway.app/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

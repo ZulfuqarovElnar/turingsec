@@ -13,7 +13,7 @@ export default function Navbar() {
           const userData = JSON.parse(userDataString);
           const { id } = userData;
           if (id) {
-            const res2 = await fetch(`http://localhost:5000/api/image-for-hacker/download/${id}`);
+            const res2 = await fetch(`https://turingsec-production-2363.up.railway.app/api/image-for-hacker/download/${id}`);
             if (res2.ok) {
               const userImageBlob = await res2.blob();
               setUserImage(URL.createObjectURL(userImageBlob));

@@ -84,7 +84,7 @@ export default function TabContentProfile() {
           const { id } = userData;
   
           if (id) {
-            const res = await fetch(`http://localhost:5000/api/hacker/${id}`);
+            const res = await fetch(`https://turingsec-production-2363.up.railway.app/api/hacker/${id}`);
             const responseData = await res.json();
             const fetchedData = responseData.data;
             console.log("User data from hacker API:", fetchedData);
@@ -94,13 +94,13 @@ export default function TabContentProfile() {
             }
           if (id) {
             // const res1 = await fetch(
-            //   `http://localhost:5000/api/background-image-for-hacker/download/${id}`
+            //   `https://turingsec-production-2363.up.railway.app/api/background-image-for-hacker/download/${id}`
             // );
             
             // const backgroundImageBlob = await res1.blob();
   
             // const res2 = await fetch(
-            //   `http://localhost:5000/api/image-for-hacker/download/${id}`
+            //   `https://turingsec-production-2363.up.railway.app/api/image-for-hacker/download/${id}`
             // );
             
             // const userImageBlob = await res2.blob();
@@ -184,7 +184,7 @@ export default function TabContentProfile() {
       console.log(imageRealSrc, ele.accessToken);
       formData.append("file", imageRealSrcUser);
       const res2 = await fetch(
-        "http://localhost:5000/api/image-for-hacker/upload",
+        "https://turingsec-production-2363.up.railway.app/api/image-for-hacker/upload",
         {
           method: "POST",
           headers: {
@@ -196,7 +196,7 @@ export default function TabContentProfile() {
       const formData2 = new FormData();
       formData2.append("file", imageRealSrc);
       const res3 = await fetch(
-        "http://localhost:5000/api/background-image-for-hacker/upload",
+        "https://turingsec-production-2363.up.railway.app/api/background-image-for-hacker/upload",
         {
           method: "POST",
           headers: {
@@ -212,7 +212,7 @@ export default function TabContentProfile() {
       const data3 = await res2.json(); // Parsing response JSON
       console.log(data3);
       const res = await fetch(
-        "http://localhost:5000/api/auth/update-profile",
+        "https://turingsec-production-2363.up.railway.app/api/auth/update-profile",
         {
           method: "POST",
           headers: {

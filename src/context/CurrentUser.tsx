@@ -60,7 +60,7 @@
             console.log("id:" + userId);
       
             const res = await fetch(
-              `http://localhost:5000/api/auth/current-user`,
+              `https://turingsec-production-2363.up.railway.app/api/auth/current-user`,
               {
                 method: "GET",
                 headers: {

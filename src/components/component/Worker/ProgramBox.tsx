@@ -29,7 +29,7 @@ export default function ProgramBox({
         throw new Error("Access token not found");
       }
 
-      const response = await fetch(`http://localhost:5000/api/auth/programsById/${id}`, {
+      const response = await fetch(`https://turingsec-production-2363.up.railway.app/api/auth/programsById/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

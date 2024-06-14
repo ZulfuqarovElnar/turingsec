@@ -10,7 +10,7 @@ export async function getAllReportsForCompany() {
     // Check if company data contains accessToken
     const accessToken = companyData.accessToken;
     const res = await fetch(
-      `http://localhost:5000/api/bug-bounty-reports/reports/company`,
+      `https://turingsec-production-2363.up.railway.app/api/bug-bounty-reports/reports/company`,
       {
         method: "GET",
         headers: {

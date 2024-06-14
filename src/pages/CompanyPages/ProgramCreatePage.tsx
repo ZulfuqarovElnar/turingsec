@@ -149,7 +149,7 @@ export default function ProgramCreatePage() {
         const prohibits = stricty.map(element => ({ prohibitAdded: element }));
   
         const res = await fetch(
-          "http://localhost:5000/api/bug-bounty-programs",
+          "https://turingsec-production-2363.up.railway.app/api/bug-bounty-programs",
           {
             method: "POST",
             headers: {

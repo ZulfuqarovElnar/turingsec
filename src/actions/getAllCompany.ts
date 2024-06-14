@@ -15,7 +15,7 @@ export async function getAllCompany() {
       throw new Error("Access token not found in user data");
     }
 
-    const res = await fetch("http://localhost:5000/api/auth/programs", {
+    const res = await fetch("https://turingsec-production-2363.up.railway.app/api/auth/programs", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

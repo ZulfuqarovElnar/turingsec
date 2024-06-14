@@ -19,7 +19,7 @@ export async function getUserReports() {
 
 
     const res = await fetch(
-      `http://localhost:5000/api/bug-bounty-reports/user`,
+      `https://turingsec-production-2363.up.railway.app/api/bug-bounty-reports/user`,
       {
         method: "GET",
         headers: {

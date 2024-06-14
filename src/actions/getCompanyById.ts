@@ -3,7 +3,7 @@ export async function getCompanyById(id: string) {
      
     console.log(id);
     const res = await fetch(
-      `http://localhost:5000/api/companies/${id}`,
+      `https://turingsec-production-2363.up.railway.app/api/companies/${id}`,
       {
         method: "GET",
         headers: {

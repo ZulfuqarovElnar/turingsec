@@ -17,7 +17,7 @@ export async function getProgramById(id: string) {
     }
 
     const res = await fetch(
-      `http://localhost:5000/api/auth/programsById/${id}`,
+      `https://turingsec-production-2363.up.railway.app/api/auth/programsById/${id}`,
       {
         method: "GET",
         headers: {

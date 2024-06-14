@@ -118,7 +118,7 @@ export default function Profile() {
           const { id } = userData;
   
           if (id) {
-            const res = await fetch(`http://localhost:5000/api/hacker/${id}`);
+            const res = await fetch(`https://turingsec-production-2363.up.railway.app/api/hacker/${id}`);
             const responseData = await res.json();
             const fetchedData = responseData.data;
             console.log("User data from hacker API:", fetchedData);
@@ -129,13 +129,13 @@ export default function Profile() {
   
           if (id) {
             const res1 = await fetch(
-              `http://localhost:5000/api/background-image-for-hacker/download/${id}`
+              `https://turingsec-production-2363.up.railway.app/api/background-image-for-hacker/download/${id}`
             );
             
             const backgroundImageBlob = await res1.blob();
   
             const res2 = await fetch(
-              `http://localhost:5000/api/image-for-hacker/download/${id}`
+              `https://turingsec-production-2363.up.railway.app/api/image-for-hacker/download/${id}`
             );
             
             const userImageBlob = await res2.blob();

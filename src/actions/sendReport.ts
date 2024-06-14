@@ -55,7 +55,7 @@ export async function sendReport(report: Report, id: string) {
       const jsonBlob = new Blob([JSON.stringify(reportPayload)], { type: 'application/json' });
       formData.append('reportPayload', jsonBlob);
       const res = await fetch(
-        `http://localhost:5000/api/bug-bounty-reports/manualReport?bugBountyProgramId=${id}`,
+        `https://turingsec-production-2363.up.railway.app/api/bug-bounty-reports/manualReport?bugBountyProgramId=${id}`,
         {
           method: "POST",
           headers: {
@@ -127,7 +127,7 @@ export async function sendReport(report: Report, id: string) {
       formData.append('reportPayload', jsonBlob);
    
       const res = await fetch(
-        `http://localhost:5000/api/bug-bounty-reports/CVSSReport?bugBountyProgramId=${id}`,
+        `https://turingsec-production-2363.up.railway.app/api/bug-bounty-reports/CVSSReport?bugBountyProgramId=${id}`,
         {
           method: "POST",
           headers: {

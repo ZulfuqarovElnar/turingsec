@@ -11,7 +11,7 @@ export async function getReportById(id: string) {
         const accessToken = userData.accessToken;
         
         const res = await fetch(
-            `http://localhost:5000/api/bug-bounty-reports/${id}`,
+            `https://turingsec-production-2363.up.railway.app/api/bug-bounty-reports/${id}`,
             {
                 method: "GET",
                 headers: {

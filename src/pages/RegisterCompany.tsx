@@ -44,7 +44,7 @@ export default function RegisterCompanyPage() {
   async function onSubmit(values: z.infer<typeof formSchemaHackerLogin>) {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/companies/login",
+        "https://turingsec-production-2363.up.railway.app/api/companies/login",
         {
           method: "POST",
           headers: {
