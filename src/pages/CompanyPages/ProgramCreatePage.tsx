@@ -142,10 +142,9 @@ export default function ProgramCreatePage() {
       };
   
       const companyString = localStorage.getItem("company");
-      const programString = localStorage.getItem("programId");
-      if (companyString && programString) {
+    
+      if (companyString) {
         const company = JSON.parse(companyString);
-        const programId = JSON.parse(programString);
         const prohibits = stricty.map(element => ({ prohibitAdded: element }));
   
         const res = await fetch(
@@ -162,7 +161,6 @@ export default function ProgramCreatePage() {
               fromDate: fromdate.toISOString().split('T')[0], // format to "YYYY-MM-DD"
               toDate: todate.toISOString().split('T')[0], // format to "YYYY-MM-DD"
               asset,
-              programId: programId.id,
               companyId: company.id,
               prohibits: prohibits,
               inScope: inScope,
