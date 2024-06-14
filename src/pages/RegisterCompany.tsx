@@ -43,8 +43,9 @@ export default function RegisterCompanyPage() {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchemaHackerLogin>) {
     try {
+      const apiUrl = process.env.REACT_APP_API_BASE_URL;
       const response = await fetch(
-        "https://turingsec-production-2363.up.railway.app/api/companies/login",
+        `${apiUrl}/api/companies/login`,
         {
           method: "POST",
           headers: {

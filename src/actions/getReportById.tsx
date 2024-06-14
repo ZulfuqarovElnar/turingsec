@@ -9,9 +9,9 @@ export async function getReportById(id: string) {
 
         // Check if user data contains accessToken
         const accessToken = userData.accessToken;
-        
+        const apiUrl = process.env.REACT_APP_API_BASE_URL;
         const res = await fetch(
-            `https://turingsec-production-2363.up.railway.app/api/bug-bounty-reports/${id}`,
+            `${apiUrl}/api/bug-bounty-reports/${id}`,
             {
                 method: "GET",
                 headers: {

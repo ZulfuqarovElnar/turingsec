@@ -16,8 +16,9 @@ export async function GetCompanyProgram() {
       throw new Error("Access token not found in company data");
     }
 
+    const apiUrl = process.env.REACT_APP_API_BASE_URL;
     const res = await fetch(
-      `https://turingsec-production-2363.up.railway.app/api/bug-bounty-programs`,
+      `${apiUrl}/api/bug-bounty-programs`,
       {
         method: "GET",
         headers: {

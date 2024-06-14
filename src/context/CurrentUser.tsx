@@ -59,8 +59,9 @@
        
             console.log("id:" + userId);
       
+            const apiUrl = process.env.REACT_APP_API_BASE_URL;
             const res = await fetch(
-              `https://turingsec-production-2363.up.railway.app/api/auth/current-user`,
+              `${apiUrl}/api/auth/current-user`,
               {
                 method: "GET",
                 headers: {

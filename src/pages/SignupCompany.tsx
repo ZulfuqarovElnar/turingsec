@@ -76,8 +76,9 @@ export default function SignupCompanyPage() {
       approved: false,
     });
     try {
+      const apiUrl = process.env.REACT_APP_API_BASE_URL;
       const res = await fetch(
-        "https://turingsec-production-2363.up.railway.app/api/companies/register",
+        `${apiUrl}/api/companies/register`,
         {
           method: "POST",
           headers: {

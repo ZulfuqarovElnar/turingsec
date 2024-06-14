@@ -16,8 +16,9 @@ export async function getProgramById(id: string) {
       throw new Error("Access token not found in user data");
     }
 
+    const apiUrl = process.env.REACT_APP_API_BASE_URL;
     const res = await fetch(
-      `https://turingsec-production-2363.up.railway.app/api/auth/programsById/${id}`,
+      `${apiUrl}/api/auth/programsById/${id}`,
       {
         method: "GET",
         headers: {

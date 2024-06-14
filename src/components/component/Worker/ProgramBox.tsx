@@ -28,8 +28,9 @@ export default function ProgramBox({
       if (!accessToken) {
         throw new Error("Access token not found");
       }
+      const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
-      const response = await fetch(`https://turingsec-production-2363.up.railway.app/api/auth/programsById/${id}`, {
+      const response = await fetch(`${apiUrl}/api/auth/programsById/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
