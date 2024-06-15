@@ -407,7 +407,7 @@ export default function SingleReportUser() {
                                     />
                                     <div className="bg-[#001D34] w-[50px]   flex items-center justify-center "
                                     >
-                                        %
+                                        % 
                                     </div>
                                 </div>
                             </div>
