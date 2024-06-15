@@ -287,7 +287,7 @@ export default function ProgramOnePage() {
             </div>
           </div>
           {Array.from({ length: maxlength }).map((index, i) => (
-            <div className="bg-[#0A273D] px-8 border-b border-black py-4">
+            <div key={index} className="bg-[#0A273D] px-8 border-b border-black py-4">
               <div className="flex items-center justify-between">
                 <div className="flex-1 text-center">
                   <p>
