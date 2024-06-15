@@ -37,8 +37,11 @@ export default function ProgramSubmitPage() {
   const { data: allUsers } = useGetAllUsers();
   const {data: currentUser}=useGetUserData()
   const [selectedAsset, setSelectedAsset] = useState(null);
+  const [weaknessType, setWeaknessType] = useState();
+ 
  
   const severityRef = useRef(null)
+  
  
   const {
     data: programData,
@@ -99,8 +102,6 @@ export default function ProgramSubmitPage() {
   
   }
 
-
-
   useEffect(() => {
     if (programData) {
       const assets = programData?.assetTypes?.map((item) => item.assetType);
@@ -129,9 +130,7 @@ export default function ProgramSubmitPage() {
       if (!searchParams.get("weaknessLine")) {
         return toast.error("Weakness is required");
       }
-      if (!methodName) {
-        return toast.error("Method name is required");
-      }
+   
       if (!proofConceptTitle) {
         return toast.error("Proof of concept title is required");
       }
@@ -147,14 +146,11 @@ export default function ProgramSubmitPage() {
       if (!severityValue) {
         return toast.error("Severity value is required");
       }
-      if (attachments.length === 0) {
-        return toast.error("Attachment is required");
-      }
-  
+ 
       const response = await mutation.mutateAsync({
         lastActivity: lastActivityDes,
         rewardsStatus: 'reward status',
-        reportTemplate: 'rep',
+        reportTemplate: reportTemplate,
         ownPercentage: percent,
         collaboratorPayload: collabrates.map(collabrate => ({
           hackerUsername: collabrate.username,
@@ -165,7 +161,7 @@ export default function ProgramSubmitPage() {
           assetType: selectedAsset?.type || "default type",
         },
         weakness: {
-          type: searchParams.get("weaknessLine"),
+          type: weaknessType,
           name: searchParams.get("weaknessLine"),
         },
         proofOfConcept: {
@@ -482,6 +478,7 @@ const uniqueAssets = getUniqueAssetTypes([
                     isSearchable={false}
                     isClearable={true}
                     placeholder="Choose your own template"
+                    onChange={(selectedOption)=>setReportTemplate(selectedOption.label)}
                   
                   />
                 </div>
@@ -558,6 +555,10 @@ const uniqueAssets = getUniqueAssetTypes([
                     isSearchable={false}
                     isClearable={true}
                     placeholder="Weakness type"
+                    onChange={(selectedOption)=>{
+                      setWeaknessType(selectedOption.label);
+                       
+                    }}
                   />
                 </div>
               </div>
