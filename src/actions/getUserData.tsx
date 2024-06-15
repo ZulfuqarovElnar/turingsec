@@ -8,9 +8,9 @@ export async function getUserData() {
 
         const userData = JSON.parse(userDataString);
         const accessToken = userData.accessToken;
-
+        const apiUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(
-            `https://turingsec-production-2363.up.railway.app/api/auth/current-user`,
+            `${apiUrl}/api/auth/current-user`,
             {
                 method: "GET",
                 headers: {

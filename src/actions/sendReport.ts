@@ -54,8 +54,9 @@ export async function sendReport(report: Report, id: string) {
       // reportPayload
       const jsonBlob = new Blob([JSON.stringify(reportPayload)], { type: 'application/json' });
       formData.append('reportPayload', jsonBlob);
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
       const res = await fetch(
-        `https://turingsec-production-2363.up.railway.app/api/bug-bounty-reports/manualReport?bugBountyProgramId=${id}`,
+        `${apiUrl}/api/bug-bounty-reports/manualReport?bugBountyProgramId=${id}`,
         {
           method: "POST",
           headers: {
@@ -125,9 +126,9 @@ export async function sendReport(report: Report, id: string) {
       // reportPayload
       const jsonBlob = new Blob([JSON.stringify(reportPayload)], { type: 'application/json' });
       formData.append('reportPayload', jsonBlob);
-   
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
       const res = await fetch(
-        `https://turingsec-production-2363.up.railway.app/api/bug-bounty-reports/CVSSReport?bugBountyProgramId=${id}`,
+        `${apiUrl}/api/bug-bounty-reports/CVSSReport?bugBountyProgramId=${id}`,
         {
           method: "POST",
           headers: {

@@ -1,7 +1,8 @@
 export async function getAllUsers() {
   try {
+    const apiUrl = import.meta.env.VITE_APP_BASE_URL;
     const res = await fetch(
-      "https://turingsec-production-2363.up.railway.app/api/auth/allUsers",
+      `${apiUrl}/api/auth/allUsers`,
       {
         method: "GET",
       }

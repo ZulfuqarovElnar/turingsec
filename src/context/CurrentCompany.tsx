@@ -42,9 +42,10 @@ const CurrentCompanyProvider = ({ children }: { children: ReactNode }) => {
         const companyString = localStorage.getItem("company");
         if (companyString) {
           const company = JSON.parse(companyString);
+          const apiUrl = import.meta.env.VITE_APP_BASE_URL;
 
           const res = await fetch(
-            `https://turingsec-production-2363.up.railway.app/api/companies/current-user`,
+            `${apiUrl}/api/companies/current-user`,
             {
               method: "GET",
               headers: {

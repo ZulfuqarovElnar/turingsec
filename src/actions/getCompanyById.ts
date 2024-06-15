@@ -2,8 +2,9 @@ export async function getCompanyById(id: string) {
   try {
      
     console.log(id);
+    const apiUrl = import.meta.env.VITE_APP_BASE_URL;
     const res = await fetch(
-      `https://turingsec-production-2363.up.railway.app/api/companies/${id}`,
+      `${apiUrl}/api/companies/${id}`,
       {
         method: "GET",
         headers: {

@@ -12,8 +12,9 @@ export default function Navbar() {
         if (userDataString) {
           const userData = JSON.parse(userDataString);
           const { id } = userData;
+          const apiUrl = import.meta.env.VITE_APP_BASE_URL;
           if (id) {
-            const res2 = await fetch(`https://turingsec-production-2363.up.railway.app/api/image-for-hacker/download/${id}`);
+            const res2 = await fetch(`${apiUrl}/api/image-for-hacker/download/${id}`);
             if (res2.ok) {
               const userImageBlob = await res2.blob();
               setUserImage(URL.createObjectURL(userImageBlob));

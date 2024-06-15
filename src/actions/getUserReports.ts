@@ -17,9 +17,9 @@ export async function getUserReports() {
       throw new Error("Access token not found in company data");
     }
 
-
+    const apiUrl = import.meta.env.VITE_APP_BASE_URL;
     const res = await fetch(
-      `https://turingsec-production-2363.up.railway.app/api/bug-bounty-reports/user`,
+      `${apiUrl}/api/bug-bounty-reports/user`,
       {
         method: "GET",
         headers: {

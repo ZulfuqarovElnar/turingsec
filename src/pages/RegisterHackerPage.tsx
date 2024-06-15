@@ -50,7 +50,9 @@ export default function RegisterHackerPage() {
 
   async function onSubmit(values: LoginFormValues) {
     try {
-      const response = await fetch("https://turingsec-production-2363.up.railway.app/api/auth/login", {
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
+
+      const response = await fetch(`${apiUrl}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

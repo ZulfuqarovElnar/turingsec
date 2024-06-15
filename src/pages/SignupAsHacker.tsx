@@ -49,7 +49,9 @@ export default function SignupAsHacker() {
 
   async function onSubmit(values: z.infer<typeof formSchemaHackerRegister>) {
     try {
-      const response = await fetch("https://turingsec-production-2363.up.railway.app/api/auth/register/hacker", {
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
+
+      const response = await fetch(`${apiUrl}/api/auth/register/hacker`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

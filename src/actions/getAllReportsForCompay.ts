@@ -9,8 +9,10 @@ export async function getAllReportsForCompany() {
 
     // Check if company data contains accessToken
     const accessToken = companyData.accessToken;
+
+    const apiUrl = import.meta.env.VITE_APP_BASE_URL;
     const res = await fetch(
-      `https://turingsec-production-2363.up.railway.app/api/bug-bounty-reports/reports/company`,
+      `${apiUrl}/api/bug-bounty-reports/reports/company`,
       {
         method: "GET",
         headers: {

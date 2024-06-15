@@ -146,9 +146,9 @@ export default function ProgramCreatePage() {
       if (companyString) {
         const company = JSON.parse(companyString);
         const prohibits = stricty.map(element => ({ prohibitAdded: element }));
-  
+        const apiUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(
-          "https://turingsec-production-2363.up.railway.app/api/bug-bounty-programs",
+          `${apiUrl}/api/bug-bounty-programs`,
           {
             method: "POST",
             headers: {

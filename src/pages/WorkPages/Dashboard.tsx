@@ -21,8 +21,9 @@ export default function Dashboard() {
       const accessToken = user.accessToken || '';
 
       try {
+        const apiUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(
-          "https://turingsec-production-2363.up.railway.app/api/auth/programs",
+          `${apiUrl}/api/auth/programs`,
           {
             method: "GET",
             headers: {

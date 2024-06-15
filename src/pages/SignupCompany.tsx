@@ -76,8 +76,9 @@ export default function SignupCompanyPage() {
       approved: false,
     });
     try {
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
       const res = await fetch(
-        "https://turingsec-production-2363.up.railway.app/api/companies/register",
+        `${apiUrl}/api/companies/register`,
         {
           method: "POST",
           headers: {
