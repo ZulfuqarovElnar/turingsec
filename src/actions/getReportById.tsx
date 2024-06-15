@@ -9,7 +9,7 @@ export async function getReportById(id: string) {
 
         // Check if user data contains accessToken
         const accessToken = userData.accessToken;
-        const apiUrl = process.env.REACT_APP_API_BASE_URL;
+        const apiUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(
             `${apiUrl}/api/bug-bounty-reports/${id}`,
             {

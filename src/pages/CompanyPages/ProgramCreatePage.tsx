@@ -146,7 +146,7 @@ export default function ProgramCreatePage() {
       if (companyString) {
         const company = JSON.parse(companyString);
         const prohibits = stricty.map(element => ({ prohibitAdded: element }));
-        const apiUrl = process.env.REACT_APP_API_BASE_URL;
+        const apiUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(
           `${apiUrl}/api/bug-bounty-programs`,
           {

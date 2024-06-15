@@ -1,6 +1,6 @@
 export async function getAllUsers() {
   try {
-    const apiUrl = process.env.REACT_APP_API_BASE_URL;
+    const apiUrl = import.meta.env.VITE_APP_BASE_URL;
     const res = await fetch(
       `${apiUrl}/api/auth/allUsers`,
       {

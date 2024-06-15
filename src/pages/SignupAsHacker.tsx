@@ -49,7 +49,7 @@ export default function SignupAsHacker() {
 
   async function onSubmit(values: z.infer<typeof formSchemaHackerRegister>) {
     try {
-      const apiUrl = process.env.REACT_APP_API_BASE_URL;
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
 
       const response = await fetch(`${apiUrl}/api/auth/register/hacker`, {
         method: "POST",

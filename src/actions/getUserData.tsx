@@ -8,7 +8,7 @@ export async function getUserData() {
 
         const userData = JSON.parse(userDataString);
         const accessToken = userData.accessToken;
-        const apiUrl = process.env.REACT_APP_API_BASE_URL;
+        const apiUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(
             `${apiUrl}/api/auth/current-user`,
             {

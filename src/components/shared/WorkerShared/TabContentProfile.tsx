@@ -82,7 +82,7 @@ export default function TabContentProfile() {
         if (userDataString) {
           const userData = JSON.parse(userDataString);
           const { id } = userData;
-          const apiUrl = process.env.REACT_APP_API_BASE_URL;
+          const apiUrl = import.meta.env.VITE_APP_BASE_URL;
           if (id) {
             const res = await fetch(`${apiUrl}/api/hacker/${id}`);
             const responseData = await res.json();
@@ -93,7 +93,7 @@ export default function TabContentProfile() {
               console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
             }
 
-            // const apiUrl = process.env.REACT_APP_API_BASE_URL;
+            // const apiUrl = import.meta.env.VITE_APP_BASE_URL;
           if (id) {
             // const res1 = await fetch(
             //   `${apiUrl}/api/background-image-for-hacker/download/${id}`
@@ -185,7 +185,7 @@ export default function TabContentProfile() {
       const formData = new FormData();
       console.log(imageRealSrc, ele.accessToken);
       formData.append("file", imageRealSrcUser);
-      const apiUrl = process.env.REACT_APP_API_BASE_URL;
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
 
       const res2 = await fetch(
         `${apiUrl}/api/image-for-hacker/upload`,

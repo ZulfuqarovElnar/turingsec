@@ -17,7 +17,7 @@ export async function getUserReports() {
       throw new Error("Access token not found in company data");
     }
 
-    const apiUrl = process.env.REACT_APP_API_BASE_URL;
+    const apiUrl = import.meta.env.VITE_APP_BASE_URL;
     const res = await fetch(
       `${apiUrl}/api/bug-bounty-reports/user`,
       {

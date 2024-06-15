@@ -54,7 +54,7 @@ export async function sendReport(report: Report, id: string) {
       // reportPayload
       const jsonBlob = new Blob([JSON.stringify(reportPayload)], { type: 'application/json' });
       formData.append('reportPayload', jsonBlob);
-      const apiUrl = process.env.REACT_APP_API_BASE_URL;
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
       const res = await fetch(
         `${apiUrl}/api/bug-bounty-reports/manualReport?bugBountyProgramId=${id}`,
         {
@@ -126,7 +126,7 @@ export async function sendReport(report: Report, id: string) {
       // reportPayload
       const jsonBlob = new Blob([JSON.stringify(reportPayload)], { type: 'application/json' });
       formData.append('reportPayload', jsonBlob);
-      const apiUrl = process.env.REACT_APP_API_BASE_URL;
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
       const res = await fetch(
         `${apiUrl}/api/bug-bounty-reports/CVSSReport?bugBountyProgramId=${id}`,
         {

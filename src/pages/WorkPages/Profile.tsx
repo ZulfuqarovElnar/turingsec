@@ -116,7 +116,7 @@ export default function Profile() {
         if (userDataString) {
           const userData = JSON.parse(userDataString);
           const { id } = userData;
-          const apiUrl = process.env.REACT_APP_API_BASE_URL;
+          const apiUrl = import.meta.env.VITE_APP_BASE_URL;
           if (id) {
             const res = await fetch(`${apiUrl}/api/hacker/${id}`);
             const responseData = await res.json();

@@ -28,7 +28,7 @@ export default function ProgramBox({
       if (!accessToken) {
         throw new Error("Access token not found");
       }
-      const apiUrl = process.env.REACT_APP_API_BASE_URL;
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
 
       const response = await fetch(`${apiUrl}/api/auth/programsById/${id}`, {
         method: "GET",

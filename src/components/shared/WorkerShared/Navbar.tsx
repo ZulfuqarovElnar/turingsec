@@ -12,7 +12,7 @@ export default function Navbar() {
         if (userDataString) {
           const userData = JSON.parse(userDataString);
           const { id } = userData;
-          const apiUrl = process.env.REACT_APP_API_BASE_URL;
+          const apiUrl = import.meta.env.VITE_APP_BASE_URL;
           if (id) {
             const res2 = await fetch(`${apiUrl}/api/image-for-hacker/download/${id}`);
             if (res2.ok) {

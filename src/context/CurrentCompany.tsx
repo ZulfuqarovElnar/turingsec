@@ -42,7 +42,7 @@ const CurrentCompanyProvider = ({ children }: { children: ReactNode }) => {
         const companyString = localStorage.getItem("company");
         if (companyString) {
           const company = JSON.parse(companyString);
-          const apiUrl = process.env.REACT_APP_API_BASE_URL;
+          const apiUrl = import.meta.env.VITE_APP_BASE_URL;
 
           const res = await fetch(
             `${apiUrl}/api/companies/current-user`,

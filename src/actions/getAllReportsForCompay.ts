@@ -10,7 +10,7 @@ export async function getAllReportsForCompany() {
     // Check if company data contains accessToken
     const accessToken = companyData.accessToken;
 
-    const apiUrl = process.env.REACT_APP_API_BASE_URL;
+    const apiUrl = import.meta.env.VITE_APP_BASE_URL;
     const res = await fetch(
       `${apiUrl}/api/bug-bounty-reports/reports/company`,
       {
