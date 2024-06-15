@@ -206,6 +206,27 @@ export default function ProgramSubmitPage() {
       toast.error("Report submission failed");
     }
   }
+  // Util function to get unique asset types
+const getUniqueAssetTypes = (assets) => {
+  const types = [];
+  const uniqueTypes = new Set();
+  assets.forEach(asset => {
+    if (!uniqueTypes.has(asset.type)) {
+      types.push(asset);
+      uniqueTypes.add(asset.type);
+    }
+  });
+  return types;
+};
+
+// Function to get unique assets
+const uniqueAssets = getUniqueAssetTypes([
+  ...(programData?.asset?.lowAsset?.assets || []),
+  ...(programData?.asset?.mediumAsset?.assets || []),
+  ...(programData?.asset?.highAsset?.assets || []),
+  ...(programData?.asset?.criticalAsset?.assets || [])
+]);
+
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
       <AddCollabrateModal
@@ -335,78 +356,73 @@ export default function ProgramSubmitPage() {
                 </div>
                 <div className="lg:-[40%] w-full">
                 <Select
-                    styles={{
-                      control: (provided, state) => ({
-                        ...provided,
-                        backgroundColor: "#2451F5",
-                        border: "none",
-                        color: "white",
-                        borderRadius: "20px",
-                        width: "100%",
-                        height: "50px",
-                        padding: "0 10px",
-                        "&:hover": {
-                          borderColor: "none",
-                        },
-                      }),
-                      option: (provided, state) => ({
-                        ...provided,
-                        backgroundColor: state.isFocused ? "#2451F5" : "#2451F5",
-                        ":hover": { backgroundColor: "rgb(14 165 233)" },
-                        color: state.isFocused ? "white" : "white",
-                      }),
-                      menuList: (provided, state) => ({
-                        ...provided,
-                        backgroundColor: "#2451F5",
-                        color: "white",
-                        padding: "0",
-                      }),
-                      placeholder: (provided) => ({
-                        ...provided,
-                        color: "white",
-                      }),
-                      singleValue: (provided, state) => {
-                        const color = "white";
+                  styles={{
+                    control: (provided, state) => ({
+                      ...provided,
+                      backgroundColor: "#2451F5",
+                      border: "none",
+                      color: "white",
+                      borderRadius: "20px",
+                      width: "100%",
+                      height: "50px",
+                      padding: "0 10px",
+                      "&:hover": {
+                        borderColor: "none",
+                      },
+                    }),
+                    option: (provided, state) => ({
+                      ...provided,
+                      backgroundColor: state.isFocused ? "#2451F5" : "#2451F5",
+                      ":hover": { backgroundColor: "rgb(14 165 233)" },
+                      color: state.isFocused ? "white" : "white",
+                    }),
+                    menuList: (provided, state) => ({
+                      ...provided,
+                      backgroundColor: "#2451F5",
+                      color: "white",
+                      padding: "0",
+                    }),
+                    placeholder: (provided) => ({
+                      ...provided,
+                      color: "white",
+                    }),
+                    singleValue: (provided, state) => {
+                      const color = "white";
                         return { ...provided, color };
                       },
                     }}
-                    options={[
-                      ...(programData?.asset?.lowAsset?.assets || []),
-                      ...(programData?.asset?.mediumAsset?.assets || []),
-                      ...(programData?.asset?.highAsset?.assets || []),
-                      ...(programData?.asset?.criticalAsset?.assets || []),
-                    ].map((asset) => ({
-                      label: asset.type,
-                      value: asset.type,
-                    }))}
-                    isSearchable={false}
-                    isClearable={true}
-                    placeholder="Asset type"
-                    onChange={(selectedOption) => {
-                      const selectedAsset = [
-                        ...(programData?.asset?.lowAsset?.assets || []),
-                        ...(programData?.asset?.mediumAsset?.assets || []),
-                        ...(programData?.asset?.highAsset?.assets || []),
-                        ...(programData?.asset?.criticalAsset?.assets || [])
-                      ].find((asset) => asset.type === selectedOption?.value);
-
-                      setSelectedAsset({
-                        name: selectedAsset?.names[0] || '',
-                        type: selectedAsset?.type || ''
-                      });
-                    }}
-                  />
+                  options={uniqueAssets.map(asset => ({
+                    label: asset.type,
+                    value: asset.type,
+                  }))}
+                  isSearchable={false}
+                  isClearable={true}
+                  placeholder="Asset type"
+                  onChange={(selectedOption) => {
+                    const selectedAsset = uniqueAssets.find(asset => asset.type === selectedOption?.value);
+                    setSelectedAsset({
+                      name: selectedAsset?.names[0] || '',
+                      type: selectedAsset?.type || ''
+                    });
+                  }}
+                />
                 </div>
               </div>
               <div className="overflow-y-scroll mt-4 bluescroll max-h-[280px]">
-                {[
-                  ...(programData?.asset?.lowAsset?.assets || []),
-                  ...(programData?.asset?.mediumAsset?.assets || []),
-                  ...(programData?.asset?.highAsset?.assets || []),
-                  ...(programData?.asset?.criticalAsset?.assets || []),
-                ].flatMap((asset: any) => asset.names.map((name: string, index: number) => (
-                  <Line key={`${asset.id}-${index}`} text={name} asset={asset} />
-                )))}
+                {selectedAsset ? (
+                  [
+                    ...(programData?.asset?.lowAsset?.assets || []),
+                    ...(programData?.asset?.mediumAsset?.assets || []),
+                    ...(programData?.asset?.highAsset?.assets || []),
+                    ...(programData?.asset?.criticalAsset?.assets || []),
+                  ]
+                    .filter(asset => asset.type === selectedAsset.type)
+                    .flatMap((asset) => asset.names.map((name, index) => (
+                      <Line key={`${asset.id}-${index}`} text={name} asset={asset} />
+                    )))
+                ) : (
+                  <p className="px-8 py-4 bg-[#2B5D83] sm:text-[16px] text-[14px] font-[600]">Assets type seçin.</p>
+                )}
               </div>
             </div>
           </div>
