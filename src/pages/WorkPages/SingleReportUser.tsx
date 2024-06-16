@@ -354,12 +354,23 @@ export default function SingleReportUser() {
                                 {filteredReport.attachments.length > 0 ? (
                                     <div className="w-full">
                                         {filteredReport.attachments.map((a, index) => (
-                                            <div key={index}>
-                                                <a href={a} target="_blank" rel="noopener noreferrer">
-                                                    Click to see
-                                                </a>
-                                            </div>
+                                            (a.type==='image/jpeg' || a.type==='image/png')?(
+                                                <div key={index}>
+                                                    <a href={a} target="_blank" rel="noopener noreferrer">
+                                                        Click to image
+                                                    </a>
+                                                </div>
+                                            ) :(
+                                                    <div key={index}>
+                                                        <a href={a} target="_blank" rel="noopener noreferrer">
+                                                            Click to see
+                                                        </a>
+                                                    </div>
+                                            )
+                                            
                                         ))}
+                                        
+
                                     </div>
                                 ) : (
                                     <div className="w-full">No attachments</div>
