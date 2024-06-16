@@ -17,43 +17,25 @@ export default function ProgramOnePage() {
   } = useGetProgramById(programId);
 
   useEffect(() => {
-    localStorage.setItem(
-      "programId",
-      JSON.stringify({
-        id: programId,
-      })
-    );
-  }, [programId]);
+    if (programData) {
+      localStorage.setItem(
+        "programId",
+        JSON.stringify({
+          id: programId,
+        })
+      );
+    }
+  }, [programData, programId]);
 
-  const [easyAssets, setEasyAssets] = useState([]);
-  const [mediumAssets, setMediumAssets] = useState([]);
-  const [highAssets, setHighAssets] = useState([]);
-  const [criticalAssets, setCriticalAssets] = useState([]);
-  const [maxlength, setMaxlength] = useState(0);
-  const [outScope, setOutScope] = useState([]);
-  const [inScope, setInScope] = useState([]);
+  const [maxLength, setMaxLength] = useState(0);
 
   useEffect(() => {
-    if (programData && programData.assetTypes) {
-      const easyAssets = programData.assetTypes.filter(
-        (asset) => asset.level === "easy"
-      );
-      const mediumAssets = programData.assetTypes.filter(
-        (asset) => asset.level === "medium"
-      );
-      const highAssets = programData.assetTypes.filter(
-        (asset) => asset.level === "hard"
-      );
-      const criticalAssets = programData.assetTypes.filter(
-        (asset) => asset.level === "critical"
-      );
+    if (programData && programData.asset) {
+      const easyAssets = programData.asset.lowAsset.assets;
+      const mediumAssets = programData.asset.mediumAsset.assets;
+      const highAssets = programData.asset.highAsset.assets;
+      const criticalAssets = programData.asset.criticalAsset.assets;
 
-      setEasyAssets(easyAssets);
-      setMediumAssets(mediumAssets);
-      setHighAssets(highAssets);
-      setCriticalAssets(criticalAssets);
-
-      // Calculate the lengths of all arrays
       const lengths = [
         easyAssets.length,
         mediumAssets.length,
@@ -61,12 +43,8 @@ export default function ProgramOnePage() {
         criticalAssets.length,
       ];
 
-      // Find the maximum length
       const maxLength = Math.max(...lengths);
-      setMaxlength(maxLength);
-
-      setOutScope(programData.outOfScope);
-      setInScope(programData.inScope);
+      setMaxLength(maxLength);
     }
   }, [programData]);
 
@@ -75,6 +53,13 @@ export default function ProgramOnePage() {
     navigate("submit");
   };
 
+  if (programPending) return <div>Loading...</div>;
+  if (programError) return <div>Error fetching program data!</div>;
+
+  // Ensure programData and programData.asset are defined before accessing
+  if (!programData || !programData.asset) {
+    return <div></div>;
+  }
 
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
@@ -244,89 +229,106 @@ export default function ProgramOnePage() {
         </div>
         <h2 className="my-[10px] sm:text-[20px] text-[16px] w-[600]">Reward</h2>
         <div className="rounded-2xl overflow-hidden">
-          <div className="bg-[#001D34] h-[70px] items-center px-8 flex ">
-            <div className="my-8 flex justify-between flex-1">
-              <div className={`flex items-center gap-4 `}>
-                <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                  <div
-                    className={`bg-[#FFDE31] h-[8px] w-[60px] rounded-full`}
-                  ></div>
-                </div>
+    <div className="bg-[#001D34] h-[70px] items-center px-8 flex">
+      <div className="my-8 flex justify-between flex-1">
+        <div className={`flex items-center gap-4 `}>
+          <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
+            <div className={`bg-[#FFDE31] h-[8px] w-[60px] rounded-full`}></div>
+          </div>
+          <p className="sm:text-[18px] text-[16px] font-[600]">Low</p>
+        </div>
+        <div className={`flex items-center gap-4 `}>
+          <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
+            <div className={`bg-[#2342E3] h-[8px] w-[60px] rounded-full`}></div>
+          </div>
+          <p className="sm:text-[18px] text-[16px] font-[600]">Medium</p>
+        </div>
+        <div className={`flex items-center gap-4 `}>
+          <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
+            <div className={`bg-[#5AFF31] h-[8px] w-[60px] rounded-full`}></div>
+          </div>
+          <p className="sm:text-[18px] text-[16px] font-[600]">High</p>
+        </div>
+        <div className={`flex items-center gap-4 `}>
+          <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
+            <div className={`bg-[#E32323] h-[8px] w-[60px] rounded-full`}></div>
+          </div>
+          <p className="sm:text-[18px] text-[16px] font-[600]">Critical</p>
+        </div>
+      </div>
+    </div>
 
-                <p className="sm:text-[18px] text-[16px] font-[600]">Low</p>
-              </div>
-              <div className={`flex items-center gap-4 `}>
-                <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                  <div
-                    className={`bg-[#2342E3] h-[8px] w-[60px] rounded-full`}
-                  ></div>
-                </div>
+    <div className="bg-[#0A273D] px-8 border-b border-black py-4">
+      {Array.from({ length: maxLength }).map((_, i) => (
+        <div key={i} className="mb-4">
+          <div className="flex lg:flex-row items-center justify-between gap-4">
+            {/* Low Asset */}
+            <div className="flex-1 text-center min-w-[100px] p-4 bg-[#00467C] rounded-lg shadow-md">
+              <p className="text-[#FFDE31] font-semibold">
+                {programData.asset.lowAsset.assets[i]?.type || "-"}
+              </p>
+              <p className="text-white">
+                {programData.asset.lowAsset.assets[i]?.names.join(", ") || "-"}
+              </p>
+            </div>
 
-                <p className="sm:text-[18px] text-[16px] font-[600]">Medium</p>
-              </div>
-              <div className={`flex items-center gap-4 `}>
-                <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                  <div
-                    className={`bg-[#5AFF31] h-[8px] w-[60px] rounded-full`}
-                  ></div>
-                </div>
+            {/* Medium Asset */}
+            <div className="flex-1 text-center min-w-[100px] p-4 bg-[#2342E3] rounded-lg shadow-md">
+              <p className="text-[#FFDE31] font-semibold">
+                {programData.asset.mediumAsset.assets[i]?.type || "-"}
+              </p>
+              <p className="text-white">
+                {programData.asset.mediumAsset.assets[i]?.names.join(", ") || "-"}
+              </p>
+            </div>
 
-                <p className="sm:text-[18px] text-[16px] font-[600]">High</p>
-              </div>
-              <div className={`flex items-center gap-4 `}>
-                <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                  <div
-                    className={`bg-[#E32323] h-[8px] w-[60px] rounded-full`}
-                  ></div>
-                </div>
+            {/* High Asset */}
+            <div className="flex-1 text-center min-w-[100px] p-4 bg-[#5AFF31] rounded-lg shadow-md">
+              <p className="text-[#00467C] font-semibold">
+                {programData.asset.highAsset.assets[i]?.type || "-"}
+              </p>
+              <p className="text-gray-900">
+                {programData.asset.highAsset.assets[i]?.names.join(", ") || "-"}
+              </p>
+            </div>
 
-                <p className="sm:text-[18px] text-[16px] font-[600]">
-                  Critical
-                </p>
-              </div>
+            {/* Critical Asset */}
+            <div className="flex-1 text-center min-w-[100px] p-4 bg-[#E32323] rounded-lg shadow-md">
+              <p className="text-[#FFDE31] font-semibold">
+                {programData.asset.criticalAsset.assets[i]?.type || "-"}
+              </p>
+              <p className="text-white">
+                {programData.asset.criticalAsset.assets[i]?.names.join(", ") || "-"}
+              </p>
             </div>
           </div>
-          {Array.from({ length: maxlength }).map((index, i) => (
-            <div key={index} className="bg-[#0A273D] px-8 border-b border-black py-4">
-              <div className="flex items-center justify-between">
-                <div className="flex-1 text-center">
-                  <p>
-                    {easyAssets[i]?.assetType ? easyAssets[i].assetType : "-"}
-                  </p>
-                  <p> {easyAssets[i]?.price ? easyAssets[i].price : "-"}</p>
-                </div>
-                <div className="flex-1 text-center">
-                  <p>
-                    {" "}
-                    {mediumAssets[i]?.assetType
-                      ? mediumAssets[i].assetType
-                      : "-"}
-                  </p>
-                  <p> {mediumAssets[i]?.price ? mediumAssets[i].price : "-"}</p>
-                </div>
-                <div className="flex-1 text-center">
-                  <p>
-                    {" "}
-                    {highAssets[i]?.assetType ? highAssets[i].assetType : "-"}
-                  </p>
-                  <p> {highAssets[i]?.price ? highAssets[i].price : "-"}</p>
-                </div>
-                <div className="flex-1 text-center">
-                  <p>
-                    {" "}
-                    {criticalAssets[i]?.assetType
-                      ? criticalAssets[i].assetType
-                      : "-"}
-                  </p>
-                  <p>
-                    {" "}
-                    {criticalAssets[i]?.price ? criticalAssets[i].price : "-"}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
+      ))}
+
+      {/* Prices */}
+      <div className="flex  lg:flex-row items-center justify-between gap-4">
+        {/* Low Asset */}
+        <div className="flex-1 text-center min-w-[100px] p-4 bg-[#00467C] rounded-lg shadow-md">
+          <p className="text-white">{programData.asset.lowAsset.price}</p>
+        </div>
+
+        {/* Medium Asset */}
+        <div className="flex-1 text-center min-w-[100px] p-4 bg-[#2342E3] rounded-lg shadow-md">
+          <p className="text-white">{programData.asset.mediumAsset.price}</p>
+        </div>
+
+        {/* High Asset */}
+        <div className="flex-1 text-center min-w-[100px] p-4 bg-[#5AFF31] rounded-lg shadow-md">
+          <p className="text-gray-900 ">{programData.asset.highAsset.price}</p>
+        </div>
+
+        {/* Critical Asset */}
+        <div className="flex-1 text-center min-w-[100px] p-4 bg-[#E32323] rounded-lg shadow-md">
+          <p className="text-white">{programData.asset.criticalAsset.price}</p>
+        </div>
+      </div>
+    </div>
+  </div>
         <h2 className="my-[10px] sm:text-[20px] text-[16px] w-[600]">Policy</h2>
         <div className="bg-[#0A273D] h-[365px] rounded-xl p-4">
           {" "}
