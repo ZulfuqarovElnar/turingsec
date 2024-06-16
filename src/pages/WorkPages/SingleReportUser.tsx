@@ -32,8 +32,13 @@ export default function SingleReportUser() {
     const [allAssets, setAllAssets] = useState<string[]>([]);
     const collaborators = filteredReport.collaborators
     console.log(collaborators)
-
-
+    const fakeAttachments = {
+        attachments: [
+            { url: 'https://turingsec-production-2363.up.railway.app/api/report-media/download/28', type: 'application/pdf' },
+            { url: 'https://turingsec-production-2363.up.railway.app/api/report-media/download/29', type: 'image/png' },
+            { url: 'https://turingsec-production-2363.up.railway.app/api/report-media/download/30', type: 'image/png' }
+        ]
+    };
 
     return (
         <div className="text-white flex-1 flex flex-col overflow-hidden relative">
@@ -352,14 +357,26 @@ export default function SingleReportUser() {
                         <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
                             <div className="flex gap-4 flex-col">
                                 {filteredReport.attachments.length > 0 ? (
-                                    <div className="w-full">
-                                        {filteredReport.attachments.map((a, index) => (
-                                            <div key={index}>
-                                                <a href={a} target="_blank" rel="noopener noreferrer">
-                                                    Click to see
-                                                </a>
-                                            </div>
+                                    <div className="w-full flex gap-9">
+                                        {fakeAttachments.attachments.map((a, index) => (
+                                            (a.type==='image/jpeg' || a.type==='image/png')?(
+                                                <div key={index} >
+                                                    <a href={a} target="_blank" rel="noopener noreferrer">
+                                                        Click to image
+                                                    </a>
+                                                    <img src={a.url} alt={`attachment-${index}`} width="100" height="40" />
+                                                </div>
+                                            ) :(
+                                                    <div key={index}>
+                                                        <a href={a} target="_blank" rel="noopener noreferrer">
+                                                            Click to see
+                                                        </a>
+                                                    </div>
+                                            )
+                                            
                                         ))}
+                                        
+
                                     </div>
                                 ) : (
                                     <div className="w-full">No attachments</div>
