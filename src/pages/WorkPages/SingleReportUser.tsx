@@ -9,10 +9,20 @@ import { useState } from "react";
 // import { useCurrentUser } from "../../context/CurrentUser";
 import { Textarea } from '../../components/ui/textarea';
 import { useGetUserReports } from '../../queryies/useGetUserReports';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faFile } from '@fortawesome/free-regular-svg-icons';
+import { faVideo } from '@fortawesome/free-solid-svg-icons';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+// Add the icon to the library
+library.add(faFile);
+library.add(faVideo)
+
 
 export default function SingleReportUser() {
     const { id } = useParams();
-    
+
     const { data } = useGetUserReports();
     console.log(data)
     console.log("id: " + id)
@@ -28,21 +38,14 @@ export default function SingleReportUser() {
 
     // const [methodName, setMethodName] = useState<string>("");
     const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
- 
+
     const [allAssets, setAllAssets] = useState<string[]>([]);
     const collaborators = filteredReport.collaborators
-    console.log(collaborators)
-    const fakeAttachments = {
-        attachments: [
-            { url: 'https://turingsec-production-2363.up.railway.app/api/report-media/download/28', type: 'application/pdf' },
-            { url: 'https://turingsec-production-2363.up.railway.app/api/report-media/download/29', type: 'image/png' },
-            { url: 'https://turingsec-production-2363.up.railway.app/api/report-media/download/30', type: 'image/png' }
-        ]
-    };
+
 
     return (
         <div className="text-white flex-1 flex flex-col overflow-hidden relative">
-            
+
 
             <div className="bg-[#1E1E1E] lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
                 <div className="lg:flex my-4  gap-6 relative hidden mb-16">
@@ -294,7 +297,7 @@ export default function SingleReportUser() {
                                 </div>
 
 
-                                
+
                             </div>
                         </div>
                     </div>
@@ -336,7 +339,7 @@ export default function SingleReportUser() {
                                     <Textarea type="text" placeholder="Description" value={filteredReport.proofOfConcept.description}
                                         className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-2 " />
                                 </div></div>
-                    
+
 
 
                         </div>
@@ -351,37 +354,43 @@ export default function SingleReportUser() {
 
                     <div className=" rounded-xl overflow-hidden  flex-1">
                         <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
-                        Attachments
+                            Attachments
                         </div>
 
                         <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
                             <div className="flex gap-4 flex-col">
                                 {filteredReport.attachments.length > 0 ? (
                                     <div className="w-full flex gap-9">
-                                        {fakeAttachments.attachments.map((a, index) => (
-                                            (a.type==='image/jpeg' || a.type==='image/png')?(
+                                        {filteredReport.attachments.map((a, index) => (
+                                            (a.contentType === 'image/jpeg' || a.contentType === 'image/png') ? (
                                                 <div key={index} >
-                                                    <a href={a} target="_blank" rel="noopener noreferrer">
-                                                        Click to image
+                                                    <a href={a.url} target="_blank" rel="noopener noreferrer">
+                                                        <img className="cursor-pointer" src={a.url} alt={`attachment-${index}`} width="100" height="40" />
                                                     </a>
-                                                    <img src={a.url} alt={`attachment-${index}`} width="100" height="40" />
-                                                </div>
-                                            ) :(
-                                                    <div key={index}>
-                                                        <a href={a} target="_blank" rel="noopener noreferrer">
-                                                            Click to see
-                                                        </a>
-                                                    </div>
-                                            )
-                                            
-                                        ))}
-                                        
 
+                                                </div>
+                                            ) : a.contentType.startsWith('video/') ? (
+                                        <div key={index}>
+                                            <a href={a.url} target="_blank" rel="noopener noreferrer">
+                                                <FontAwesomeIcon icon={faVideo} size="2xl" style={{ color: "#f3f4f7" }} />
+                                                Video
+                                            </a>
+                                        </div>
+                                        ) : (
+                                        <div key={index}>
+                                            <a href={a.url} target="_blank" rel="noopener noreferrer">
+                                                <FontAwesomeIcon icon={faFile} size="2xl" style={{ color: "#f3f4f7" }} />
+                                                File
+                                            </a>
+                                        </div>
+                                        )
+
+                                        ))}
                                     </div>
                                 ) : (
                                     <div className="w-full">No attachments</div>
                                 )}
-                            
+
                             </div>
                         </div>
                     </div>
@@ -435,7 +444,7 @@ export default function SingleReportUser() {
                                     />
                                     <div className="bg-[#001D34] w-[50px]   flex items-center justify-center "
                                     >
-                                        % 
+                                        %
                                     </div>
                                 </div>
                             </div>
