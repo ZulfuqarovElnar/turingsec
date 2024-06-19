@@ -35,14 +35,35 @@ export default function SingleReportUser() {
         });
     });
     console.log(filteredReport);
-
-    // const [methodName, setMethodName] = useState<string>("");
+  
     const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
-
     const [allAssets, setAllAssets] = useState<string[]>([]);
     const collaborators = filteredReport.collaborators
+    const [enlarged, setEnlarged] = useState(null);
 
+    const handleEnlarge = (index) => {
+        setEnlarged(enlarged === index ? null : index);
+    };
 
+    const getAttachmentStyle = (index) => {
+        if (enlarged === index) {
+            return {
+                width: '300px',
+                height:'180px',
+                transition: 'width 0.3s ease-in-out',
+                transition: 'height 0.3s ease-in-out',
+                zIndex: 1000,
+                position: 'relative',
+            };
+        } else {
+            return {
+                width: '100px',
+                height: '40px',
+                transition: 'transform 0.3s ease-in-out',
+            };
+        }
+
+    }
     return (
         <div className="text-white flex-1 flex flex-col overflow-hidden relative">
 
@@ -363,10 +384,13 @@ export default function SingleReportUser() {
                                     <div className="w-full flex gap-9">
                                         {filteredReport.attachments.map((a, index) => (
                                             (a.contentType === 'image/jpeg' || a.contentType === 'image/png') ? (
-                                                <div key={index} >
-                                                    <a href={a.url} target="_blank" rel="noopener noreferrer">
-                                                        <img className="cursor-pointer" src={a.url} alt={`attachment-${index}`} width="100" height="40" />
-                                                    </a>
+                                                <div key={index} onClick={() => handleEnlarge(index)} >
+                                                    <img 
+                                                    className="cursor-pointer" 
+                                                    src={a.url} 
+                                                    alt={`attachment-${index}`} 
+                                                    style={getAttachmentStyle(index)} />
+                                                   
 
                                                 </div>
                                             ) : a.contentType.startsWith('video/') ? (

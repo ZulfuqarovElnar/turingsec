@@ -144,7 +144,7 @@ console.log(filteredReport);
                       <div className="flex items-center gap-4 flex-col lg:flex-row">
                         <div className=" w-full">
                           <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                            <Input type="text" placeholder="Max Bounty" value={'Choose your own template'}
+                              <Input type="text" placeholder="Max Bounty" value={filteredReport.reportTemplate}
                               className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                           </Label>
                         </div>
@@ -165,7 +165,7 @@ console.log(filteredReport);
 
                         <div className="lg:-[40%] w-full">
                           <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                            <Input value={'Access Control'} type="text" placeholder="Max Bounty" 
+                              <Input value={filteredReport.weakness.type} type="text" placeholder="Max Bounty" 
                               className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                           </Label>
                         </div>
@@ -174,7 +174,7 @@ console.log(filteredReport);
 
 
                           <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                            <Input value={filteredReport.weakness} type="text" placeholder="Max Bounty"
+                              <Input value={filteredReport.weakness.name} type="text" placeholder="Max Bounty"
                               className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                           </Label>
                         </div>
@@ -310,30 +310,7 @@ console.log(filteredReport);
                         </div>
 
 
-                        <div className='bg-[#2B5D83] rounded-xl'>
-                          <div
-                            className='rounded-xl sm:text-[16px] text-[14px] font-[500] bg-[#001D34] h-[60px] flex justify-center items-center mt-3 px-8'>
-                            <div className='flex-1 flex justify-center'>Method Name</div>
-                            <div className='flex-1 flex justify-center'>Confidentially</div>
-                            <div className='flex-1 flex justify-center'>Integrity</div>
-                            <div className='flex-1 flex justify-center'>Availability</div>
-                          </div>
-
-                          <div
-                            className='sm:text-[16px] text-[14px] font-[500] h-[60px] flex justify-between items-center px-8'>
-                            <div className='flex-1 flex justify-center'>{filteredReport.methodName}</div>
-                            <div className='flex-1 flex justify-center'>
-                              <RadioInput name="attackvector1" value="High" id="Network" label="High" checked={true} />
-                            </div>
-                            <div className='flex-1 flex justify-center'>
-                              <RadioInput name="attackvector2" value="Low" id="Network" label="Low" checked={true} />
-                            </div>
-
-                            <div className='flex-1 flex justify-center'>
-                              <RadioInput name="attackvector3" value="High" id="Network" label="High" checked={true} />
-                            </div>
-                          </div>
-                        </div>
+                       
                       </div>
                     </div>
                   </div>
@@ -374,24 +351,64 @@ console.log(filteredReport);
                           <Textarea type="text" placeholder="Description" value={filteredReport.proofOfConcept.description}
                             className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-2 " />
                           </div></div>
-                      {/* <div>
-                        <h2 className="sm:text-[18px] text-[16px] font-[400] mt-4">
-                          Impact
-                        </h2>
-                        <div className="w-full mt-4">
-                        <Textarea
-                            className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-5 "
-                          />
-                        </div>
-                      </div> */}
-
-                      
+      
                     </div>
                   </div>
                 </div>
+
+                  <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
+
+                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+                      6
+                    </div>
+
+                    <div className=" rounded-xl overflow-hidden  flex-1">
+                      <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+                        Attachments
+                      </div>
+
+                      <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+                        <div className="flex gap-4 flex-col">
+                          {filteredReport.attachments.length > 0 ? (
+                            <div className="w-full flex gap-9">
+                              {filteredReport.attachments.map((a, index) => (
+                                (a.contentType === 'image/jpeg' || a.contentType === 'image/png') ? (
+                                  <div key={index} >
+                                    <a href={a.url} target="_blank" rel="noopener noreferrer">
+                                      <img className="cursor-pointer" src={a.url} alt={`attachment-${index}`} width="100" height="40" />
+                                    </a>
+
+                                  </div>
+                                ) : a.contentType.startsWith('video/') ? (
+                                  <div key={index}>
+                                    <a href={a.url} target="_blank" rel="noopener noreferrer">
+                                      <FontAwesomeIcon icon={faVideo} size="2xl" style={{ color: "#f3f4f7" }} />
+                                      Video
+                                    </a>
+                                  </div>
+                                ) : (
+                                  <div key={index}>
+                                    <a href={a.url} target="_blank" rel="noopener noreferrer">
+                                      <FontAwesomeIcon icon={faFile} size="2xl" style={{ color: "#f3f4f7" }} />
+                                      File
+                                    </a>
+                                  </div>
+                                )
+
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="w-full">No attachments</div>
+                          )}
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
                   <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
-                    6
+                    7
                   </div>
                   <div className=" rounded-xl overflow-hidden  flex-1">
                     <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
