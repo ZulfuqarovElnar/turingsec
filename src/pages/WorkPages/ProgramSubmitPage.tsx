@@ -40,7 +40,12 @@ export default function ProgramSubmitPage() {
   const [weaknessType, setWeaknessType] = useState();
  
  
-  const severityRef = useRef(null)
+  const [selectedOption, setSelectedOption] = useState('');
+  const severityRef = useRef(null);
+
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
   
  
   const {
@@ -60,7 +65,7 @@ export default function ProgramSubmitPage() {
   }, [currentUser]);
   
   
-  const [selectedOption, setSelectedOption] = useState('with');
+  // const [selectedOption, setSelectedOption] = useState('with');
 
   // const handleSev = (e)=>{
   //   console.log(e)
@@ -585,15 +590,19 @@ const uniqueAssets = getUniqueAssetTypes([
               <div className="flex justify-between lg:items-center mb-4 xl:w-[70%] w-full flex-col lg:flex-row gap-4 ">
                 <RadioInput 
                   name="test1"
-                  value="manual"
+                  value="CVSS"
                   id="test1"
                   label="Submit report without severity"
+                  onChange={handleOptionChange}
+                  checked={selectedOption === 'CVSS'}
                 />
                 <RadioInput
                   name="test1"
-                  value="CVSS"
+                  value="manual"
                   id="test2"
                   label="Submit report with severity"
+                  onChange={handleOptionChange}
+                  checked={selectedOption === 'manual'}
                 />
               </div>
               <div className=" items-center gap-4">
@@ -643,6 +652,7 @@ const uniqueAssets = getUniqueAssetTypes([
                   placeholder=" Period"
                 />
               </div>
+              {selectedOption === 'CVSS' && (
               <div className="mt-4 severity" id="withSev" ref={severityRef}>
                 <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
@@ -828,14 +838,9 @@ const uniqueAssets = getUniqueAssetTypes([
                     />
                   </div>
                 </div>
-                <Input
-                  type="text"
-                  placeholder="Method name"
-                  className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0  focus-visible:ring-offset-0 border-2 border-[#2451F5]  placeholder:text-white py-6 mt-4"
-                  value={methodName}
-                  onChange={(e) => setMethodName(e.target.value)}
-                />
               </div>
+              )}
+              {selectedOption === 'manual' && (
               <div className="mt-4 severity" id="withoutSev">
               <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
@@ -869,6 +874,14 @@ const uniqueAssets = getUniqueAssetTypes([
                   </div>
                 </div>
               </div>
+              )}
+              <Input
+                  type="text"
+                  placeholder="Method name"
+                  className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0  focus-visible:ring-offset-0 border-2 border-[#2451F5]  placeholder:text-white py-6 mt-4"
+                  value={methodName}
+                  onChange={(e) => setMethodName(e.target.value)}
+                />
             </div>
           </div>
         </div>
