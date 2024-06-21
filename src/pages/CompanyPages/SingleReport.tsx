@@ -31,6 +31,30 @@ filteredReport = report;
 });
 });
 console.log(filteredReport);
+  const [enlarged, setEnlarged] = useState(null);
+
+  const handleEnlarge = (index) => {
+    setEnlarged(enlarged === index ? null : index);
+  };
+
+  const getAttachmentStyle = (index) => {
+    if (enlarged === index) {
+      return {
+        width: '300px',
+        height: '180px',
+        transition: 'width 0.3s ease-in-out, height 0.3s ease-in-out',
+        zIndex: 1000,
+        position: 'relative',
+      };
+    } else {
+      return {
+        width: '100px',
+        height: '40px',
+        transition: 'transform 0.3s ease-in-out',
+      };
+    }
+
+  }
 
 // const [methodName, setMethodName] = useState<string>("");
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
@@ -51,6 +75,7 @@ console.log(filteredReport);
           const [allAssets, setAllAssets] = useState<string[]>([]);
             const collaborators=filteredReport.collaborators
             console.log(collaborators)
+
 
 
 
@@ -165,7 +190,7 @@ console.log(filteredReport);
 
                         <div className="lg:-[40%] w-full">
                           <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                              <Input value={filteredReport.weakness.type} type="text" placeholder="Max Bounty" 
+                              <Input value={filteredReport.weakness.name} type="text" placeholder="Max Bounty" 
                               className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                           </Label>
                         </div>
@@ -174,7 +199,7 @@ console.log(filteredReport);
 
 
                           <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                              <Input value={filteredReport.weakness.name} type="text" placeholder="Max Bounty"
+                              <Input value={filteredReport.weakness.type} type="text" placeholder="Max Bounty"
                               className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                           </Label>
                         </div>
@@ -373,10 +398,12 @@ console.log(filteredReport);
                             <div className="w-full flex gap-9">
                               {filteredReport.attachments.map((a, index) => (
                                 (a.contentType === 'image/jpeg' || a.contentType === 'image/png') ? (
-                                  <div key={index} >
-                                    <a href={a.url} target="_blank" rel="noopener noreferrer">
-                                      <img className="cursor-pointer" src={a.url} alt={`attachment-${index}`} width="100" height="40" />
-                                    </a>
+                                  <div key={index} onClick={() => handleEnlarge(index)} >
+                                    <img
+                                      className="cursor-pointer"
+                                      src={a.url}
+                                      alt={`attachment-${index}`}
+                                      style={getAttachmentStyle(index)} />
 
                                   </div>
                                 ) : a.contentType.startsWith('video/') ? (
