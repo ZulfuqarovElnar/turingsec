@@ -8,7 +8,7 @@ import { Textarea } from "../../components/ui/textarea";
 import { useGetProgramById } from "../../queryies/useGetProgramById";
 import { useParams } from "react-router";
 // import { useGetCompanyById } from "../../queryies/useGetCompanyById";
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { useSendReport } from "../../queryies/useSendReport";
 import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
@@ -74,14 +74,14 @@ export default function ProgramSubmitPage() {
     { label: "Closed Bounty", value: 1000,},
   ];
 
-  const fakeAssetsData = [
-    { label: "Harware", value: 1000,},
-    { label: "AndroidPlayStore", value: 1000,},
-    { label: "OtherAsset", value: 1000,},
-    { label: "losAppStore", value: 1000,},
-    { label: "Domain", value: 1000,},
-    { label: "API", value: 1000,}
-  ];
+  // const fakeAssetsData = [
+  //   { label: "Harware", value: 1000,},
+  //   { label: "AndroidPlayStore", value: 1000,},
+  //   { label: "OtherAsset", value: 1000,},
+  //   { label: "losAppStore", value: 1000,},
+  //   { label: "Domain", value: 1000,},
+  //   { label: "API", value: 1000,}
+  // ];
 
   const fakeWeaknessData = [
     { label: "Access Control", value: 1000,},
@@ -108,15 +108,24 @@ export default function ProgramSubmitPage() {
       setAllAssets(assets);
     }
   }, [programData]);
+  const [severityValue, setSeverityValue] = useState<string>('');
+  
 
   const mutation = useSendReport(programId);
   
+  const handleRadioChange = () => {
+    console.log("severityyyyyyyyyyyyyy")
+    const radios = document.querySelector('input[type="radio"]:checked')
+    setSeverityValue(radios.value)
+  
+  };
+  
   async function submitReport() {
     try {
-      const radios =document.querySelector('input[type="radio"]:checked');
-      const severityValue= radios.value;
- 
+      // const radios =document.querySelector('input[type="radio"]:checked');
+      // const severityValue= radios.value;
       console.log(severityValue)
+  
       const severity = parseCvss3Vector('AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H').baseScore;
       // localStorage'den kullanıcı verilerini al
       const userString = localStorage.getItem("user");
@@ -582,21 +591,25 @@ const uniqueAssets = getUniqueAssetTypes([
               Severity
             </div>
             <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
-              <div className="flex justify-between lg:items-center mb-4 xl:w-[70%] w-full flex-col lg:flex-row gap-4 ">
+              <div className="flex justify-between lg:items-center mb-4 xl:w-[70%] w-full flex-col lg:flex-row gap-4 " onChange={handleRadioChange} >
                 <RadioInput 
                   name="test1"
                   value="manual"
                   id="test1"
-                  label="Submit report without severity"
+                  label="Manual"
                 />
                 <RadioInput
                   name="test1"
                   value="CVSS"
                   id="test2"
-                  label="Submit report with severity"
+                  label="CVSS"
+               
                 />
               </div>
-              <div className=" items-center gap-4">
+              
+              {severityValue === 'CVSS' ? (
+                <>
+                <div className=" items-center gap-4">
                 <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
                   Severity calculation method
                 </h2>
@@ -643,7 +656,7 @@ const uniqueAssets = getUniqueAssetTypes([
                   placeholder=" Period"
                 />
               </div>
-              <div className="mt-4 severity" id="withSev" ref={severityRef}>
+                <div className="mt-4 severity" id="withSev" ref={severityRef}>
                 <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Attack vector
@@ -805,7 +818,7 @@ const uniqueAssets = getUniqueAssetTypes([
                 </div>
                 <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
-                    Availability 
+                    Availability
                   </div>
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
                     <RadioInput
@@ -828,47 +841,47 @@ const uniqueAssets = getUniqueAssetTypes([
                     />
                   </div>
                 </div>
-                <Input
-                  type="text"
-                  placeholder="Method name"
-                  className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0  focus-visible:ring-offset-0 border-2 border-[#2451F5]  placeholder:text-white py-6 mt-4"
-                  value={methodName}
-                  onChange={(e) => setMethodName(e.target.value)}
-                />
-              </div>
-              <div className="mt-4 severity" id="withoutSev">
-              <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
-                  <div className="min-w-[200px] mt-2 xl:mt-0">
-                    manual
+                 
+              </div></>
+              ): severityValue==='manual' ?(
+                <div className="mt-4 severity" id="withoutSev">
+                  <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                    <div className="min-w-[200px] mt-2 xl:mt-0">
+                      manual
+                    </div>
+                    <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                      <RadioInput
+                        name="attackvector"
+                        value="AV:N"
+                        id="Network"
+                        label="Network"
+                      />
+                      <RadioInput
+                        name="attackvector"
+                        value="AV:A"
+                        id="Adjacent"
+                        label="Adjacent"
+                      />
+                      <RadioInput
+                        name="attackvector"
+                        value="AV:L"
+                        id="Local"
+                        label="Local"
+                      />
+                      <RadioInput
+                        name="attackvector"
+                        value="AV:P"
+                        id="Physical"
+                        label="Physical"
+                      />
+                    </div>
                   </div>
-                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                    <RadioInput
-                      name="attackvector"
-                      value="AV:N"
-                      id="Network"
-                      label="Network"
-                    />
-                    <RadioInput
-                      name="attackvector"
-                      value="AV:A"
-                      id="Adjacent"
-                      label="Adjacent"
-                    />
-                    <RadioInput
-                      name="attackvector"
-                      value="AV:L"
-                      id="Local"
-                      label="Local"
-                    />
-                    <RadioInput
-                      name="attackvector"
-                      value="AV:P"
-                      id="Physical"
-                      label="Physical"
-                    />
-                  </div>
-                </div>
-              </div>
+                </div>):(
+                  <div></div>
+                )}
+              
+
+              
             </div>
           </div>
         </div>

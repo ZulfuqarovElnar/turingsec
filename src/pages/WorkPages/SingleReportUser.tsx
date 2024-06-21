@@ -50,8 +50,7 @@ export default function SingleReportUser() {
             return {
                 width: '300px',
                 height:'180px',
-                transition: 'width 0.3s ease-in-out',
-                transition: 'height 0.3s ease-in-out',
+                transition: 'width 0.3s ease-in-out, height 0.3s ease-in-out',
                 zIndex: 1000,
                 position: 'relative',
             };
@@ -173,7 +172,7 @@ export default function SingleReportUser() {
 
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.weakness.type} type="text" placeholder="Max Bounty"
+                                        <Input value={filteredReport.weakness.name} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -182,7 +181,7 @@ export default function SingleReportUser() {
 
 
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.weakness.name} type="text" placeholder="Max Bounty"
+                                        <Input value={filteredReport.weakness.type} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
