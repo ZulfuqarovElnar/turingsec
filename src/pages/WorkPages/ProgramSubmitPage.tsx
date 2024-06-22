@@ -24,7 +24,7 @@ import { useGetUserData } from "../../queryies/useGetUserData";
 export default function ProgramSubmitPage() {
  
   const { programId } = useParams();
-  const [methodName, setMethodName] = useState<string>("");
+ 
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
   const [proofConceptDescription, setProofConceptDescription] =
     useState<string>("");
@@ -38,7 +38,16 @@ export default function ProgramSubmitPage() {
   const {data: currentUser}=useGetUserData()
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [weaknessType, setWeaknessType] = useState();
- 
+  const [severityValue, setSeverityValue] = useState<string>('');
+  const [attackVector, setAttackVector] = useState<string>('');
+  const [attackComplexity, setAttackComplexity] = useState<string>('');
+  const [privilegesRequired, setPrivilegesRequired] = useState<string>('');
+  const [userInteractions, setUserInteractions] = useState<string>('');
+  const [integrity, setIntegrity] = useState<string>('');
+  const [availability, setAvailability] = useState<string>('');
+  const [confidentiality, setConfidentiality] = useState<string>('');
+  const [scope, setScope] = useState<string>('');
+  
  
   const severityRef = useRef(null)
   
@@ -53,18 +62,45 @@ export default function ProgramSubmitPage() {
  
   const [collabrates, setCollabrates] = useState([]);
   
- 
+ //..............CVSS Values.........
+  const handleAttackVector = () => {
+    const radios = document.querySelector('input[name="attackvector"]:checked')
+    setAttackVector(radios.value)
+  }
+  const handleAttackComplexity = () => {
+    const radios = document.querySelector('input[name="attackcomplexity"]:checked')
+    setAttackComplexity(radios.value)
+  }
+  const handlePrivilegesRequired = () => {
+    const radios = document.querySelector('input[name="privilegesrequired"]:checked')
+    setPrivilegesRequired(radios.value)
+  }
+  const handleUserInteractions = () => {
+    const radios = document.querySelector('input[name="userinteractions"]:checked')
+    setUserInteractions(radios.value)
+  }
+  const handleIntegrity = () => {
+    const radios = document.querySelector('input[name="integrity"]:checked')
+    setIntegrity(radios.value)
+  }
+  const handleAvailability = () => {
+    const radios = document.querySelector('input[name="availability"]:checked')
+    setAvailability(radios.value)
+  }
+  const handleConfidentiality = () => {
+    const radios = document.querySelector('input[name="confidentiality"]:checked')
+    setConfidentiality(radios.value)
+  }
+  const handleScope = () => {
+    const radios = document.querySelector('input[name="Scope"]:checked')
+    setScope(radios.value)
+  }
+ //...............CVSS.............
   
   useEffect(() => {
     setCollabrates((prev) =>[currentUser]);
   }, [currentUser]);
-  
-  
-  const [selectedOption, setSelectedOption] = useState('with');
-
-  // const handleSev = (e)=>{
-  //   console.log(e)
-  // }
+ 
   const fakeDATA = [
     { label: "Max Bounty", value: 1000,},
     { label: "Total Bounty", value: 1000,},
@@ -73,16 +109,7 @@ export default function ProgramSubmitPage() {
     { label: "Collaborated Bounty", value: 1000,},
     { label: "Closed Bounty", value: 1000,},
   ];
-
-  // const fakeAssetsData = [
-  //   { label: "Harware", value: 1000,},
-  //   { label: "AndroidPlayStore", value: 1000,},
-  //   { label: "OtherAsset", value: 1000,},
-  //   { label: "losAppStore", value: 1000,},
-  //   { label: "Domain", value: 1000,},
-  //   { label: "API", value: 1000,}
-  // ];
-
+ 
   const fakeWeaknessData = [
     { label: "Access Control", value: 1000,},
     { label: "AII CAPECs", value: 1000,},
@@ -95,11 +122,9 @@ export default function ProgramSubmitPage() {
   const [attachments, setAttachments] = useState<File[]>([]);
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>)=>{
     let file = e.target.files?.[0];
-    
     if (file) {
       setAttachments((prev) => [...prev,file])
     }
-  
   }
 
   useEffect(() => {
@@ -108,18 +133,13 @@ export default function ProgramSubmitPage() {
       setAllAssets(assets);
     }
   }, [programData]);
-  const [severityValue, setSeverityValue] = useState<string>('');
-  
-
-  const mutation = useSendReport(programId);
   
   const handleRadioChange = () => {
-    console.log("severityyyyyyyyyyyyyy")
     const radios = document.querySelector('input[type="radio"]:checked')
     setSeverityValue(radios.value)
-  
   };
-  
+
+  const mutation = useSendReport(programId);
   async function submitReport() {
     try {
       // const radios =document.querySelector('input[type="radio"]:checked');
@@ -182,17 +202,16 @@ export default function ProgramSubmitPage() {
           timeSpend: lastActivityDes,
         },
         attachments: attachments,
-        methodName: methodName,
+        methodName: severityValue,
         severity: `${severity}`,
-        severityValue: severityValue,
-        attackVector: "attac",
-        attackComplexity: "attackCompl",
-        privilegesRequired: "privile",
-        userInteractions: "userInteg",
-        scope: "scope",
-        confidentiality: "confideng",
-        integrity: "integr",
-        availability: "aviali"
+        attackVector: attackVector,
+        attackComplexity: attackComplexity,
+        privilegesRequired: privilegesRequired,
+        userInteractions: userInteractions,
+        scope: scope,
+        confidentiality: confidentiality,
+        integrity: integrity,
+        availability: availability
       }
     );
 
@@ -661,28 +680,28 @@ const uniqueAssets = getUniqueAssetTypes([
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Attack vector
                   </div>
-                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleAttackVector}>
                     <RadioInput
                       name="attackvector"
-                      value="AV:N"
+                      value="network"
                       id="Network"
                       label="Network"
                     />
                     <RadioInput
                       name="attackvector"
-                      value="AV:A"
+                      value="adjacent"
                       id="Adjacent"
                       label="Adjacent"
                     />
                     <RadioInput
                       name="attackvector"
-                      value="AV:L"
+                      value="local"
                       id="Local"
                       label="Local"
                     />
                     <RadioInput
                       name="attackvector"
-                      value="AV:P"
+                      value="physical"
                       id="Physical"
                       label="Physical"
                     />
@@ -692,16 +711,16 @@ const uniqueAssets = getUniqueAssetTypes([
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Attack complexity
                   </div>
-                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleAttackComplexity}>
                     <RadioInput
                       name="attackcomplexity"
-                      value="AC:L"
+                      value="low"
                       id="Low1"
                       label="Low"
                     />
                     <RadioInput
                       name="attackcomplexity"
-                      value="AC:H"
+                      value="high"
                       id="High1"
                       label="High"
                     />
@@ -711,23 +730,23 @@ const uniqueAssets = getUniqueAssetTypes([
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Privileges required
                   </div>
-                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handlePrivilegesRequired}>
                     <RadioInput
-                      name="Privilegesrequired"
-                      value="PR:N"
-                      id="None"
+                      name="privilegesrequired"
+                      value="none"
+                      id="None2"
                       label="None"
                     />
                     <RadioInput
-                      name="Privilegesrequired"
-                      value="PR:L"
+                      name="privilegesrequired"
+                      value="low"
                       id="Low2"
                       label="Low"
                     />
                     <RadioInput
-                      name="Privilegesrequired"
-                      value="PR:H"
-                      id="High"
+                      name="privilegesrequired"
+                      value="high"
+                      id="High2"
                       label="High"
                     />
                   </div>
@@ -736,16 +755,16 @@ const uniqueAssets = getUniqueAssetTypes([
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     User interactions
                   </div>
-                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleUserInteractions}>
                     <RadioInput
-                      name="Userinteractions"
-                      value="UI:N"
-                      id="None1"
+                      name="userinteractions"
+                      value="none"
+                      id="None3"
                       label="None"
                     />
                     <RadioInput
-                      name="Userinteractions"
-                      value="UI:R"
+                      name="userinteractions"
+                      value="required"
                       id="Required"
                       label="Required"
                     />
@@ -753,16 +772,16 @@ const uniqueAssets = getUniqueAssetTypes([
                 </div>
                 <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">Scope</div>
-                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleScope}>
                     <RadioInput
                       name="Scope"
-                      value="S:U"
+                      value="unchanged"
                       id="Unchanged"
                       label="Unchanged"
                     />
                     <RadioInput
                       name="Scope"
-                      value="S:C"
+                      value="changed"
                       id="Changed"
                       label="Changed"
                     />
@@ -772,22 +791,22 @@ const uniqueAssets = getUniqueAssetTypes([
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Confidentiality
                   </div>
-                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleConfidentiality}>
                     <RadioInput
-                      name="Confidentiality"
-                      value="C:N"
+                      name="confidentiality"
+                      value="none"
                       id="None3"
                       label="None"
                     />
                     <RadioInput
-                      name="Confidentiality"
-                      value="C:L"
+                      name="confidentiality"
+                      value="low"
                       id="Low3"
                       label="Low"
                     />
                     <RadioInput
-                      name="Confidentiality"
-                      value="C:H"
+                      name="confidentiality"
+                      value="high"
                       id="High4"
                       label="High"
                     />
@@ -795,22 +814,22 @@ const uniqueAssets = getUniqueAssetTypes([
                 </div>
                 <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">Integrity</div>
-                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleIntegrity}>
                     <RadioInput
-                      name="Integrity"
-                      value="I:N"
+                      name="integrity"
+                      value="none"
                       id="None5"
                       label="None"
                     />
                     <RadioInput
-                      name="Integrity"
-                      value="I:L"
+                      name="integrity"
+                      value="low"
                       id="Low5"
                       label="Low"
                     />
                     <RadioInput
-                      name="Integrity"
-                      value="I:H"
+                      name="integrity"
+                      value="high"
                       id="High5"
                       label="High"
                     />
@@ -820,22 +839,22 @@ const uniqueAssets = getUniqueAssetTypes([
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Availability
                   </div>
-                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                  <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleAvailability}>
                     <RadioInput
-                      name="Availability"
-                      value="A:N"
+                      name="availability"
+                      value="none"
                       id="None6"
                       label="None"
                     />
                     <RadioInput
-                      name="Availability"
-                      value="A:L"
+                      name="availability"
+                      value="low"
                       id="Low6"
                       label="Low"
                     />
                     <RadioInput
-                      name="Availability"
-                      value="A:H"
+                      name="availability"
+                      value="high"
                       id="High6"
                       label="High"
                     />
@@ -847,32 +866,32 @@ const uniqueAssets = getUniqueAssetTypes([
                 <div className="mt-4 severity" id="withoutSev">
                   <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
                     <div className="min-w-[200px] mt-2 xl:mt-0">
-                      manual
+                      Manual
                     </div>
                     <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
                       <RadioInput
-                        name="attackvector"
-                        value="AV:N"
-                        id="Network"
-                        label="Network"
+                        name="manual"
+                        value="low"
+                        id="Low7"
+                        label="Low"
                       />
                       <RadioInput
-                        name="attackvector"
-                        value="AV:A"
-                        id="Adjacent"
-                        label="Adjacent"
+                        name="manual"
+                        value="medium"
+                        id="Medium"
+                        label="Medium"
                       />
                       <RadioInput
-                        name="attackvector"
-                        value="AV:L"
-                        id="Local"
-                        label="Local"
+                        name="manual"
+                        value="high"
+                        id="High7"
+                        label="High"
                       />
                       <RadioInput
-                        name="attackvector"
-                        value="AV:P"
-                        id="Physical"
-                        label="Physical"
+                        name="manual"
+                        value="critical"
+                        id="Critical"
+                        label="Critical"
                       />
                     </div>
                   </div>
