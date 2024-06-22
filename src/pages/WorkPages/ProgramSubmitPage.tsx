@@ -285,13 +285,13 @@ const uniqueAssets = getUniqueAssetTypes([
               </div>
               <div>
                 <p className="sm:text-[18px] text-[16px] font-[600]">
-                  Reports Resolved
+                  Assets in scope
                 </p>
                 <p className="sm:text-[18px] text-[16px] font-[600]">12</p>
               </div>
               <div>
                 <p className="sm:text-[18px] text-[16px] font-[600]">
-                  Reports Resolved
+                  Average bounty
                 </p>
                 <p className="sm:text-[18px] text-[16px] font-[600]">12</p>
               </div>

@@ -47,24 +47,15 @@ export default function ProgramCreatePage() {
 
   const [strictyTest, setStrictyTest] = React.useState("");
   const [stricty, setStricty] = React.useState([
-    "Failure to invalidate Session issues",
-    "No Rate Limiting on Form issues unless the researcher can demonstrate a strong security impact ",
-    "Vulnerabilities that only result in inconsequential losses for Exoscale ",
-    "No Rate Limiting on Form issues unless the researcher can demonstrate a strong security impact ",
-    "Failure to invalidate Session issues",
-    "Vulnerabilities that only result in inconsequential losses for Exoscale ",
+    
   ]);
   const [scopeText, setScopeText] = React.useState("");
   const [scopeType, setScopeType] = React.useState("out");
   const [inScope, setInScope] = React.useState([
-    "No Rate Limiting on Form issues unless the researcher can demonstrate a strong ",
-    "Vulnerabilities that only result in inconsequential losses for Exoscale ",
-    "Vulnerabilities that only result in inconsequential losses for Exoscale ",
+   
   ]);
   const [outScope, setOutScope] = React.useState([
-    "Failure to invalidate Session issues",
-    "Vulnerabilities that only result in inconsequential losses for Exoscale ",
-    "Failure to invalidate Session issues",
+    
   ]);
 
   const { data } = useGetCompanyProgram();
@@ -244,23 +235,18 @@ export default function ProgramCreatePage() {
               </div>
               <div>
                 <p className="sm:text-[18px] text-[16px] font-[600]">
-                  Reports Resolved
+                  Assets in scope
                 </p>
                 <p className="sm:text-[18px] text-[16px] font-[600]">0</p>
               </div>
               <div>
                 <p className="sm:text-[18px] text-[16px] font-[600]">
-                  Reports Resolved
+                  Average bounty
                 </p>
                 <p className="sm:text-[18px] text-[16px] font-[600]">0</p>
               </div>
             </div>
           </div>{" "}
-          <div className="flex-1 flex justify-end">
-            <button className="bg-[#1F44CC] rounded-full w-[40px] h-[40px] p-[5px] ">
-              <img src="/assets/pen.svg" alt="edit" />
-            </button>
-          </div>
         </div>
         <div className="flex my-4  sm:gap-6 gap-2 relative lg:hidden flex-col sm:mb-16 mb-4">
           <div className="flex gap-6">
@@ -289,22 +275,18 @@ export default function ProgramCreatePage() {
             </div>
             <div>
               <p className="sm:text-[18px] text-[16px] font-[600]">
-                Reports Resolved
+                Assets in scope
               </p>
               <p className="sm:text-[18px] text-[16px] font-[600]">0</p>
             </div>
             <div>
               <p className="sm:text-[18px] text-[16px] font-[600]">
-                Reports Resolved
+                Average bounty
               </p>
               <p className="sm:text-[18px] text-[16px] font-[600]">0</p>
             </div>
           </div>
-          <div className="flex-1 flex justify-end">
-            <button className="bg-[#1F44CC] rounded-full  p-[5px]  ">
-              <img src="/assets/pen.svg" alt="edit" />
-            </button>
-          </div>
+          
         </div>
         <div>
           
@@ -318,12 +300,7 @@ export default function ProgramCreatePage() {
 
             <div className="bg-[#0A273D] px-6 pt-6 pb-10">
               <div className="flex justify-between lg:mt-4 mb-4  xl:w-[70%] flex-col  lg:flex-row">
-                <div className="flex items-center gap-4 mb-4 lg:mb-0">
-                  <p className="sm:text-[18px] text-[16px] font-[600]">
-                    Time spend
-                  </p>
-                  <img src="/assets/images/info.png" alt="" />
-                </div>
+                
                 <div className="flex gap-4 flex-col lg:flex-row">
                   <div className="flex flex-col dark relative">
                     <Label className="mb-2 lg:absolute static -top-5">
@@ -399,9 +376,7 @@ export default function ProgramCreatePage() {
                   </div>
                 </div>
               </div>
-              <h2 className="sm:text-[18px] text-[16px] font-[600]">
-                Assets eligible:All in-scope assets
-              </h2>
+              
               <div className="my-8 flex justify-between flex-col xl:flex-row">
                 {/* <LevelBar color="#FFDE31" level={60} label="Low" />
                 <LevelBar color="#2342E3" level={60} label="Medium" />
@@ -759,7 +734,7 @@ export default function ProgramCreatePage() {
           </div>
           <div className="bg-[#0A273D] p-8  ">
             <div className="gap-12 flex  flex-col lg:flex-row">
-              <div>
+              <div className="flex-1">
                 <h3 className="mb-6">Out of Scope</h3>
                 {outScope.map((element, index) => (
                   <div className="flex gap-4 mt-4">
@@ -779,7 +754,7 @@ export default function ProgramCreatePage() {
                   </div>
                 ))}
               </div>
-              <div>
+              <div className="flex-1">
                 <h3 className="mb-6">In of Scope</h3>
                 {inScope.map((element, index) => (
                   <div className="flex gap-4 mt-4">

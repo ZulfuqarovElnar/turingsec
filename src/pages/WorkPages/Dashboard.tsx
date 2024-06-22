@@ -33,7 +33,7 @@ export default function Dashboard() {
           }
         );
 
-        if (!res.ok) {
+        if (!res.ok) { 
           throw new Error("Wrong response");
         }
 
