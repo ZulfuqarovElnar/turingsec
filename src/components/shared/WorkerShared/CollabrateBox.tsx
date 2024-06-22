@@ -21,7 +21,6 @@ export default function CollabrateBox({
 }) {
   const [value, setValues] = useState<number | null>(null);
   function handleChange(e) {
-    console.log(e.target.value, globalPercentage - percent, percent);
 
     if (e.target.value >= globalPercentage && percent === 0) {
       setValues(globalPercentage);
@@ -41,15 +40,12 @@ export default function CollabrateBox({
       setValues(0);
       return;
     }
-    console.log(percent);
-
-    console.log(value, percent);
+   
     setPercent((prev) => prev - value + Number(e.target.value));
-    console.log(e.target.value);
     setValues(e.target.value);
   }
   function handleDelete() {
-    console.log("kdffldfkdlfkdl", id);
+    
     setPercent((percent) => percent - Number(value));
     setCollabrates((prev) => prev.filter((item) => item && item.id === id));
   }

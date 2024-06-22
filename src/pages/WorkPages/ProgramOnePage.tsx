@@ -385,7 +385,7 @@ export default function ProgramOnePage() {
                   <h3 className="mb-6">Out of Scope</h3>
                 <div className="list-disc ml-6">
                   {programData?.outOfScope.map((item, index) => (
-                    <div className="flex gap-4 mt-4">
+                    <div className="flex gap-4 mt-4" key={index}>
                       <div className="bg-yellow-500 min-w-[8px] h-[8px] rounded-full mt-2"></div>
                       <span key={index}>{item}</span>
                     </div>
@@ -396,7 +396,7 @@ export default function ProgramOnePage() {
                   <h3 className="mb-6">In of Scope</h3>
                   <div className="list-disc ml-6">
                     {programData?.inScope.map((item, index) => (
-                      <div className="flex gap-4 mt-4">
+                      <div className="flex gap-4 mt-4" key={index}>
                         <div className="bg-yellow-500 min-w-[8px] h-[8px] rounded-full mt-2"></div>
                         <span  key={index}>{item}</span>
                       </div>

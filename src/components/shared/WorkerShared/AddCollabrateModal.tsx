@@ -33,7 +33,7 @@ export default function AddCollabrateModal({
     const newItem = { ...item, id: item.userId };
     setCollabrates((prev) => [...prev, newItem]);
     setOpen(false);
-    console.log(collabrates)
+   
   }
 
   return (

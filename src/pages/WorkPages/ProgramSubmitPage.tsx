@@ -795,13 +795,13 @@ const uniqueAssets = getUniqueAssetTypes([
                     <RadioInput
                       name="confidentiality"
                       value="none"
-                      id="None3"
+                      id="None4"
                       label="None"
                     />
                     <RadioInput
                       name="confidentiality"
                       value="low"
-                      id="Low3"
+                      id="Low4"
                       label="Low"
                     />
                     <RadioInput
