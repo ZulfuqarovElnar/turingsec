@@ -198,128 +198,146 @@ export default function SingleReportUser() {
                             className="rounded-xl sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
                             Severity
                         </div>
-                        <div className=" py-8 sm:px-8 px-4">
-                            <div
-                                className="flex justify-between lg:items-center mb-4 xl:w-[70%] w-full flex-col lg:flex-row gap-4 ">
-                                <RadioInput name="test1" value="test1" id="test1" label="Submit report without severity" />
-                                <RadioInput name="test1" value="test2" id="test2" label="Submit report with severity"
-                                    checked={true} />
+                        {filteredReport.methodName==='CVSS'?(
+                            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+                                <div
+                                    className="flex justify-between lg:items-center mb-4 xl:w-[70%] w-full flex-col lg:flex-row gap-4 ">
+                      
+                                    <RadioInput name="test1" value="test2" id="test2" label="CVSS" checked />
+                                </div>
+                                <div className=" items-center gap-4">
+                                    <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
+                                        Calculation: 7/10
+                                    </h2>
+                                </div>
+                                <div className="mt-4">
+                                    <div className='flex'>
+
+                                        <div
+                                            className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Attack vector
+                                            </div>
+                                            <div
+                                                className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                                                <RadioInput name="attackvector" value={filteredReport.attackvector} id="Network" label={filteredReport.attackVector} checked />
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Scope
+                                            </div>
+                                            <div
+                                                className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                                                <RadioInput name="scope" value={filteredReport.scope} id="Low3" label={filteredReport.scope} checked />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='flex'>
+
+                                        <div
+                                            className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Attack complexity
+                                            </div>
+                                            <div
+                                                className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                                                <RadioInput name="attackcomplexity" value={filteredReport.attackComplexity} id="Network" label={filteredReport.attackComplexity} checked />
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Confidentially
+                                            </div>
+                                            <div
+                                                className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                                                <RadioInput name="confidentiality" value={filteredReport.confidentiality} id="Low2" label={filteredReport.confidentiality} checked />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='flex'>
+
+                                        <div
+                                            className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                User interactions
+                                            </div>
+                                            <div
+                                                className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                                                <RadioInput name="userinteraction" value={filteredReport.userInteractions} id="Network" label={filteredReport.userInteractions}
+                                                    checked />
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Integrity
+                                            </div>
+                                            <div
+                                                className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                                                <RadioInput name="integrity" value={filteredReport.integrity} id="Low4" label={filteredReport.integrity} checked />
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='flex'>
+
+                                        <div
+                                            className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Privileges required
+                                            </div>
+                                            <div
+                                                className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                                                <RadioInput name="privileges" value={filteredReport.privilegesRequired} id="Network" label={filteredReport.privilegesRequired} checked />
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Availability
+                                            </div>
+                                            <div
+                                                className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                                                <RadioInput name="availability" value={filteredReport.availability} id="Low1" label={filteredReport.availability} checked />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className=" items-center gap-4">
-                                <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
-                                    Calculation: 7/10
-                                </h2>
-                            </div>
-                            <div className="mt-4">
-                                <div className='flex'>
-
+                        ):(
+                                <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
                                     <div
-                                        className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Attack vector
-                                        </div>
-                                        <div
-                                            className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                                            <RadioInput name="attackvector" value="Network" id="Network" label="High"
-                                                checked={true} />
-                                        </div>
+                                        className=" flex justify-between lg:items-center mb-4 xl:w-[70%] w-full flex-col lg:flex-row gap-4 ">
+                                        <RadioInput name="test1" value="test1" id="test1" label="Manual" checked/>
                                     </div>
-                                    <div
-                                        className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Scope
-                                        </div>
-                                        <div
-                                            className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                                            <RadioInput name="attackcomplexity" value="Unchanged" id="Low3" label="High"
-                                                checked={true} />
+                                   
+                                    <div className="mt-4 ">
+                                        <div className='flex'>
 
-
+                                            <div
+                                                className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                                                <div className="min-w-[800px] mt-2 xl:mt-0">
+                                                    Manual
+                                                </div>
+                                                <div
+                                                    className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                                                    <RadioInput name="manual" value={filteredReport.rewardsStatus} id="Network" label={filteredReport.rewardsStatus}
+                                                        checked={true} />
+                                                </div>
+                                            </div>
+                                         
                                         </div>
+
                                     </div>
                                 </div>
-                                <div className='flex'>
-
-                                    <div
-                                        className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Attack complexity
-                                        </div>
-                                        <div
-                                            className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                                            <RadioInput name="attackvector" value="High" id="Network" label="Low" checked={true} />
-                                        </div>
-                                    </div>
-                                    <div
-                                        className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Confidentially
-                                        </div>
-                                        <div
-                                            className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                                            <RadioInput name="attackcomplexity" value="Low" id="Low2" label="High" checked={true} />
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='flex'>
-
-                                    <div
-                                        className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            User interactions
-                                        </div>
-                                        <div
-                                            className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                                            <RadioInput name="attackvector" value="Network" id="Network" label="High"
-                                                checked={true} />
-                                        </div>
-                                    </div>
-                                    <div
-                                        className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Integrity
-                                        </div>
-                                        <div
-                                            className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                                            <RadioInput name="attackcomplexity" value="Low" id="Low4" label="High" checked={true} />
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='flex'>
-
-                                    <div
-                                        className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Privileges required
-                                        </div>
-                                        <div
-                                            className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                                            <RadioInput name="attackvector" value="Network" id="Network" label="High"
-                                                checked={true} />
-                                        </div>
-                                    </div>
-                                    <div
-                                        className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Availability
-                                        </div>
-                                        <div
-                                            className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
-                                            <RadioInput name="attackcomplexity" value="Low" id="Low1" label="Low" checked={true} />
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                        </div>
+                        )}
                     </div>
                 </div>
 
