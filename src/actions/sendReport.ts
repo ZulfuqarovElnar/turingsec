@@ -1,6 +1,5 @@
-import { json } from "stream/consumers";
 import { Report } from "../types";
-import { AttackVector } from "vuln-vects/dist/cvss3-enums";
+ 
 
 export async function sendReport(report: Report, id: string) {
 
@@ -12,7 +11,7 @@ export async function sendReport(report: Report, id: string) {
     
     
     //Manual
-    if(report.severityValue === 'manual'){
+    if(report.methodName === 'manual'){
       const formData = new FormData();
       // Append attachments
 
@@ -138,7 +137,7 @@ export async function sendReport(report: Report, id: string) {
           body: formData,
         }
       );
-
+     
       if (!res.ok) {
         console.log(formData);
         throw new Error("Wrong response");
