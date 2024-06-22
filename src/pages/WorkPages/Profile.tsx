@@ -4,6 +4,7 @@ import { Button } from "../../components/ui/button";
 import { useCurrentUser } from "../../context/CurrentUser";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { useGetUserData } from "../../queryies/useGetUserData";
 
 interface UserData {
   backgroundImageId: string | null;
@@ -22,7 +23,7 @@ interface UserData {
 }
 
 export default function Profile() {
-  const { currentUser } = useCurrentUser();
+  const { data: currentUser } = useGetUserData();
   const [userImage, setUserImage] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [userDate, setUserDate] = useState<UserData | null>(null);
@@ -116,9 +117,9 @@ export default function Profile() {
         if (userDataString) {
           const userData = JSON.parse(userDataString);
           const { id } = userData;
-          const apiUrl = import.meta.env.VITE_APP_BASE_URL;
+           
           if (id) {
-            const res = await fetch(`${apiUrl}/api/hacker/${id}`);
+            const res = await fetch(`http://localhost:5000/api/hacker/${id}`);
             const responseData = await res.json();
             const fetchedData = responseData.data;
             console.log("User data from hacker API:", fetchedData);
@@ -129,13 +130,13 @@ export default function Profile() {
   
           if (id) {
             const res1 = await fetch(
-              `${apiUrl}/api/background-image-for-hacker/download/${id}`
+              `http://localhost:5000/api/background-image-for-hacker/download/${id}`
             );
             
             const backgroundImageBlob = await res1.blob();
   
             const res2 = await fetch(
-              `${apiUrl}/api/image-for-hacker/download/${id}`
+              `http://localhost:5000/api/image-for-hacker/download/${id}`
             );
             
             const userImageBlob = await res2.blob();
@@ -154,7 +155,7 @@ export default function Profile() {
     };
   
     fetchData();
-  }, [currentUser?.userId]);
+  }, [currentUser?.hackerId]);
   
   
   const navigate = useNavigate();
@@ -251,7 +252,7 @@ export default function Profile() {
             Bio
           </h2>
           <p className="sm:text-[20px] text-[14px] font-[400]">
-            {currentUser?.bio ||
+            {userDate?.bio ||
               "Provide detailed information about the company, including its  history, founding date, key milestones, and any notable achievements. This helps establish credibility and builds trust with visitors."}
           </p>
         </div>
