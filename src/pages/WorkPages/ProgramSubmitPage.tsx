@@ -47,6 +47,7 @@ export default function ProgramSubmitPage() {
   const [availability, setAvailability] = useState<string>('');
   const [confidentiality, setConfidentiality] = useState<string>('');
   const [scope, setScope] = useState<string>('');
+  const [manual, setManual] = useState<string>('');
   
  
   const severityRef = useRef(null)
@@ -94,6 +95,10 @@ export default function ProgramSubmitPage() {
   const handleScope = () => {
     const radios = document.querySelector('input[name="Scope"]:checked')
     setScope(radios.value)
+  }
+  const handleManual = () => {
+    const radios = document.querySelector('input[name="manual"]:checked')
+    setManual(radios.value)
   }
  //...............CVSS.............
   
@@ -178,7 +183,7 @@ export default function ProgramSubmitPage() {
  
       const response = await mutation.mutateAsync({
         lastActivity: lastActivityDes,
-        rewardsStatus: 'reward status',
+        rewardsStatus: manual,
         reportTemplate: reportTemplate,
         ownPercentage: percent,
         collaboratorPayload: collabrates.map(collabrate => ({
@@ -868,7 +873,7 @@ const uniqueAssets = getUniqueAssetTypes([
                     <div className="min-w-[200px] mt-2 xl:mt-0">
                       Manual
                     </div>
-                    <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1">
+                    <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleManual}>
                       <RadioInput
                         name="manual"
                         value="low"
