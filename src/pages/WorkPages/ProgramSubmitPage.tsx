@@ -39,15 +39,16 @@ export default function ProgramSubmitPage() {
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [weaknessType, setWeaknessType] = useState();
   const [severityValue, setSeverityValue] = useState<string>('');
-  const [attackVector, setAttackVector] = useState<string>('');
-  const [attackComplexity, setAttackComplexity] = useState<string>('');
-  const [privilegesRequired, setPrivilegesRequired] = useState<string>('');
-  const [userInteractions, setUserInteractions] = useState<string>('');
-  const [integrity, setIntegrity] = useState<string>('');
-  const [availability, setAvailability] = useState<string>('');
-  const [confidentiality, setConfidentiality] = useState<string>('');
-  const [scope, setScope] = useState<string>('');
-  const [manual, setManual] = useState<string>('');
+  const [attackVector, setAttackVector] = useState<string>('N');
+const [attackComplexity, setAttackComplexity] = useState<string>('L');
+const [privilegesRequired, setPrivilegesRequired] = useState<string>('N');
+const [userInteractions, setUserInteractions] = useState<string>('N');
+const [integrity, setIntegrity] = useState<string>('N');
+const [availability, setAvailability] = useState<string>('N');
+const [confidentiality, setConfidentiality] = useState<string>('N');
+const [scope, setScope] = useState<string>('U');
+const [manual, setManual] = useState<string>('low');
+
   
   
  
@@ -247,7 +248,7 @@ const handleManual = () => {
         },
         attachments: attachments,
         methodName: severityValue,
-        severityScore: score.baseScore,
+        severity: `${severityValue}`,
         attackVector: attackVector === 'H' ? 'High' : 'Low',
         attackComplexity: attackComplexity === 'H' ? 'High' : 'Low',
         privilegesRequired: privilegesRequired === 'H' ? 'High' : 'Low',
