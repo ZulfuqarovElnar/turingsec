@@ -20,9 +20,9 @@ library.add(faFile);
 library.add(faVideo)
 
 
-export default function SingleReportUser() {
+export default function SingleReportUser({severityScore}) {
     const { id } = useParams();
-
+    console.log(`${severityScore}`);
     const { data } = useGetUserReports();
     console.log(data)
     console.log("id: " + id)
@@ -207,7 +207,7 @@ export default function SingleReportUser() {
                                 </div>
                                 <div className=" items-center gap-4">
                                     <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
-                                        Calculation: 7/10
+                                        Calculation: 7/10 {severityScore}
                                     </h2>
                                 </div>
                                 <div className="mt-4">
