@@ -249,6 +249,7 @@ const handleManual = () => {
         attachments: attachments,
         methodName: severityValue,
         severity: `${severityValue}`,
+        score: score.baseScore,
         attackVector: attackVector === 'H' ? 'High' : 'Low',
         attackComplexity: attackComplexity === 'H' ? 'High' : 'Low',
         privilegesRequired: privilegesRequired === 'H' ? 'High' : 'Low',
