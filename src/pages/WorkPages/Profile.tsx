@@ -112,17 +112,18 @@ export default function Profile() {
     const fetchData = async () => {
       try {
         const userDataString = localStorage.getItem("user");
-        console.log("userData:", userDataString);
+        // console.log("userData:", userDataString);
   
         if (userDataString) {
           const userData = JSON.parse(userDataString);
           const { id } = userData;
+          const apiUrl = import.meta.env.VITE_APP_BASE_URL;
            
           if (id) {
-            const res = await fetch(`http://localhost:5000/api/hacker/${id}`);
+            const res = await fetch(`${apiUrl}/api/hacker/${id}`);
             const responseData = await res.json();
             const fetchedData = responseData.data;
-            console.log("User data from hacker API:", fetchedData);
+            // console.log("User data from hacker API:", fetchedData);
             setUserDate(fetchedData as UserData);
           } else {
             console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
@@ -130,13 +131,13 @@ export default function Profile() {
   
           if (id) {
             const res1 = await fetch(
-              `http://localhost:5000/api/background-image-for-hacker/download/${id}`
+              `${apiUrl}/api/background-image-for-hacker/download/${id}`
             );
             
             const backgroundImageBlob = await res1.blob();
   
             const res2 = await fetch(
-              `http://localhost:5000/api/image-for-hacker/download/${id}`
+              `${apiUrl}/api/image-for-hacker/download/${id}`
             );
             
             const userImageBlob = await res2.blob();

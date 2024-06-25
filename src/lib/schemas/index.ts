@@ -59,15 +59,9 @@ export const formSchemaProfileUpdate = z.object({
     label: z.string().min(2, { message: "Country is not defibed" }),
   }),
   city: z.string().min(2, { message: "City is too short" }),
-  linkedin: z.string().min(2, { message: "Linkedin is too short" }).url({
-    message: "Please enter a valid URL",
-  }),
-  twitter: z.string().min(2, { message: "Twitter is too short" }).url({
-    message: "Please enter a valid URL",
-  }),
-  github: z.string().min(2, { message: "Github is too short" }).url({
-    message: "Please enter a valid URL",
-  }),
+  linkedin: z.string().url({ message: "Please enter a valid URL or empty",}).optional().or(z.literal('')),
+  twitter: z.string().url({ message: "Please enter a valid URL",}).optional().or(z.literal('')),
+  github: z.string().url({ message: "Please enter a valid URL",}).optional().or(z.literal('')),
 });
 
 export const contactUsSchema = z.object({

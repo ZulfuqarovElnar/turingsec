@@ -120,6 +120,7 @@ export async function sendReport(report: Report, id: string) {
         confidentiality: report.confidentiality,
         integrity: report.integrity,
         availability: report.availability,
+        score: report.score,
       };
 
       // reportPayload
