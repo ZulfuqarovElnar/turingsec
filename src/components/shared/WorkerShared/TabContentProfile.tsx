@@ -84,9 +84,10 @@ export default function TabContentProfile() {
         if (userDataString) {
           const userData = JSON.parse(userDataString);
           const { id } = userData;
+          const apiUrl = import.meta.env.VITE_APP_BASE_URL;
   
           if (id) {
-            const res = await fetch(`http://localhost:5000/api/hacker/${id}`);
+            const res = await fetch(`${apiUrl}/api/hacker/${id}`);
             const responseData = await res.json();
             const fetchedData = responseData.data;
             // console.log("User data from hacker API:", fetchedData);
@@ -100,13 +101,13 @@ export default function TabContentProfile() {
              
           if (id) {
             const res1 = await fetch(
-              `http://localhost:5000/api/background-image-for-hacker/download/${id}`
+              `${apiUrl}/api/background-image-for-hacker/download/${id}`
             );
             
             const backgroundImageBlob = await res1.blob();
   
             const res2 = await fetch(
-              `http://localhost:5000/api/image-for-hacker/download/${currentUser.hackerId}`
+              `${apiUrl}/api/image-for-hacker/download/${currentUser.hackerId}`
             );
             
             const userImageBlob = await res2.blob();
@@ -190,12 +191,12 @@ export default function TabContentProfile() {
     try {
       const ele = JSON.parse(localStorage.getItem("user") || "");
       const formData = new FormData();
-    
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
       formData.append("file", imageRealSrcUser);
       
 
       const res2 = await fetch(
-        `http://localhost:5000/api/image-for-hacker/upload`,
+        `${apiUrl}/api/image-for-hacker/upload`,
         {
           method: "POST",
           headers: {
@@ -207,7 +208,7 @@ export default function TabContentProfile() {
       const formData2 = new FormData();
       formData2.append("file", imageRealSrc);
       const res3 = await fetch(
-        `http://localhost:5000/api/background-image-for-hacker/upload`,
+        `${apiUrl}/api/background-image-for-hacker/upload`,
         {
           method: "POST",
           headers: {
@@ -233,7 +234,7 @@ export default function TabContentProfile() {
         bio: data.bio
       }
       const res = await fetch(
-        `http://localhost:5000/api/auth/update-profile`,
+        `${apiUrl}/api/auth/update-profile`,
         {
           method: "PUT",
           headers: {
