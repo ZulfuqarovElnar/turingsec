@@ -55,7 +55,7 @@ export default function TabContentProfile() {
   const [userDate, setUserDate] = useState<UserData | null>(null);
   // const [userImage, setUserImage] = useState("");
   // const [backgroundImage, setBackgroundImage] = useState("");
-  console.log(currentUser)
+  // console.log(currentUser)
   const form = useForm<z.infer<typeof formSchemaProfileUpdate>>({
     resolver: zodResolver(formSchemaProfileUpdate),
     defaultValues: {
@@ -107,7 +107,7 @@ export default function TabContentProfile() {
             const backgroundImageBlob = await res1.blob();
   
             const res2 = await fetch(
-              `${apiUrl}/api/image-for-hacker/download/${currentUser.hackerId}`
+              `${apiUrl}/api/image-for-hacker/download/${id}`
             );
             
             const userImageBlob = await res2.blob();
@@ -192,6 +192,8 @@ export default function TabContentProfile() {
       const ele = JSON.parse(localStorage.getItem("user") || "");
       const formData = new FormData();
       const apiUrl = import.meta.env.VITE_APP_BASE_URL;
+      console.log("yesssssssssssssssssssssssssssssssssssssssssssss")
+      console.log(imageRealSrcUser)
       formData.append("file", imageRealSrcUser);
       
 
@@ -246,11 +248,16 @@ export default function TabContentProfile() {
       );
       // console.log(res3);
       // console.log(res2);
-      console.log(res);
+      
       const resJson = await res.json(); // Parsing the response JSON
+      if (res.status === 422) {
+        const values=Object.values(resJson)
+        toast.error(`${values[0]}`)
+      };
       console.log(resJson);
-      if (!res.ok || !res2.ok || !res3.ok) {
-        console.log(payload)
+
+      if (!res.ok) {
+        
         throw new Error("Please try again later");
       }
       if (resJson.meta && resJson.meta.message) {
