@@ -156,7 +156,7 @@ export default function Profile() {
     };
   
     fetchData();
-  }, [currentUser?.hackerId]);
+  }, [userDate]);
   
   
   const navigate = useNavigate();
@@ -271,25 +271,25 @@ export default function Profile() {
           </h2>
           <ul className="space-y-4 max-w-[100px]">
             <li>
-              <a href="#" className="flex items-center gap-3">
+              <a href={userDate?.github} className="flex items-center gap-3">
                 <img src="/assets/github.svg" alt="" />
                 <p className="text-[18px] font-[600]">Github</p>
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center gap-3">
+              <a href={userDate?.twitter} className="flex items-center gap-3">
                 <img src="/assets/twitter.svg" alt="" />
                 <p className="text-[18px] font-[600]">Twitter</p>
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center gap-3">
+              <a href={userDate?.website} className="flex items-center gap-3">
                 <img src="/assets/website.svg" alt="" />
                 <p className="text-[18px] font-[600]">Website</p>
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center gap-3">
+              <a href={userDate?.linkedin} className="flex items-center gap-3">
                 <img src="/assets/linkedin.svg" alt="" />
                 <p className="text-[18px] font-[600]">Linkedin</p>
               </a>
