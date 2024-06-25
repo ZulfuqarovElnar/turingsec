@@ -79,7 +79,7 @@ export default function TabContentProfile() {
     const fetchData = async () => {
       try {
         const userDataString = localStorage.getItem("user");
-        console.log("userData:", userDataString);
+        // console.log("userData:", userDataString);
   
         if (userDataString) {
           const userData = JSON.parse(userDataString);
@@ -89,7 +89,7 @@ export default function TabContentProfile() {
             const res = await fetch(`http://localhost:5000/api/hacker/${id}`);
             const responseData = await res.json();
             const fetchedData = responseData.data;
-            console.log("User data from hacker API:", fetchedData);
+            // console.log("User data from hacker API:", fetchedData);
             setUserDate(fetchedData as UserData);
              
              
@@ -97,25 +97,25 @@ export default function TabContentProfile() {
               console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
             }
 
-            // const apiUrl = import.meta.env.VITE_APP_BASE_URL;
-          // if (id) {
-            // const res1 = await fetch(
-            //   `${apiUrl}/api/background-image-for-hacker/download/${id}`
-            // );
+             
+          if (id) {
+            const res1 = await fetch(
+              `http://localhost:5000/api/background-image-for-hacker/download/${id}`
+            );
             
-            // const backgroundImageBlob = await res1.blob();
+            const backgroundImageBlob = await res1.blob();
   
-            // const res2 = await fetch(
-            //   `${apiUrl}/api/image-for-hacker/download/${id}`
-            // );
+            const res2 = await fetch(
+              `http://localhost:5000/api/image-for-hacker/download/${currentUser.hackerId}`
+            );
             
-            // const userImageBlob = await res2.blob();
-  
-            // setUserImage(URL.createObjectURL(userImageBlob));
-            // setBackgroundImage(URL.createObjectURL(backgroundImageBlob));
-          // } else {
-          //   console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
-          // }
+            const userImageBlob = await res2.blob();
+
+            setImageSrcUser(URL.createObjectURL(userImageBlob));
+            setImageSrc(URL.createObjectURL(backgroundImageBlob));
+          } else {
+            console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
+          }
         } else {
           console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
         }
@@ -125,7 +125,7 @@ export default function TabContentProfile() {
     };
   
     fetchData();
-  }, [userDate?.userId]);
+  }, [currentUser?.hackerId]);
 
   useEffect(() => {
     if (currentUser) {
@@ -147,16 +147,16 @@ export default function TabContentProfile() {
         label: country[0]?.label || "Select Country...",
       });
     }
-  }, [currentUser]);
+  }, [userDate]);
   
   const handleFileChange = (e) => {
-    console.log(e);
+    // console.log(e);
     const file = e.target.files[0];
     setImageRealSrc(file);
     const reader = new FileReader();
     reader.onload = () => {
       setImageSrc(reader.result);
-      console.log(reader.result);
+      // console.log(reader.result);
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -184,9 +184,9 @@ export default function TabContentProfile() {
       return;
     }
   
-    console.log(data)
-    console.log(imageSrc) 
-    console.log(imageSrcUser);
+    // console.log(data)
+    // console.log(imageSrc) 
+    // console.log(imageSrcUser);
     try {
       const ele = JSON.parse(localStorage.getItem("user") || "");
       const formData = new FormData();
@@ -216,10 +216,22 @@ export default function TabContentProfile() {
           body: formData2,
         }
       );
-      console.log(res2, res3);
+      // console.log(res2, res3);
     
       const data3 = await res2.json(); // Parsing response JSON
       console.log(data3);
+      const payload = {
+        firstName: data.firstname,
+        lastName: data.lastname,
+        username: data.username,
+        country: data.country.value,
+        linkedin: data.linkedin,
+        github: data.github,
+        twitter: data.twitter,
+        city: data.city,
+        website: data.website,
+        bio: data.bio
+      }
       const res = await fetch(
         `http://localhost:5000/api/auth/update-profile`,
         {
@@ -228,26 +240,24 @@ export default function TabContentProfile() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${ele.accessToken}`,
           },
-          body: JSON.stringify({
-            firstName: data.firstname,
-            lastName: data.lastname,
-            username: data.username,
-            country: data.country.value,
-            linkedin: data.linkedin,
-            github: data.github,
-            twitter: data.twitter,
-            city: data.city,
-            website: data.website,
-            bio: data.bio
-          }),
+          body: JSON.stringify(payload),
         }
       );
-      console.log(res3);
-      console.log(res2);
+      // console.log(res3);
+      // console.log(res2);
       console.log(res);
+      const resJson = await res.json(); // Parsing the response JSON
+      console.log(resJson);
       if (!res.ok || !res2.ok || !res3.ok) {
+        console.log(payload)
         throw new Error("Please try again later");
       }
+      if (resJson.meta && resJson.meta.message) {
+        const newToken = resJson.meta.message;
+        // Update the token in local storage or where you store it
+        localStorage.setItem('accessToken', newToken);
+      }
+ 
       toast.success("Profile Updated");
       setTimeout(() => {
         window.location.href = "/";
@@ -281,7 +291,7 @@ export default function TabContentProfile() {
                   
                   render={({ field }) => (
                     <FormItem>
-                        {/* <FormControl> */}
+                        <FormControl>
                             <InputCompany
                                 type="text"
                                 placeholder="Enter First Name"
@@ -289,8 +299,8 @@ export default function TabContentProfile() {
                                 defaultValue={userDate?.first_name || ''}
                                 className="xl:min-w-[250px]"
                             />
-                        {/* </FormControl>
-                        <FormMessage /> */}
+                        </FormControl>
+                        <FormMessage />
                     </FormItem>
                 )}
                 />                
@@ -324,17 +334,17 @@ export default function TabContentProfile() {
                 name="username"
                 render={({field}) => (
                   <FormItem>
-                    {/* <FormControl> */}
+                    <FormControl>
                       <InputCompany
                         type="text"
                         placeholder="Usernamee"
                         {...field}
-                        defaultValue={userDate?.first_name || ""}
+                        defaultValue={userDate?.username || ""}
                         className="xl:min-w-[350px] scale-r-125"
                       />
-                    {/* </FormControl> */}
+                    </FormControl>
 
-                    {/* <FormMessage /> */}
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -379,7 +389,7 @@ export default function TabContentProfile() {
                 name="bigfile"
                 render={({ field }) => (
                   <FormItem>
-                    {/* <FormControl> */}
+                    <FormControl>
                       <Label
                         className="bg-[#FFEC86] text-black hover:bg-[#FFEC86] 
                       min-w-[120px]
@@ -395,7 +405,7 @@ export default function TabContentProfile() {
                           className="bg-[#FFEC86] text-black hidden w-full"
                         />
                       </Label>
-                    {/* </FormControl> */}
+                    </FormControl>
 
                     {!imageSrc && (
                       <div className="absolute text-red-500">File upload</div>
@@ -417,7 +427,7 @@ export default function TabContentProfile() {
                 name="file"
                 render={({ field }) => (
                   <FormItem>
-                    {/* <FormControl> */}
+                    <FormControl>
                       <Label
                         className="bg-[#FFEC86] text-black hover:bg-[#FFEC86] 
                       min-w-[120px]
@@ -433,7 +443,7 @@ export default function TabContentProfile() {
                           className="bg-[#FFEC86] text-black hidden w-full"
                         />
                       </Label>
-                    {/* </FormControl> */}
+                    </FormControl>
 
                     {!imageSrcUser && (
                       <div className="absolute text-red-500">File upload</div>
@@ -526,7 +536,7 @@ export default function TabContentProfile() {
                   name="city"
                   render={({field}) => (
                     <FormItem>
-                      {/* <FormControl> */}
+                      <FormControl>
                         <InputCompany
                           type="text"
                           placeholder="City"
@@ -534,9 +544,9 @@ export default function TabContentProfile() {
                           defaultValue={userDate?.city || ""}
                           className="xl:min-w-[250px]"
                         />
-                      {/* </FormControl>
+                      </FormControl>
 
-                      <FormMessage /> */}
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -574,7 +584,7 @@ export default function TabContentProfile() {
                 name="linkedin"
                 render={({field}) => (
                   <FormItem>
-                    {/* <FormControl> */}
+                    <FormControl>
                       <InputCompany
                         type="text"
                         placeholder="Bughunter.az"
@@ -582,9 +592,9 @@ export default function TabContentProfile() {
                         defaultValue={userDate?.linkedin || ""}
                         className="xl:min-w-[350px] scale-r-125"
                       />
-                    {/* </FormControl> */}
+                    </FormControl>
 
-                    {/* <FormMessage /> */}
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -598,7 +608,7 @@ export default function TabContentProfile() {
                 name="twitter"
                 render={({field}) => (
                   <FormItem>
-                    {/* <FormControl> */}
+                    <FormControl>
                       <InputCompany
                         type="text"
                         placeholder="Bughunter.az"
@@ -606,9 +616,9 @@ export default function TabContentProfile() {
                         defaultValue={userDate?.twitter || ""}
                         className="xl:min-w-[350px] scale-r-125"
                       />
-                    {/* </FormControl> */}
+                    </FormControl>
 
-                    {/* <FormMessage /> */}
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -622,7 +632,7 @@ export default function TabContentProfile() {
                 name="github"
                 render={({field}) => (
                   <FormItem>
-                    {/* <FormControl> */}
+                    <FormControl>
                       <InputCompany
                         type="text"
                         placeholder="Bughunter.az"
@@ -630,9 +640,9 @@ export default function TabContentProfile() {
                         defaultValue={userDate?.github || ""}
                         className="xl:min-w-[350px] scale-r-125"
                       />
-                    {/* </FormControl>
+                    </FormControl>
 
-                    <FormMessage /> */}
+                    <FormMessage />
                   </FormItem>
                 )}
               />
