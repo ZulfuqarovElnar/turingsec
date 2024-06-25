@@ -11,6 +11,7 @@ export interface Report {
   rewardsStatus: string;
   vulnerabilityUrl: string;
   ownPercentage: number;
+  score: number;
   collaboratorDTO: {
       hackerUsername: string;
       collaborationPercentage: number;
