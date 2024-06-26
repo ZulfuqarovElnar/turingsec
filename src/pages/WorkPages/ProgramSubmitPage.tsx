@@ -47,7 +47,7 @@ const [integrity, setIntegrity] = useState<string>('N');
 const [availability, setAvailability] = useState<string>('N');
 const [confidentiality, setConfidentiality] = useState<string>('N');
 const [scope, setScope] = useState<string>('U');
-const [manual, setManual] = useState<string>('low');
+const [manual, setManual] = useState<string>('Low');
 
   
   
@@ -919,25 +919,25 @@ const uniqueAssets = getUniqueAssetTypes([
                     <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleManual}>
                       <RadioInput
                         name="manual"
-                        value="low"
+                        value="Low"
                         id="Low7"
                         label="Low"
                       />
                       <RadioInput
                         name="manual"
-                        value="medium"
+                        value="Medium"
                         id="Medium"
                         label="Medium"
                       />
                       <RadioInput
                         name="manual"
-                        value="high"
+                        value="High"
                         id="High7"
                         label="High"
                       />
                       <RadioInput
                         name="manual"
-                        value="critical"
+                        value="Critical"
                         id="Critical"
                         label="Critical"
                       />
