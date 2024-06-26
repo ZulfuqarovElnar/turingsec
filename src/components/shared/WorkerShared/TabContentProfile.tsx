@@ -371,7 +371,7 @@ export default function TabContentProfile() {
                     <FormControl>
                       <InputCompany
                         type="text"
-                        placeholder="Bughunter.az"
+                        placeholder=""
                         {...field}
                         defaultValue={userDate?.website || ""}
                         className="xl:min-w-[350px] scale-r-125"
@@ -572,7 +572,7 @@ export default function TabContentProfile() {
                   <FormItem>
                     <FormControl>
                       <Textarea
-                        placeholder="bio"
+                        placeholder="Bio"
                         {...field}
                         className="bg-transparent text-white placeholder:text-white border focus-visible:border-none focus-visible:outline-none xl:w-[620px] lg:h-[170px] sm:h-[100px] lg:w-[350px] w-full"
                         defaultValue={userDate?.bio || ""}
@@ -596,7 +596,7 @@ export default function TabContentProfile() {
                     <FormControl>
                       <InputCompany
                         type="text"
-                        placeholder="Bughunter.az"
+                        placeholder=""
                         {...field}
                         defaultValue={userDate?.linkedin || ""}
                         className="xl:min-w-[350px] scale-r-125"
@@ -620,7 +620,7 @@ export default function TabContentProfile() {
                     <FormControl>
                       <InputCompany
                         type="text"
-                        placeholder="Bughunter.az"
+                        placeholder=""
                         {...field}
                         defaultValue={userDate?.twitter || ""}
                         className="xl:min-w-[350px] scale-r-125"
@@ -644,7 +644,7 @@ export default function TabContentProfile() {
                     <FormControl>
                       <InputCompany
                         type="text"
-                        placeholder="Bughunter.az"
+                        placeholder=""
                         {...field}
                         defaultValue={userDate?.github || ""}
                         className="xl:min-w-[350px] scale-r-125"
