@@ -74,42 +74,42 @@ export default function TabContentProfile() {
     },
   });
   const options = useMemo(() => countryList().getData(), []);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userDataString = localStorage.getItem("user");
         // console.log("userData:", userDataString);
-  
+
         if (userDataString) {
           const userData = JSON.parse(userDataString);
           const { id } = userData;
           const apiUrl = import.meta.env.VITE_APP_BASE_URL;
-  
+
           if (id) {
             const res = await fetch(`${apiUrl}/api/hacker/${id}`);
             const responseData = await res.json();
             const fetchedData = responseData.data;
             // console.log("User data from hacker API:", fetchedData);
             setUserDate(fetchedData as UserData);
-             
-             
-            } else {
-              console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
-            }
 
-             
+
+          } else {
+            console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
+          }
+
+
           if (id) {
             const res1 = await fetch(
               `${apiUrl}/api/background-image-for-hacker/download/${id}`
             );
-            
+
             const backgroundImageBlob = await res1.blob();
-  
+
             const res2 = await fetch(
               `${apiUrl}/api/image-for-hacker/download/${id}`
             );
-            
+
             const userImageBlob = await res2.blob();
 
             setImageSrcUser(URL.createObjectURL(userImageBlob));
@@ -124,7 +124,7 @@ export default function TabContentProfile() {
         console.log(error);
       }
     };
-  
+
     fetchData();
   }, [currentUser?.hackerId]);
 
@@ -133,7 +133,7 @@ export default function TabContentProfile() {
       const country = options.filter(
         (a) => a.value === userDate?.country
       );
-  
+
       form.setValue("firstname", userDate?.first_name || "");
       form.setValue("lastname", userDate?.last_name || "");
       form.setValue("username", currentUser?.username || "");
@@ -149,7 +149,7 @@ export default function TabContentProfile() {
       });
     }
   }, [userDate]);
-  
+
   const handleFileChange = (e) => {
     // console.log(e);
     const file = e.target.files[0];
@@ -176,33 +176,34 @@ export default function TabContentProfile() {
     }
     console.log(imageRealSrcUser)
   }
-  
-  
+
+
   async function onSubmit(data: z.infer<typeof formSchemaProfileUpdate>) {
     console.log("submitttttttttttttttttttttttttt")
     if (!imageSrc || !imageSrcUser) {
       toast.error("Please upload images");
       return;
     }
-  
+
     // console.log(data)
     // console.log(imageSrc) 
     // console.log(imageSrcUser);
     try {
-      const ele = JSON.parse(localStorage.getItem("user") || "");
+      const user = JSON.parse(localStorage.getItem("user") || "");
+      
       const formData = new FormData();
       const apiUrl = import.meta.env.VITE_APP_BASE_URL;
       console.log("yesssssssssssssssssssssssssssssssssssssssssssss")
       console.log(imageRealSrcUser)
       formData.append("file", imageRealSrcUser);
-      
+
 
       const res2 = await fetch(
         `${apiUrl}/api/image-for-hacker/upload`,
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${ele.accessToken}`,
+            Authorization: `Bearer ${user.accessToken}`,
           },
           body: formData,
         }
@@ -214,13 +215,13 @@ export default function TabContentProfile() {
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${ele.accessToken}`,
+            Authorization: `Bearer ${user.accessToken}`,
           },
           body: formData2,
         }
       );
       // console.log(res2, res3);
-    
+
       const data3 = await res2.json(); // Parsing response JSON
       console.log(data3);
       const payload = {
@@ -241,41 +242,41 @@ export default function TabContentProfile() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${ele.accessToken}`,
+            Authorization: `Bearer ${user.accessToken}`,
           },
           body: JSON.stringify(payload),
         }
       );
       // console.log(res3);
       // console.log(res2);
-      
+
       const resJson = await res.json(); // Parsing the response JSON
       if (res.status === 422) {
-        const values=Object.values(resJson)
+        const values = Object.values(resJson)
         toast.error(`${values[0]}`)
       };
       console.log(resJson);
 
       if (!res.ok) {
-        
+
         throw new Error("Please try again later");
       }
       if (resJson.meta && resJson.meta.message) {
-        const newToken = resJson.meta.message;
-        // Update the token in local storage or where you store it
-        localStorage.setItem('accessToken', newToken);
+        const takingToken = resJson.meta.message;
+        const newToken = takingToken.substring(98)
+        // Update the token in local storage or where you store 
+        user.accessToken=newToken
+        localStorage.setItem("user", JSON.stringify(user));
       }
- 
+
       toast.success("Profile Updated");
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 1000);
+      
     } catch (err: any) {
       toast.error("Error", err?.message);
       console.log(err);
     }
   }
-  
+
   return (
     <div className="mt-4">
       <h2 className="sm:text-[23px] text-[16px] font-[600] mb-8 ">
@@ -296,26 +297,26 @@ export default function TabContentProfile() {
                 <FormField
                   control={form.control}
                   name="firstname"
-                  
+
                   render={({ field }) => (
                     <FormItem>
-                        <FormControl>
-                            <InputCompany
-                                type="text"
-                                placeholder="Enter First Name"
-                                {...field}
-                                defaultValue={userDate?.first_name || ''}
-                                className="xl:min-w-[250px]"
-                            />
-                        </FormControl>
-                        <FormMessage />
+                      <FormControl>
+                        <InputCompany
+                          type="text"
+                          placeholder="Enter First Name"
+                          {...field}
+                          defaultValue={userDate?.first_name || ''}
+                          className="xl:min-w-[250px]"
+                        />
+                      </FormControl>
+                      <FormMessage />
                     </FormItem>
-                )}
-                />                
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="lastname"
-                  render={({field}) => (
+                  render={({ field }) => (
                     <FormItem>
                       <FormControl>
                         <InputCompany
@@ -325,9 +326,9 @@ export default function TabContentProfile() {
                           defaultValue={userDate?.last_name || ""}
                           className="xl:min-w-[250px]"
                         />
-                      </FormControl> 
+                      </FormControl>
 
-                      <FormMessage /> 
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -340,7 +341,7 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="username"
-                render={({field}) => (
+                render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <InputCompany
@@ -361,11 +362,11 @@ export default function TabContentProfile() {
               <Label className="sm:text-[18px] text-[14px] font-[600] md:min-w-[130px] sm:min-w-[100px]">
                 Website
               </Label>
-              
+
               <FormField
                 control={form.control}
                 name="website"
-                render={({field}) => (
+                render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <InputCompany
@@ -378,7 +379,7 @@ export default function TabContentProfile() {
                     </FormControl>
                     <FormMessage />
                   </FormItem>
-              )}
+                )}
               />
             </div>
             <div className="flex items-center gap-8 flex-col sm:flex-row">
@@ -542,7 +543,7 @@ export default function TabContentProfile() {
                 <FormField
                   control={form.control}
                   name="city"
-                  render={({field}) => (
+                  render={({ field }) => (
                     <FormItem>
                       <FormControl>
                         <InputCompany
@@ -567,7 +568,7 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="bio"
-                render={({field}) => (
+                render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <Textarea
@@ -590,7 +591,7 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="linkedin"
-                render={({field}) => (
+                render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <InputCompany
@@ -614,7 +615,7 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="twitter"
-                render={({field}) => (
+                render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <InputCompany
@@ -638,7 +639,7 @@ export default function TabContentProfile() {
               <FormField
                 control={form.control}
                 name="github"
-                render={({field}) => (
+                render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <InputCompany
