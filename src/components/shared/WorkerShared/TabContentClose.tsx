@@ -1,4 +1,38 @@
 import { Button } from "../../ui/button";
+import toast from "react-hot-toast";
+
+async function handleDelete() {
+  try {
+   
+    const userData = JSON.parse(localStorage.getItem("user") || "");
+    const apiUrl = import.meta.env.VITE_APP_BASE_URL;
+   
+    const res = await fetch(
+      `${apiUrl}/api/auth/delete-user`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${userData.accessToken}`, // Corrected header name
+        },
+      }
+    );
+   
+    console.log(res)
+    if (res.ok) {
+      localStorage.removeItem("user");
+      toast.success("DELETED USER");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
+
+    } 
+  } catch (err) {
+
+    toast.error("Error while  :");
+    console.error("Error while  :", err);
+  }
+}
+
 
 export default function TabContentClose() {
   return (
@@ -27,7 +61,7 @@ export default function TabContentClose() {
         </p>
       </div>
       <div className="flex justify-end mt-4">
-        <Button className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[200px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5] ">
+        <Button onClick={handleDelete} className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[200px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5] ">
           Delete account
         </Button>
       </div>
