@@ -6,7 +6,7 @@ export default function ReportCompany() {
   const { data, isError } = useGetReportsForCompanies();
   // console.log(data);
   return (
-    <div className="text-white flex-1 flex flex-col overflow-hidden relative">
+    <div className="text-white flex-1 flex flex-col overflow-hidden relative h-screen">
       <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
         <img
           src="/assets/iconnav11.svg"
@@ -22,7 +22,7 @@ export default function ReportCompany() {
       </section>
       <div className=" bg-[#1F44CC]  w-full absolute top-0 left-0 h-[30px] "></div>
 
-      <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3  py-16">
+      <div className="bg-[#1E1E1E] h-full flex-1 lg:px-20 sm:px-8 px-3  py-16">
         <h2 className="sm:text-[25px] font-[700] text-[20px] mb-6">
           Incoming Reports
         </h2>
