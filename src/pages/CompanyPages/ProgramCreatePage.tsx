@@ -109,6 +109,7 @@ export default function ProgramCreatePage() {
       const transformAssets = (elements) => {
         return elements.map((element) => ({
           type: element.assetType,
+          price: parseFloat(element.price),
           names: [element.assetName]
         }));
       };

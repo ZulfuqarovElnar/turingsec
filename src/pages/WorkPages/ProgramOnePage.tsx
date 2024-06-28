@@ -270,6 +270,9 @@ export default function ProgramOnePage() {
               <p className="text-white">
                 {programData.asset.lowAsset.assets[i]?.names.join(", ") || "-"}
               </p>
+              <p className="text-white">
+                {programData.asset.lowAsset.assets[i]?.price || "-"}
+              </p>
             </div>
 
             {/* Medium Asset */}
@@ -279,6 +282,9 @@ export default function ProgramOnePage() {
               </p>
               <p className="text-white">
                 {programData.asset.mediumAsset.assets[i]?.names.join(", ") || "-"}
+              </p>
+              <p className="text-white">
+                {programData.asset.mediumAsset.assets[i]?.price || "-"}
               </p>
             </div>
 
@@ -290,6 +296,9 @@ export default function ProgramOnePage() {
               <p className="text-gray-900">
                 {programData.asset.highAsset.assets[i]?.names.join(", ") || "-"}
               </p>
+              <p className="text-gray-900"> 
+                {programData.asset.highAsset.assets[i]?.price || "-"}
+              </p>
             </div>
 
             {/* Critical Asset */}
@@ -300,33 +309,13 @@ export default function ProgramOnePage() {
               <p className="text-white">
                 {programData.asset.criticalAsset.assets[i]?.names.join(", ") || "-"}
               </p>
-            </div>
+              <p className="text-white">
+                {programData.asset.criticalAsset.assets[i]?.price || "-"}
+              </p>
+            </div> 
           </div>
         </div>
       ))}
-
-      {/* Prices */}
-      <div className="flex  lg:flex-row items-center justify-between gap-4">
-        {/* Low Asset */}
-        <div className="flex-1 text-center min-w-[100px] p-4 bg-[#00467C] rounded-lg shadow-md">
-          <p className="text-white">{programData.asset.lowAsset.price}</p>
-        </div>
-
-        {/* Medium Asset */}
-        <div className="flex-1 text-center min-w-[100px] p-4 bg-[#2342E3] rounded-lg shadow-md">
-          <p className="text-white">{programData.asset.mediumAsset.price}</p>
-        </div>
-
-        {/* High Asset */}
-        <div className="flex-1 text-center min-w-[100px] p-4 bg-[#5AFF31] rounded-lg shadow-md">
-          <p className="text-gray-900 ">{programData.asset.highAsset.price}</p>
-        </div>
-
-        {/* Critical Asset */}
-        <div className="flex-1 text-center min-w-[100px] p-4 bg-[#E32323] rounded-lg shadow-md">
-          <p className="text-white">{programData.asset.criticalAsset.price}</p>
-        </div>
-      </div>
     </div>
   </div>
         <h2 className="my-[10px] sm:text-[20px] text-[16px] w-[600]">Policy</h2>
