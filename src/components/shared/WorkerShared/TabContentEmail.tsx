@@ -1,21 +1,21 @@
 import InputCompany from "../../component/Company/InputCompany";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
-
+import toast from "react-hot-toast";
 import { Label } from "../../ui/label";
 import { useState } from "react";
 import { Button } from "../../ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "../../../components/ui/form";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+
 export default function TabContentEmail() {
   const [currentpasswordVisible, setCurrentPasswordVisible] = useState(false);
 
@@ -26,10 +26,10 @@ export default function TabContentEmail() {
     func(!item);
   };
   const formSchema = z.object({
-    currentPassword: z.string().min(8, {
-      message: "CurrentPassword must be at least 8 characters.",
+    password: z.string().min(8, {
+    message: "CurrentPassword must be at least 8 characters.",
     }),
-    email: z.string().email({
+    newEmail: z.string().email({
       message: "Invalid email",
     }),
   });
@@ -37,12 +37,49 @@ export default function TabContentEmail() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      currentPassword: "",
-      email: "",
+      password: "",
+      newEmail: "",
     },
   });
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    try {
+      console.log(data)
+      const ele = JSON.parse(localStorage.getItem("user") || "");
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
+      const datt = {
+        password: data.password,
+        newEmail: data.newEmail,
+      };
+      const res = await fetch(
+        `${apiUrl}/api/auth/change-email`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Specify content type as JSON
+            Authorization: `Bearer ${ele.accessToken}`, // Corrected header name
+          },
+          body: JSON.stringify(datt), // Convert data to JSON string
+        }
+      );
+      console.log(res);
+      const resJson = await res.json(); // Parsing the response JSON
+      console.log(resJson)
+
+      if (res.ok) {
+        // Handle success
+        toast.success("Email changed successfully!");
+       
+      } else {
+
+        toast.error(`${resJson.message}`);
+        // Handle error
+        console.error("Failed to change email:", res.statusText);
+      }
+    } catch (err) {
+
+      toast.error("Error while changing email:");
+      console.error("Error while changing email:", err);
+    }
   }
   return (
     <div className="mt-4">
@@ -59,7 +96,7 @@ export default function TabContentEmail() {
               </Label>
               <FormField
                 control={form.control}
-                name="currentPassword"
+                name="password"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -106,7 +143,7 @@ export default function TabContentEmail() {
               </Label>
               <FormField
                 control={form.control}
-                name="email"
+                name="newEmail"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>

@@ -1,39 +1,36 @@
 import InputCompany from "../../component/Company/InputCompany";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
-
 import { Label } from "../../ui/label";
 import { useState } from "react";
 import { Button } from "../../ui/button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "../../../components/ui/form";
 import { z } from "zod";
-import { Input } from "../../ui/input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useCurrentUser } from "../../../context/CurrentUser";
-import toast from "react-hot-toast";
+ 
+
 
 export default function TabContentPassword() {
-  const { currentUser } = useCurrentUser();
+ 
   const [currentpasswordVisible, setCurrentPasswordVisible] = useState(false);
-
+  
   const formSchema = z
     .object({
       currentPassword: z.string().min(8, {
-        message: "CurrentPassword must be at least 8 characters.",
+        message: "Current password must be at least 8 characters.",
       }),
       newPassword: z.string().min(8, {
-        message: "NewPassword must be at least 8 characters.",
+        message: "New password must be at least 8 characters.",
       }),
       confirmPassword: z.string().min(8, {
-        message: "ConfirmPassword must be at least 8 characters.",
+        message: "Confirm Password must be at least 8 characters.",
       }),
     })
     .refine((data) => data.newPassword === data.confirmPassword, {
@@ -62,15 +59,15 @@ export default function TabContentPassword() {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
       const ele = JSON.parse(localStorage.getItem("user") || "");
-      console.log(ele.accessToken);
       console.log(data);
+      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
       const datt = {
         currentPassword: data.currentPassword,
         newPassword: data.newPassword,
         confirmNewPassword: data.confirmPassword,
       };
       const res = await fetch(
-        "https://turingsec-production-de02.up.railway.app/api/auth/change-password",
+        `${apiUrl}/api/auth/change-password`,
         {
           method: "POST",
           headers: {
@@ -81,17 +78,23 @@ export default function TabContentPassword() {
         }
       );
       console.log(res);
+      const resJson = await res.json(); // Parsing the response JSON
+      
       if (res.ok) {
         // Handle success
         toast.success("Password changed successfully!");
-        console.log("Password changed successfully!");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1000);
       } else {
-        toast.error("Failed to change password");
+       
+        toast.error(`${resJson.message}`);
         // Handle error
         console.error("Failed to change password:", res.statusText);
       }
     } catch (err) {
-      toast.error("Error while changing password");
+     
+      toast.error("Error while changing password:");
       console.error("Error while changing password:", err);
     }
   }
