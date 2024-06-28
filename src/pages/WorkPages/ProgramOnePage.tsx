@@ -312,7 +312,7 @@ export default function ProgramOnePage() {
               <p className="text-white">
                 {programData.asset.criticalAsset.assets[i]?.price || "-"}
               </p>
-            </div>
+            </div> 
           </div>
         </div>
       ))}
