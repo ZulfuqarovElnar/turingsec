@@ -296,7 +296,7 @@ export default function ProgramOnePage() {
               <p className="text-gray-900">
                 {programData.asset.highAsset.assets[i]?.names.join(", ") || "-"}
               </p>
-              <p className="text-gray-900">
+              <p className="text-gray-900"> 
                 {programData.asset.highAsset.assets[i]?.price || "-"}
               </p>
             </div>
