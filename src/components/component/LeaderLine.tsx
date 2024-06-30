@@ -14,7 +14,7 @@ export default function LeaderLine() {
           </p>
           <p className="flex items-center gap-2">
             <img src="/assets/images/aze.svg" alt="flag" />
-            <p className="text-[12px] sm:text-[14px] font-[600]">City</p>
+            <span className="text-[12px] sm:text-[14px] font-[600]">City</span>
           </p>
         </div>
       </div>
