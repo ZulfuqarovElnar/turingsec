@@ -64,7 +64,7 @@ export default function Dashboard() {
       </section>
 
       <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3 py-16">
-        <h1 className="font-[600] text-[25px] mb-2">No Reports Found</h1>
+        {/* <h1 className="font-[600] text-[25px] mb-2">No Reports Found</h1> */}
         <p className="text-[20px] font-[400]">
           Discover the programs and start hunting to report your first
           vulnerability

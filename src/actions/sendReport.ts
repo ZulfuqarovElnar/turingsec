@@ -9,7 +9,7 @@ export async function sendReport(report: Report, id: string) {
   try {
     console.log("sending report...");
     
-    
+    console.log(report.discoveryDetails.timeSpend)
     //Manual
     if(report.methodName === 'manual'){
       const formData = new FormData();
@@ -65,11 +65,11 @@ export async function sendReport(report: Report, id: string) {
           body: formData,
         }
       );
-
       if (!res.ok) {
         console.log(formData);
         throw new Error("Wrong response");
       }
+      
       return res;
     }
 
