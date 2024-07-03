@@ -30,7 +30,7 @@ export default function ProgramSubmitPage() {
     useState<string>("");
   const [description, setDesciptions] = useState<string>("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const [lastActivityDes, setLastActivity]=useState<string>("");
+  const [lastActivityDes, setLastActivity]=useState<string>("1");
   const [reportTemplate, setReportTemplate]=useState<string>("");
   const [globalPercent, setGlobalPercent] = useState<number>(100);
   const [percent, setPercent] = useState<number>(0);
@@ -244,7 +244,7 @@ const handleManual = () => {
           description: description,
         },
         discoveryDetails: {
-          timeSpend: lastActivityDes,
+          timeSpend: lastActivityDes ,
         },
         attachments: attachments,
         methodName: severityValue,
@@ -268,7 +268,7 @@ const handleManual = () => {
           //window.location.href = "/work/dashboard";
         }, 1000);
       } else {
-        console.log("ldlgf;lg;lgfpp[");
+         
         throw new Error("Wrong response");
       }
     } catch (err) {
@@ -1049,7 +1049,7 @@ const uniqueAssets = getUniqueAssetTypes([
           </div>
           <div className=" rounded-xl overflow-hidden  flex-1">
             <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
-              Discovery details
+              Discovery details (Optional)
             </div>
             <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
               <div className="flex items-center gap-4 flex-col lg:flex-row">

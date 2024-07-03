@@ -1,17 +1,18 @@
 import { Link } from "react-router-dom";
-
 import { useState } from "react";
-
+ 
 import { TiThMenu } from "react-icons/ti";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCurrentUser } from "../../context/CurrentUser";
 // import { Button } from "../ui/button";
 import { useCurrentCompany } from "../../context/CurrentCompany";
+import { useGetUserData } from "../../queryies/useGetUserData";
 export default function Navbar() {
-  const { currentUser } = useCurrentUser();
+  // const { currentUser } = useCurrentUser();
+  const { data:currentUser } = useGetUserData();
   const { currentCompany } = useCurrentCompany();
-  console.log(currentCompany);
+  // console.log(currentUser);
 
   const [hoveredLink, setHoveredLink] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -84,8 +85,10 @@ export default function Navbar() {
           onMouseEnter={() => handleHover("/leaderboard")}
           onMouseLeave={resetHover}
         >
-          Leaderboard
+          Leader
         </Link>
+
+        
         <Link
           to={currentUser?.activated ? "/work/programs" : "/registerhacker"}
           className={`hover:text-blue-700 transition-all duration-300 font-medium ${
@@ -226,7 +229,7 @@ export default function Navbar() {
         >
           Contact Us
         </Link>
-        {currentUser?.activated && (
+        {currentUser?.username && (
           <Link to={"/work/dashboard"}>
             <img
               src="/assets/images/newuserlogo.svg"
