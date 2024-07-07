@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 
 export default function InfoPart() {
   return (
-    <div className="  sm:px-16  px-8  relative  bg-[#061723] py-16">
+    <div className="  sm:px-16  px-8  relative py-16">
       <h2 className="font-[800] text-[32px] py-6 text-white sm:w-[433px] w-[177px]">
         About Us
       </h2>

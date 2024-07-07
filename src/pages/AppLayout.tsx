@@ -4,7 +4,7 @@ import Footer from "../components/shared/Footer";
 
 export default function AppLayout() {
   return (
-    <div className="font-sans">
+    <div className="font-sans bg-[url(/assets/images/gauze-01.png)] bg-center	bg-no-repeat	bg-cover	">
       <Navbar />
       <Outlet />
       <Footer />

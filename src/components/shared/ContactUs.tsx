@@ -50,7 +50,7 @@ export default function ContactUs() {
   }
 
   return (
-    <div className="text-white bg-[#1F44CC]  py-12 relative">
+    <div className="text-white h-full w-full bg-[#583555] rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-45 py-12 relative">
       <img
         src="/assets/images/contactusicon1.png"
         alt=""
@@ -88,7 +88,7 @@ export default function ContactUs() {
                       type="text"
                       placeholder="First Name"
                       {...field}
-                      className=""
+                      className="bg-[#200F23]"
                     />
                   </FormControl>
 
@@ -106,7 +106,7 @@ export default function ContactUs() {
                       type="text"
                       placeholder="Last Name"
                       {...field}
-                      className=""
+                      className="bg-[#200F23]"
                     />
                   </FormControl>
 
@@ -124,7 +124,7 @@ export default function ContactUs() {
                       type="text"
                       placeholder="Company Name"
                       {...field}
-                      className=""
+                      className="bg-[#200F23]"
                     />
                   </FormControl>
 
@@ -142,7 +142,7 @@ export default function ContactUs() {
                       type="text"
                       placeholder="Business email"
                       {...field}
-                      className=""
+                      className="bg-[#200F23]"
                     />
                   </FormControl>
 
@@ -160,7 +160,7 @@ export default function ContactUs() {
                       type="text"
                       placeholder="Job Title"
                       {...field}
-                      className=""
+                      className="bg-[#200F23]"
                     />
                   </FormControl>
 
@@ -180,7 +180,7 @@ export default function ContactUs() {
                       styles={{
                         control: (styles) => ({
                           ...styles,
-                          background: "#061723",
+                          background: "#200F23",
                           borderRadius: "0.5rem",
                           width: "100%",
                           borderWidth: "0",
@@ -194,7 +194,7 @@ export default function ContactUs() {
                         }),
                         option: (styles) => ({
                           ...styles,
-                          background: "#023059",
+                          background: "#200F23",
                           padding: "10px 20px",
                           scrollbarColor: "red",
 
@@ -246,7 +246,7 @@ export default function ContactUs() {
                     <Textarea
                       placeholder="Write"
                       {...field}
-                      className="bg-[#061723] border-0 focus-visible:outline-none focus-visible:ring-0 
+                      className="bg-[#200F23] border-0 focus-visible:outline-none focus-visible:ring-0 
                       
                       focus-visible:ring-offset-1 placeholder:text-white col-span-2 sm:h-[217px] h-[180px]"
                     />

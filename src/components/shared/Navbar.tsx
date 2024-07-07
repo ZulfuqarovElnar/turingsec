@@ -57,7 +57,7 @@ export default function Navbar() {
   };
   return (
     <div
-      className="bg-[#0C2F47] text-[
+      className="text-[
         white]   flex justify-between items-center px-8 sm:px-16 py-2 fixed top-0 w-full z-50 h-[80px]"
     >
       <Link className="hidden sm:block" to={"/"}>

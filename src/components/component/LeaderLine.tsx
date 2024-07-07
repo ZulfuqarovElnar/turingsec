@@ -1,6 +1,6 @@
 export default function LeaderLine() {
   return (
-    <div className="border-2 rounded-3xl border-[#023059] bg-[#023059] lg:px-8 px-4 flex items-center justify-between hover:scale-105 cursor-pointer transition-all duration-300 py-1">
+    <div className=" rounded-3xl bg-[#3D0436] lg:px-8 px-4 flex items-center justify-between hover:scale-105 cursor-pointer transition-all duration-300 py-1">
       <div className="flex items-center justify-between  ">
         <p className="lg:min-w-12 sm:min-w-8 sm:text-[30px] text-[25px] min-w-[20px]">
           1
@@ -45,7 +45,7 @@ export default function LeaderLine() {
             <p className=" text-[22px] font-[700]">65</p>
           </div>
         </div>
-        <div className="bg-[#FFDE31]   h-[40px] min-w-[60px]  rounded-xl text-black    sm:text-[25px] text-[22px] lg:ml-12 sm:ml-4 ml-4 sm:mr-4 mr-2 sm:font-[600] font-[700] text-center flex items-center justify-center">
+        <div className="bg-[#FFDE31]   h-[40px] min-w-[60px]  rounded-md text-black    sm:text-[25px] text-[22px] lg:ml-12 sm:ml-4 ml-4 sm:mr-4 mr-2 sm:font-[600] font-[700] text-center flex items-center justify-center">
           61
         </div>
         <button className="text-[2px] min-w-8">

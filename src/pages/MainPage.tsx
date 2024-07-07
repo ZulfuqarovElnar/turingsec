@@ -45,7 +45,7 @@ export default function MainPage() {
       <Header />
       <Oppotunuties />
       {/* <Company /> */}
-      <div className="fill bg-[#061723]">
+      <div className="fill">
         <InfoPart />
         <ShortInfo ref={elementRef} />
         <LeaderBoard />

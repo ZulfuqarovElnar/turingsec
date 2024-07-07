@@ -7,7 +7,7 @@ export default function Header() {
   const { data: currentUser } = useGetUserData()
 
   return (
-    <div className=" flex  justify-between xl:pb-12 pb-4 sm:py-28 flex-col-reverse text-[white] lg:flex-row items-center bg-[#31688F] dark:bg-inherit sm:px-16 mt-[52px] py-20 px-8">
+    <div className=" flex  justify-between xl:pb-12 pb-4 sm:py-28 flex-col-reverse text-[white] lg:flex-row items-center dark:bg-inherit sm:px-16 py-20 px-8">
       <motion.div
         animate={{
           x: [-900, 0],
