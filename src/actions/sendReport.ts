@@ -1,4 +1,5 @@
 import { Report } from "../types";
+import { toast } from "react-hot-toast";
  
 
 export async function sendReport(report: Report, id: string) {
@@ -65,6 +66,12 @@ export async function sendReport(report: Report, id: string) {
           body: formData,
         }
       );
+      const resJson = await res.json()
+      if (res.status === 422) {
+        const values = Object.values(resJson)
+        toast.error(`${values[0]}`)
+      };
+      console.log(resJson);
       if (!res.ok) {
         console.log(formData);
         throw new Error("Wrong response");
@@ -72,8 +79,6 @@ export async function sendReport(report: Report, id: string) {
       
       return res;
     }
-
-
     //End of Manual
     else{
       const formData = new FormData();

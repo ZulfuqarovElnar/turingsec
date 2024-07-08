@@ -3,6 +3,8 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { useGetAllCompany } from "../../queryies/useGetAllCompany";
 
+
+
 export default function Programs() {
   const { data, isError, isLoading } = useGetAllCompany();
   console.log(data)
