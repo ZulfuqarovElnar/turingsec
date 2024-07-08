@@ -12,7 +12,11 @@ export default function Navbar() {
   const { current } = useCurrentUser();
   const { data:currentUser } = useGetUserData();
   const { currentCompany } = useCurrentCompany();
-  console.log(current);
+ 
+  
+  const userDataString=localStorage.getItem("user")
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const accessToken = userData?.accessToken;
 
   const [hoveredLink, setHoveredLink] = useState("");
   const [isOpen, setIsOpen] = useState(false);

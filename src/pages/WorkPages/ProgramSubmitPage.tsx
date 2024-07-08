@@ -30,7 +30,8 @@ export default function ProgramSubmitPage() {
     useState<string>("");
   const [description, setDesciptions] = useState<string>("");
   const [searchParams, setSearchParams] = useSearchParams();
-  const [lastActivityDes, setLastActivity]=useState<string>("1");
+  const [timeSpend, setTimeSpend]=useState<number>();
+  const [lastActivity, setLastActivity] = useState<string>("2024-07-08T19:56:45.552Z");
   const [reportTemplate, setReportTemplate]=useState<string>("");
   const [globalPercent, setGlobalPercent] = useState<number>(100);
   const [percent, setPercent] = useState<number>(0);
@@ -222,7 +223,7 @@ const handleManual = () => {
       }
  
       const response = await mutation.mutateAsync({
-        lastActivity: lastActivityDes,
+        lastActivity: lastActivity,
         rewardsStatus: manual,
         reportTemplate: reportTemplate,
         ownPercentage: percent,
@@ -244,7 +245,7 @@ const handleManual = () => {
           description: description,
         },
         discoveryDetails: {
-          timeSpend: lastActivityDes ,
+          timeSpend: timeSpend ,
         },
         attachments: attachments,
         methodName: severityValue,
@@ -1058,7 +1059,7 @@ const uniqueAssets = getUniqueAssetTypes([
                     type="text"
                     placeholder="Time spend"
                     className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6"
-                    onChange={(e) => setLastActivity(e.target.value)}
+                    onChange={(e) => setTimeSpend(e.target.value)}
                   />
                 </div>
               </div>

@@ -58,7 +58,7 @@
           if (userString) {
             const user = JSON.parse(userString);
        
-            console.log(user.accessToken);
+            // console.log(user.accessToken);
 
       
             const apiUrl = import.meta.env.VITE_APP_BASE_URL;
