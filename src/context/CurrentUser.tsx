@@ -53,11 +53,13 @@
     useEffect(() => {
       async function fetchUser() {
         try {
-          const userString = localStorage.getItem("userId");
+          const userString = localStorage.getItem("user");
+          
           if (userString) {
-            const userId = JSON.parse(userString);
+            const user = JSON.parse(userString);
        
-            console.log("id:" + userId);
+            console.log(user.accessToken);
+
       
             const apiUrl = import.meta.env.VITE_APP_BASE_URL;
             const res = await fetch(
@@ -65,14 +67,14 @@
               {
                 method: "GET",
                 headers: {
-                  Authorization: `Bearer ${userId.accessToken}`,
+                  Authorization: `Bearer ${user.accessToken}`,
                 },
               }
             );
       
             if (res.ok) {
               const updatedUser = await res.json();
-              console.log(updatedUser);
+              // console.log(updatedUser);
       
               setCurrentUser(updatedUser.data);
             } else {
