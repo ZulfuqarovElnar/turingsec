@@ -9,10 +9,10 @@ import { useCurrentUser } from "../../context/CurrentUser";
 import { useCurrentCompany } from "../../context/CurrentCompany";
 import { useGetUserData } from "../../queryies/useGetUserData";
 export default function Navbar() {
-  // const { currentUser } = useCurrentUser();
+  const { current } = useCurrentUser();
   const { data:currentUser } = useGetUserData();
   const { currentCompany } = useCurrentCompany();
-  // console.log(currentUser);
+  console.log(current);
 
   const [hoveredLink, setHoveredLink] = useState("");
   const [isOpen, setIsOpen] = useState(false);
