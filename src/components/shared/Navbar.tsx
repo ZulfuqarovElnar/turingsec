@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
  
 import { TiThMenu } from "react-icons/ti";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
@@ -9,18 +9,30 @@ import { useCurrentUser } from "../../context/CurrentUser";
 import { useCurrentCompany } from "../../context/CurrentCompany";
 import { useGetUserData } from "../../queryies/useGetUserData";
 export default function Navbar() {
-  const { current } = useCurrentUser();
-  const { data:currentUser } = useGetUserData();
-  const { currentCompany } = useCurrentCompany();
- 
+  const { currentUser } = useCurrentUser();
+  // const { data:currentUser } = useGetUserData();
   
-  const userDataString=localStorage.getItem("user")
-  const userData = userDataString ? JSON.parse(userDataString) : null;
-  const accessToken = userData?.accessToken;
+  const { currentCompany } = useCurrentCompany();
+  
 
   const [hoveredLink, setHoveredLink] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [ani, setAni] = useState(false);
+
+  const [accessToken, setAccessToken] = useState("")
+  const [accessTokenCompany, setAccessTokenCompany] = useState("")
+  useEffect(() => {
+    const userDataString = localStorage.getItem("user");
+    const userData = userDataString ? JSON.parse(userDataString) : null;
+    const companyDataString = localStorage.getItem("company");
+    const companyData = companyDataString ? JSON.parse(companyDataString) : null;
+    if (userDataString) {
+      setAccessToken(userData?.accessToken);
+    }
+    if (companyDataString) {
+      setAccessTokenCompany(companyData?.accessToken)
+    }
+  }, [])
   const handleHover = (link: string) => {
     setHoveredLink(link);
   };
@@ -233,7 +245,7 @@ export default function Navbar() {
         >
           Contact Us
         </Link>
-        {currentUser?.username && (
+        {accessToken && (
           <Link to={"/work/dashboard"}>
             <img
               src="/assets/images/newuserlogo.svg"
@@ -242,7 +254,7 @@ export default function Navbar() {
             />
           </Link>
         )}
-        {currentCompany && (
+        {accessTokenCompany && (
           <Link to={"/company/dashboard"}>
             <img
               src="/assets/images/newuserlogo.svg"

@@ -4,12 +4,16 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 
 export default function ProgramBox({
+  companyName,
   fromDate,
   toDate,
+  lastDays,
   id,
 }: {
+  companyName: string;
   fromDate: string;  // Assuming fromDate and toDate are strings in the fetched data
   toDate: string;
+  lastDays: string;
   id: string;
 }) {
   const navigate = useNavigate();
@@ -65,9 +69,9 @@ export default function ProgramBox({
         </div>
         <div className="py-4 mt-6 px-4">
           <h2 className="text-[18px] sm:text-[20px] font-[600] sm:font-[700] mb-4 lg:mb-0">
-            Bug Bounty Program name
+            {companyName}
           </h2>
-          <p className="text-[16px] font-[400]">Collaboration, Retesting</p>
+          {/* <p className="text-[16px] font-[400]">Collaboration, Retesting</p>
           <div className="flex gap-4 mt-6 sm:flex-col xl:flex-row flex-row">
             <div className="rounded-xl flex items-center px-6 justify-center py-[5px] border border-[#FFDE31] text-white text-[14px] font-[400]">
               Updated
@@ -75,14 +79,14 @@ export default function ProgramBox({
             <div className="rounded-xl flex items-center px-6 justify-center py-[5px] border border-[#FFDE31] text-white text-[14px] font-[400]">
               Campaign
             </div>
-          </div>
+          </div> */}
           <p className="sm:text-[18px] text-[16px] font-[600] mt-4">
-            Ends in {findDays(new Date(fromDate), new Date(toDate))} days
+            Ends in {lastDays} days
           </p>
-          <p className="sm:text-[20px] text-[18px] font-[700] text-[#FFDE31] my-4">
+          {/* <p className="sm:text-[20px] text-[18px] font-[700] text-[#FFDE31] my-4">
             Up to $10k
-          </p>
-          <div className="flex justify-between lg:w-[50%] w-full">
+          </p> */}
+          {/* <div className="flex justify-between lg:w-[50%] w-full">
             <div className="flex gap-2 items-center">
               <img src="/assets/images/bugicon.png" alt="" />
               <p className="sm:text-[18px] text-[16px] font-[600]">125</p>
@@ -91,7 +95,7 @@ export default function ProgramBox({
               <img src="/assets/images/peopleicon.png" alt="" />
               <p className="sm:text-[18px] text-[16px] font-[600]">130</p>
             </div>
-          </div>
+          </div> */}
           <Button
             className="hover:scale-105 transition-all duration-300 rounded-3xl py-[7px] bg-transparent text-white border-2 border-[#2451F5] font-[600] hover:bg-transparent flex gap-4 px-4 w-full mt-6"
             onClick={handleSeeDetails}

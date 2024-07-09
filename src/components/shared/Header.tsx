@@ -1,11 +1,28 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { motion } from "framer-motion";
-import { useGetUserData } from "../../queryies/useGetUserData";
-
+//import { useGetUserData } from "../../queryies/useGetUserData";\
+import { useState } from "react";
+import { useEffect } from "react";
+ 
+ 
 export default function Header() {
-  const { data: currentUser } = useGetUserData()
 
+  const [accessToken,setAccessToken]=useState("")
+   
+  useEffect(() => {
+    const userDataString = localStorage.getItem("user");
+    const userData = userDataString ? JSON.parse(userDataString) : null;
+    const companyDataString = localStorage.getItem("company");
+    const companyData = companyDataString ? JSON.parse(companyDataString) : null;
+    if (userDataString) {
+      setAccessToken(userData?.accessToken);
+    }
+    else if (companyDataString) {
+      setAccessToken(companyData?.accessToken)
+    }
+  }, [])
+   
   return (
     <div className=" flex  justify-between xl:pb-12 pb-4 sm:py-28 flex-col-reverse text-[white] lg:flex-row items-center dark:bg-inherit sm:px-16 py-20 px-8">
       <motion.div
@@ -29,7 +46,7 @@ export default function Header() {
           <span className="lg:block inline"> Cybersecurity Collaboration</span>
         </p>
         
-        {currentUser?.username || (
+        {!accessToken && (
           <div className="flex justify-between my-6 md:w-[80%] m-auto flex-col md:flex-row space-y-4 md:space-y-0   lg:w-[100%] w-[100%] md:space-x-4 space-x-0 items-center">
 
             <Link to={"/registerhacker"}>
@@ -44,6 +61,7 @@ export default function Header() {
             </Link>
           </div>
         )}
+      
       </motion.div>
       <motion.div
         className="min-w-[50%]"
