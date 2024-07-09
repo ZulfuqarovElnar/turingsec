@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { motion } from "framer-motion";
-import { useGetUserData } from "../../queryies/useGetUserData";
+//import { useGetUserData } from "../../queryies/useGetUserData";
+import { useCurrentUser } from "../../context/CurrentUser";
 
 export default function Header() {
-  const { data: currentUser } = useGetUserData()
+  const {currentUser}=useCurrentUser()
 
   return (
     <div className=" flex  justify-between xl:pb-12 pb-4 sm:py-28 flex-col-reverse text-[white] lg:flex-row items-center dark:bg-inherit sm:px-16 py-20 px-8">
@@ -29,8 +30,7 @@ export default function Header() {
           <span className="lg:block inline"> Cybersecurity Collaboration</span>
         </p>
         
-        {currentUser?.username || (
-          <div className="flex justify-between my-6 md:w-[80%] m-auto flex-col md:flex-row space-y-4 md:space-y-0   lg:w-[100%] w-[100%] md:space-x-4 space-x-0 items-center">
+        <div className="flex justify-between my-6 md:w-[80%] m-auto flex-col md:flex-row space-y-4 md:space-y-0   lg:w-[100%] w-[100%] md:space-x-4 space-x-0 items-center">
 
             <Link to={"/registerhacker"}>
               <Button className="hover:scale-110 transition-all duration-300 rounded-3xlpy-[7px] w-[220px] bg-[#FFDE31] hover:bg-[#FFDE31] text-black font-bold rounded-3xl">
@@ -43,7 +43,7 @@ export default function Header() {
               </Button>
             </Link>
           </div>
-        )}
+      
       </motion.div>
       <motion.div
         className="min-w-[50%]"

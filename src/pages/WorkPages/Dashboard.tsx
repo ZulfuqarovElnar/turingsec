@@ -19,6 +19,7 @@ export default function Dashboard() {
       const user = JSON.parse(userString);
       
       const accessToken = user.accessToken || '';
+    
 
       try {
         const apiUrl = import.meta.env.VITE_APP_BASE_URL;

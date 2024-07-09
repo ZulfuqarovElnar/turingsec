@@ -42,8 +42,10 @@ export default function Programs() {
           {data?.map((program: any) => (
             <ProgramBox 
               key={program.id} 
+              companyName={program.companyName}
               fromDate={program.fromDate} 
               toDate={program.toDate} 
+              lastDays={program.lastDays}
               id={program.id} 
             />
           ))}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
  
 import { TiThMenu } from "react-icons/ti";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "../ui/sheet";
@@ -9,14 +9,11 @@ import { useCurrentUser } from "../../context/CurrentUser";
 import { useCurrentCompany } from "../../context/CurrentCompany";
 import { useGetUserData } from "../../queryies/useGetUserData";
 export default function Navbar() {
-  const { current } = useCurrentUser();
-  const { data:currentUser } = useGetUserData();
-  const { currentCompany } = useCurrentCompany();
- 
+  const { currentUser } = useCurrentUser();
+  // const { data:currentUser } = useGetUserData();
   
-  const userDataString=localStorage.getItem("user")
-  const userData = userDataString ? JSON.parse(userDataString) : null;
-  const accessToken = userData?.accessToken;
+  const { currentCompany } = useCurrentCompany();
+  
 
   const [hoveredLink, setHoveredLink] = useState("");
   const [isOpen, setIsOpen] = useState(false);
