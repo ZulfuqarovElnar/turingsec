@@ -18,7 +18,9 @@ export default function WorkLayout() {
 
   useEffect(() => {
     if (currentUser && load) {
-    
+
+      //navigate("/");
+
     }
   }, [currentUser, load, navigate]); // currentUser veya load değiştiğinde useEffect tekrar çalışsın
 
