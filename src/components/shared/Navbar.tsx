@@ -18,6 +18,21 @@ export default function Navbar() {
   const [hoveredLink, setHoveredLink] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [ani, setAni] = useState(false);
+
+  const [accessToken, setAccessToken] = useState("")
+  const [accessTokenCompany, setAccessTokenCompany] = useState("")
+  useEffect(() => {
+    const userDataString = localStorage.getItem("user");
+    const userData = userDataString ? JSON.parse(userDataString) : null;
+    const companyDataString = localStorage.getItem("company");
+    const companyData = companyDataString ? JSON.parse(companyDataString) : null;
+    if (userDataString) {
+      setAccessToken(userData?.accessToken);
+    }
+    if (companyDataString) {
+      setAccessTokenCompany(companyData?.accessToken)
+    }
+  }, [])
   const handleHover = (link: string) => {
     setHoveredLink(link);
   };
@@ -230,7 +245,7 @@ export default function Navbar() {
         >
           Contact Us
         </Link>
-        {currentUser?.username && (
+        {accessToken && (
           <Link to={"/work/dashboard"}>
             <img
               src="/assets/images/newuserlogo.svg"
@@ -239,7 +254,7 @@ export default function Navbar() {
             />
           </Link>
         )}
-        {currentCompany && (
+        {accessTokenCompany && (
           <Link to={"/company/dashboard"}>
             <img
               src="/assets/images/newuserlogo.svg"

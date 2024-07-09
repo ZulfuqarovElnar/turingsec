@@ -17,7 +17,6 @@ export default function ContactUsInput({
       className={`bg-[#061723] text-white rounded-lg focus:outline-none 
       border-0
       px-8
-      
       focus-visible:ring-0
       focus-visible:ring-offset-1
     placeholder:text-white py-6 ${className} `}

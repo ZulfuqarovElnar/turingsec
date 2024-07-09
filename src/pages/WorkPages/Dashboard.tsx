@@ -9,7 +9,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchData() {
       const userString = localStorage.getItem("user");
-
+       
       if (!userString) {
         // Handle case where user data is not found in localStorage
         console.error("User data not found in localStorage");
