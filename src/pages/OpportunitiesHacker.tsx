@@ -5,7 +5,7 @@ import { Button } from "../components/ui/button";
 export default function OpportunitiesHacker() {
   return (
     <>
-      <div className=" xl:pb-40  sm:pb-28 sm:pt-16  text-[white] lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16 mt-[52px] pb-20 py-0  px-8 pt-20">
+      <div className=" xl:pb-40  sm:pb-28 sm:pt-16  text-[white] lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16 pb-20 py-0  px-8 pt-20">
         <div className="flex items-center flex-col lg:flex-row">
           <div className="lg:w-1/2 w-full">
             <h2 className="sm:text-[50px] font-[700] text-[28px]">
