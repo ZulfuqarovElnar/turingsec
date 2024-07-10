@@ -115,7 +115,7 @@ export default function SignupCompanyPage() {
     }
   }
   return (
-    <div className=" flex  flex-col justify-between xl:pb-40 pb-4 sm:py-18  text-[white] lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16 mt-[52px] py-20 px-8 ">
+    <div className=" flex  flex-col justify-between xl:pb-40 pb-4 sm:py-18  text-[white] lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16  py-20 px-8 ">
       <div className="lg:w-[60%] w-auto  ">
         <div className="">
           <h2 className="font-[700] sm:text-[45px] text-[28px] mb-2">
