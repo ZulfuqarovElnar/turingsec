@@ -47,12 +47,11 @@ export default function CollabrateBox({
   function handleDelete() {
     
     setPercent((percent) => percent - Number(value));
-    setCollabrates((prev) => prev.filter((item) => item && item.id === id));
+    setCollabrates((prev) => prev.filter((item) => item && item.id !== id));
   }
   useEffect(() => {
     if (id !== undefined && value !== null) {
-        setCollabrates((prev) =>
-          prev.map((item) => {
+        setCollabrates((prev) => prev.map((item) => {
             if (item && item.id === id) {
               return { ...item, collaborationPercentage: value };
             }

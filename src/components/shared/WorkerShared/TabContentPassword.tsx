@@ -23,7 +23,7 @@ export default function TabContentPassword() {
   
   const formSchema = z
     .object({
-      currentPassword: z.string().min(8, {
+      currentPassword: z.string().min(5, {
         message: "Current password must be at least 8 characters.",
       }),
       newPassword: z.string().min(8, {
@@ -55,11 +55,20 @@ export default function TabContentPassword() {
   const [newpasswordVisible, setNewPasswordVisible] = useState(false);
 
   const [confirmpasswordVisible, setConfirmPasswordVisible] = useState(false);
-
+   
   async function onSubmit(data: z.infer<typeof formSchema>) {
+    
     try {
-      const ele = JSON.parse(localStorage.getItem("user") || "");
-      console.log(data);
+      const hacker = JSON.parse(localStorage.getItem("user") || "");
+      const company = JSON.parse(localStorage.getItem("company") || "");
+      let accessToken=""
+      if (hacker){
+        accessToken=hacker.accessToken
+      }
+      if(company){
+        accessToken=company.accessToken
+      }
+      console.log(accessToken);
       const apiUrl = import.meta.env.VITE_APP_BASE_URL;
       const datt = {
         currentPassword: data.currentPassword,
@@ -72,7 +81,7 @@ export default function TabContentPassword() {
           method: "POST",
           headers: {
             "Content-Type": "application/json", // Specify content type as JSON
-            Authorization: `Bearer ${ele.accessToken}`, // Corrected header name
+            Authorization: `Bearer ${accessToken}`, // Corrected header name
           },
           body: JSON.stringify(datt), // Convert data to JSON string
         }

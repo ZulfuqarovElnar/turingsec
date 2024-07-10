@@ -16,7 +16,7 @@ import WeaknessLine from "../../components/component/WeaknessLine";
 import CollabrateBox from "../../components/shared/WorkerShared/CollabrateBox";
 import { useGetAllUsers } from "../../queryies/useGetAllUsers";
 import AddCollabrateModal from "../../components/shared/WorkerShared/AddCollabrateModal";
-import { useCurrentUser } from "../../context/CurrentUser";
+// import { useCurrentUser } from "../../context/CurrentUser";
 import {useRef} from 'react';
 import { parseCvss3Vector } from 'vuln-vects';
 import { useGetUserData } from "../../queryies/useGetUserData";
@@ -62,7 +62,6 @@ const [manual, setManual] = useState<string>('Low');
     isError: programError,
   } = useGetProgramById(programId);
   const [openModal, setOpenModal] = useState(false);
-  const userData= useGetUserData();
  
   const [collabrates, setCollabrates] = useState([]);
   
@@ -304,6 +303,7 @@ const uniqueAssets = getUniqueAssetTypes([
         isOpen={openModal}
         setOpen={setOpenModal}
         allUsers={allUsers}
+        currentUser={currentUser}
         collabrates={collabrates}
         setCollabrates={setCollabrates}
       />

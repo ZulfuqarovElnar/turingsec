@@ -131,8 +131,7 @@ export default function TabContentProfileCompany() {
             Authorization: `Bearer ${ele.accessToken}`,
           },
           body: JSON.stringify({
-            first_name: data.firstname,
-            last_name: data.lastname,
+
             username: data.username,
             website: data.website,
             bio: data.bio,
@@ -173,7 +172,7 @@ export default function TabContentProfileCompany() {
             className="space-y-4 sm:space-y-8
               "
           >
-            <div className="flex sm:items-center gap-4 flex-col sm:flex-row">
+            {/* <div className="flex sm:items-center gap-4 flex-col sm:flex-row">
               <Label className="sm:text-[18px] text-[14px] font-[600] md:min-w-[130px] sm:min-w-[100px]">
                 Full Name
               </Label>
@@ -215,14 +214,14 @@ export default function TabContentProfileCompany() {
                   )}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="flex sm:items-center gap-4 flex-col sm:flex-row">
               <Label className="sm:text-[18px] text-[14px] font-[600] md:min-w-[130px] sm:min-w-[100px]">
-                Username
+                Company Name
               </Label>
               <FormField
                 control={form.control}
-                name="username"
+                name="companyName"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -251,7 +250,7 @@ export default function TabContentProfileCompany() {
                     <FormControl>
                       <InputCompany
                         type="text"
-                        placeholder="Bughunter.az"
+                        placeholder=""
                         {...field}
                         className="xl:min-w-[350px] scale-r-125"
                       />
@@ -450,7 +449,7 @@ export default function TabContentProfileCompany() {
                   <FormItem>
                     <FormControl>
                       <Textarea
-                        placeholder="bio"
+                        placeholder="Bio"
                         className="bg-transparent text-white placeholder:text-white border focus-visible:border-none focus-visible:outline-none xl:w-[620px] lg:h-[170px] sm:h-[100px] lg:w-[350px] w-full"
                         {...field}
                       />
@@ -473,7 +472,7 @@ export default function TabContentProfileCompany() {
                     <FormControl>
                       <InputCompany
                         type="text"
-                        placeholder="Bughunter.az"
+                        placeholder=" "
                         {...field}
                         className="xl:min-w-[350px] scale-r-125"
                       />
@@ -496,7 +495,7 @@ export default function TabContentProfileCompany() {
                     <FormControl>
                       <InputCompany
                         type="text"
-                        placeholder="Bughunter.az"
+                        placeholder=" "
                         {...field}
                         className="xl:min-w-[350px] scale-r-125"
                       />
@@ -519,7 +518,7 @@ export default function TabContentProfileCompany() {
                     <FormControl>
                       <InputCompany
                         type="text"
-                        placeholder="Bughunter.az"
+                        placeholder=""
                         {...field}
                         className="xl:min-w-[350px] scale-r-125"
                       />

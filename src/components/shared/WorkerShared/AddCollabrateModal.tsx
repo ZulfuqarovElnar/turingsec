@@ -4,13 +4,14 @@ export default function AddCollabrateModal({
   isOpen,
   setOpen,
   allUsers = [], // Provide a default value of an empty array
+  currentUser,
   collabrates,
   setCollabrates,
 }) {
   function OnClose() {
     setOpen(false);
   }
-
+ 
   const [users, setUsers] = useState(allUsers);
   const [search, setSearch] = useState("");
   
@@ -22,7 +23,9 @@ export default function AddCollabrateModal({
     }
 
     // Filter users based on search input
-    const filteredUsers = allUsers.filter((item) =>
+    const filteredUsers = allUsers
+    .filter((user)=>user.username!==currentUser.username)
+    .filter((item) =>
       item.username.toLowerCase().includes(search.toLowerCase())
     );
 
@@ -35,7 +38,6 @@ export default function AddCollabrateModal({
     setOpen(false);
    
   }
-
   return (
     <>
       {isOpen && (
