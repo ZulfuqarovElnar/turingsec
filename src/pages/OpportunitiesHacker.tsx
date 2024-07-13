@@ -4,8 +4,8 @@ import { Button } from "../components/ui/button";
 
 export default function OpportunitiesHacker() {
   return (
-    <>
-      <div className=" xl:pb-40  sm:pb-28 sm:pt-16  text-[white] lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16 pb-20 py-0  px-8 pt-20">
+    <div className="bg-[url(/assets/images/bg-3.png)] bg-center	bg-no-repeat bg-cover">
+      <div className=" xl:pb-40  sm:pb-28 sm:pt-16  text-[white] lg:flex-row items-center  dark:bg-inherit sm:px-16 pb-20 py-0  px-8 pt-20">
         <div className="flex items-center flex-col lg:flex-row">
           <div className="lg:w-1/2 w-full">
             <h2 className="sm:text-[50px] font-[700] text-[28px]">
@@ -160,7 +160,7 @@ export default function OpportunitiesHacker() {
           </div>
         </div>
       </div>
-      <div className="bg-[#31688F] pb-20">
+      <div className="bg-[#583555] rounded-md bg-clip-padding backdrop-filter backdrop-blur-2xl bg-opacity-45 pb-20">
         <h2 className="sm:text-[40px] sm:font-[800] font-sans text-[28px] font-[700] text-white sm:text-center pt-10 pb-10 lg:pb-0 text-left ml-8 sm:ml-0">
           Start hacking in 3 easy steps
         </h2>
@@ -214,6 +214,6 @@ export default function OpportunitiesHacker() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

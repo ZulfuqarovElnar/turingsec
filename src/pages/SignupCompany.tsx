@@ -115,7 +115,7 @@ export default function SignupCompanyPage() {
     }
   }
   return (
-    <div className=" flex  flex-col justify-between xl:pb-40 pb-4 sm:py-18  text-[white] lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16  py-20 px-8 ">
+    <div className=" flex  flex-col justify-between xl:pb-40 pb-4 sm:py-18  text-[white] lg:flex-row items-center  bg-[url(/assets/images/bg-2.png)]  bg-center	bg-no-repeat	bg-cover dark:bg-inherit sm:px-16  py-20 px-8 ">
       <div className="lg:w-[60%] w-auto  ">
         <div className="">
           <h2 className="font-[700] sm:text-[45px] text-[28px] mb-2">
@@ -141,7 +141,7 @@ export default function SignupCompanyPage() {
                       <Input
                         placeholder="First Name"
                         {...field}
-                        className="bg-[#023059] rounded-xl h-[60px] sm:w-[450px] w-[317px]
+                        className="bg-linear-contact rounded-xl h-[60px] sm:w-[450px] w-[317px]
                       outline-none border-none 
                       placeholder:text-white
                     pl-8
@@ -165,7 +165,7 @@ export default function SignupCompanyPage() {
                       <Input
                         placeholder="Last Name"
                         {...field}
-                        className="bg-[#023059] rounded-xl  h-[60px] sm:w-[450px] w-[317px]
+                        className="bg-linear-contact rounded-xl  h-[60px] sm:w-[450px] w-[317px]
                       outline-none 
                       pl-8 border-none 
                       placeholder:text-white
@@ -191,7 +191,7 @@ export default function SignupCompanyPage() {
                         type="email"
                         placeholder="Company Email Address"
                         {...field}
-                        className="bg-[#023059] rounded-xl  h-[60px] sm:w-[450px] w-[317px]
+                        className="bg-linear-contact rounded-xl  h-[60px] sm:w-[450px] w-[317px]
                       outline-none border-none 
                       placeholder:text-white
                     pl-8
@@ -215,7 +215,7 @@ export default function SignupCompanyPage() {
                       <Input
                         placeholder="Company Name"
                         {...field}
-                        className="bg-[#023059] rounded-xl h-[60px] sm:w-[450px] w-[317px]
+                        className="bg-linear-contact rounded-xl h-[60px] sm:w-[450px] w-[317px]
                       outline-none border-none 
                       placeholder:text-white
                     pl-8
@@ -239,7 +239,7 @@ export default function SignupCompanyPage() {
                       <Input
                         placeholder="Job Title"
                         {...field}
-                        className="bg-[#023059] rounded-xl  h-[60px] sm:w-[450px] w-[317px]
+                        className="bg-linear-contact rounded-xl  h-[60px] sm:w-[450px] w-[317px]
                       outline-none border-none 
                       placeholder:text-white
                     pl-8
@@ -257,17 +257,19 @@ export default function SignupCompanyPage() {
               <FormField
                 control={form.control}
                 name="assets"
+                
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <Select
                         {...field}
                         placeholder="Select Country"
+                        className="xl:w-[630px] w-[100%]"
                         options={options}
                         styles={{
                           control: (styles) => ({
                             ...styles,
-                            background: "#023059",
+                            background: "linear-gradient(87.81deg, #733D74 -4.47%, #660867 39.64%, #FB28FF 100%)",
                             borderRadius: "0.5rem",
                             height: "60px",
                             autocomplete: "none",
@@ -275,10 +277,11 @@ export default function SignupCompanyPage() {
                             paddingLeft: "8px",
                             border: "none",
                             color: "white",
+
                           }),
                           option: (styles) => ({
                             ...styles,
-                            background: "#023059",
+                            background: "linear-gradient(87.81deg, #733D74 -4.47%, #660867 39.64%, #FB28FF 100%)",
                             padding: "10px 20px",
                             scrollbarColor: "red",
 
@@ -328,7 +331,7 @@ export default function SignupCompanyPage() {
                       <Textarea
                         placeholder="Write your message..."
                         {...field}
-                        className="bg-[#023059] h-[170px] xl:w-[630px] w-[100%]  pt-4  rounded-xl 
+                        className="bg-linear-contact h-[170px] xl:w-[630px] w-[100%]  pt-4  rounded-xl 
                       outline-none border-none 
                       placeholder:text-white
                     pl-8
@@ -357,7 +360,7 @@ export default function SignupCompanyPage() {
       </div>
       <div className="lg:w-[100%] mt-8 w-auto pb-12 pt-2">
         <img
-          src="/assets/images/seclog.png"
+          src="/assets/images/seclogo.png"
           alt=""
           className="m-auto w-[300px]"
         />

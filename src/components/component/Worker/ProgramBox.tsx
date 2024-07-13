@@ -57,7 +57,7 @@ export default function ProgramBox({
 
   return (
     <div className="rounded-xl overflow-hidden">
-      <div className="bg-[#023059] p-0 pb-10 rounded-2xl relative flex-col">
+      <div className="bg-[#3D0436] p-0 pb-10 rounded-2xl relative flex-col">
         <div className="bg-[url('/assets/images/programimage.jpeg')] h-[120px] bg-center bg-cover relative w-full">
           <div className="h-full w-full bg-black opacity-60"></div>
           <div className="absolute top-4 right-4 flex items-center justify-center text-[14px] font-[600] cursor-pointer">
@@ -97,7 +97,7 @@ export default function ProgramBox({
             </div>
           </div> */}
           <Button
-            className="hover:scale-105 transition-all duration-300 rounded-3xl py-[7px] bg-transparent text-white border-2 border-[#2451F5] font-[600] hover:bg-transparent flex gap-4 px-4 w-full mt-6"
+            className="hover:scale-105 transition-all duration-300 rounded-3xl py-[7px] bg-[#200F23] text-white  font-[600] hover:border-1 flex gap-4 px-4 w-full mt-6"
             onClick={handleSeeDetails}
           >
             See Details

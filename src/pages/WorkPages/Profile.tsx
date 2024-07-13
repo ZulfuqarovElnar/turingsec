@@ -163,7 +163,7 @@ export default function Profile() {
 
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
-      <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
+      <section className="   font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
         <img
           src="/assets/iconnav9.svg"
           alt=""
@@ -177,7 +177,7 @@ export default function Profile() {
         />
       </section>
 
-      <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3  py-16">
+      <div className="bg-[url(/assets/images/gauze-03.png)] bg-center bg-no-repeat bg-cover flex-1 lg:px-20 sm:px-8 px-3  py-16">
         <div
           className={`md:h-[200px] h-auto bg-cover bg-center relative rounded-3xl overflow-hidden`}
         >
@@ -297,7 +297,7 @@ export default function Profile() {
           </ul>
         </div>
         <Button
-          className="hover:scale-110 transition-all duration-300  rounded-xl  w-[200px] h-[50px] sm:h-[50px]   sm:w-[200px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5] mt-8 gap-4"
+          className="hover:scale-110 transition-all duration-300  rounded-xl  w-[200px] h-[50px] sm:h-[50px]   sm:w-[200px] bg-[#FFDE31] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5] mt-8 gap-4"
           onClick={() => {
             localStorage.removeItem("user");
             toast.success("logout");

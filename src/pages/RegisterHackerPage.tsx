@@ -99,7 +99,7 @@ export default function RegisterHackerPage() {
   }
   
   return (
-    <div className="flex flex-col justify-between xl:pb-40 pb-4 sm:py-28 text-white lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16 py-20 px-8">
+    <div className="flex flex-col justify-between xl:pb-40 pb-4 sm:py-28 text-white lg:flex-row items-center bg-[url(/assets/images/bg-2.png)]  bg-center	bg-no-repeat	bg-cover dark:bg-inherit sm:px-16 py-20 px-8">
       <div className="lg:w-[60%] w-auto">
         <div className="">
           <h2 className="font-[700] sm:text-[45px] text-[28px] mb-2">
@@ -110,6 +110,7 @@ export default function RegisterHackerPage() {
             find weak spots, understand your system better, and tighten security
             for organizations.
           </p>
+
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -125,7 +126,7 @@ export default function RegisterHackerPage() {
                         type="email"
                         placeholder="Email"
                         {...field}
-                        className="bg-[#023059] rounded-xl h-[60px] autocomplete-none outline-none border-none placeholder:text-white pl-8 focus-visible:ring-0 focus-visible:ring-offset-1"
+                        className="bg-linear-contact rounded-xl h-[60px] autocomplete-none outline-none border-none placeholder:text-white pl-8 focus-visible:ring-0 focus-visible:ring-offset-1"
                       />
                     </FormControl>
                     <FormMessage />
@@ -142,7 +143,7 @@ export default function RegisterHackerPage() {
                         type="password"
                         placeholder="Password"
                         {...field}
-                        className="bg-[#023059] rounded-xl h-[60px] autocomplete-none outline-none pl-8 border-none placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-1"
+                        className="bg-linear-contact rounded-xl h-[60px] autocomplete-none outline-none pl-8 border-none placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-1"
                       />
                     </FormControl>
                     <FormMessage />
@@ -156,7 +157,7 @@ export default function RegisterHackerPage() {
                 Sign In
               </Button>
               <Link to={"/signupashacker"}>
-                <p className="text-[#92CCFF] text-[16px] font-[500] text-center cursor-pointer mt-3">
+                <p className="text-[#ffffff] text-[16px] font-[500] text-center cursor-pointer mt-3">
                   Create a Turingsec Account
                 </p>
               </Link>
@@ -166,7 +167,7 @@ export default function RegisterHackerPage() {
       </div>
       <div className="lg:w-[100%] mt-8 w-auto pb-12 pt-2">
         <img
-          src="/assets/images/seclog.png"
+          src="/assets/images/seclogo.png"
           alt=""
           className="m-auto w-[300px]"
         />

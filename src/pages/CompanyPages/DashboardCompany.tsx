@@ -45,10 +45,9 @@ export default function DashboardCompany() {
             styles={buildStyles({
               strokeLinecap: 'round',
               textSize: '16px',
-              pathColor: `#2451F5`,
+              pathColor: `#660867`,
               textColor: '#fff',
-              trailColor: '#102160',
-              backgroundColor: '#102160',
+              trailColor: '#3D0436',
             })}/>
             <p className="my-2 text-[16px] font-[600]">Success Rate</p>
           </div>

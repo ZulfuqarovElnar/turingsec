@@ -350,7 +350,7 @@
   width: 8px;
   height: calc(100% + 8px);
   /* height: 20px; */
-  background-color: #31688f;
+  background-color: #010204;
   border-left: 2px solid #ff7f50;
   right: -2px;
   top: 0px;
@@ -488,5 +488,15 @@ input[type="radio"]:checked + label:before {
 
 .CircularProgressbar{
   border-radius: 50%;
-  background-color: #102160;
+  background-color: #3D0436;
 }
+
+.bg-linear-contact{
+  background: linear-gradient(87.81deg, #733D74 -4.47%, #660867 39.64%, #FB28FF 100%);
+}
+
+.bg-linear-btn{
+  background: linear-gradient(87.81deg, rgba(251, 55, 255, 0.13) -4.47%, rgba(171, 44, 173, 0.195) 39.64%, rgba(250, 0, 210, 0.325) 100%);
+
+}
+

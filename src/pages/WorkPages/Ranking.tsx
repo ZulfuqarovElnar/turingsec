@@ -108,13 +108,13 @@ export default function Ranking() {
   ];
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden min-h-screen relative">
-      <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
+      <section className="   font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
         <img
           src="/assets/iconnav5.svg"
           alt=""
           className="absolute z-[20] lg:-left-[10%] md:-left-[27%] sm:-left-[100px] top-0 w-[294px] md:w-[302px] -left-[150px]  "
         />
-        <p className="md:text-[30px] text-[20px]">Ranking</p>
+        <p className="md:text-[30px] text-[20px]">RANKING</p>
         <img
           src="/assets/iconnav6.svg"
           alt=""
@@ -122,16 +122,16 @@ export default function Ranking() {
         />
       </section>
 
-      <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3  py-16">
+      <div className="bg-[url(/assets/images/gauze-03.png)] bg-center bg-no-repeat flex-1 lg:px-20 sm:px-8 px-3  py-16">
         <Select
           styles={{
             control: (provided, state) => ({
               ...provided,
-              backgroundColor: "#1F44CC",
+              backgroundColor: "#FFDE31",
               border: "none",
-              color: "white",
+              color: "#000",
               borderRadius: "20px",
-              width: "370",
+              width: "370px",
               height: "50px",
               padding: "0 10px",
               "&:hover": {
@@ -140,22 +140,22 @@ export default function Ranking() {
             }),
             option: (provided, state) => ({
               ...provided,
-              backgroundColor: state.isFocused ? "#1F44CC" : "#1F44CC",
-              ":hover": { backgroundColor: "rgb(14 165 233)" },
-              color: state.isFocused ? "white" : "white",
+              backgroundColor: state.isFocused ? "#FFDE31" : "#FFDE31",
+              ":hover": { backgroundColor: "#FFDE31" },
+              color: state.isFocused ? "black" : "black",
             }),
             menuList: (provided, state) => ({
               ...provided,
-              backgroundColor: "#1F44CC",
-              color: "white",
+              backgroundColor: "#FFDE31",
+              color: "black",
               padding: "0",
             }),
             placeholder: (provided) => ({
               ...provided,
-              color: "white",
+              color: "black",
             }),
             singleValue: (provided, state) => {
-              const color = "white";
+              const color = "black";
               return { ...provided, color };
             },
           }}

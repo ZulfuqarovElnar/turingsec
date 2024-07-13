@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="sm:px-16 px-8 py-10">
+    <footer className="sm:px-16 px-8 py-10 bg-[#200F23]">
       <h2 className="font-bold text-[32px] ">
         <img src="/assets/images/whitelogo.png" alt="" className="w-[182px]" />
       </h2>

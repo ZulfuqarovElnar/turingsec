@@ -50,7 +50,7 @@ export default function Dashboard() {
   
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
-      <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
+      <section className="   font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
         <img
           src="/assets/iconnav1.svg"
           alt=""
@@ -64,7 +64,7 @@ export default function Dashboard() {
         />
       </section>
 
-      <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3 py-16">
+      <div className="bg-[url(/assets/images/bg-hacker.png)] bg-center bg-no-repeat bg-cover flex-1 lg:px-20 sm:px-8 px-3 py-16">
         {/* <h1 className="font-[600] text-[25px] mb-2">No Reports Found</h1> */}
         <p className="text-[20px] font-[400]">
           Discover the programs and start hunting to report your first
@@ -78,7 +78,7 @@ export default function Dashboard() {
           <Box text="Collaborated Reports" />
           <Box text="Closed Reports" />
         </div>
-        <div className="flex flex-sm-col items-center justify-around border-[3px] rounded-[20px] border-[#2451F5] py-[40px] px-[20px]">
+        <div className="flex flex-sm-col items-center justify-around bg-[#885389] rounded-[20px] border-[#2451F5] py-[40px] px-[20px]">
           {/* <Box text="Report Bounty" />
           <Box text="Accepted invitations for Bug Bounty" />
           <Box text="Accepted invitations for Bug Bounty" /> */}
@@ -89,10 +89,9 @@ export default function Dashboard() {
             styles={buildStyles({
               strokeLinecap: 'round',
               textSize: '16px',
-              pathColor: `#2451F5`,
+              pathColor: `#660867`,
               textColor: '#fff',
-              trailColor: '#102160',
-              backgroundColor: '#102160',
+              trailColor: '#3D0436',
             })}/>
             <p className="my-2 text-[16px] font-[600]">Success Rate</p>
           </div>
@@ -100,7 +99,7 @@ export default function Dashboard() {
           <div className={`flex items-center `}>
               <div className="flex flex-col items-center" >
                 <div className="flex items-center gap-4 my-5">
-                  <div className="bg-[#00467C] h-[8px] w-[80px] rounded-full">
+                  <div className="bg-[#3D0436] h-[8px] w-[80px] rounded-full">
                     <div
                         className={`bg-[#FFDE31] h-[8px] w-[60px] rounded-full`}
                     ></div>
@@ -109,14 +108,14 @@ export default function Dashboard() {
                         Low
                   </p>
                 </div>
-                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#2451F5] rounded-full">6</div>
+                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#3D0436] rounded-full">6</div>
               </div>
           </div>
 
           <div className={`flex items-center `}>
               <div className="flex flex-col items-center" >
                 <div className="flex items-center gap-4 my-5">
-                <div className="bg-[#00467C] h-[8px] w-[80px] rounded-full">
+                <div className="bg-[#3D0436] h-[8px] w-[80px] rounded-full">
                     <div
                       className={`bg-[#2342E3] h-[8px] w-[60px] rounded-full`}
                     ></div>
@@ -126,14 +125,14 @@ export default function Dashboard() {
                     Medium
                   </p>
                 </div>
-                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#2451F5] rounded-full">6</div>
+                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#3D0436] rounded-full">6</div>
               </div>
           </div>
 
           <div className={`flex items-center `}>
               <div className="flex flex-col items-center" >
                 <div className="flex items-center gap-4 my-5">
-                <div className="bg-[#00467C] h-[8px] w-[80px] rounded-full">
+                <div className="bg-[#3D0436] h-[8px] w-[80px] rounded-full">
                     <div
                       className={`bg-[#5AFF31] h-[8px] w-[60px] rounded-full`}
                     ></div>
@@ -142,14 +141,14 @@ export default function Dashboard() {
                   <p className="sm:text-[18px] text-[14px] font-[500]">High</p>
                 
                 </div>
-                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#2451F5] rounded-full">6</div>
+                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#3D0436] rounded-full">6</div>
               </div>
           </div>
 
           <div className={`flex items-center `}>
               <div className="flex flex-col items-center" >
                 <div className="flex items-center gap-4 my-5">
-                <div className="bg-[#00467C] h-[8px] w-[80px] rounded-full">
+                <div className="bg-[#3D0436] h-[8px] w-[80px] rounded-full">
                     <div
                       className={`bg-[#E32323] h-[8px] w-[60px] rounded-full`}
                     ></div>
@@ -159,7 +158,7 @@ export default function Dashboard() {
                     Critical
                   </p>
                 </div>
-                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#2451F5] rounded-full">6</div>
+                <div className="w-[40px] flex items-center justify-center text-[16px] font-[500] h-[40px] bg-[#3D0436] rounded-full">6</div>
               </div>
           </div>
           

@@ -2,8 +2,8 @@ export default function RankingLine({ data, index }) {
   return (
     <div
       className={`flex justify-between ${
-        index == 0 ? "bg-[#2451F5]" : "bg-[#023059] border-b border-black"
-      } text-white  h-[60px] items-center sm:px-8 px-0 sm:text-[18px] text-[14px]`}
+        index == 0 ? "bg-[#FCE363] text-black" : "bg-[#3D0436] border-b text-white border-black"
+      }  h-[60px] items-center sm:px-8 px-0 sm:text-[18px] text-[14px]`}
     >
       <div className="flex-1 text-center">
         {index == 0 ? (
@@ -11,7 +11,7 @@ export default function RankingLine({ data, index }) {
         ) : (
           <span
             className={`${
-              index == 1 ? "text-[#FCE363]" : "text-[#7D99FF]"
+              index == 1 ? "text-[#FCE363]" : "text-[#FCE363]"
             } font-[800] relative`}
           >
             <img

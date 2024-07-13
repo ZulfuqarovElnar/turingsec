@@ -257,7 +257,7 @@ export default function ContactUs() {
               )}
             />
             <div className="sm:space-x-8 flex items-center justify-center sm:col-span-2   flex-col sm:flex-row gap-4 sm:gap-0">
-              <Button className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[220px] bg-[#FFDE31] text-[#1F44CC]  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#FFDE31]">
+              <Button className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[220px] bg-[#FFDE31] text-[#000]  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#FFDE31]">
                 Submit
               </Button>
             </div>
