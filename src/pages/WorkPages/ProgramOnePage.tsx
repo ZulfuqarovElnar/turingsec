@@ -164,8 +164,7 @@ export default function ProgramOnePage() {
           <div className="rounded-2xl overflow-hidden">
             <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between">
               <div className="flex items-center gap-4">
-                <img src="/assets/images/increase.png" alt="" />
-                <p className="text-[#FFEC86]">Active Campaign</p>
+                <p className="text-[#FFEC86]"> </p>
               </div>
               <div className="flex items-center gap-4">
                 <p className="hidden sm:block">Ends in 15 days</p>
@@ -173,53 +172,6 @@ export default function ProgramOnePage() {
               </div>
             </div>
             <div className="bg-[#0A273D] px-6 pt-6 pb-10">
-              <h2 className="sm:text-[18px] text-[16px] font-[600]">
-                Assets eligible:All in-scope assets
-              </h2>
-              <div className="my-8 flex justify-between flex-col xl:flex-row">
-                <div className={`flex items-center gap-4 `}>
-                  <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                    <div
-                      className={`bg-[#FFDE31] h-[8px] w-[60px] rounded-full`}
-                    ></div>
-                  </div>
-
-                  <p className="sm:text-[18px] text-[16px] font-[600]">
-                    Low
-                  </p>
-                </div>
-                <div className={`flex items-center gap-4 `}>
-                  <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                    <div
-                      className={`bg-[#2342E3] h-[8px] w-[60px] rounded-full`}
-                    ></div>
-                  </div>
-
-                  <p className="sm:text-[18px] text-[16px] font-[600]">
-                    Medium
-                  </p>
-                </div>
-                <div className={`flex items-center gap-4 `}>
-                  <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                    <div
-                      className={`bg-[#5AFF31] h-[8px] w-[60px] rounded-full`}
-                    ></div>
-                  </div>
-
-                  <p className="sm:text-[18px] text-[16px] font-[600]">High</p>
-                </div>
-                <div className={`flex items-center gap-4 `}>
-                  <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                    <div
-                      className={`bg-[#E32323] h-[8px] w-[60px] rounded-full`}
-                    ></div>
-                  </div>
-
-                  <p className="sm:text-[18px] text-[16px] font-[600]">
-                    Critical
-                  </p>
-                </div>
-              </div>
 
               <p className="sm:text-[16px] text-[14px] font-[400]">
                 {programData?.notes}

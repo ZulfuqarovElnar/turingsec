@@ -292,12 +292,6 @@ export default function ProgramCreatePage() {
         <div>
           
           <div className="rounded-2xl overflow-hidden">
-            <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between">
-              <div className="flex items-center gap-4">
-                <img src="/assets/images/increase.png" alt="" />
-                <p className="text-[#FFEC86]">Active Campaign</p>
-              </div>
-            </div>
 
             <div className="bg-[#0A273D] px-6 pt-6 pb-10">
               <div className="flex justify-between lg:mt-4 mb-4  xl:w-[70%] flex-col  lg:flex-row">
@@ -383,49 +377,6 @@ export default function ProgramCreatePage() {
                 <LevelBar color="#2342E3" level={60} label="Medium" />
                 <LevelBar color="#5AFF31" level={60} label="High" />
                 <LevelBar color="#E32323" level={60} label="Critical" /> */}
-                <div className={`flex items-center gap-4 `}>
-                  <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                    <div
-                      className={`bg-[#FFDE31] h-[8px] w-[60px] rounded-full`}
-                    ></div>
-                  </div>
-
-                  <p className="sm:text-[18px] text-[16px] font-[600]">
-                    Yellow
-                  </p>
-                </div>
-
-                <div className={`flex items-center gap-4 `}>
-                  <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                    <div
-                      className={`bg-[#2342E3] h-[8px] w-[60px] rounded-full`}
-                    ></div>
-                  </div>
-
-                  <p className="sm:text-[18px] text-[16px] font-[600]">
-                    Medium
-                  </p>
-                </div>
-                <div className={`flex items-center gap-4 `}>
-                  <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                    <div
-                      className={`bg-[#5AFF31] h-[8px] w-[60px] rounded-full`}
-                    ></div>
-                  </div>
-
-                  <p className="sm:text-[18px] text-[16px] font-[600]">High</p>
-                </div>
-                <div className={`flex items-center gap-4 `}>
-                  <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
-                    <div
-                      className={`bg-[#E32323] h-[8px] w-[60px] rounded-full`}
-                    ></div>
-                  </div>
-
-                  <p className="sm:text-[18px] text-[16px] font-[600]">
-                    Critical
-                  </p>
-                </div>
               </div>
 
               <Textarea
