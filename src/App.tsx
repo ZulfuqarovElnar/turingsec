@@ -42,6 +42,8 @@ import CompanySettings from "./pages/CompanyPages/Settings";
 
 import SingleReport from "./pages/CompanyPages/SingleReport";
 import SingleReportUser from "./pages/WorkPages/SingleReportUser";
+import LeaderBoard from "./components/shared/LeaderBoard";
+import ContactUs from "./components/shared/ContactUs";
 
 function App() {
   function ScrollToTop() {
@@ -69,6 +71,8 @@ function App() {
           <Route path="signupascompany" element={<SignupCompanyPage />} />
           <Route path="registercompany" element={<RegisterCompanyPage />} />
           <Route path="aboutus" element={<AboutUs />} />
+          <Route path="leaderboard" element={<LeaderBoard/>} />
+          <Route path="joinus" element={<ContactUs/>} />
           <Route path="opportunitieshacker" element={<OpportunitiesHacker />} />
           <Route
             path="opportunitiescompany"

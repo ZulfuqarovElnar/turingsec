@@ -2,7 +2,7 @@ import AboutUsComponent from "../components/shared/AboutUsComponent";
 
 export default function AboutUs() {
   return (
-    <div className=" xl:pb-40  sm:py-28   text-[white] lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16  py-20  px-8 text-left  sm:text-center xl:text-left static w-full sm:pb-0">
+    <div className=" xl:pb-40  sm:py-28   text-[white] lg:flex-row items-center bg-[url(/assets/images/bg-3.png)] bg-center	bg-no-repeat bg-cover dark:bg-inherit sm:px-16  py-20  px-8 text-left  sm:text-center xl:text-left static w-full sm:pb-0">
       <div className="flex w-full flex-col xl:flex-row">
         <div className="m-auto xl:m-0">
           <h2 className="xl:w-[295px] w-[full] sm:text-[45px] font-[700] sm:leading-[60px] mb-6 text-[28px] leading-[50px]">

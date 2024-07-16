@@ -3,7 +3,7 @@ import OpportunitiesBox from "../components/component/OpportunitiesBox";
 export default function OpportunitiesCompany() {
   return (
     <>
-      <div className=" xl:pb-20  sm:pb-10 sm:pt-20  text-[white] lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16 pb-20 py-0  px-8 pt-20">
+      <div className=" xl:pb-20  sm:pb-10 sm:pt-20  text-[white] lg:flex-row items-center bg-[url(/assets/images/bg-4.png)] bg-center	bg-no-repeat bg-cover dark:bg-inherit sm:px-16 pb-20 py-0  px-8 pt-20">
         <div className="flex  flex-col lg:flex-row">
           <div className="lg:w-1/2 w-full">
             <h2 className="sm:text-[50px] font-[700] text-[28px] mb-4">

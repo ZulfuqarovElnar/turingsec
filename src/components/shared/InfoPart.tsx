@@ -18,8 +18,8 @@ export default function InfoPart() {
             identified, reported, and swiftly resolved.
           </p>
           <Button
-            className="bg-[#FFDE31] hover:bg-[#FFDE31]
-            text-black mt-4 rounded-xl hover:scale-105 transition-all duration-300 px-8 font-[800]"
+            className="bg-linear-btn hover:bg-linear-btn
+            text-white mt-4 rounded-xl hover:scale-105 transition-all duration-300 px-8 font-[800]"
           >
             <p> More information</p>
             <img

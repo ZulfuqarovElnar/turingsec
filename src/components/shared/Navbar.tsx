@@ -127,7 +127,7 @@ export default function Navbar() {
         </Link>
         <Link
           to="/joinus"
-          className={`hover:scale-105 transition-all duration-300 font-medium bg-[#2451F5] text-center w-[150px] text-white rounded-3xl py-[7px] ${
+          className={`hover:scale-105 transition-all duration-300 font-medium bg-linear-contact text-center w-[150px] text-white rounded-3xl py-[7px] ${
             hoveredLink && hoveredLink !== "joinus" && "opacity-40"
           }`}
           onMouseEnter={() => handleHover("joinus")}
@@ -237,7 +237,7 @@ export default function Navbar() {
       <div className="absolute sm:right-12 right-6 flex items-center gap-2">
         <Link
           to="/joinus"
-          className={`hover:scale-105 transition-all duration-300 font-medium bg-[#2451F5] text-center w-[120px] text-white rounded-3xl py-[7px]  absolute right-28 sm:w-[150px] block xl:hidden text-[14px] sm:text-[16px]  ${
+          className={`hover:scale-105 transition-all duration-300 bg-linear-contact font-medium text-center w-[120px] text-white rounded-3xl py-[7px]  absolute right-28 sm:w-[150px] block xl:hidden text-[14px] sm:text-[16px]  ${
             hoveredLink && hoveredLink !== "joinus" && "opacity-40"
           }`}
           onMouseEnter={() => handleHover("joinus")}

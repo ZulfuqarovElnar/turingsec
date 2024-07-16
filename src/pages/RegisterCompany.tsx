@@ -102,7 +102,7 @@ export default function RegisterCompanyPage() {
     console.log(values);
   }
   return (
-    <div className=" flex  flex-col justify-between xl:pb-40 pb-4 sm:py-28  text-[white] lg:flex-row items-center bg-[#061723] dark:bg-inherit sm:px-16  py-20 px-8 ">
+    <div className=" flex  flex-col justify-between xl:pb-40 pb-4 sm:py-28  text-[white] lg:flex-row items-center bg-[url(/assets/images/bg-2.png)]  bg-center bg-cover	bg-no-repeat dark:bg-inherit sm:px-16  py-20 px-8 ">
       <div className="lg:w-[60%] w-auto  ">
         <div className="">
           <h2 className="font-[700] sm:text-[45px] text-[28px] mb-2">
@@ -129,7 +129,7 @@ export default function RegisterCompanyPage() {
                         type="email"
                         placeholder="Email"
                         {...field}
-                        className="bg-[#023059] rounded-xl h-[60px] 
+                        className="bg-linear-contact rounded-xl h-[60px] 
                         autocomplete-none
                       outline-none border-none  
                       placeholder:text-white
@@ -155,7 +155,7 @@ export default function RegisterCompanyPage() {
                         type="password"
                         placeholder="Password"
                         {...field}
-                        className="bg-[#023059] rounded-xl  h-[60px] autocomplete-none
+                        className="bg-linear-contact rounded-xl  h-[60px] autocomplete-none
                       outline-none 
                       pl-8 border-none 
                       placeholder:text-white
@@ -179,7 +179,7 @@ export default function RegisterCompanyPage() {
                 Sign In
               </Button>
               <Link to={"/signupascompany"}>
-                <p className="text-[#92CCFF] text-[16px] font-[500] text-center cursor-pointer mt-3">
+                <p className="text-[#ffffff] text-[16px] font-[500] text-center cursor-pointer mt-3">
                   Create a Turingsec Account
                 </p>
               </Link>
@@ -189,7 +189,7 @@ export default function RegisterCompanyPage() {
       </div>
       <div className="lg:w-[100%] mt-8 w-auto pb-12 pt-2">
         <img
-          src="/assets/images/seclog.png"
+          src="/assets/images/seclogo.png"
           alt=""
           className="m-auto w-[300px]"
         />

@@ -47,7 +47,7 @@ export default function Navbar() {
 
 
   return (
-    <div className="bg-[#023059] py-14 z-30 md:w-[270px] w-[74px] left-0 fixed h-screen">
+    <div className="bg-[#3D0436] py-14 z-30 md:w-[270px] w-[74px] left-0 fixed h-screen">
       <ul className="">
         <li>
           <Link className="hidden md:block px-10 " to={"/"}>
@@ -67,14 +67,14 @@ export default function Navbar() {
         <li className="mt-10">
           <Link
             to={"dashboard"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600]  ${
-              url == "/dashboard" ? "bg-[#2451F5]" : ""
+            className={`flex items-center text-[22px] gap-5 font-[600]  ${
+              url == "/dashboard" ? "bg-[#FFDE31] text-dark" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
               src="/assets/icon17.svg"
               alt=""
-              className="md:w-[32px] w-[34px] m-auto md:m-0"
+              className="md:w-[32px] w-[34px] m-auto md:m-0 "
             />
             <p className="hidden md:block">Dashboard</p>
           </Link>
@@ -82,8 +82,8 @@ export default function Navbar() {
         <li>
           <Link
             to={"programs"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/programs" ? "bg-[#2451F5]" : ""
+            className={`flex items-center  text-[22px] gap-5 font-[600] ${
+              url == "/programs" ? "bg-[#FFDE31] text-dark" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -97,8 +97,8 @@ export default function Navbar() {
         <li>
           <Link
             to={"hactivity"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/hactivity" ? "bg-[#2451F5]" : ""
+            className={`flex items-center  text-[22px] gap-5 font-[600] ${
+              url == "/hactivity" ? "bg-[#FFDE31] text-dark" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -112,8 +112,8 @@ export default function Navbar() {
         <li>
           <Link
             to={"ranking"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/ranking" ? "bg-[#2451F5]" : ""
+            className={`flex items-center  text-[22px] gap-5 font-[600] ${
+              url == "/ranking" ? "bg-[#FFDE31] text-dark" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -127,8 +127,8 @@ export default function Navbar() {
         <li>
           <Link
             to={"report"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/report" ? "bg-[#2451F5]" : ""
+            className={`flex items-center  text-[22px] gap-5 font-[600] ${
+              url == "/report" ? "bg-[#FFDE31] text-dark" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -142,8 +142,8 @@ export default function Navbar() {
         <li>
           <Link
             to={"profile"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/profile" ? "bg-[#2451F5]" : ""
+            className={`flex items-center  text-[22px] gap-5 font-[600] ${
+              url == "/profile" ? "bg-[#FFDE31] text-dark" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <div className="hexagon6 m-auto md:m-0">
@@ -160,8 +160,8 @@ export default function Navbar() {
         <li>
           <Link
             to={"notifications"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/notifications" ? "bg-[#2451F5]" : ""
+            className={`flex items-center  text-[22px] gap-5 font-[600] ${
+              url == "/notifications" ? "bg-[#FFDE31] text-dark" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -175,8 +175,8 @@ export default function Navbar() {
         <li>
           <Link
             to={"inbox"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/inbox" ? "bg-[#2451F5]" : ""
+            className={`flex items-center  text-[22px] gap-5 font-[600] ${
+              url == "/inbox" ? "bg-[#FFDE31] text-dark" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -190,8 +190,8 @@ export default function Navbar() {
         <li>
           <Link
             to={"settings"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/settings" ? "bg-[#2451F5]" : ""
+            className={`flex items-center  text-[22px] gap-5 font-[600] ${
+              url == "/settings" ? "bg-[#FFDE31] text-dark" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
