@@ -31,7 +31,7 @@ export async function GetCompanyProgram() {
 
     if (res.ok) {
       const companyProgram = await res.json();
-      console.log(companyProgram);
+      console.log(companyProgram.data);
       return companyProgram;
     } else {
       // Handle error if the fetch fails
