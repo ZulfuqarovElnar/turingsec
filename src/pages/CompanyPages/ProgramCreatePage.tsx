@@ -28,73 +28,85 @@ export default function ProgramCreatePage() {
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
-  const [policy, setPolicy] = React.useState(data?.data.map((a)=>a.policy));
+  const [policy, setPolicy] = React.useState("");
   const [info, setInfo] = React.useState("");
-  const [lowElement, setLowElement] = React.useState<
-    {assetName:string; assetType: string; price: string }[]
-  >([]);
-  const [mediumElement, setMediumElement] = React.useState<
-    {assetName:string; assetType: string; price: string }[]
-
-  >([]);
-  const [highElement, setHighElement] = React.useState<
-    {assetName:string; assetType: string; price: string }[]
-
-  >([]);
-  const [criticalElement, setCriticalElement] = React.useState<
-    {assetName:string; assetType: string; price: string }[]
-
-  >([]);
+  //data?.data.map((a) => a.notes)
+  // const [lowElement, setLowElement] = React.useState<
+  //   {assetName:string; assetType: string; price: string }[]
+  // >([]);
+  const [lowElement, setLowElement] = React.useState([]);
+  const [mediumElement, setMediumElement] = React.useState([]);
+  const [highElement, setHighElement] = React.useState([]);
+  const [criticalElement, setCriticalElement] = React.useState([]);
 
   const [strictyTest, setStrictyTest] = React.useState("");
-  const [stricty, setStricty] = React.useState(
-    data?.data.flatMap(a => a.prohibits.map((b)=>b.prohibitAdded)) || []
-  );
+  const [stricty, setStricty] = React.useState([]);
   const [scopeText, setScopeText] = React.useState("");
   const [scopeType, setScopeType] = React.useState("out");
-  const [inScope, setInScope] = React.useState(
-   data?.data.flatMap(a => a.inScope) || []
-  );
-  const [outScope, setOutScope] = React.useState(
-    data?.data.flatMap(a => a.outOfScope) || []
-  );
-
-
-
-  
-  console.log(data);
+  const [inScope, setInScope] = React.useState([]);
+  const [outScope, setOutScope] = React.useState([]);
+   
   useEffect(() => {
     // console.log(data, "sdsdsd");
-    if (data?.length > 0) {
-      // console.log("flllllllll,");
-      // data.map(a => console.log(a.asset.mediumAsset));
+    if (data?.data[0]) {
+      console.log("flllllllll,");
+      // const newLowElement = data.data.map(a => ({
+      //   assetName: a.asset.lowAsset.assets?.map(b => b.names.map(c => c)),
+      //   assetType: a.asset.lowAsset.assets?.map(b => b.type),
+      //   price: a.asset.lowAsset.assets?.map(b => b.price)
+      // }))
       // const newMediumElement = data.data.map(a => ({
-      //   assetName: a.asset.mediumAsset.assets?.map(b => b.name),
+      //   assetName: a.asset.mediumAsset.assets?.map(b => b.names.map(c => c)),
       //   assetType: a.asset.mediumAsset.assets?.map(b => b.type),
       //   price: a.asset.mediumAsset.assets?.map(b => b.price)
       // }))
-      // setMediumElement(newMediumElement)
-      setInfo(data[0]?.notes);
-      setPolicy(data[0]?.policy);
-      setFromDate(new Date(data[0]?.fromDate));
-      setToDate(new Date(data[0]?.toDate));
-      const low = data[0]?.assetTypes.filter(
-        (element) => element.level === "easy"
-      );
-      const medium = data[0]?.assetTypes.filter(
-        (element) => element.level === "medium"
-      );
-      const high = data[0]?.assetTypes.filter(
-        (element) => element.level === "hard"
-      );
-      const critical = data[0]?.assetTypes.filter(
-        (element) => element.level === "critical"
-      );
-      
-      setLowElement(low);
-      setMediumElement(medium);
-      setHighElement(high);
-      setCriticalElement(critical);
+      // const newHighElement = data.data.map(a => ({
+      //   assetName: a.asset.highAsset.assets?.map(b => b.names.map(c=>c)),
+      //   assetType: a.asset.highAsset.assets?.map(b => b.type),
+      //   price: a.asset.highAsset.assets?.map(b => b.price)
+      // }))
+      // const newCriticalElement = data.data.map(a => ({
+      //   assetName: a.asset.criticalAsset.assets?.map(b => b.names.map(c => c)),
+      //   assetType: a.asset.criticalAsset.assets?.map(b => b.type),
+      //   price: a.asset.criticalAsset.assets?.map(b => b.price)
+      // }))
+      const lowAssets = data.data[0]?.asset.lowAsset?.assets || [];
+      const mediumAssets = data.data[0]?.asset.mediumAsset?.assets || [];
+      const highAssets = data.data[0]?.asset.highAsset?.assets || [];
+      const criticalAssets = data.data[0]?.asset.criticalAsset?.assets || [];
+
+      const newLowElement = lowAssets.map(asset => ({
+        assetName: asset.names[0] || '',
+        assetType: asset.type || '',
+        price: asset.price.toString() || ''
+      }));
+      const newMediumElement = mediumAssets.map(asset => ({
+        assetName: asset.names[0] || '',
+        assetType: asset.type || '',
+        price: asset.price.toString() || ''
+      }));
+      const newHighElement = highAssets.map(asset => ({
+        assetName: asset.names[0] || '',
+        assetType: asset.type || '',
+        price: asset.price.toString() || ''
+      }));
+      const newCriticalElement = criticalAssets.map(asset => ({
+        assetName: asset.names[0] || '',
+        assetType: asset.type || '',
+        price: asset.price.toString() || ''
+      }));
+    
+      setInfo(data?.data[0].notes);
+      setPolicy(data?.data[0].policy);
+      setFromDate(new Date(data.data[0]?.fromDate));
+      setToDate(new Date(data.data[0]?.toDate));
+      setLowElement(newLowElement);
+      setMediumElement(newMediumElement);
+      setHighElement(newHighElement);
+      setCriticalElement(newCriticalElement);
+      setOutScope(data.data.flatMap(a => a.outOfScope))
+      setInScope(data.data.flatMap(a => a.inScope))
+      setStricty(data?.data.flatMap(a => a.prohibits.map((b) => b.prohibitAdded)))
     }
   }, [data]);
   async function createProgram() {
@@ -147,8 +159,20 @@ export default function ProgramCreatePage() {
       const companyString = localStorage.getItem("company");
     
       if (companyString) {
+        
         const company = JSON.parse(companyString);
         const prohibits = stricty.map(element => ({ prohibitAdded: element }));
+        const prog = {
+          notes: info,
+          policy,
+          fromDate: fromdate.toISOString().split('T')[0], // format to "YYYY-MM-DD"
+          toDate: todate.toISOString().split('T')[0], // format to "YYYY-MM-DD"
+          asset,
+
+          prohibits: prohibits,
+          inScope: inScope,
+          outOfScope: outScope
+        }
         const apiUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(
           `${apiUrl}/api/bug-bounty-programs`,
@@ -174,6 +198,7 @@ export default function ProgramCreatePage() {
         if (res.ok) {
           return toast.success("Program Updated Successfully");
         } else {
+          console.log(prog)
           return toast.error("Failed to create program");
         }
       }
