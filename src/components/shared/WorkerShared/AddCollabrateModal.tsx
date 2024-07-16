@@ -15,8 +15,11 @@ export default function AddCollabrateModal({
   const [users, setUsers] = useState(allUsers);
   const [search, setSearch] = useState("");
   
+  
 
   useEffect(() => {
+    // console.log(users)
+    // console.log(currentUser)
     if (!Array.isArray(allUsers)) {
       // Check if allUsers is not an array, if so, return
       return;

@@ -81,7 +81,7 @@ export default function TabContentPassword() {
           method: "POST",
           headers: {
             "Content-Type": "application/json", // Specify content type as JSON
-            Authorization: `Bearer ${accessToken}`, // Corrected header name
+            Authorization: `Bearer ${company.accessToken}`, // Corrected header name
           },
           body: JSON.stringify(datt), // Convert data to JSON string
         }

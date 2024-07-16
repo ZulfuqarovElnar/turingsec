@@ -23,7 +23,7 @@ export async function sendReport(report: Report, id: string) {
         lastActivity: report.lastActivity,
         rewardsStatus: report.rewardsStatus,
         reportTemplate: report.reportTemplate,
-        ownPercentage: 100,
+        // ownPercentage: 100,
         collaboratorPayload: report.collaboratorPayload.map(collaborator => ({
           hackerUsername: collaborator.hackerUsername,
           collaborationPercentage: collaborator.collaborationPercentage

@@ -36,6 +36,7 @@ export default function ProgramSubmitPage() {
   const [globalPercent, setGlobalPercent] = useState<number>(100);
   const [percent, setPercent] = useState<number>(0);
   const { data: allUsers } = useGetAllUsers();
+  // const allUsers=allUsersWithCurrent.filter((user)=> user.username!==currentUser.username)
   const {data: currentUser}=useGetUserData()
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [weaknessType, setWeaknessType] = useState();
@@ -225,7 +226,7 @@ const handleManual = () => {
         lastActivity: lastActivity,
         rewardsStatus: manual,
         reportTemplate: reportTemplate,
-        ownPercentage: percent,
+        // ownPercentage: percent,
         collaboratorPayload: collabrates.map(collabrate => ({
           hackerUsername: collabrate.username,
           collaborationPercentage: collabrates.length>1 ?collabrate.collaborationPercentage : 100 ,
