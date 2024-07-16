@@ -16,7 +16,7 @@ import WeaknessLine from "../../components/component/WeaknessLine";
 import CollabrateBox from "../../components/shared/WorkerShared/CollabrateBox";
 import { useGetAllUsers } from "../../queryies/useGetAllUsers";
 import AddCollabrateModal from "../../components/shared/WorkerShared/AddCollabrateModal";
-import { useCurrentUser } from "../../context/CurrentUser";
+// import { useCurrentUser } from "../../context/CurrentUser";
 import {useRef} from 'react';
 import { parseCvss3Vector } from 'vuln-vects';
 import { useGetUserData } from "../../queryies/useGetUserData";
@@ -36,6 +36,7 @@ export default function ProgramSubmitPage() {
   const [globalPercent, setGlobalPercent] = useState<number>(100);
   const [percent, setPercent] = useState<number>(0);
   const { data: allUsers } = useGetAllUsers();
+  // const allUsers=allUsersWithCurrent.filter((user)=> user.username!==currentUser.username)
   const {data: currentUser}=useGetUserData()
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [weaknessType, setWeaknessType] = useState();
@@ -62,7 +63,6 @@ const [manual, setManual] = useState<string>('Low');
     isError: programError,
   } = useGetProgramById(programId);
   const [openModal, setOpenModal] = useState(false);
-  const userData= useGetUserData();
  
   const [collabrates, setCollabrates] = useState([]);
   
@@ -226,7 +226,7 @@ const handleManual = () => {
         lastActivity: lastActivity,
         rewardsStatus: manual,
         reportTemplate: reportTemplate,
-        ownPercentage: percent,
+        // ownPercentage: percent,
         collaboratorPayload: collabrates.map(collabrate => ({
           hackerUsername: collabrate.username,
           collaborationPercentage: collabrates.length>1 ?collabrate.collaborationPercentage : 100 ,
@@ -304,6 +304,7 @@ const uniqueAssets = getUniqueAssetTypes([
         isOpen={openModal}
         setOpen={setOpenModal}
         allUsers={allUsers}
+        currentUser={currentUser}
         collabrates={collabrates}
         setCollabrates={setCollabrates}
       />
