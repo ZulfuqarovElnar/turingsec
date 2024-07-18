@@ -12,10 +12,7 @@ export default function AddCollabrateModal({
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    if (!Array.isArray(allUsers)) {
-      return;
-    }
-
+    // Filter users based on search input
     const filteredUsers = allUsers
       .filter((user) => user.username !== currentUser.username)
       .filter((item) =>
@@ -23,7 +20,7 @@ export default function AddCollabrateModal({
       );
 
     setUsers(filteredUsers);
-  }, [search, allUsers, currentUser]);
+  }, [search, allUsers, currentUser]); // Ensure all dependencies are included
 
   function handleAddCollabrated(item) {
     const newItem = { ...item, id: item.userId };
