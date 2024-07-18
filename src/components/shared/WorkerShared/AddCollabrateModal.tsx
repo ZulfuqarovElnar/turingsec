@@ -12,15 +12,19 @@ export default function AddCollabrateModal({
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    // Filter users based on search input
+    if (!Array.isArray(allUsers) || !currentUser || !currentUser.username) {
+      return;
+    }
+  
     const filteredUsers = allUsers
       .filter((user) => user.username !== currentUser.username)
       .filter((item) =>
         item.username.toLowerCase().includes(search.toLowerCase())
       );
-
+  
     setUsers(filteredUsers);
-  }, [search, allUsers, currentUser]); // Ensure all dependencies are included
+  }, [search, allUsers, currentUser]);
+   // Ensure all dependencies are included
 
   function handleAddCollabrated(item) {
     const newItem = { ...item, id: item.userId };
