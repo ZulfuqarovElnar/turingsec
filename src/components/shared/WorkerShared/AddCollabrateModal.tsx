@@ -3,50 +3,43 @@ import React, { useEffect, useState } from "react";
 export default function AddCollabrateModal({
   isOpen,
   setOpen,
-  allUsers = [], // Provide a default value of an empty array
+  allUsers = [],
   currentUser,
   collabrates,
   setCollabrates,
 }) {
-  function OnClose() {
-    setOpen(false);
-  }
- 
   const [users, setUsers] = useState(allUsers);
   const [search, setSearch] = useState("");
-  
-  
 
   useEffect(() => {
-    // console.log(users)
-    // console.log(currentUser)
     if (!Array.isArray(allUsers)) {
-      // Check if allUsers is not an array, if so, return
       return;
     }
 
-    // Filter users based on search input
     const filteredUsers = allUsers
-    .filter((user)=>user.username!==currentUser.username)
-    .filter((item) =>
-      item.username.toLowerCase().includes(search.toLowerCase())
-    );
+      .filter((user) => user.username !== currentUser.username)
+      .filter((item) =>
+        item.username.toLowerCase().includes(search.toLowerCase())
+      );
 
     setUsers(filteredUsers);
-  }, [search, allUsers]);
+  }, [search, allUsers, currentUser]);
 
   function handleAddCollabrated(item) {
     const newItem = { ...item, id: item.userId };
     setCollabrates((prev) => [...prev, newItem]);
     setOpen(false);
-   
   }
+
+  function onClose() {
+    setOpen(false);
+  }
+
   return (
     <>
       {isOpen && (
         <div className="fixed inset-0 z-[10000000] flex items-center justify-center overflow-auto bg-black bg-opacity-50">
           <div className="relative bg-white w-96 p-8 rounded-md text-black">
-           
             <h2 className="font-[600] sm:text-[18px] text-[16px]">
               Add Collaborated
             </h2>
@@ -64,6 +57,7 @@ export default function AddCollabrateModal({
                   key={i}
                   onClick={() => handleAddCollabrated(item)}
                 >
+                  {/* Replace with your image and text components */}
                   <div className="hexagon5 m-auto md:m-0 ">
                     <img src={"/assets/images/profileimage.jpeg"} alt="" />
                   </div>
@@ -72,7 +66,7 @@ export default function AddCollabrateModal({
                       {item?.username}
                     </h3>
                     <div className="flex items-center gap-2">
-                      <img src="/assets/flag.svg" className="w-[18px] " />
+                      <img src="/assets/flag.svg" className="w-[18px]" />
                       <p className="text-[16px] font-[400]">
                         {item?.city || "city"}
                       </p>
@@ -82,10 +76,9 @@ export default function AddCollabrateModal({
               ))}
             </div>
 
-            
             <button
               className="absolute top-4 right-4 text-gray-600 hover:text-gray-800"
-              onClick={OnClose}
+              onClick={onClose}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
