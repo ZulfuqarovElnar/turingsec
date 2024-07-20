@@ -566,7 +566,7 @@ const handleSelectChange = (selectedOption) => {
           <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
             3
           </div>
-          <div className="rounded-xl overflow-hidden flex-1">
+          <div className="rounded-xl flex-1">
       <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
         Weakness
       </div>
@@ -632,28 +632,27 @@ const handleSelectChange = (selectedOption) => {
             />
           </div>
         </div>
-        <div className="overflow-y-scroll mt-4 bluescroll h-[280px]">
-  {weaknessType ? (
-    Array.isArray(weaknesses[weaknessType]) ? (
-      weaknesses[weaknessType].map((text, index) => (
-        <WeaknessLine
-          key={index}
-          text={text}
-          handleClick={() => {
-            const params = new URLSearchParams(searchParams);
-            params.set("weaknessLine", text);
-            setSearchParams(params);
-          }}
-        />
-      ))
-    ) : (
-      <p className="text-white">Invalid weakness type</p>
-    )
-  ) : (
-    <p className="px-8 py-4 bg-[#2B5D83] sm:text-[16px] text-[14px] font-[600]">Weakness type seçin</p>
-  )}
-</div>
-
+        <div className="overflow-y-scroll mt-4 bluescroll max-h-[280px]">
+            {weaknessType ? (
+              Array.isArray(weaknesses[weaknessType]) ? (
+                weaknesses[weaknessType].map((text, index) => (
+                  <WeaknessLine
+                    key={index}
+                    text={text}
+                    handleClick={() => {
+                      const params = new URLSearchParams(searchParams);
+                      params.set("weaknessLine", text);
+                      setSearchParams(params);
+                    }}
+                  />
+                ))
+              ) : (
+                <p className="text-white">Invalid weakness type</p>
+              )
+            ) : (
+              <p className="px-8 py-4 bg-[#2B5D83] sm:text-[16px] text-[14px] font-[600]">Weakness type seçin</p>
+            )}
+          </div>
       </div>
     </div>
         </div>
