@@ -650,7 +650,7 @@ const handleSelectChange = (selectedOption) => {
       <p className="text-white">Invalid weakness type</p>
     )
   ) : (
-    <p className="text-white">Weakness type seçin</p>
+    <p className="px-8 py-4 bg-[#2B5D83] sm:text-[16px] text-[14px] font-[600]">Weakness type seçin</p>
   )}
 </div>
 
