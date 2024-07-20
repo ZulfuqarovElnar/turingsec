@@ -1,14 +1,13 @@
 import { useSearchParams } from "react-router-dom";
 
-export default function WeaknessLine({ text }: { text: string }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const line = searchParams.get("weaknessLine");
+interface WeaknessLineProps {
+  text: string;
+  handleClick: () => void;
+}
 
-  const handleClick = () => {
-    const params = new URLSearchParams(searchParams);
-    params.set("weaknessLine", text);
-    setSearchParams(params);
-  };
+export default function WeaknessLine({ text, handleClick }: WeaknessLineProps) {
+  const [searchParams] = useSearchParams();
+  const line = searchParams.get("weaknessLine");
 
   return (
     <div
