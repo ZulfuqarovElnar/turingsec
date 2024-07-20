@@ -12,7 +12,6 @@ import { useEffect, useState} from "react";
 import { useSendReport } from "../../queryies/useSendReport";
 import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
-import WeaknessLine from "../../components/component/WeaknessLine";
 import CollabrateBox from "../../components/shared/WorkerShared/CollabrateBox";
 import { useGetAllUsers } from "../../queryies/useGetAllUsers";
 import AddCollabrateModal from "../../components/shared/WorkerShared/AddCollabrateModal";
@@ -20,6 +19,8 @@ import AddCollabrateModal from "../../components/shared/WorkerShared/AddCollabra
 import {useRef} from 'react';
 import { parseCvss3Vector } from 'vuln-vects';
 import { useGetUserData } from "../../queryies/useGetUserData";
+import { fakeWeaknessData, weaknesses } from "../../components/component/WeaknessData";
+import WeaknessLine from "../../components/component/WeaknessLine";
 
 export default function ProgramSubmitPage() {
  
@@ -40,6 +41,7 @@ export default function ProgramSubmitPage() {
   const {data: currentUser}=useGetUserData()
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [weaknessType, setWeaknessType] = useState();
+  const [weaknessLine, setWeaknessLine] = useState<string>("");
   const [severityValue, setSeverityValue] = useState<string>('');
   const [attackVector, setAttackVector] = useState<string>('N');
 const [attackComplexity, setAttackComplexity] = useState<string>('L');
@@ -143,15 +145,6 @@ const handleManual = () => {
     { label: "Collaborated Bounty", value: 1000,},
     { label: "Closed Bounty", value: 1000,},
   ];
- 
-  const fakeWeaknessData = [
-    { label: "Access Control", value: 1000,},
-    { label: "AII CAPECs", value: 1000,},
-    { label: "AII CWEs", value: 1000,},
-    { label: "Cryptographic Issues", value: 1000,},
-    { label: "Insecure Interaction Between Components", value: 1000,},
-    { label: "Memory Corruption", value: 1000,}
-  ]
   const [allAssets, setAllAssets] = useState<string[]>([]);
   const [attachments, setAttachments] = useState<File[]>([]);
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>)=>{
@@ -184,6 +177,8 @@ const handleManual = () => {
     console.log('Confidentiality:', confidentiality);
     console.log('Integrity:', integrity);
     console.log('Availability:', availability);
+    console.log('Weaknesstype', weaknessType);
+    console.log('Weakness:', weaknessLine)
     
     try {
       // const radios =document.querySelector('input[type="radio"]:checked');
@@ -297,6 +292,11 @@ const uniqueAssets = getUniqueAssetTypes([
   ...(programData?.asset?.highAsset?.assets || []),
   ...(programData?.asset?.criticalAsset?.assets || [])
 ]);
+
+const handleSelectChange = (selectedOption) => {
+    setWeaknessType(selectedOption ? selectedOption.value : null);
+  };
+
 
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
@@ -566,88 +566,96 @@ const uniqueAssets = getUniqueAssetTypes([
           <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
             3
           </div>
-          <div className=" rounded-xl overflow-hidden  flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
-              Weakness
-            </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
-              <div className="flex items-center gap-4 flex-col lg:flex-row">
-                <div className="lg:w-[60%] w-full">
-                  <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                    <img src="/assets/search.svg" alt="" />
-                    <Input
-                      type="text"
-                      placeholder="Search"
-                      className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6"
-                    />
-                    <img
-                      src="/assets/x.svg"
-                      alt=""
-                      className="cursor-pointer"
-                    />
-                  </Label>
-                </div>
-                <div className="lg:-[40%] w-full">
-                  <Select
-                    styles={{
-                      control: (provided, state) => ({
-                        ...provided,
-                        backgroundColor: "#2451F5",
-                        border: "none",
-                        color: "white",
-                        borderRadius: "20px",
-
-                        width: "100%",
-                        height: "50px",
-                        padding: "0 10px",
-                        "&:hover": {
-                          borderColor: "none",
-                        },
-                      }),
-                      option: (provided, state) => ({
-                        ...provided,
-                        backgroundColor: state.isFocused
-                          ? "#2451F5"
-                          : "#2451F5",
-                        ":hover": { backgroundColor: "rgb(14 165 233)" },
-                        color: state.isFocused ? "white" : "white",
-                      }),
-                      menuList: (provided, state) => ({
-                        ...provided,
-                        backgroundColor: "#2451F5",
-                        color: "white",
-                        padding: "0",
-                      }),
-                      placeholder: (provided) => ({
-                        ...provided,
-                        color: "white",
-                      }),
-                      singleValue: (provided, state) => {
-                        const color = "white";
-                        return { ...provided, color };
-                      },
-                    }}
-                    options={fakeWeaknessData}
-                    isSearchable={false}
-                    isClearable={true}
-                    placeholder="Weakness type"
-                    onChange={(selectedOption)=>{
-                      setWeaknessType(selectedOption.label);
-                       
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="overflow-y-scroll mt-4 bluescroll h-[280px]">
-                <WeaknessLine text="SQL Injection" />
-                <WeaknessLine text="XSS" />
-                <WeaknessLine text="CSRF" />
-                <WeaknessLine text="XSS" />
-                <WeaknessLine text="XXE" />
-                <WeaknessLine text="RCE" />
-              </div>
-            </div>
+          <div className="rounded-xl overflow-hidden flex-1">
+      <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+        Weakness
+      </div>
+      <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+        <div className="flex items-center gap-4 flex-col lg:flex-row">
+          <div className="lg:w-[60%] w-full">
+            <Label className="flex bg-[#2451F5] rounded-2xl px-4 w-full">
+              <img src="/assets/search.svg" alt="" />
+              <Input
+                type="text"
+                placeholder="Search"
+                className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6"
+              />
+              <img
+                src="/assets/x.svg"
+                alt=""
+                className="cursor-pointer"
+              />
+            </Label>
           </div>
+          <div className="lg:w-[40%] w-full">
+            <Select
+              styles={{
+                control: (provided) => ({
+                  ...provided,
+                  backgroundColor: "#2451F5",
+                  border: "none",
+                  color: "white",
+                  borderRadius: "20px",
+                  width: "100%",
+                  height: "50px",
+                  padding: "0 10px",
+                  "&:hover": {
+                    borderColor: "none",
+                  },
+                }),
+                option: (provided, state) => ({
+                  ...provided,
+                  backgroundColor: state.isFocused ? "#2451F5" : "#2451F5",
+                  ":hover": { backgroundColor: "rgb(14 165 233)" },
+                  color: state.isFocused ? "white" : "white",
+                }),
+                menuList: (provided) => ({
+                  ...provided,
+                  backgroundColor: "#2451F5",
+                  color: "white",
+                  padding: "0",
+                }),
+                placeholder: (provided) => ({
+                  ...provided,
+                  color: "white",
+                }),
+                singleValue: (provided) => ({
+                  ...provided,
+                  color: "white",
+                }),
+              }}
+              options={fakeWeaknessData}
+              isSearchable={false}
+              isClearable={true}
+              placeholder="Weakness type seçin"
+              onChange={handleSelectChange}
+            />
+          </div>
+        </div>
+        <div className="overflow-y-scroll mt-4 bluescroll h-[280px]">
+  {weaknessType ? (
+    Array.isArray(weaknesses[weaknessType]) ? (
+      weaknesses[weaknessType].map((text, index) => (
+        <WeaknessLine
+          key={index}
+          text={text}
+          handleClick={() => {
+            const params = new URLSearchParams(searchParams);
+            params.set("weaknessLine", text);
+            setSearchParams(params);
+          }}
+        />
+      ))
+    ) : (
+      <p className="text-white">Invalid weakness type</p>
+    )
+  ) : (
+    <p className="text-white">Weakness type seçin</p>
+  )}
+</div>
+
+      </div>
+    </div>
         </div>
         <div className="flex sm:gap-8 mt-4 flex-col sm:flex-row gap-4">
           <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
