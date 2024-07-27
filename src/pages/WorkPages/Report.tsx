@@ -33,7 +33,7 @@ export default function Report() {
 
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative min-h-screen">
-      <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
+      <section className="   font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
         <img
           src="/assets/iconnav11.svg"
           alt=""
@@ -47,7 +47,7 @@ export default function Report() {
         />
       </section>
 
-      <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3  py-16">
+      <div className="bg-[url(/assets/images/bg-reports.png)] bg-center bg-no-repeat bg-cover flex-1 lg:px-20 sm:px-8 px-3  py-16">
         <Tabs defaultValue="All" className=" ">
           <TabsList className="flex bg-[#2451F5] h-[50px] px-0 rounded-2xl lg:pr-[20%] pr-0 xl:w-[80%] w-full">
             <TabsTrigger
@@ -103,16 +103,14 @@ export default function Report() {
         
         </Tabs>
         <div className=" mt-7 flex gap-3 lg:items-center w-full flex-col lg:flex-row xl:w-[80%]">
-          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex bg-[#2451F5] rounded-2xl px-4 flex-1">
+          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex bg-[#FFDE31] rounded-2xl px-4 flex-1">
             <img src="/assets/search.svg" alt="" />
             <input type="text" className="flex h-10 w-full border border-input px-3 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" placeholder="Search" onChange={handleSearchInputChange} />
             <img src="/assets/x.svg" alt="" className="cursor-pointer" />
           </label>
         </div>
 
-        
-      </div>
-      <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3  py-16">
+        <div className=" flex-1 lg:px-20 sm:px-8 px-3  py-16">
         <div className="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4 ">
           {data && Array.isArray(filteredData) && filteredData.map((company) => (
             company.reports.map((report) => (
@@ -128,6 +126,8 @@ export default function Report() {
         </div>
         
       </div>
+      </div>
+      
       
       
     </div>

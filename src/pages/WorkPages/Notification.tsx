@@ -5,7 +5,7 @@ import NotificationMessage from "../../components/component/NotificationMessage"
 export default function Notification() {
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative min-h-screen">
-      <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
+      <section className="   font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
         <img
           src="/assets/iconnav15.svg"
           alt=""
@@ -19,8 +19,8 @@ export default function Notification() {
         />
       </section>
 
-      <div className="bg-[#1E1E1E] flex-1    flex flex-col lg:flex-row">
-        <div className="lg:w-[25%] lg:border-r-2 flex flex-row lg:flex-col">
+      <div className="bg-[url(/assets/images/bg-settings.png)] bg-center bg-no-repeat flex-1 flex flex-col lg:flex-row">
+        <div className="lg:w-[25%] lg:border-r-2 border-[#885389] flex flex-row lg:flex-col">
           <NotificationBox
             active={true}
             text="Update profile 80% updated"

@@ -83,22 +83,21 @@ export default function Hactivity() {
   ];
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden min-h-screen relative">
-      <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
+      <section className="font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
         <img
           src="/assets/iconnav7.svg"
           alt=""
           className="absolute z-[20] lg:-left-[10%] md:-left-[27%] sm:-left-[100px] top-0 w-[294px] md:w-[302px] -left-[150px]  "
         />
-        <p className="md:text-[30px] text-[20px]">Hactivity</p>
+        <p className="md:text-[30px] text-[20px]">HACKTIVITY</p>
         <img
           src="/assets/iconnav8.svg"
           alt=""
           className="absolute z-[20] md:-right-[0] top-0 sm:-right-[10%] -right-[20%]   overflow-hidden w-[244px] md:w-[232px]"
         />
       </section>
-      <div className=" bg-[#1F44CC]  w-full absolute top-0 left-0 h-[30px] text-white"></div>
 
-      <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3  py-16">
+      <div className="bg-[url(/assets/images/bg-hacktivity.png)] bg-center bg-no-repeat bg-cover flex-1 lg:px-20 sm:px-8 px-3  py-16">
         <div className="mt-8 rounded-[20px] overflow-hidden">
           {fakeData.map((data, i) => (
             <HactivityLine

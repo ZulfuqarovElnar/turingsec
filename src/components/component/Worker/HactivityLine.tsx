@@ -3,8 +3,8 @@ export default function HactivityLine({ data, index, page, setPage }) {
   return (
     <div
       className={`flex justify-between ${
-        index == 0 ? "bg-[#2451F5]" : "bg-[#023059] border-b border-black"
-      } text-white  h-[60px] items-center sm:px-8 px-0 sm:text-[18px] text-[14px]`}
+        index == 0 ? "bg-[#FFDE31] text-black font-[600]" : "bg-[#3D0436] border-b border-black text-white "
+      }  h-[60px] items-center sm:px-8 px-0 sm:text-[18px] text-[14px]`}
     >
       <div
         className={`flex-1 text-center ${

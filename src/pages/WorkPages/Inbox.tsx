@@ -7,7 +7,7 @@ export default function Inbox() {
   const chatNo = searchParams.get("chat");
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative max-h-screen min-h-screen">
-      <section className="   font-[800] bg-[#1F44CC] min-h-[124px] flex items-center justify-center overflow-hidden  ">
+      <section className="   font-[800] bg-[#200F23] min-h-[124px] flex items-center justify-center overflow-hidden  ">
         <img
           src="/assets/iconnav17.svg"
           alt=""
@@ -21,9 +21,9 @@ export default function Inbox() {
         />
       </section>
 
-      <div className="bg-[#1E1E1E] flex-1   flex flex-col lg:flex-row  ">
+      <div className="bg-[url(/assets/images/bg-settings.png)] bg-center bg-no-repeat flex-1   flex flex-col lg:flex-row  ">
         <div
-          className={`lg:w-[25%] lg:border-r-2 flex w-full  flex-col ${
+          className={`lg:w-[25%] lg:border-r-2 border-[#885389] flex w-full  flex-col ${
             chatNo ? "hidden" : "block"
           } lg:block `}
         >
