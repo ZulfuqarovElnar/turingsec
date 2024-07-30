@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import LevelBar from "../../components/component/LevelBar";
 
 import { Button } from "../../components/ui/button";
@@ -19,6 +19,10 @@ import { useGetCompanyProgram } from "../../queryies/useGetCompanyProgram";
 // import { Input } from "../../components/ui/input";
 
 export default function ProgramCreatePage() {
+  //...edit buttons....//
+  const [editDay,setEditDay]=useState(false)
+
+  //.................
   const { data } = useGetCompanyProgram();
   const { currentCompany } = useCurrentCompany();
   const [fromdate, setFromDate] = React.useState<Date>();
@@ -100,6 +104,7 @@ export default function ProgramCreatePage() {
       setPolicy(data?.data[0].policy);
       setFromDate(new Date(data.data[0]?.fromDate));
       setToDate(new Date(data.data[0]?.toDate));
+      console.log(todate)
       setLowElement(newLowElement);
       setMediumElement(newMediumElement);
       setHighElement(newHighElement);
@@ -196,6 +201,7 @@ export default function ProgramCreatePage() {
           }
         );
         if (res.ok) {
+          setEditDay(true)
           return toast.success("Program Updated Successfully");
         } else {
           console.log(prog)
@@ -332,11 +338,17 @@ export default function ProgramCreatePage() {
 
               <div className="rounded-2xl overflow-hidden">
 
-                <div className="bg-[#0A273D] px-6 pt-6 pb-10">
+                <div className="bg-[#0A273D] px-6 pt-6 pb-10 relative">
+              <button disabled={!editDay} 
+              onClick={()=>setEditDay(false)}
+              className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[10px]">
+                <img src="/assets/blackpen.svg" alt="edit" />
+              </button>
                   <div className="flex justify-between lg:mt-4 mb-4  xl:w-[70%] flex-col  lg:flex-row">
 
                     <div className="flex gap-4 flex-col lg:flex-row">
                       <div className="flex flex-col dark relative">
+                        
                         <Label className="mb-2 lg:absolute static -top-5">
                           From
                         </Label>
@@ -422,6 +434,7 @@ export default function ProgramCreatePage() {
                     className="bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 border-2 border-[#2451F5] h-[160px] rounded-2xl"
                     value={info}
                     onChange={(e) => setInfo(e.target.value)}
+                    disabled={editDay}
                   />
                 </div>
               </div>
@@ -661,6 +674,7 @@ export default function ProgramCreatePage() {
 
             <h2 className="my-[10px] sm:text-[20px] text-[16px] w-[600]">Policy</h2>
             <div className="bg-[#0A273D] p-8 rounded-xl">
+              
               <Textarea
                 className="bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 border-2 border-[#2451F5] h-[160px] rounded-2xl"
                 value={policy}
@@ -669,7 +683,10 @@ export default function ProgramCreatePage() {
             </div>
 
             <div className="rounded-2xl overflow-hidden mt-8">
-              <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between">
+              <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between relative">
+            <button className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[10px]">
+              <img src="/assets/blackpen.svg" alt="edit" />
+            </button>
                 <div className="flex items-center gap-4">
                   <img src="/assets/stricty.svg" alt="" />
                   <p className="">Stricty Prohibet</p>
@@ -717,7 +734,10 @@ export default function ProgramCreatePage() {
             </div>
 
             <div className="rounded-2xl overflow-hidden mt-8">
-              <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between">
+              <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between relative">
+            <button className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[10px]">
+              <img src="/assets/blackpen.svg" alt="edit" />
+            </button>
                 <div className="flex items-center gap-4">
                   <img src="/assets/stroke.svg" alt="" />
                   <p className="">Scope</p>

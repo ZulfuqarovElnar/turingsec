@@ -12,8 +12,11 @@ import { useGetUserReports } from '../../queryies/useGetUserReports';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
 import { faVideo } from '@fortawesome/free-solid-svg-icons';
-
+//import { io, Socket } from "socket.io-client";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import io from 'socket.io-client';
+
+// import { useSocket } from '../../actions/socket';
 
 // Add the icon to the library
 library.add(faFile);
@@ -21,11 +24,11 @@ library.add(faVideo)
 
 
 export default function SingleReportUser({severityScore}) {
+    const [message, setMessage]=useState("")
     const { id } = useParams();
-    console.log(`${severityScore}`);
     const { data } = useGetUserReports();
-    console.log(data)
-    console.log("id: " + id)
+    
+    
     let filteredReport;
     data.forEach((user) => {
         user.reports.forEach((report) => {
@@ -35,16 +38,63 @@ export default function SingleReportUser({severityScore}) {
         });
     });
     console.log(filteredReport);
+    const room=filteredReport.room
+    console.log(room)
   
     const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
     const [allAssets, setAllAssets] = useState<string[]>([]);
     const collaborators = filteredReport.collaborators
     const [enlarged, setEnlarged] = useState(null);
+    const getMessage = (e) => {
+        setMessage(e.target.value)
+        console.log(message)
+    }
+    
+    
+    //...............Send New Message ..................
+    const sendMessage = async ()=>{
+        const userDataString = localStorage.getItem("user");
+        const userData = userDataString ? JSON.parse(userDataString) : null;
+        const accessToken = userData?.accessToken;
+        const socket= io("http://localhost:6000", {
+            path:"/socket.io/",
+            query: { room: room },
+            extraHeaders: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            
+            transports: ['websocket'] ,
+            // forceNew: true, 
+            // upgrade: false
+        });
+        socket.on("connect", () => {
+            socket.emit('message',{
+                "isReplied": false,
+                "replyToMessageId": null,
+                "content": message
+            });
+            console.log("Connected to WebSocket server");
+        });
+
+        // socket.on("disconnect", (event) => {
+        //     console.log("Disconnected from WebSocket server",event);
+        // });
+
+        socket.on("get_message", (message) => {
+            console.log("Message received:", message);
+        });
+
+        socket.on("error", (error) => {
+            console.error("Error received:", error);
+        });
+        
+    }
+    //..................................................
 
     const handleEnlarge = (index) => {
         setEnlarged(enlarged === index ? null : index);
     };
-
+    
     const getAttachmentStyle = (index) => {
         if (enlarged === index) {
             return {
@@ -314,7 +364,6 @@ export default function SingleReportUser({severityScore}) {
                         )}
                     </div>
                 </div>
-
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
                     <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
                         5
@@ -357,7 +406,6 @@ export default function SingleReportUser({severityScore}) {
                         </div>
                     </div>
                 </div>
-
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
 
                     <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
@@ -410,7 +458,6 @@ export default function SingleReportUser({severityScore}) {
                         </div>
                     </div>
                 </div>
-
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
                     <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
                         7
@@ -432,6 +479,7 @@ export default function SingleReportUser({severityScore}) {
                         </div>
                     </div>
                 </div>
+
                 <div className="flex  flex-col  lg:flex-row lg:gap-16 gap-4  mt-4 ">
                     <div className="flex flex-col gap-4">
 
@@ -473,8 +521,95 @@ export default function SingleReportUser({severityScore}) {
 
                     </div>
                 </div>
+                
 
+                <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 ">
+                    <div className=" h-[30px] w-[30px] flex text-white items-center justify-center hexagon6 !bg-[#2451F5]">
+                        7
+                    </div>
+                    <div className="flex flex-col w-full">
+                        <div className=" rounded-xl overflow-hidden flex flex-col gap-7">
+                            <div className="flex flex-col gap-5 py-2 px-2">
+                                <div className="sm:text-[18px] text-[16px] font-[600] bg-initial h-[60px] flex items-center max-[550px]:flex-col max-[550px]:items-start gap-3 justify-between px-8">
+                                    <div className="flex gap-5">
+                                        <img
+                                            src="/images/turung.jpg"
+                                            className="hexagon6"
+                                            width={50}
+                                            height={50}
+                                        />
+                                        <p className="text-[25px] text-white">Hacker</p>
+                                    </div>
+                                    <p className="text-gray-500">July 01, 2024, 5:65am UTC</p>
+                                </div>
 
+                                <div className="bg-initial py-8 sm:px-8 px-4">
+                                    <div className="flex flex-col gap-5">
+                                        <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]">
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium dignissimos consectetur sint porro, eveniet dolorum!</p>
+                                        </div>
+                                        <div className="max-w-[350px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-5 py-2 px-2">
+                                <div className="sm:text-[18px] text-[16px] font-[600] bg-initial h-[60px] flex items-center max-[550px]:flex-col-reverse max-[550px]:items-end gap-3 justify-between px-8">
+                                    <p className="text-gray-500">July 01, 2024, 5:65am UTC</p>
+                                    <div className="flex gap-5">
+                                        <p className="text-[25px] text-white">Guest</p>
+                                        <img
+                                            src="/images/hacker.jpg"
+                                            className=" hexagon6 h-[50px] w-[50px]"
+                                            width={50}
+                                            height={50}/>
+                                    </div>
+                                </div>
+
+                                <div className="bg-initial py-8 sm:px-8 px-4">
+                                    <div className="flex flex-col items-end gap-5">
+                                        <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]">
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium ullam vero sit vitae iste saepe.</p>
+                                        </div>
+                                        <div className="max-w-[350px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#162764]">
+                            <input
+                                type="text"
+                                className="w-8/12 outline-none h-[35px] pl-2 text-white bg-inherit"
+                                placeholder="Send your message ..."
+                                onChange={getMessage}
+                            />
+                            <div className="flex items-center gap-1">
+                                <img
+                                    src="/images/file.png"
+                                    className="cursor-pointer transition ease-in-out h-[30px] w-[30px] hover:bg-sky-700 p-[5px] rounded-[25px]"
+                                    width={50}
+                                    height={50}
+                                />
+                                <img
+                                    src="/images/Vector-camera.png"
+                                    className="cursor-pointer transition ease-in-out h-[30px] w-[30px] hover:bg-sky-700 rounded-[10px] p-1"
+                                    width={50}
+                                    height={50}
+                                />
+                                <div className="cursor-pointer flex items-center justify-center w-[75px] h-[40px] p-1 bg-[#2451F5] hover:bg-[#3690f7] rounded-[30px]" onClick={sendMessage}
+                                >
+                                    <img
+                                        src="/assets/images/send.jpg"
+                                        className=" transition ease-in-out h-[30px] w-[30px] rounded-[10px] p-1"
+                                        width={50}
+                                        height={50}
+                                    />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     );
