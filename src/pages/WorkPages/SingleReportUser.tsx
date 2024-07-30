@@ -3,20 +3,15 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import Line from "../../components/shared/WorkerShared/Line";
 import RadioInput from "../../components/component/RadioInput";
-// import { useGetCompanyById } from "../../queryies/useGetCompanyById";
 import { useState } from "react";
-// import { useSearchParams } from "react-router-dom";
-// import { useCurrentUser } from "../../context/CurrentUser";
 import { Textarea } from '../../components/ui/textarea';
 import { useGetUserReports } from '../../queryies/useGetUserReports';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
 import { faVideo } from '@fortawesome/free-solid-svg-icons';
-//import { io, Socket } from "socket.io-client";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import io from 'socket.io-client';
-
-// import { useSocket } from '../../actions/socket';
+import { useSocket } from '../../actions/useSocket';
+import io from "socket.io-client"
 
 // Add the icon to the library
 library.add(faFile);
@@ -28,7 +23,6 @@ export default function SingleReportUser({severityScore}) {
     const { id } = useParams();
     const { data } = useGetUserReports();
     
-    
     let filteredReport;
     data.forEach((user) => {
         user.reports.forEach((report) => {
@@ -38,47 +32,54 @@ export default function SingleReportUser({severityScore}) {
         });
     });
     console.log(filteredReport);
-    const room=filteredReport.room
-    console.log(room)
+    
   
     const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
     const [allAssets, setAllAssets] = useState<string[]>([]);
     const collaborators = filteredReport.collaborators
     const [enlarged, setEnlarged] = useState(null);
-    const getMessage = (e) => {
-        setMessage(e.target.value)
-        console.log(message)
-    }
-    
-    
+    const room = filteredReport.room
+    // const { socketResponse, isConnected, sendData } = useSocket(room)
+    const userDataString = localStorage.getItem("user");
+    const userData = userDataString ? JSON.parse(userDataString) : null;
+    const accessToken = userData?.accessToken;
     //...............Send New Message ..................
     const sendMessage = async ()=>{
-        const userDataString = localStorage.getItem("user");
-        const userData = userDataString ? JSON.parse(userDataString) : null;
-        const accessToken = userData?.accessToken;
-        const socket= io("http://localhost:6000", {
-            path:"/socket.io/",
+        // if (message !== "") {
+        //     sendData({
+        //         content: message,
+        //         isReplied: false,
+        //         replyToMessageId: null,
+        //     });
+           
+        //     setMessage("");
+        // }
+        
+        // const socket= io("http://localhost:3000",{
+        //     transports: ['websocket', 'polling'],
+        // })
+        const socket = io("http://localhost:6000", {
+            reconnection: false,
             query: { room: room },
             extraHeaders: {
                 Authorization: `Bearer ${accessToken}`,
             },
-            
-            transports: ['websocket'] ,
-            // forceNew: true, 
-            // upgrade: false
+            transports: ["websocket","polling"]
+
         });
+     
         socket.on("connect", () => {
-            socket.emit('message',{
-                "isReplied": false,
-                "replyToMessageId": null,
-                "content": message
-            });
+            // socket.emit('message',{
+            //     "isReplied": false,
+            //     "replyToMessageId": null,
+            //     "content": message
+            // });
             console.log("Connected to WebSocket server");
         });
 
-        // socket.on("disconnect", (event) => {
-        //     console.log("Disconnected from WebSocket server",event);
-        // });
+        socket.on("disconnect", (event) => {
+            console.log("Disconnected from WebSocket server",event);
+        });
 
         socket.on("get_message", (message) => {
             console.log("Message received:", message);
@@ -86,6 +87,12 @@ export default function SingleReportUser({severityScore}) {
 
         socket.on("error", (error) => {
             console.error("Error received:", error);
+        });
+        socket.on("connect_error", (error) => {
+            console.error("Connection error:", error);
+        });
+        socket.on("reconnect_attempt", () => {
+            console.log("Attempting to reconnect...");
         });
         
     }
@@ -580,7 +587,7 @@ export default function SingleReportUser({severityScore}) {
                                 type="text"
                                 className="w-8/12 outline-none h-[35px] pl-2 text-white bg-inherit"
                                 placeholder="Send your message ..."
-                                onChange={getMessage}
+                                onChange={(e)=> setMessage(e.target.value)}
                             />
                             <div className="flex items-center gap-1">
                                 <img

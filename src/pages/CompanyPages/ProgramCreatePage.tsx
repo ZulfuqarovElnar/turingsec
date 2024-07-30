@@ -20,8 +20,11 @@ import { useGetCompanyProgram } from "../../queryies/useGetCompanyProgram";
 
 export default function ProgramCreatePage() {
   //...edit buttons....//
-  const [editDay,setEditDay]=useState(false)
-
+  const [editDay, setEditDay]=useState(true)
+  const [editReward, setEditReward]=useState(true)
+  const [editPolicy, setEditPolicy]=useState(true)
+  const [editStricty, setEditStricty] = useState(true)
+  const [editScope, setEditScope] = useState(true)
   //.................
   const { data } = useGetCompanyProgram();
   const { currentCompany } = useCurrentCompany();
@@ -34,10 +37,7 @@ export default function ProgramCreatePage() {
   };
   const [policy, setPolicy] = React.useState("");
   const [info, setInfo] = React.useState("");
-  //data?.data.map((a) => a.notes)
-  // const [lowElement, setLowElement] = React.useState<
-  //   {assetName:string; assetType: string; price: string }[]
-  // >([]);
+ 
   const [lowElement, setLowElement] = React.useState([]);
   const [mediumElement, setMediumElement] = React.useState([]);
   const [highElement, setHighElement] = React.useState([]);
@@ -51,29 +51,13 @@ export default function ProgramCreatePage() {
   const [outScope, setOutScope] = React.useState([]);
    
   useEffect(() => {
-    // console.log(data, "sdsdsd");
+    
     if (data?.data[0]) {
-      console.log("flllllllll,");
-      // const newLowElement = data.data.map(a => ({
-      //   assetName: a.asset.lowAsset.assets?.map(b => b.names.map(c => c)),
-      //   assetType: a.asset.lowAsset.assets?.map(b => b.type),
-      //   price: a.asset.lowAsset.assets?.map(b => b.price)
-      // }))
-      // const newMediumElement = data.data.map(a => ({
-      //   assetName: a.asset.mediumAsset.assets?.map(b => b.names.map(c => c)),
-      //   assetType: a.asset.mediumAsset.assets?.map(b => b.type),
-      //   price: a.asset.mediumAsset.assets?.map(b => b.price)
-      // }))
-      // const newHighElement = data.data.map(a => ({
-      //   assetName: a.asset.highAsset.assets?.map(b => b.names.map(c=>c)),
-      //   assetType: a.asset.highAsset.assets?.map(b => b.type),
-      //   price: a.asset.highAsset.assets?.map(b => b.price)
-      // }))
-      // const newCriticalElement = data.data.map(a => ({
-      //   assetName: a.asset.criticalAsset.assets?.map(b => b.names.map(c => c)),
-      //   assetType: a.asset.criticalAsset.assets?.map(b => b.type),
-      //   price: a.asset.criticalAsset.assets?.map(b => b.price)
-      // }))
+      setEditDay(true)
+      setEditReward(true)
+      setEditPolicy(true)
+      setEditScope(true)
+      setEditStricty(true)
       const lowAssets = data.data[0]?.asset.lowAsset?.assets || [];
       const mediumAssets = data.data[0]?.asset.mediumAsset?.assets || [];
       const highAssets = data.data[0]?.asset.highAsset?.assets || [];
@@ -104,7 +88,6 @@ export default function ProgramCreatePage() {
       setPolicy(data?.data[0].policy);
       setFromDate(new Date(data.data[0]?.fromDate));
       setToDate(new Date(data.data[0]?.toDate));
-      console.log(todate)
       setLowElement(newLowElement);
       setMediumElement(newMediumElement);
       setHighElement(newHighElement);
@@ -113,7 +96,7 @@ export default function ProgramCreatePage() {
       setInScope(data.data.flatMap(a => a.inScope))
       setStricty(data?.data.flatMap(a => a.prohibits.map((b) => b.prohibitAdded)))
     }
-  }, [data]);
+  }, [,data]);
   async function createProgram() {
     try {
       if (!info) {
@@ -202,9 +185,14 @@ export default function ProgramCreatePage() {
         );
         if (res.ok) {
           setEditDay(true)
+          setEditReward(true)
+          setEditPolicy(true)
+          setEditScope(true)
+          setEditStricty(true)
           return toast.success("Program Updated Successfully");
         } else {
           console.log(prog)
+         
           return toast.error("Failed to create program");
         }
       }
@@ -341,7 +329,7 @@ export default function ProgramCreatePage() {
                 <div className="bg-[#0A273D] px-6 pt-6 pb-10 relative">
               <button disabled={!editDay} 
               onClick={()=>setEditDay(false)}
-              className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[10px]">
+              className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[8px]">
                 <img src="/assets/blackpen.svg" alt="edit" />
               </button>
                   <div className="flex justify-between lg:mt-4 mb-4  xl:w-[70%] flex-col  lg:flex-row">
@@ -355,6 +343,7 @@ export default function ProgramCreatePage() {
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
+                            disabled={editDay}
                               variant={"outline"}
                               className={cn(
                                 "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#2451F5] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white ",
@@ -390,6 +379,7 @@ export default function ProgramCreatePage() {
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
+                          disabled={editDay}
                               variant={"outline"}
                               className={cn(
                                 "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#2451F5] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white ",
@@ -439,13 +429,23 @@ export default function ProgramCreatePage() {
                 </div>
               </div>
             </div>
-            <div className=" flex justify-between items-center mt-2">
+            <div className=" flex justify-between items-center mt-2 relative">
               <h2 className="my-[10px] sm:text-[20px] text-[16px] w-[600]">
                 Reward
               </h2>
+              {editReward===true?(
+            <button
+              onClick={() => setEditReward(false)}
+              className="bg-[#BDBDBD] rounded-full absolute z-21 right-5 top-2 p-[8px]">
+              <img src="/assets/blackpen.svg" alt="edit" />
+            </button>
+              ):(
               <Button className="w-[100px]" onClick={() => setIsOpen(true)}>
                 Add
               </Button>
+              )}
+          
+              
             </div>
             <div className="rounded-2xl overflow-hidden">
               <div className="bg-[#001D34] h-[70px] items-center px-8 flex ">
@@ -473,8 +473,8 @@ export default function ProgramCreatePage() {
                       <p className="sm:text-[18px] text-[16px] font-[600]">Low</p>
                     </div>
                     <div className="flex-1 text-center block lg:hidden ">
-                      {lowElement.map((element) => (
-                        <div >
+                      {lowElement.map((element,i) => (
+                        <div key={i}>
                           <p className="sm:text-[18px] text-[16px] font-[600]">
                             {element.assetName}
                           </p>
@@ -489,22 +489,22 @@ export default function ProgramCreatePage() {
                     </div>
 
                     <div className="flex-1 text-center lg:block hidden  ">
-                      {lowElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {lowElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.assetName}
                         </p>
                       ))}
                     </div>
                     <div className="flex-1 text-center lg:block hidden  ">
-                      {lowElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {lowElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.assetType}
                         </p>
                       ))}
                     </div>
                     <div className="flex-1 text-center hidden lg:block ">
-                      {lowElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {lowElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.price}
                         </p>
                       ))}
@@ -527,8 +527,8 @@ export default function ProgramCreatePage() {
                       </p>
                     </div>
                     <div className="flex-1 text-center block lg:hidden ">
-                      {mediumElement.map((element) => (
-                        <div>
+                      {mediumElement.map((element,i) => (
+                        <div key={i}>
                           <p className="sm:text-[18px] text-[16px] font-[600]">
                             {element.assetName}
                           </p>
@@ -542,22 +542,22 @@ export default function ProgramCreatePage() {
                       ))}
                     </div>
                     <div className="flex-1 text-center hidden lg:block">
-                      {mediumElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {mediumElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.assetName}
                         </p>
                       ))}
                     </div>
                     <div className="flex-1 text-center hidden lg:block">
-                      {mediumElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {mediumElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.assetType}
                         </p>
                       ))}
                     </div>
                     <div className="flex-1 text-center hidden lg:block">
-                      {mediumElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {mediumElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.price}
                         </p>
                       ))}
@@ -578,8 +578,8 @@ export default function ProgramCreatePage() {
                       <p className="sm:text-[18px] text-[16px] font-[600]">High</p>
                     </div>
                     <div className="flex-1 text-center block lg:hidden ">
-                      {highElement.map((element) => (
-                        <div>
+                      {highElement.map((element,i) => (
+                        <div key={i}>
                           <p className="sm:text-[18px] text-[16px] font-[600]">
                             {element.assetName}
                           </p>
@@ -593,23 +593,23 @@ export default function ProgramCreatePage() {
                       ))}
                     </div>
                     <div className="flex-1 text-center hidden lg:block">
-                      {highElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {highElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.assetName}
                         </p>
                       ))}
                     </div>
 
                     <div className="flex-1 text-center hidden lg:block">
-                      {highElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {highElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.assetType}
                         </p>
                       ))}
                     </div>
                     <div className="flex-1 text-center hidden lg:block">
-                      {highElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {highElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.price}
                         </p>
                       ))}
@@ -632,8 +632,8 @@ export default function ProgramCreatePage() {
                       </p>
                     </div>
                     <div className="flex-1 text-center block lg:hidden ">
-                      {criticalElement.map((element) => (
-                        <div>
+                      {criticalElement.map((element,i) => (
+                        <div key={i}>
                           <p className="sm:text-[18px] text-[16px] font-[600]">
                             {element.assetName}
                           </p>
@@ -647,22 +647,22 @@ export default function ProgramCreatePage() {
                       ))}
                     </div>
                     <div className="flex-1 text-center hidden lg:block">
-                      {criticalElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {criticalElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.assetName}
                         </p>
                       ))}
                     </div>
                     <div className="flex-1 text-center hidden lg:block">
-                      {criticalElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {criticalElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.assetType}
                         </p>
                       ))}
                     </div>
                     <div className="flex-1 text-center hidden lg:block">
-                      {criticalElement.map((element) => (
-                        <p className="sm:text-[18px] text-[16px] font-[600]">
+                      {criticalElement.map((element,i) => (
+                        <p key={i} className="sm:text-[18px] text-[16px] font-[600]">
                           {element.price}
                         </p>
                       ))}
@@ -673,10 +673,19 @@ export default function ProgramCreatePage() {
             </div>
 
             <h2 className="my-[10px] sm:text-[20px] text-[16px] w-[600]">Policy</h2>
-            <div className="bg-[#0A273D] p-8 rounded-xl">
-              
+            <div className="bg-[#0A273D] p-8 rounded-xl relative">
+          {editPolicy === true ? (
+            <button
+              onClick={() => setEditPolicy(false)}
+              className="bg-[#BDBDBD] rounded-full absolute z-21 right-5 -top-11 p-[8px]">
+              <img src="/assets/blackpen.svg" alt="edit" />
+            </button>
+          ) : (
+            <></>
+          )}
               <Textarea
                 className="bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 border-2 border-[#2451F5] h-[160px] rounded-2xl"
+                disabled={editPolicy}
                 value={policy}
                 onChange={(e) => setPolicy(e.target.value)}
               />
@@ -684,9 +693,15 @@ export default function ProgramCreatePage() {
 
             <div className="rounded-2xl overflow-hidden mt-8">
               <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between relative">
-            <button className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[10px]">
-              <img src="/assets/blackpen.svg" alt="edit" />
-            </button>
+            {editStricty === true ? (
+              <button
+                onClick={() => setEditStricty(false)}
+                className="bg-[#BDBDBD] rounded-full absolute z-21 right-5 top-4 p-[8px]">
+                <img src="/assets/blackpen.svg" alt="edit" />
+              </button>
+            ) : (
+            <></>
+            )}
                 <div className="flex items-center gap-4">
                   <img src="/assets/stricty.svg" alt="" />
                   <p className="">Stricty Prohibet</p>
@@ -694,7 +709,7 @@ export default function ProgramCreatePage() {
               </div>
               <div className="bg-[#0A273D] p-8 grid lg:grid-cols-2 gap-12 grid-cols-1">
                 {stricty.map((element, index) => (
-                  <div className="flex gap-4">
+                  <div key={index} className="flex gap-4">
                     <div className="min-w-[40px]">
                       <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5] ">
                         <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#0A273D]">
@@ -714,6 +729,9 @@ export default function ProgramCreatePage() {
                     </div>
                   </div>
                 ))}
+                {editStricty===true?(
+                  <></>
+                ):(
                 <div className="m-auto lg:col-span-2 flex flex-col items-center ">
                   <Textarea
                     className="bg-transparent focus-visible:outline-none focus-visible:ring-offset-0"
@@ -730,14 +748,21 @@ export default function ProgramCreatePage() {
                     Add
                   </Button>
                 </div>
+                )}
               </div>
             </div>
 
             <div className="rounded-2xl overflow-hidden mt-8">
               <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between relative">
-            <button className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[10px]">
-              <img src="/assets/blackpen.svg" alt="edit" />
-            </button>
+            {editScope===true?(
+              <button onClick={() => setEditScope(false)}
+              className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[8px]">
+                <img src="/assets/blackpen.svg" alt="edit" />
+              </button>
+            ):
+            (
+              <></>
+            )}
                 <div className="flex items-center gap-4">
                   <img src="/assets/stroke.svg" alt="" />
                   <p className="">Scope</p>
@@ -748,7 +773,7 @@ export default function ProgramCreatePage() {
                   <div className="flex-1">
                     <h3 className="mb-6">Out of Scope</h3>
                     {outScope.map((element, index) => (
-                      <div className="flex gap-4 mt-4">
+                      <div key={index} className="flex gap-4 mt-4">
                         <div className="bg-yellow-500 min-w-[8px] h-[8px] rounded-full mt-2"></div>
                         <p>{element}</p>
                         <div
@@ -768,7 +793,7 @@ export default function ProgramCreatePage() {
                   <div className="flex-1">
                     <h3 className="mb-6">In of Scope</h3>
                     {inScope.map((element, index) => (
-                      <div className="flex gap-4 mt-4">
+                      <div key={index} className="flex gap-4 mt-4">
                         <div className="bg-yellow-500 min-w-[8px] h-[8px] rounded-full mt-2"></div>
                         <p>{element}</p>
                         <div
@@ -786,44 +811,48 @@ export default function ProgramCreatePage() {
                     ))}
                   </div>
                 </div>
-                <div className="flex flex-col items-center gap-4 mt-12">
-                  <Textarea
-                    className="bg-transparent focus-visible:outline-none focus-visible:ring-offset-0 w-[250px]"
-                    value={scopeText}
-                    onChange={(e) => setScopeText(e.target.value)}
-                  />
-                  <select
-                    value={scopeType}
-                    onChange={(e) => setScopeType(e.target.value)}
-                    className="
+                {editScope===false?(
+              <div className="flex flex-col items-center gap-4 mt-12">
+                <Textarea
+                  className="bg-transparent focus-visible:outline-none focus-visible:ring-offset-0 w-[250px]"
+                  value={scopeText}
+                  onChange={(e) => setScopeText(e.target.value)}
+                />
+                <select
+                  value={scopeType}
+                  onChange={(e) => setScopeType(e.target.value)}
+                  className="
                 border
                 text-black
                 focus-visible:outline-none focus-visible:ring-offset-0"
-                  >
-                    <option
-                      value="out"
-                      className="
+                >
+                  <option
+                    value="out"
+                    className="
                 bg-transparent
                 "
-                    >
-                      Out of Scope
-                    </option>
-                    <option value="in">In of Scope</option>
-                  </select>
-                  <Button
-                    onClick={() => {
-                      if (scopeType === "out") {
-                        setOutScope([...outScope, scopeText]);
-                      }
-                      if (scopeType === "in") {
-                        setInScope([...inScope, scopeText]);
-                      }
-                      setScopeText("");
-                    }}
                   >
-                    Add
-                  </Button>
-                </div>
+                    Out of Scope
+                  </option>
+                  <option value="in">In of Scope</option>
+                </select>
+                <Button
+                  onClick={() => {
+                    if (scopeType === "out") {
+                      setOutScope([...outScope, scopeText]);
+                    }
+                    if (scopeType === "in") {
+                      setInScope([...inScope, scopeText]);
+                    }
+                    setScopeText("");
+                  }}
+                >
+                  Add
+                </Button>
+              </div>
+                ):(
+                  <></>
+                )}
               </div>
             </div>
              {data?.data.length>0?(
