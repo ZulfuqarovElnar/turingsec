@@ -161,7 +161,7 @@ export default function TabContentEmail() {
               />
             </div>
             <div className="sm:space-x-8 flex items-center sm:mt-16 mt-8 justify-end  flex-col sm:flex-row gap-4 sm:gap-0">
-              <Button className="hover:scale-110 transition-all duration-300  rounded-xl  w-full h-[50px] sm:h-[50px]  sm:w-[200px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5]">
+              <Button className="hover:scale-110 transition-all duration-300  rounded-xl  w-full h-[50px] sm:h-[50px]  sm:w-[200px] bg-[#FFDE31] text-black  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#FFDE31]">
                 Change Email
               </Button>
             </div>

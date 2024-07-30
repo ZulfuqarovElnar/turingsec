@@ -61,7 +61,7 @@ export default function TabContentClose() {
         </p>
       </div>
       <div className="flex justify-end mt-4">
-        <Button onClick={handleDelete} className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[200px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5] ">
+        <Button onClick={handleDelete} className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[200px] bg-[#FFDE31] text-black  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#FFDE31] ">
           Delete account
         </Button>
       </div>

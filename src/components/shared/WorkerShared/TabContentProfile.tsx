@@ -400,7 +400,7 @@ export default function TabContentProfile() {
                   <FormItem>
                     <FormControl>
                       <Label
-                        className="bg-[#FFEC86] text-black hover:bg-[#FFEC86] 
+                        className="bg-[#FFDE31] text-black hover:bg-[#FFDE31] 
                       min-w-[120px]
                       h-[40px]
                       text-[14px] font-[600]  rounded-xl flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300
@@ -411,7 +411,7 @@ export default function TabContentProfile() {
                           type="file"
                           {...field}
                           onChange={handleFileChange}
-                          className="bg-[#FFEC86] text-black hidden w-full"
+                          className="bg-[#200F23] text-black hidden w-full"
                         />
                       </Label>
                     </FormControl>
@@ -438,7 +438,7 @@ export default function TabContentProfile() {
                   <FormItem>
                     <FormControl>
                       <Label
-                        className="bg-[#FFEC86] text-black hover:bg-[#FFEC86] 
+                        className="bg-[#FFDE31] text-black hover:bg-[#FFDE31] 
                       min-w-[120px]
                       h-[40px]
                       text-[14px] font-[600]  rounded-xl flex items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300
@@ -657,7 +657,7 @@ export default function TabContentProfile() {
               />
             </div>
             <div className="sm:space-x-8 flex items-center mt-16 justify-end  flex-col sm:flex-row gap-4 sm:gap-0">
-              <Button className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[220px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5]">
+              <Button className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px] text-black sm:h-[50px] w-full sm:w-[220px] bg-[#FFDE31]  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#FFDE31]">
                 Update Profile
               </Button>
             </div>

@@ -260,7 +260,7 @@ export default function TabContentPassword() {
             </div>
             <div className="sm:space-x-8 flex items-center sm:mt-16 mt-6 justify-end  flex-col-reverse sm:flex-row gap-4 sm:gap-0">
               <Button
-                className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[150px] bg-transparent text-white  sm:text-[18px] font-[600] text-[12px] border border-[#2451F5]  hover:bg-transparent"
+                className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[150px] bg-transparent text-white  sm:text-[18px] font-[600] text-[12px] border border-[#FFDE31]  hover:bg-transparent"
                 type="reset"
                 onClick={() => {
                   form.reset();
@@ -268,7 +268,7 @@ export default function TabContentPassword() {
               >
                 Cancel
               </Button>
-              <Button className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[220px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5]">
+              <Button className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[220px] bg-[#FFDE31] text-black  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#FFDE31]">
                 Update password
               </Button>
             </div>
