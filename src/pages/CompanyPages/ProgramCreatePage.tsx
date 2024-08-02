@@ -327,11 +327,14 @@ export default function ProgramCreatePage() {
               <div className="rounded-2xl overflow-hidden">
 
                 <div className="bg-[#0A273D] px-6 pt-6 pb-10 relative">
-              <button disabled={!editDay} 
-              onClick={()=>setEditDay(false)}
-              className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[8px]">
-                <img src="/assets/blackpen.svg" alt="edit" />
-              </button>
+                  {editDay===true?(
+                <button 
+                  onClick={() => setEditDay(false)}
+                  className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[8px]">
+                  <img src="/assets/blackpen.svg" alt="edit" />
+                </button>
+                  ):(<></>)}
+              
                   <div className="flex justify-between lg:mt-4 mb-4  xl:w-[70%] flex-col  lg:flex-row">
 
                     <div className="flex gap-4 flex-col lg:flex-row">
