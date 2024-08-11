@@ -393,7 +393,7 @@ export default function SingleReportUser({severityScore}) {
                         {filteredReport?.methodName==='CVSS'?(
                             <div className="bg-[#0A273D] py-8 px-8 ">
                             <div className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4  flex-col lg:flex-row gap-4">
-                                <RadioInput name="test1" value="test2" id="test2" label="CVSS" checked/>
+                                <RadioInput name="test1" value="test2" id="test2" label="CVSS" defaultChecked/>
                             </div>
                             <div className="items-center gap-4 max-w-[1000px] mx-auto">
                                 <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
@@ -408,7 +408,7 @@ export default function SingleReportUser({severityScore}) {
                                             Attack vector
                                         </div>
                                         <div className="">
-                                                <RadioInput name="attackvector"  value={filteredReport?.attackvector} id="Network" label={filteredReport?.attackVector} checked />
+                                                <RadioInput name="attackvector"  value={filteredReport?.attackvector} id="Network" label={filteredReport?.attackVector} defaultChecked />
                                         </div>
                                     </div>
                         
@@ -417,7 +417,7 @@ export default function SingleReportUser({severityScore}) {
                                             Scope
                                         </div>
                                         <div className="">
-                                            <RadioInput name="scope" value={filteredReport?.scope} id="Low3" label={filteredReport?.scope} checked />
+                                            <RadioInput name="scope" value={filteredReport?.scope} id="Low3" label={filteredReport?.scope} defaultChecked />
                                         </div>
                                     </div>
                         
@@ -426,7 +426,7 @@ export default function SingleReportUser({severityScore}) {
                                             Attack complexity
                                         </div>
                                         <div className="">
-                                            <RadioInput name="attackcomplexity" value={filteredReport?.attackComplexity} id="Network" label={filteredReport?.attackComplexity} checked />
+                                            <RadioInput name="attackcomplexity" value={filteredReport?.attackComplexity} id="Network" label={filteredReport?.attackComplexity} defaultChecked />
                                         </div>
                                     </div>
                         
@@ -435,7 +435,7 @@ export default function SingleReportUser({severityScore}) {
                                             Confidentially
                                         </div>
                                         <div className="">
-                                            <RadioInput name="confidentiality" value={filteredReport?.confidentiality} id="Low2" label={filteredReport?.confidentiality} checked />
+                                            <RadioInput name="confidentiality" value={filteredReport?.confidentiality} id="Low2" label={filteredReport?.confidentiality} defaultChecked />
                                         </div>
                                     </div>
                         
@@ -444,7 +444,7 @@ export default function SingleReportUser({severityScore}) {
                                             User interactions
                                         </div>
                                         <div className="">
-                                            <RadioInput name="userinteraction" value={filteredReport?.userInteractions} id="Network" label={filteredReport?.userInteractions} checked />
+                                            <RadioInput name="userinteraction" value={filteredReport?.userInteractions} id="Network" label={filteredReport?.userInteractions} defaultChecked />
                                         </div>
                                     </div>
                         
@@ -453,7 +453,7 @@ export default function SingleReportUser({severityScore}) {
                                             Integrity
                                         </div>
                                         <div className="">
-                                            <RadioInput name="integrity" value={filteredReport?.integrity} id="Low4" label={filteredReport?.integrity} checked />
+                                            <RadioInput name="integrity" value={filteredReport?.integrity} id="Low4" label={filteredReport?.integrity} defaultChecked />
                                         </div>
                                     </div>
                         
@@ -462,7 +462,7 @@ export default function SingleReportUser({severityScore}) {
                                             Privileges required
                                         </div>
                                         <div className="">
-                                            <RadioInput name="privileges" value={filteredReport?.privilegesRequired} id="Network" label={filteredReport?.privilegesRequired} checked />
+                                            <RadioInput name="privileges" value={filteredReport?.privilegesRequired} id="Network" label={filteredReport?.privilegesRequired} defaultChecked />
                                         </div>
                                     </div>
                         
@@ -471,7 +471,7 @@ export default function SingleReportUser({severityScore}) {
                                             Availability
                                         </div>
                                         <div className="">
-                                            <RadioInput name="availability" value={filteredReport?.availability} id="Low1" label={filteredReport?.availability} checked />
+                                            <RadioInput name="availability" value={filteredReport?.availability} id="Low1" label={filteredReport?.availability} defaultChecked />
                                         </div>
                                     </div>
                                 </div>
@@ -481,7 +481,7 @@ export default function SingleReportUser({severityScore}) {
                                 <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
                                     <div
                                         className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4 flex-col lg:flex-row gap-4 ">
-                                        <RadioInput name="test1" value="test1" id="test1" label="Manual" checked/>
+                                        <RadioInput name="test1" value="test1" id="test1" label="Manual" defaultChecked />
                                     </div>
                                    
                                     <div className="mt-4 ">
@@ -494,8 +494,7 @@ export default function SingleReportUser({severityScore}) {
                                                 </div>
                                                 <div
                                                     className="">
-                                                    <RadioInput name="manual" value={filteredReport?.rewardsStatus} id="Network" label={filteredReport?.rewardsStatus}
-                                                        checked={true} />
+                                                    <RadioInput name="manual" value={filteredReport?.rewardsStatus} id="Network" label={filteredReport?.rewardsStatus} defaultChecked />
                                                 </div>
                                             </div>
                                          
@@ -663,24 +662,25 @@ export default function SingleReportUser({severityScore}) {
 
                     </div>
                 </div>
-                <div className="flex-1 w-full flex gap-[50px]">
-                    <button className='bg-[#2451F5] max-w-[250px] text-white min-h-[40px] py-2 px-3 rounded-[30px]' onClick={connect}>Chat with Company</button>
-                </div>
-                
-                {onChat && <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 ">
-                    <div className="flex flex-col w-full">
-                        <div className=" rounded-xl overflow-hidden flex flex-col gap-7 bg-[#1431F5]">
-                            {messages.map((msg,i)=>(
-                                <div key={i} className="bg-initial py-8 sm:px-8 px-4">
-                                    <div className="flex flex-col gap-5">
-                                        <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]">
-                                            <p>{msg.content}</p>
-                                        </div>
-                                        <div className="max-w-[350px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]"></div>
-                                    </div>
-                                </div>   
-                            ))}
-                            {/* <div className="flex flex-col gap-5 py-2 px-2">
+                <div className="flex  flex-col  lg:flex-row lg:gap-16 gap-4  mt-4 ">
+                    <div className="flex flex-col gap-4"></div>
+                    <div className="flex-1 w-full flex gap-[50px]">
+                        {onChat ? (
+                            <>
+                                <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 ">
+                                    <div className="flex flex-col w-full">
+                                        <div className=" rounded-xl overflow-hidden flex flex-col gap-7 bg-[#1431F5]">
+                                            {messages.map((msg, i) => (
+                                                <div key={i} className="bg-initial py-8 sm:px-8 px-4">
+                                                    <div className="flex flex-col gap-5">
+                                                        <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]">
+                                                            <p>{msg.content}</p>
+                                                        </div>
+                                            
+                                                    </div>
+                                                </div>
+                                            ))}
+                                            {/* <div className="flex flex-col gap-5 py-2 px-2">
                                 <div className="sm:text-[18px] text-[16px] font-[600] bg-initial h-[60px] flex items-center max-[550px]:flex-col max-[550px]:items-start gap-3 justify-between px-8 ">
                                     <div className="flex gap-5 ">
                                         <img
@@ -725,45 +725,68 @@ export default function SingleReportUser({severityScore}) {
                                     </div>
                                 </div>
                             </div> */}
-                        </div>
-                        <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#162764]">
-                            <input
-                                type="text"
-                                className="w-8/12 outline-none h-[35px] pl-2 text-white bg-inherit"
-                                placeholder="Send your message ..."
-                                onChange={(e) => setMessage(e.target.value)}
-                            />
-                            <div className="flex items-center gap-1">
-                                <img
-                                    src="/images/file.png"
-                                    className="cursor-pointer transition ease-in-out h-[30px] w-[30px] hover:bg-sky-700 p-[5px] rounded-[25px]"
-                                    width={50}
-                                    height={50}
-                                />
-                                <img
-                                    src="/images/Vector-camera.png"
-                                    className="cursor-pointer transition ease-in-out h-[30px] w-[30px] hover:bg-sky-700 rounded-[10px] p-1"
-                                    width={50}
-                                    height={50}
-                                />
-                                <div className="cursor-pointer flex items-center justify-center w-[75px] h-[40px] p-1 bg-[#2451F5] hover:bg-[#3690f7] rounded-[30px]" onClick={sendMessage}
-                                >
-                                    <img
-                                        src="/assets/images/send.jpg"
-                                        className=" transition ease-in-out h-[30px] w-[30px] rounded-[10px] p-1"
-                                        width={50}
-                                        height={50}
-                                    />
+                                        </div>
+                                        <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#162764]">
+                                            <input
+                                                type="text"
+                                                className="w-8/12 outline-none h-[35px] pl-2 text-white bg-inherit"
+                                                placeholder="Send your message ..."
+                                                onChange={(e) => setMessage(e.target.value)}
+                                            />
+                                            <div className="flex items-center gap-1">
+                                                <img
+                                                    src="/images/file.png"
+                                                    className="cursor-pointer transition ease-in-out h-[30px] w-[30px] hover:bg-sky-700 p-[5px] rounded-[25px]"
+                                                    width={50}
+                                                    height={50}
+                                                />
+                                                <img
+                                                    src="/images/Vector-camera.png"
+                                                    className="cursor-pointer transition ease-in-out h-[30px] w-[30px] hover:bg-sky-700 rounded-[10px] p-1"
+                                                    width={50}
+                                                    height={50}
+                                                />
+                                                <div className="cursor-pointer flex items-center justify-center w-[75px] h-[40px] p-1 bg-[#2451F5] hover:bg-[#3690f7] rounded-[30px]" onClick={sendMessage}
+                                                >
+                                                    <img
+                                                        src="/assets/images/send.jpg"
+                                                        className=" transition ease-in-out h-[30px] w-[30px] rounded-[10px] p-1"
+                                                        width={50}
+                                                        height={50}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
                                 </div>
+                             
+                
+
+                            </>
+                        ) : (
+                      
+                            <div className='py-8 rounded-2xl flex items-center justify-between w-full relative'>
+                                        <button className='bg-[#2451F5] max-w-[250px] text-white min-h-[40px] py-2 px-3 rounded-[30px]' onClick={connect}>Chat with Company</button>
                             </div>
 
-                        </div>
+                        )}
 
                     </div>
-                </div>}
-                <div className="flex-1 w-full flex gap-[50px]">
-                    <button className='bg-[#2451F5] max-w-[250px] text-white min-h-[40px] py-2 px-3 rounded-[30px]' onClick={closeSocket}>Stop Chat</button>
+
                 </div>
+                <div className="flex  flex-col  lg:flex-row lg:gap-16 gap-4  mt-4 ">
+                    <div className="flex flex-col gap-4"></div>
+                    <div className="flex-1 w-full flex gap-[50px]">
+                        {onChat?(
+                            <button className='bg-[#2451F5] max-w-[250px] text-white min-h-[40px] py-2 px-3 rounded-[30px]' onClick={closeSocket}>Stop Chat</button>
+                        ):
+                        (<></>)}
+                    </div>
+                </div>
+                
+
             </div>
         </div>
     );
