@@ -3,98 +3,233 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import Line from "../../components/shared/WorkerShared/Line";
 import RadioInput from "../../components/component/RadioInput";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Textarea } from '../../components/ui/textarea';
 import { useGetUserReports } from '../../queryies/useGetUserReports';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
 import { faVideo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSocket } from '../../actions/useSocket';
-import io from "socket.io-client"
-
+import SockJS from 'sockjs-client';
+import {Stomp} from '@stomp/stompjs';
+import { CompatClient } from '@stomp/stompjs';
 // Add the icon to the library
 library.add(faFile);
 library.add(faVideo)
 
 
 export default function SingleReportUser({severityScore}) {
+    interface AttachmentType {
+        url: string;
+        contentType: string;
+    }
+    interface ReportType {
+        id: number;
+        room: string;
+        weakness: {
+            type: string;
+            name: string;
+        };
+        asset: {
+            assetName: string;
+            assetType: string;
+        };
+        proofOfConcept: {
+            title: string;
+            vulnerabilityUrl: string;
+            description: string;
+        };
+        discoveryDetails: {
+            timeSpend: string;
+        };
+        attachments: AttachmentType[]; 
+        methodName: string;
+        lastActivity: string;
+        rewardsStatus: string;
+        reportTemplate: string;
+        collaborators: {
+            id: number;
+            hackerUsername: string;
+            collaborationPercentage: number;
+        }[];
+        severity: string;
+    }
+
+    interface UserType {
+        companyName: string;
+        reports: ReportType[];
+    }
+    interface CollaboratorType {
+        id: number;
+        hackerUsername: string;
+        collaborationPercentage: number;
+    }
+    const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
+    const [onChat,setOnChat]=useState(false)
+    const [allAssets, setAllAssets] = useState<string[]>([]);
+    const [attachments, setAttachments] = useState<AttachmentType[]>([]);
+    const [enlarged, setEnlarged] = useState(null);
+    const [room, setRoom] = useState<string>('');
+   
+    const [csrfToken, setCsrfToken] = useState('')
+    const chatAreaRef = useRef(null);
+    // const stompClientRef = useRef(null);
+    const stompClientRef = useRef<CompatClient | null>(null);
     const [message, setMessage]=useState("")
+    const [messages, setMessages] = useState<string[]>([]);
+    const [error, setError] = useState<string[]>([]);
+    const [connectionError, setConnectionError] = useState('');
+    const IamHacker = true; //static
     const { id } = useParams();
     const { data } = useGetUserReports();
-    
-    let filteredReport;
-    data.forEach((user) => {
-        user.reports.forEach((report) => {
-            if (report.id === parseInt(`${id}`)) {
-                filteredReport = report;
-            }
-        });
-    });
-    console.log(filteredReport);
-    
-  
-    const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
-    const [allAssets, setAllAssets] = useState<string[]>([]);
-    const collaborators = filteredReport.collaborators
-    const [enlarged, setEnlarged] = useState(null);
-    const room = filteredReport.room
-    // const { socketResponse, isConnected, sendData } = useSocket(room)
+    const [filteredReport, setFilteredReport] = useState<ReportType | undefined>(undefined);
+    const [collaborators, setCollaborators] = useState<CollaboratorType[]>([]);
     const userDataString = localStorage.getItem("user");
     const userData = userDataString ? JSON.parse(userDataString) : null;
-    const accessToken = userData?.accessToken;
+    const accessToken = userData?.accessToken
+    useEffect(() => {
+        
+        let foundReport: ReportType | undefined = undefined;
+        data.forEach((user: UserType) => {
+            user.reports.forEach((report: ReportType) => {
+                if (report.id === parseInt(`${id}`)) {
+                    foundReport = report;
+                    // console.log(foundReport)
+                }
+            });
+        });
+        if (foundReport) {
+            setFilteredReport(foundReport);
+        }
+      
+    }, [data,id]);
+    
+    useEffect(() => {
+        console.log("Filtered Report updated:", filteredReport);
+        setCollaborators(filteredReport?.collaborators || [])
+        setRoom(filteredReport?.room || '')
+        setAttachments(filteredReport?.attachments || [])
+        console.log("Room num: " + room)
+         
+    }, [filteredReport]);
+
+    useEffect(() => {
+        //..................Taking csrf...............
+        fetch('http://localhost:5000/api/csrf/csrf-token', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setCsrfToken(data.token);
+                console.log("CSRF: " + csrfToken)
+            })
+            .catch(error => console.error('Error fetching CSRF token:', error));
+    }, [accessToken])
+    //........Connect Socket............................
+
+    const connect =(e) =>{
+        console.log(csrfToken)
+        console.log(room)
+        setOnChat(true)
+        const headers = {
+            'Authorization': `Bearer ${accessToken}`,
+            'X-CSRF-TOKEN': csrfToken,
+            'Content-Type': 'application/json'
+        };
+
+        const socket = new SockJS('http://localhost:5000/ws');
+        const stompClient = Stomp.over(()=>socket)
+        stompClient.debug = (str) => {
+            console.log(str);
+        };
+        stompClientRef.current = stompClient
+        stompClient.connect(headers, onConnected, onErrorInConnection);
+    }
+
+    const closeSocket = () => {
+        setOnChat(false)
+        if (stompClientRef.current) {
+            stompClientRef.current.deactivate();
+        }
+    };
+    //...........On Connect
+    const onConnected = () => {
+        console.log('Socket connected');
+
+        stompClientRef.current.subscribe('/topic/error', onErrorReceived, {
+            'Authorization': `Bearer ${accessToken}`,
+            'X-CSRF-TOKEN': csrfToken,
+            'Content-Type': 'application/json'
+        });
+
+        stompClientRef.current.subscribe(`/topic/${room}/messagesInReport`, onMessageReceived, {
+            'Authorization': `Bearer ${accessToken}`,
+            'X-CSRF-TOKEN': csrfToken,
+            'Content-Type': 'application/json'
+        });
+    };
+    //............On Message
+    const onMessageReceived = (payload) => {
+        const message = JSON.parse(payload.body);
+        console.log('Message received:', message);
+
+        // Determine message direction based on isHacker
+        const messageClass = message.isHacker === IamHacker ? 'message-right' : 'message-left';
+
+        setMessages(prevMessages => [...prevMessages, { ...message, direction: messageClass }]);
+    };
+    //..........On Error
+    const onErrorReceived = (payload) => {
+        console.error('Error received:', payload.body);
+
+        setError(prev => [...prev, payload.body]);
+        // scrollToBottom();
+    };
+    //.........On Error In Connection
+    const onErrorInConnection = (frame) => {
+        console.error('WebSocket connection error frame:', frame);
+
+        // Check if the frame has a body
+        if (frame && frame.body) {
+            try {
+                // Parse the error message if it's in JSON format
+                const errorMessage = JSON.parse(frame.body);
+                console.error('Error message body:', errorMessage);
+            } catch (e) {
+                // If it's not JSON, log the raw body
+                console.error('Error message body (raw):', frame.body);
+            }
+        }
+
+        setConnectionError('Could not connect to WebSocket server. Please refresh this page to try again!');
+    };
+    
     //...............Send New Message ..................
-    const sendMessage = async ()=>{
-        // if (message !== "") {
-        //     sendData({
-        //         content: message,
-        //         isReplied: false,
-        //         replyToMessageId: null,
-        //     });
-           
-        //     setMessage("");
-        // }
-        
-        // const socket= io("http://localhost:3000",{
-        //     transports: ['websocket', 'polling'],
-        // })
-        const socket = io("http://localhost:6000", {
-            reconnection: false,
-            query: { room: room },
-            extraHeaders: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            transports: ["websocket","polling"]
+    const sendMessage = async (e) =>{
+        e.preventDefault();
+        if (!stompClientRef.current || !stompClientRef.current.connected) {
+            console.error("Cannot send message: STOMP client is not connected.");
+            setConnectionError("Could not send message: No active WebSocket connection.");
+            return;
+        }
+        if (message.trim()) {
+            const chatMessage = {
+                isReplied: false,
+                content: message.trim(),
+                // replyToMessageId: null
+            };
 
-        });
-     
-        socket.on("connect", () => {
-            // socket.emit('message',{
-            //     "isReplied": false,
-            //     "replyToMessageId": null,
-            //     "content": message
-            // });
-            console.log("Connected to WebSocket server");
-        });
+            const headers = {
+                'Authorization': `Bearer ${accessToken}`,
+                'X-CSRF-TOKEN': csrfToken,
+                'Content-Type': 'application/json'
+            };
 
-        socket.on("disconnect", (event) => {
-            console.log("Disconnected from WebSocket server",event);
-        });
-
-        socket.on("get_message", (message) => {
-            console.log("Message received:", message);
-        });
-
-        socket.on("error", (error) => {
-            console.error("Error received:", error);
-        });
-        socket.on("connect_error", (error) => {
-            console.error("Connection error:", error);
-        });
-        socket.on("reconnect_attempt", () => {
-            console.log("Attempting to reconnect...");
-        });
-        
+            stompClientRef.current.send(`/app/${room}/sendMessageInReport`, headers, JSON.stringify(chatMessage));
+            setMessage('');
+        }
     }
     //..................................................
 
@@ -176,14 +311,14 @@ export default function SingleReportUser({severityScore}) {
                             <div className="flex items-center gap-4 flex-col lg:flex-row">
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.asset.assetName} type="text" placeholder="Max Bounty"
+                                        <Input readOnly value={filteredReport?.asset?.assetName} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
 
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.asset.assetType} type="text" placeholder="Max Bounty"
+                                        <Input readOnly value={filteredReport?.asset?.assetType} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -208,7 +343,7 @@ export default function SingleReportUser({severityScore}) {
                             <div className="flex items-center gap-4 flex-col lg:flex-row">
                                 <div className=" w-full">
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input type="text" placeholder="Max Bounty" value={filteredReport.reportTemplate}
+                                        <Input readOnly type="text" placeholder="Max Bounty" value={filteredReport?.reportTemplate}
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -229,7 +364,7 @@ export default function SingleReportUser({severityScore}) {
 
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.weakness.name} type="text" placeholder="Max Bounty"
+                                        <Input readOnly value={filteredReport?.weakness?.name} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -238,7 +373,7 @@ export default function SingleReportUser({severityScore}) {
 
 
                                     <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.weakness.type} type="text" placeholder="Max Bounty"
+                                        <Input readOnly value={filteredReport?.weakness?.type} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -255,14 +390,14 @@ export default function SingleReportUser({severityScore}) {
                             className="rounded-xl sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
                             Severity
                         </div>
-                        {filteredReport.methodName==='CVSS'?(
+                        {filteredReport?.methodName==='CVSS'?(
                             <div className="bg-[#0A273D] py-8 px-8 ">
                             <div className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4  flex-col lg:flex-row gap-4">
-                                <RadioInput name="test1" value="test2" id="test2" label="CVSS" checked />
+                                <RadioInput name="test1" value="test2" id="test2" label="CVSS" checked/>
                             </div>
                             <div className="items-center gap-4 max-w-[1000px] mx-auto">
                                 <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
-                                    Calculation: {filteredReport.score}
+                                    Calculation: {filteredReport?.score}
                                 </h2>
                             </div>
                             <div className="mt-4 max-w-[1000px] mx-auto">
@@ -273,7 +408,7 @@ export default function SingleReportUser({severityScore}) {
                                             Attack vector
                                         </div>
                                         <div className="">
-                                            <RadioInput name="attackvector" value={filteredReport.attackvector} id="Network" label={filteredReport.attackVector} checked />
+                                                <RadioInput name="attackvector"  value={filteredReport?.attackvector} id="Network" label={filteredReport?.attackVector} checked />
                                         </div>
                                     </div>
                         
@@ -282,7 +417,7 @@ export default function SingleReportUser({severityScore}) {
                                             Scope
                                         </div>
                                         <div className="">
-                                            <RadioInput name="scope" value={filteredReport.scope} id="Low3" label={filteredReport.scope} checked />
+                                            <RadioInput name="scope" value={filteredReport?.scope} id="Low3" label={filteredReport?.scope} checked />
                                         </div>
                                     </div>
                         
@@ -291,7 +426,7 @@ export default function SingleReportUser({severityScore}) {
                                             Attack complexity
                                         </div>
                                         <div className="">
-                                            <RadioInput name="attackcomplexity" value={filteredReport.attackComplexity} id="Network" label={filteredReport.attackComplexity} checked />
+                                            <RadioInput name="attackcomplexity" value={filteredReport?.attackComplexity} id="Network" label={filteredReport?.attackComplexity} checked />
                                         </div>
                                     </div>
                         
@@ -300,7 +435,7 @@ export default function SingleReportUser({severityScore}) {
                                             Confidentially
                                         </div>
                                         <div className="">
-                                            <RadioInput name="confidentiality" value={filteredReport.confidentiality} id="Low2" label={filteredReport.confidentiality} checked />
+                                            <RadioInput name="confidentiality" value={filteredReport?.confidentiality} id="Low2" label={filteredReport?.confidentiality} checked />
                                         </div>
                                     </div>
                         
@@ -309,7 +444,7 @@ export default function SingleReportUser({severityScore}) {
                                             User interactions
                                         </div>
                                         <div className="">
-                                            <RadioInput name="userinteraction" value={filteredReport.userInteractions} id="Network" label={filteredReport.userInteractions} checked />
+                                            <RadioInput name="userinteraction" value={filteredReport?.userInteractions} id="Network" label={filteredReport?.userInteractions} checked />
                                         </div>
                                     </div>
                         
@@ -318,7 +453,7 @@ export default function SingleReportUser({severityScore}) {
                                             Integrity
                                         </div>
                                         <div className="">
-                                            <RadioInput name="integrity" value={filteredReport.integrity} id="Low4" label={filteredReport.integrity} checked />
+                                            <RadioInput name="integrity" value={filteredReport?.integrity} id="Low4" label={filteredReport?.integrity} checked />
                                         </div>
                                     </div>
                         
@@ -327,7 +462,7 @@ export default function SingleReportUser({severityScore}) {
                                             Privileges required
                                         </div>
                                         <div className="">
-                                            <RadioInput name="privileges" value={filteredReport.privilegesRequired} id="Network" label={filteredReport.privilegesRequired} checked />
+                                            <RadioInput name="privileges" value={filteredReport?.privilegesRequired} id="Network" label={filteredReport?.privilegesRequired} checked />
                                         </div>
                                     </div>
                         
@@ -336,7 +471,7 @@ export default function SingleReportUser({severityScore}) {
                                             Availability
                                         </div>
                                         <div className="">
-                                            <RadioInput name="availability" value={filteredReport.availability} id="Low1" label={filteredReport.availability} checked />
+                                            <RadioInput name="availability" value={filteredReport?.availability} id="Low1" label={filteredReport?.availability} checked />
                                         </div>
                                     </div>
                                 </div>
@@ -359,7 +494,7 @@ export default function SingleReportUser({severityScore}) {
                                                 </div>
                                                 <div
                                                     className="">
-                                                    <RadioInput name="manual" value={filteredReport.rewardsStatus} id="Network" label={filteredReport.rewardsStatus}
+                                                    <RadioInput name="manual" value={filteredReport?.rewardsStatus} id="Network" label={filteredReport?.rewardsStatus}
                                                         checked={true} />
                                                 </div>
                                             </div>
@@ -387,7 +522,7 @@ export default function SingleReportUser({severityScore}) {
                                     </h2>
                                     <Input type="text" placeholder="Title"
                                         className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6 mt-2"
-                                        value={filteredReport.proofOfConcept.title} onChange={(e) => setProofConceptTitle(e.target.value)}
+                                        value={filteredReport?.proofOfConcept?.title} onChange={(e) => setProofConceptTitle(e.target.value)}
                                     />
                                 </div>
                                 <div className="w-full">
@@ -395,16 +530,16 @@ export default function SingleReportUser({severityScore}) {
                                     <h2 className="sm:text-[18px] text-[16px] font-[600] mt-4">
                                         URL
                                     </h2>
-                                    <Input type="text" placeholder="URL"
+                                    <Input type="text" placeholder="URL" readOnly
                                         className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white mt-2 py-6"
-                                        value={filteredReport.proofOfConcept.vulnerabilityUrl} />
+                                        value={filteredReport?.proofOfConcept?.vulnerabilityUrl} />
                                 </div>
                                 <div className="w-full">
 
                                     <h2 className="sm:text-[18px] text-[16px] font-[600] mt-4">
                                         Descriptions
                                     </h2>
-                                    <Textarea type="text" placeholder="Description" value={filteredReport.proofOfConcept.description}
+                                    <Textarea type="text" placeholder="Description" value={filteredReport?.proofOfConcept?.description} readOnly
                                         className="bg-transparent h-[100px] text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white pb-5 mt-2 " />
                                 </div></div>
 
@@ -426,9 +561,9 @@ export default function SingleReportUser({severityScore}) {
 
                         <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
                             <div className="flex gap-4 flex-col">
-                                {filteredReport.attachments.length > 0 ? (
+                                {attachments && attachments.length > 0 ? (
                                     <div className="w-full flex gap-9">
-                                        {filteredReport.attachments.map((a, index) => (
+                                        {attachments.map((a, index) => (
                                             (a.contentType === 'image/jpeg' || a.contentType === 'image/png') ? (
                                                 <div key={index} onClick={() => handleEnlarge(index)} >
                                                     <img 
@@ -479,7 +614,7 @@ export default function SingleReportUser({severityScore}) {
                                     Time Spent
                                 </div>
                                 <div className="w-full">
-                                    <Input value={filteredReport.discoveryDetails.timeSpend} type="text" placeholder="Time spend"
+                                    <Input value={filteredReport?.discoveryDetails?.timeSpend} type="text" placeholder="Time spend" readOnly
                                         className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                 </div>
                             </div>
@@ -494,8 +629,8 @@ export default function SingleReportUser({severityScore}) {
                     <div className="flex-1 w-full flex gap-[50px]">
                         {/* HACKERS */}
 
-                        {collaborators.map((c) => (
-                            <div className="bg-[#0A273D]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
+                        {collaborators && collaborators.map((c,i) => (
+                            <div key={i} className="bg-[#0A273D]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
                                 <div className="flex items-center">
                                     <div className="hexagon5 m-auto md:m-0 ">
                                         <img src={"/assets/images/profileimage.jpeg"} alt="" />
@@ -510,7 +645,7 @@ export default function SingleReportUser({severityScore}) {
                                 </div>
                                 <div className="bg-[#001D34] rounded-l-xl rounded-r-xl overflow-hidden flex">
                                     <input type="number"
-                                        className="w-[50px] py-1 px-3 bg-[#001D34] border-r border-white text-white focus:outline-none focus-visible:ring-0" value={c.collaborationPercentage}
+                                        className="w-[50px] py-1 px-3 bg-[#001D34] border-r border-white text-white focus:outline-none focus-visible:ring-0" value={c.collaborationPercentage} readOnly
                                     />
                                     <div className="bg-[#001D34] w-[50px]   flex items-center justify-center "
                                     >
@@ -528,17 +663,26 @@ export default function SingleReportUser({severityScore}) {
 
                     </div>
                 </div>
+                <div className="flex-1 w-full flex gap-[50px]">
+                    <button className='bg-[#2451F5] max-w-[250px] text-white min-h-[40px] py-2 px-3 rounded-[30px]' onClick={connect}>Chat with Company</button>
+                </div>
                 
-
-                <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 ">
-                    <div className=" h-[30px] w-[30px] flex text-white items-center justify-center hexagon6 !bg-[#2451F5]">
-                        7
-                    </div>
+                {onChat && <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 ">
                     <div className="flex flex-col w-full">
-                        <div className=" rounded-xl overflow-hidden flex flex-col gap-7">
-                            <div className="flex flex-col gap-5 py-2 px-2">
-                                <div className="sm:text-[18px] text-[16px] font-[600] bg-initial h-[60px] flex items-center max-[550px]:flex-col max-[550px]:items-start gap-3 justify-between px-8">
-                                    <div className="flex gap-5">
+                        <div className=" rounded-xl overflow-hidden flex flex-col gap-7 bg-[#1431F5]">
+                            {messages.map((msg,i)=>(
+                                <div key={i} className="bg-initial py-8 sm:px-8 px-4">
+                                    <div className="flex flex-col gap-5">
+                                        <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]">
+                                            <p>{msg.content}</p>
+                                        </div>
+                                        <div className="max-w-[350px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]"></div>
+                                    </div>
+                                </div>   
+                            ))}
+                            {/* <div className="flex flex-col gap-5 py-2 px-2">
+                                <div className="sm:text-[18px] text-[16px] font-[600] bg-initial h-[60px] flex items-center max-[550px]:flex-col max-[550px]:items-start gap-3 justify-between px-8 ">
+                                    <div className="flex gap-5 ">
                                         <img
                                             src="/images/turung.jpg"
                                             className="hexagon6"
@@ -568,7 +712,7 @@ export default function SingleReportUser({severityScore}) {
                                             src="/images/hacker.jpg"
                                             className=" hexagon6 h-[50px] w-[50px]"
                                             width={50}
-                                            height={50}/>
+                                            height={50} />
                                     </div>
                                 </div>
 
@@ -580,14 +724,14 @@ export default function SingleReportUser({severityScore}) {
                                         <div className="max-w-[350px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]"></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#162764]">
                             <input
                                 type="text"
                                 className="w-8/12 outline-none h-[35px] pl-2 text-white bg-inherit"
                                 placeholder="Send your message ..."
-                                onChange={(e)=> setMessage(e.target.value)}
+                                onChange={(e) => setMessage(e.target.value)}
                             />
                             <div className="flex items-center gap-1">
                                 <img
@@ -616,6 +760,9 @@ export default function SingleReportUser({severityScore}) {
                         </div>
 
                     </div>
+                </div>}
+                <div className="flex-1 w-full flex gap-[50px]">
+                    <button className='bg-[#2451F5] max-w-[250px] text-white min-h-[40px] py-2 px-3 rounded-[30px]' onClick={closeSocket}>Stop Chat</button>
                 </div>
             </div>
         </div>
