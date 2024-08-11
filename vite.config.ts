@@ -4,6 +4,12 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    'global': 'window',
+  },
+  optimizeDeps: {
+    include: ['sockjs-client'],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
