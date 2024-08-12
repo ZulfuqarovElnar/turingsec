@@ -8,6 +8,12 @@ import QueryContext from "./context/QueryContext.tsx";
 import { CurrentCompanyProvider } from "./context/CurrentCompany.tsx";
 
 // import { ThemeProvider } from "./context/ThemeContext.tsx";
+// Polyfill global object
+(function () {
+  if (typeof global === 'undefined') {
+    (window as any).global = window;
+  }
+})();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

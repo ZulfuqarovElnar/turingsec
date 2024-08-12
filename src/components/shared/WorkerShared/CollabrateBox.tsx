@@ -95,8 +95,16 @@ export default function CollabrateBox({
           type="number"
           className="w-[50px] py-1 px-3 bg-[#FFDE31] border-r border-black text-black focus:outline-none focus-visible:ring-0"
           value={value || ""}
-          onChange={(e) => handleChange(e)}
+          onChange={handleChange}
+          style={{
+            /* Chrome, Safari, Edge, Opera */
+            WebkitAppearance: 'none',
+            margin: 0,
+            /* Firefox */
+            MozAppearance: 'textfield'
+          }}
         />
+
         <div
           className="bg-[#FFDE31] w-[50px] text-black  flex items-center 
      

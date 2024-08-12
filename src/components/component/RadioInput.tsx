@@ -7,12 +7,14 @@ export default function RadioInput({
   id,
   label,
   checked,
+  defaultChecked,
 }: {
   name: string;
   value: string;
   id: string;
   label: string;
   checked?: boolean;
+  defaultChecked?:boolean;
 }) {
   return (
     <div>
@@ -22,7 +24,7 @@ export default function RadioInput({
         name={name}
         value={value}
         id={id}
-        checked={checked}
+        defaultChecked={defaultChecked}
       />
       <Label
         className="flex items-center gap-2 sm:text-[18px] text-[14px] font-[500]"
