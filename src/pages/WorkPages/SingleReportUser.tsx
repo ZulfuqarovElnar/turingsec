@@ -67,7 +67,7 @@ export default function SingleReportUser({severityScore}) {
         <div className="text-white flex-1 flex flex-col overflow-hidden relative">
 
 
-            <div className="bg-[#1E1E1E] lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
+            <div className="bg-[url(/assets/images/bg-3.png)] bg-center bg-no-repeat bg-cover lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
                 <div className="lg:flex my-4  gap-6 relative hidden mb-16">
                     <div className="hexagon5 mt-3  min-w-[60px]">
                         <img src="/assets/images/programimage2.jpg" alt="" className="" />
@@ -108,24 +108,24 @@ export default function SingleReportUser({severityScore}) {
                 </div>
 
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4  ">
-                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
                         1
                     </div>
                     <div className=" rounded-xl overflow-hidden  flex-1">
-                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
                             Asset
                         </div>
-                        <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+                        <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
                             <div className="flex items-center gap-4 flex-col lg:flex-row">
                                 <div className="lg:-[40%] w-full">
-                                    <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
+                                    <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
                                         <Input value={filteredReport.asset.assetName} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
 
                                 <div className="lg:-[40%] w-full">
-                                    <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
+                                    <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
                                         <Input value={filteredReport.asset.assetType} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
@@ -140,17 +140,17 @@ export default function SingleReportUser({severityScore}) {
                     </div>
                 </div>
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
                         2
                     </div>
                     <div className=" rounded-xl   flex-1">
-                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
                             Report template
                         </div>
-                        <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+                        <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
                             <div className="flex items-center gap-4 flex-col lg:flex-row">
                                 <div className=" w-full">
-                                    <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
+                                    <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
                                         <Input type="text" placeholder="Max Bounty" value={filteredReport.reportTemplate}
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
@@ -160,18 +160,18 @@ export default function SingleReportUser({severityScore}) {
                     </div>
                 </div>
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
                         3
                     </div>
                     <div className=" rounded-xl overflow-hidden  flex-1">
-                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
                             Weakness
                         </div>
-                        <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+                        <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
                             <div className="flex items-center gap-4 flex-col lg:flex-row">
 
                                 <div className="lg:-[40%] w-full">
-                                    <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
+                                    <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
                                         <Input value={filteredReport.weakness.name} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
@@ -180,7 +180,7 @@ export default function SingleReportUser({severityScore}) {
                                 <div className="lg:-[40%] w-full">
 
 
-                                    <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
+                                    <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
                                         <Input value={filteredReport.weakness.type} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
@@ -190,16 +190,16 @@ export default function SingleReportUser({severityScore}) {
                     </div>
                 </div>
                 <div className="flex sm:gap-8 mt-4 flex-col sm:flex-row gap-4">
-                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
                         4
                     </div>
                     <div className=" overflow-hidden  flex-1">
                         <div
-                            className="rounded-xl sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+                            className="rounded-xl sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
                             Severity
                         </div>
                         {filteredReport.methodName==='CVSS'?(
-                            <div className="bg-[#0A273D] py-8 px-8 ">
+                            <div className="bg-[#3D0436] py-8 px-8 ">
                             <div className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4  flex-col lg:flex-row gap-4">
                                 <RadioInput name="test1" value="test2" id="test2" label="CVSS" checked />
                             </div>
@@ -211,7 +211,7 @@ export default function SingleReportUser({severityScore}) {
                             <div className="mt-4 max-w-[1000px] mx-auto">
                                 <div className="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-2 gap-4">
                         
-                                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                                         <div className="min-w-[200px] mt-2 xl:mt-0">
                                             Attack vector
                                         </div>
@@ -220,7 +220,7 @@ export default function SingleReportUser({severityScore}) {
                                         </div>
                                     </div>
                         
-                                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                                         <div className="min-w-[200px] mt-2 xl:mt-0">
                                             Scope
                                         </div>
@@ -229,7 +229,7 @@ export default function SingleReportUser({severityScore}) {
                                         </div>
                                     </div>
                         
-                                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                                         <div className="min-w-[200px] mt-2 xl:mt-0">
                                             Attack complexity
                                         </div>
@@ -238,7 +238,7 @@ export default function SingleReportUser({severityScore}) {
                                         </div>
                                     </div>
                         
-                                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                                         <div className="min-w-[200px] mt-2 xl:mt-0">
                                             Confidentially
                                         </div>
@@ -247,7 +247,7 @@ export default function SingleReportUser({severityScore}) {
                                         </div>
                                     </div>
                         
-                                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                                         <div className="min-w-[200px] mt-2 xl:mt-0">
                                             User interactions
                                         </div>
@@ -256,7 +256,7 @@ export default function SingleReportUser({severityScore}) {
                                         </div>
                                     </div>
                         
-                                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                                         <div className="min-w-[200px] mt-2 xl:mt-0">
                                             Integrity
                                         </div>
@@ -265,7 +265,7 @@ export default function SingleReportUser({severityScore}) {
                                         </div>
                                     </div>
                         
-                                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                                         <div className="min-w-[200px] mt-2 xl:mt-0">
                                             Privileges required
                                         </div>
@@ -274,7 +274,7 @@ export default function SingleReportUser({severityScore}) {
                                         </div>
                                     </div>
                         
-                                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                                         <div className="min-w-[200px] mt-2 xl:mt-0">
                                             Availability
                                         </div>
@@ -286,7 +286,7 @@ export default function SingleReportUser({severityScore}) {
                             </div>
                         </div>                        
                         ):(
-                                <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+                                <div className="py-8 sm:px-8 px-4">
                                     <div
                                         className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4 flex-col lg:flex-row gap-4 ">
                                         <RadioInput name="test1" value="test1" id="test1" label="Manual" checked/>
@@ -296,7 +296,7 @@ export default function SingleReportUser({severityScore}) {
                                         <div className='flex max-w-[1000px] mx-auto'>
 
                                             <div
-                                                className="h-[70px]  w-full bg-[#2B5D83] flex items-center justify-between px-4  border-b border-black xl:flex-row gap-4">
+                                                className="h-[70px]  w-full bg-[#3D0436] flex items-center justify-between px-4  border-b border-black xl:flex-row gap-4">
                                                 <div className=" mt-2 xl:mt-0">
                                                     Manual
                                                 </div>
@@ -316,14 +316,14 @@ export default function SingleReportUser({severityScore}) {
                 </div>
 
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
                         5
                     </div>
                     <div className=" rounded-xl overflow-hidden  flex-1">
-                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
                             Proof of Concept
                         </div>
-                        <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+                        <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
                             <div className="flex items-center gap-4 flex-col lg:flex-col">
                                 <div className="w-full">
                                     <h2 className="sm:text-[18px] text-[16px] font-[600] mt-4">
@@ -360,16 +360,16 @@ export default function SingleReportUser({severityScore}) {
 
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
 
-                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
                         6
                     </div>
 
                     <div className=" rounded-xl overflow-hidden  flex-1">
-                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
                             Attachments
                         </div>
 
-                        <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+                        <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
                             <div className="flex gap-4 flex-col">
                                 {filteredReport.attachments.length > 0 ? (
                                     <div className="w-full flex gap-9">
@@ -412,14 +412,14 @@ export default function SingleReportUser({severityScore}) {
                 </div>
 
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+                    <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
                         7
                     </div>
                     <div className=" rounded-xl overflow-hidden  flex-1">
-                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+                        <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
                             Discovery details
                         </div>
-                        <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+                        <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
                             <div className="flex gap-4 flex-col">
                                 <div>
                                     Time Spent
@@ -440,7 +440,7 @@ export default function SingleReportUser({severityScore}) {
                         {/* HACKERS */}
 
                         {collaborators.map((c) => (
-                            <div className="bg-[#0A273D]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
+                            <div className="bg-[#3D0436]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
                                 <div className="flex items-center">
                                     <div className="hexagon5 m-auto md:m-0 ">
                                         <img src={"/assets/images/profileimage.jpeg"} alt="" />
@@ -453,11 +453,11 @@ export default function SingleReportUser({severityScore}) {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="bg-[#001D34] rounded-l-xl rounded-r-xl overflow-hidden flex">
+                                <div className="bg-[#FFDE31] rounded-l-xl rounded-r-xl overflow-hidden flex">
                                     <input type="number"
-                                        className="w-[50px] py-1 px-3 bg-[#001D34] border-r border-white text-white focus:outline-none focus-visible:ring-0" value={c.collaborationPercentage}
+                                        className="w-[50px] py-1 px-3 bg-[#FFDE31] border-r border-black text-white focus:outline-none focus-visible:ring-0" value={c.collaborationPercentage}
                                     />
-                                    <div className="bg-[#001D34] w-[50px]   flex items-center justify-center "
+                                    <div className="bg-[#FFDE31] w-[50px]   flex items-center justify-center "
                                     >
                                         %
                                     </div>

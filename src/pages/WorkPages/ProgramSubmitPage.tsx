@@ -308,10 +308,8 @@ const handleSelectChange = (selectedOption) => {
         collabrates={collabrates}
         setCollabrates={setCollabrates}
       />
-      <div className="bg-[url('/assets/images/programimage.jpeg')] h-[100px]  bg-center bg-cover  relative w-full">
-        <div className="h-full w-full bg-black opacity-60"></div>
-      </div>
-      <div className="bg-[#1E1E1E] lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
+      
+      <div className="bg-[url(/assets/images/bg-reports.png)] bg-center bg-no-repeat bg-cover lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
         <div className="lg:flex my-4  gap-6 relative hidden mb-16">
           <div className="hexagon5 mt-3  min-w-[60px]">
             <img src="/assets/images/programimage2.jpg" alt="" className="" />
@@ -402,17 +400,17 @@ const handleSelectChange = (selectedOption) => {
           </div>
         </div>
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4  ">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#660867]">
             1
           </div>
           <div className=" rounded-xl  flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Asset
             </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex items-center gap-4 flex-col lg:flex-row">
                 <div className="lg:w-[60%] w-full">
-                  <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
+                  <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
                     <img src="/assets/search.svg" alt="" />
                     <Input
                       type="text"
@@ -431,7 +429,7 @@ const handleSelectChange = (selectedOption) => {
                   styles={{
                     control: (provided, state) => ({
                       ...provided,
-                      backgroundColor: "#2451F5",
+                      backgroundColor: "#2B0E2B",
                       border: "none",
                       color: "white",
                       borderRadius: "20px",
@@ -444,13 +442,13 @@ const handleSelectChange = (selectedOption) => {
                     }),
                     option: (provided, state) => ({
                       ...provided,
-                      backgroundColor: state.isFocused ? "#2451F5" : "#2451F5",
+                      backgroundColor: state.isFocused ? "#2B0E2B" : "#3D0436",
                       ":hover": { backgroundColor: "rgb(14 165 233)" },
                       color: state.isFocused ? "white" : "white",
                     }),
                     menuList: (provided, state) => ({
                       ...provided,
-                      backgroundColor: "#2451F5",
+                      backgroundColor: "#2B0E2B",
                       color: "white",
                       padding: "0",
                     }),
@@ -493,21 +491,21 @@ const handleSelectChange = (selectedOption) => {
                       <Line key={`${asset.id}-${index}`} text={name} asset={asset} />
                     )))
                 ) : (
-                  <p className="px-8 py-4 bg-[#2B5D83] sm:text-[16px] text-[14px] font-[600]">Assets type seçin.</p>
+                  <p className="px-8 py-4 bg-[#2B0E2B] sm:text-[16px] text-[14px] font-[600]">Assets type seçin.</p>
                 )}
               </div>
             </div>
           </div>
         </div>
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#660867]">
             2
           </div>
           <div className=" rounded-xl   flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Report template
             </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex items-center gap-4 flex-col lg:flex-row">
                 <div className=" w-full">
                   <Select
@@ -515,7 +513,7 @@ const handleSelectChange = (selectedOption) => {
                     styles={{
                       control: (provided, state) => ({
                         ...provided,
-                        backgroundColor: "#2451F5",
+                        backgroundColor: "#2B0E2B",
                         border: "none",
                         color: "white",
                         borderRadius: "20px",
@@ -530,14 +528,14 @@ const handleSelectChange = (selectedOption) => {
                       option: (provided, state) => ({
                         ...provided,
                         backgroundColor: state.isFocused
-                          ? "#2451F5"
-                          : "#2451F5",
-                        ":hover": { backgroundColor: "rgb(14 165 233)" },
+                          ? "#2B0E2B"
+                          : "#3D0436",
+                        ":hover": { backgroundColor: "#2B0E2B" },
                         color: state.isFocused ? "white" : "white",
                       }),
                       menuList: (provided, state) => ({
                         ...provided,
-                        backgroundColor: "#2451F5",
+                        backgroundColor: "#2B0E2B",
                         color: "white",
                         padding: "0",
                       }),
@@ -563,17 +561,17 @@ const handleSelectChange = (selectedOption) => {
           </div>
         </div>
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#660867]">
             3
           </div>
           <div className="rounded-xl flex-1">
-      <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+      <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
         Weakness
       </div>
-      <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+      <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
         <div className="flex items-center gap-4 flex-col lg:flex-row">
           <div className="lg:w-[60%] w-full">
-            <Label className="flex bg-[#2451F5] rounded-2xl px-4 w-full">
+            <Label className="flex bg-[#2B0E2B] rounded-2xl px-4 w-full">
               <img src="/assets/search.svg" alt="" />
               <Input
                 type="text"
@@ -592,7 +590,7 @@ const handleSelectChange = (selectedOption) => {
               styles={{
                 control: (provided) => ({
                   ...provided,
-                  backgroundColor: "#2451F5",
+                  backgroundColor: "#2B0E2B",
                   border: "none",
                   color: "white",
                   borderRadius: "20px",
@@ -605,13 +603,13 @@ const handleSelectChange = (selectedOption) => {
                 }),
                 option: (provided, state) => ({
                   ...provided,
-                  backgroundColor: state.isFocused ? "#2451F5" : "#2451F5",
-                  ":hover": { backgroundColor: "rgb(14 165 233)" },
+                  backgroundColor: state.isFocused ? "#2B0E2B" : "#3D0436",
+                  ":hover": { backgroundColor: "#2B0E2B" },
                   color: state.isFocused ? "white" : "white",
                 }),
                 menuList: (provided) => ({
                   ...provided,
-                  backgroundColor: "#2451F5",
+                  backgroundColor: "#2B0E2B",
                   color: "white",
                   padding: "0",
                 }),
@@ -650,21 +648,21 @@ const handleSelectChange = (selectedOption) => {
                 <p className="text-white">Invalid weakness type</p>
               )
             ) : (
-              <p className="px-8 py-4 bg-[#2B5D83] sm:text-[16px] text-[14px] font-[600]">Weakness type seçin</p>
+              <p className="px-8 py-4 bg-[#2B0E2B] sm:text-[16px] text-[14px] font-[600]">Weakness type seçin</p>
             )}
           </div>
       </div>
     </div>
         </div>
         <div className="flex sm:gap-8 mt-4 flex-col sm:flex-row gap-4">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#660867]">
             4
           </div>
           <div className=" rounded-xl overflow-hidden  flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Severity
             </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex justify-between lg:items-center mb-4 xl:w-[70%] w-full flex-col lg:flex-row gap-4 " onChange={handleRadioChange} >
                 <RadioInput 
                   name="test1"
@@ -691,7 +689,7 @@ const handleSelectChange = (selectedOption) => {
                   styles={{
                     control: (provided, state) => ({
                       ...provided,
-                      backgroundColor: "#2451F5",
+                      backgroundColor: "#2B0E2B",
                       border: "none",
                       color: "white",
                       borderRadius: "20px",
@@ -705,13 +703,13 @@ const handleSelectChange = (selectedOption) => {
                     }),
                     option: (provided, state) => ({
                       ...provided,
-                      backgroundColor: state.isFocused ? "#2451F5" : "#2451F5",
-                      ":hover": { backgroundColor: "rgb(14 165 233)" },
+                      backgroundColor: state.isFocused ? "#2B0E2B" : "#3D0436",
+                      ":hover": { backgroundColor: "#2B0E2B" },
                       color: state.isFocused ? "white" : "white",
                     }),
                     menuList: (provided, state) => ({
                       ...provided,
-                      backgroundColor: "#2451F5",
+                      backgroundColor: "#2B0E2B",
                       color: "white",
                       padding: "0",
                     }),
@@ -731,7 +729,7 @@ const handleSelectChange = (selectedOption) => {
                 />
               </div>
                 <div className="mt-4 severity" id="withSev" ref={severityRef}>
-                <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                <div className="xl:h-[70px] h-[110px] bg-[#2B0E2B] flex xl:items-center sm:px-4 px-4 border border-[#885389] flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Attack vector
                   </div>
@@ -763,7 +761,7 @@ const handleSelectChange = (selectedOption) => {
                   </div>
 
                 </div>
-                <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                <div className="xl:h-[70px] h-[110px] bg-[#2B0E2B] flex xl:items-center sm:px-4 px-4 border border-[#885389] flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Attack complexity
                   </div>
@@ -783,7 +781,7 @@ const handleSelectChange = (selectedOption) => {
 
                   </div>
                 </div>
-                <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                <div className="xl:h-[70px] h-[110px] bg-[#2B0E2B] flex xl:items-center sm:px-4 px-4 border border-[#885389] flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Privileges required
                   </div>
@@ -808,7 +806,7 @@ const handleSelectChange = (selectedOption) => {
                     />
                   </div>
                 </div>
-                <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                <div className="xl:h-[70px] h-[110px] bg-[#2B0E2B] flex xl:items-center sm:px-4 px-4 border border-[#885389] flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     User interactions
                   </div>
@@ -827,7 +825,7 @@ const handleSelectChange = (selectedOption) => {
                     />
                   </div>
                 </div>
-                <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                <div className="xl:h-[70px] h-[110px] bg-[#2B0E2B] flex xl:items-center sm:px-4 px-4 border border-[#885389] flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">Scope</div>
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleScope}>
                     <RadioInput
@@ -844,7 +842,7 @@ const handleSelectChange = (selectedOption) => {
                     />
                   </div>
                 </div>
-                <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                <div className="xl:h-[70px] h-[110px] bg-[#2B0E2B] flex xl:items-center sm:px-4 px-4 border border-[#885389] flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Confidentiality
                   </div>
@@ -869,7 +867,7 @@ const handleSelectChange = (selectedOption) => {
                     />
                   </div>
                 </div>
-                <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                <div className="xl:h-[70px] h-[110px] bg-[#2B0E2B] flex xl:items-center sm:px-4 px-4 border border-[#885389] flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">Integrity</div>
                   <div className="xl:flex-nowrap grid xl:grid-cols-4  xl:gap-8 gap-y-0 gap-x-8 grid-cols-2 flex-1" onChange={handleIntegrity}>
                     <RadioInput
@@ -892,7 +890,7 @@ const handleSelectChange = (selectedOption) => {
                     />
                   </div>
                 </div>
-                <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                <div className="xl:h-[70px] h-[110px] bg-[#2B0E2B] flex xl:items-center sm:px-4 px-4 border border-[#885389] flex-col xl:flex-row gap-4">
                   <div className="min-w-[200px] mt-2 xl:mt-0">
                     Availability
                   </div>
@@ -921,7 +919,7 @@ const handleSelectChange = (selectedOption) => {
               </div></>
               ): severityValue==='manual' ?(
                 <div className="mt-4 severity" id="withoutSev">
-                  <div className="xl:h-[70px] h-[110px] bg-[#2B5D83] flex xl:items-center sm:px-4 px-4 border-b border-black flex-col xl:flex-row gap-4">
+                  <div className="xl:h-[70px] h-[110px] bg-[#2B0E2B] flex xl:items-center sm:px-4 px-4 border border-[#885389] flex-col xl:flex-row gap-4">
                     <div className="min-w-[200px] mt-2 xl:mt-0">
                       Manual
                     </div>
@@ -962,20 +960,20 @@ const handleSelectChange = (selectedOption) => {
           </div>
         </div>
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#660867]">
             5
           </div>
           <div className=" rounded-xl overflow-hidden  flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Proof of Concept
             </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex items-center gap-4 flex-col lg:flex-row">
                 <div className="w-full">
                   <Input
                     type="text"
                     placeholder="Title"
-                    className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6"
+                    className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#FFDE31]  focus-visible:ring-offset-0 placeholder:text-white py-6"
                     value={proofConceptTitle}
                     onChange={(e) => setProofConceptTitle(e.target.value)}
                   />
@@ -989,7 +987,7 @@ const handleSelectChange = (selectedOption) => {
                   <Input
                     type="text"
                     placeholder="Vulnerability URL"
-                    className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white py-6"
+                    className="bg-transparent text-white border-[#FFDE31] rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white py-6"
                     value={proofConceptDescription}
                     onChange={(e) => setProofConceptDescription(e.target.value)}
                   />
@@ -1003,7 +1001,7 @@ const handleSelectChange = (selectedOption) => {
                 <div className="w-full mt-4">
                   <Textarea
                     placeholder="Descriptions"
-                    className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white py-6"
+                    className="bg-transparent text-white rounded-2xl border-[#FFDE31] focus:outline-none focus-visible:ring-0 border-2 focus-visible:ring-offset-0 placeholder:text-white py-6"
                     onChange={(e) => setDesciptions(e.target.value)}
                   />
                 </div>
@@ -1021,7 +1019,7 @@ const handleSelectChange = (selectedOption) => {
                 <div className="flex-1 mt-4 lg:mt-0">
                   <label
                     htmlFor="attachFile"
-                    className="hover:scale-105 transition-all duration-300 rounded-xl  py-[7px]  bg-[#2451F5] text-white  border-2 border-[#2451F5] font-[600] hover:bg-[#2451F5] flex gap-2 px-4 h-[50px] w-[170px] items-center cursor-pointer"
+                    className="hover:scale-105 transition-all duration-300 rounded-xl bg-[#FFDE31] py-[7px]  text-black  border-2 border-[#FFDE31] font-[600]  flex gap-2 px-4 h-[50px] w-[170px] items-center cursor-pointer"
                   >
                     <img
                       src="/assets/attach.svg"
@@ -1053,20 +1051,20 @@ const handleSelectChange = (selectedOption) => {
           </div>
         </div>
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#660867]">
             6
           </div>
           <div className=" rounded-xl overflow-hidden  flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Discovery details (Optional)
             </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex items-center gap-4 flex-col lg:flex-row">
                 <div className="w-full">
                   <Input
                     type="text"
                     placeholder="Time spend"
-                    className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#2451F5]  focus-visible:ring-offset-0 placeholder:text-white py-6"
+                    className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-2 border-[#FFDE31]  focus-visible:ring-offset-0 placeholder:text-white py-6"
                     onChange={(e) => setTimeSpend(e.target.value)}
                   />
                 </div>
@@ -1078,7 +1076,7 @@ const handleSelectChange = (selectedOption) => {
           <div className="flex flex-col gap-4">
             <h3>Add Collabrate</h3>
             <Button
-              className="hover:scale-105 transition-all duration-300 rounded-xl  py-[7px]  bg-[#2451F5] text-white  border-2 border-[#2451F5] font-[600] hover:bg-[#2451F5] flex gap-4 px-4 w-[160px] "
+              className="hover:scale-105 transition-all duration-300 rounded-xl  py-[7px]  bg-[#FFDE31] text-black  border-2 border-[#FFDE31] font-[600] hover:bg-[#FFDE31] flex gap-4 px-4 w-[160px] "
               onClick={() => setOpenModal(true)}
             >
               Add Collaborate
@@ -1104,11 +1102,11 @@ const handleSelectChange = (selectedOption) => {
         </div>
 
         <div className="mt-4 flex gap-4  justify-end flex-col-reverse md:flex-row items-end">
-          <Button className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-transparent text-white  border-2 border-[#2451F5] font-[600] hover:bg-transparent flex gap-4 px-4 w-[160px] ">
+          <Button className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-transparent text-white  border-2 border-[#FFDE31] font-[600] hover:bg-transparent flex gap-4 px-4 w-[160px] ">
             Create Draft
           </Button>
           <Button
-            className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-[#2451F5] text-white  border-2 border-[#2451F5] font-[600] hover:bg-[#2451F5] flex gap-4 px-4 w-[160px] "
+            className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-[#FFDE31] text-white  border-2 border-[#FFDE31] font-[600] hover:bg-[#FFDE31] flex gap-4 px-4 w-[160px] "
             onClick={submitReport}
           >
             <p>Submit Report</p>
