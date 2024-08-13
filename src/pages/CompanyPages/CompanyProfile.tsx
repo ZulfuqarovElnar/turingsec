@@ -7,7 +7,7 @@ export default function CompanyProfile() {
 
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative ">
-      <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
+      <section className="   font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
         <img
           src="/assets/iconnav9.svg"
           alt=""
@@ -20,11 +20,9 @@ export default function CompanyProfile() {
           className="absolute z-[20] md:-right-[0] top-0 sm:-right-[7%] -right-[10%]   overflow-hidden w-[174px] md:w-[182px] "
         />
       </section>
-      <div className=" bg-[#1F44CC]  w-full absolute top-0 left-0 h-[30px]">
-        ssdd
-      </div>
+    
 
-      <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3  py-16">
+      <div className="bg-[url(/assets/images/bg-profile.png)] bg-center bg-no-repeat bg-cover flex-1 lg:px-20 sm:px-8 px-3  py-16">
         <div className="bg-[url('/assets/images/companyprofileimage.png')] md:h-[200px] h-auto bg-cover bg-center relative rounded-3xl overflow-hidden">
           <div className="absolute inset-0 bg-black opacity-40"></div>
           <div className="relative flex md:items-center items-stretch flex-col md:flex-row h-full lg:pl-16 py-10 md:py-0 md:pl-8 md:pr-0 sm:px-[15%] px-4 gap-6 ">
@@ -87,7 +85,7 @@ export default function CompanyProfile() {
             </ul>
           </div>{" "}
           <Button
-            className="hover:scale-110 transition-all duration-300  rounded-xl  w-[200px] h-[50px] sm:h-[50px]   sm:w-[200px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5] mt-8 gap-4"
+            className="hover:scale-110 text-black transition-all duration-300  rounded-xl  w-[200px] h-[50px] sm:h-[50px]   sm:w-[200px] bg-[#FFDE31] sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5] mt-8 gap-4"
             onClick={() => {
               localStorage.removeItem("company");
               toast.success("logout");
