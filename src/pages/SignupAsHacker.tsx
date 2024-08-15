@@ -50,7 +50,7 @@ export default function SignupAsHacker() {
   async function onSubmit(values: z.infer<typeof formSchemaHackerRegister>) {
     try {
       const apiUrl = import.meta.env.VITE_APP_BASE_URL;
-
+  
       const response = await fetch(`${apiUrl}/api/auth/register/hacker`, {
         method: "POST",
         headers: {
@@ -65,18 +65,17 @@ export default function SignupAsHacker() {
           email: values.email,
         }),
       });
-
+  
       if (!response.ok) {
-        toast.error("Something went wrong");
-        console.error("Error registering hacker:", response.statusText);
+        const errorData = await response.json();
+        toast.error(errorData.message);
         return;
       }
-
+  
       const result = await response.json();
-      console.log("Registration successful:", result);
-
-      toast.success("Activation code sent to email");
-      const { userId, access_token,username } = result;
+      toast.success(result.meta.message);
+  
+      const { userId, access_token, username } = result;
       localStorage.setItem(
         "user",
         JSON.stringify({
@@ -87,10 +86,11 @@ export default function SignupAsHacker() {
       );  
       navigate("/");
     } catch (error: any) {
-      toast.error("An error occurred while registering");
       console.error("An error occurred:", error);
+      toast.error("An unexpected error occurred.");
     }
   }
+  
 
   return (
     <div className=" flex  flex-col justify-between xl:pb-40 pb-4 sm:py-28  text-[white] lg:flex-row items-center  bg-[url(/assets/images/bg-2.png)]  bg-center	bg-no-repeat	bg-cover dark:bg-inherit sm:px-16  py-20 px-8 ">

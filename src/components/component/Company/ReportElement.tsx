@@ -8,24 +8,46 @@ export default function ReportElement({
   img: string;
 }) {
   return (
-    <div className="bg-[#023059] flex flex-col text-center items-center py-8 rounded-3xl   ">
+    <div className="bg-[#023059] flex flex-col text-center items-center py-10 rounded-3xl w-[340px]">
       <div className="hexagon4 m-auto md:m-0">
         <img
-          src={`${img ? img : "/assets/images/profileimage.jpeg "}`}
-          alt=""
+          src={`${img ? img : "/assets/images/profileimage.jpeg"}`}
+          alt="Profile"
           className=""
         />
       </div>
-      <h3 className="sm:text-[20px] text-[18px] font-[600] mt-6 mb-2">
+      <h3 className="sm:text-[20px] text-[18px] font-[600] mt-6 mb-2 text-white">
         {name}
       </h3>
-      <p className="sm:text-[16px] text-[14px] font-[400]">Bug bounty</p>
-      <div className="flex justify-between gap-4 mt-6 mb-6 lg:flex-col sm:flex-row flex-col">
-        
+      <p className="sm:text-[16px] text-[14px] font-[400] text-white">Bug bounty</p>
+      <div className="flex justify-between gap-4 mt-6 mb-9">
+        <Button
+          className="hover:scale-110 transition-all duration-300 rounded-full h-[30px] w-[120px] bg-yellow-400 text-black font-[600] text-[14px]
+          hover:bg-yellow-500 hover:text-white"
+        >
+          2 Scopes
+        </Button>
+        <Button
+          className="hover:scale-110 transition-all duration-300 rounded-full h-[30px] w-[120px] bg-yellow-400 text-black font-[600] text-[14px]
+          hover:bg-yellow-500 hover:text-white"
+        >
+          Hall of Fame
+        </Button>
       </div>
-      <Button className="hover:scale-110 transition-all duration-300 rounded-full h-[50px]  sm:h-[65px] w-[180px] sm:w-[220px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5]">
-        See Details
-      </Button>
+      <div className="flex justify-between gap-4 ">
+        <Button
+          className="hover:scale-110 transition-all duration-300 rounded-full h-[50px] w-[150px] bg-[#2451F5] text-white font-semibold text-[14px]
+          hover:bg-[#1E3A8A] hover:text-yellow-400"
+        >
+          Contact With Hacker
+        </Button>
+        <Button
+          className="hover:scale-110 transition-all duration-300 rounded-full h-[50px] w-[150px] bg-yellow-500 text-black font-semibold text-[14px]
+          hover:bg-yellow-600 hover:text-white"
+        >
+          View Report
+        </Button>
+      </div>
     </div>
   );
 }

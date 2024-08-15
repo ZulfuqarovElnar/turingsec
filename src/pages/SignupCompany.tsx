@@ -66,11 +66,11 @@ export default function SignupCompanyPage() {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchemaCompanyRegister>) {
     console.log({
-      first_name: values.firstName,
-      last_name: values.lastName,
+      firstName: values.firstName,
+      lastName: values.lastName,
       email: values.email,
-      company_name: values.companyName,
-      job_title: values.jobtitle,
+      companyName: values.companyName,
+      jobNTitle: values.jobtitle,
       assets: values.assets.value,
       message: values.message,
       approved: false,
@@ -85,11 +85,11 @@ export default function SignupCompanyPage() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            first_name: values.firstName,
-            last_name: values.lastName,
+            firstName: values.firstName,
+            lastName: values.lastName,
             email: values.email,
-            company_name: values.companyName,
-            job_title: values.jobtitle,
+            companyName: values.companyName,
+            jobTitle: values.jobtitle,
             assets: values.assets.value,
             message: values.message,
             approved: false,
@@ -97,8 +97,8 @@ export default function SignupCompanyPage() {
         }
       );
       if (!res.ok) {
-        // Handle error response, e.g., show an error message to the user
-        toast.error("Something bad");
+        const errorData = await res.json();
+        toast.error(errorData.message);
         console.error("Error registering company:", res.statusText);
         return;
       }
@@ -106,12 +106,11 @@ export default function SignupCompanyPage() {
       // If the response is successful, you can do something with the result
 
       const result = await res.json();
-      console.log("Registration successful:", result);
-      toast.success("You succesfully create account as a company!");
+      console.log("Registration successful:", result.meta.message);
+      toast.success(result.meta.message);
       navigate("/");
     } catch (error: any) {
       console.log(error);
-      toast.error(error);
     }
   }
   return (

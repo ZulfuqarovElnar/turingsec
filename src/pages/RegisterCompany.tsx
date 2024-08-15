@@ -59,8 +59,8 @@ export default function RegisterCompanyPage() {
       );
 
       if (!response.ok) {
-        // Handle error response, e.g., show an error message to the user
-        toast.error("Something bad");
+        const errorData = await response.json();
+        toast.error(errorData.message);
         console.error("Error registering hacker:", response.statusText);
         return;
       }
@@ -69,7 +69,7 @@ export default function RegisterCompanyPage() {
       const result = await response.json();
       console.log("Registration successful:", result);
 
-      toast.success("You succesfully logged in as a company!");
+      toast.success(result.meta.message);
       setTimeout(() => {
         navigate("/company/dashboard");
       }, 1000);
@@ -77,7 +77,7 @@ export default function RegisterCompanyPage() {
       const { access_token, companyId } = result.data;
       // Check if access_token and companyId are available
       if (!access_token || !companyId) {
-        toast.error("Invalid response from server. Please try againnnnnnnnnnn.");
+        toast.error("Invalid response from server. Please try again.");
         return;
       }
       localStorage.setItem(
@@ -91,14 +91,8 @@ export default function RegisterCompanyPage() {
 
       navigate("/company/dashboard");
     } catch (error) {
-      toast.error("Something bad");
-      // Handle any general error that occurred during the fetch or processing
       console.error("An error occurred:", error);
     }
-    // The rest of your code
-    console.log(values);
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
   return (
