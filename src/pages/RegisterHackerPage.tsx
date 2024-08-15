@@ -66,7 +66,8 @@ export default function RegisterHackerPage() {
       });
   
       if (!response.ok) {
-        toast.error("Invalid username or password");
+        const errorData =  await response.json();
+        toast.error(errorData.message);
         console.error("Error logging in:", response.statusText);
         return;
       }
@@ -77,7 +78,7 @@ export default function RegisterHackerPage() {
       }
       console.log("Login successful:", result);
   
-      toast.success("You successfully logged in as a hacker!");
+      toast.success(result.meta.message);
       setTimeout(() => {
         navigate("/work/dashboard");
       }, 1000);
@@ -93,7 +94,6 @@ export default function RegisterHackerPage() {
         })
       );
     } catch (error) {
-      toast.error("Something bad");
       console.error("An error occurred:", error);
     }
   }
