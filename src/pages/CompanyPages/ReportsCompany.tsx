@@ -7,7 +7,7 @@ export default function ReportCompany() {
   // console.log(data);
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative h-screen">
-      <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
+      <section className="font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
         <img
           src="/assets/iconnav11.svg"
           alt=""
@@ -20,7 +20,6 @@ export default function ReportCompany() {
           className="absolute z-[20] md:-right-[60px] top-0 lg:right-0 sm:-right-[10%] -right-[10%]   overflow-hidden w-[144px] md:w-[182px]"
         />
       </section>
-      <div className=" bg-[#1F44CC]  w-full absolute top-0 left-0 h-[30px] "></div>
 
       <div className="bg-[#1E1E1E] h-full flex-1 lg:px-20 sm:px-8 px-3  py-16">
         <h2 className="sm:text-[25px] font-[700] text-[20px] mb-6">

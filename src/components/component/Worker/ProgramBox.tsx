@@ -97,11 +97,13 @@ export default function ProgramBox({
             </div>
           </div> */}
           <Button
-            className="hover:scale-105 transition-all duration-300 rounded-3xl py-[7px] bg-[#200F23] text-white  font-[600] hover:border-1 flex gap-4 px-4 w-full mt-6"
+            className="hover:scale-105 bg-transparent transition-all duration-300 rounded-3xl py-[7px] text-white !border-[#FFDE31] font-[600] !border-[1px] flex gap-4 px-4 w-full mt-6"
             onClick={handleSeeDetails}
           >
             See Details
           </Button>
+
+         
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </div>
       </div>

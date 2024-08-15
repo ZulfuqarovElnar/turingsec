@@ -62,11 +62,9 @@ export default function ProgramOnePage() {
   }
 
   return (
-    <div className="text-white flex-1 flex flex-col overflow-hidden relative">
-      <div className="bg-[url('/assets/images/programimage.jpeg')] h-[100px]  bg-center bg-cover  relative w-full">
-        <div className="h-full w-full bg-black opacity-60"></div>
-      </div>
-      <div className="bg-[#1E1E1E] lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
+    <div className="bg-[url(/assets/images/bg-3.png)] bg-center bg-no-repeat bg-cover text-white flex-1 flex flex-col overflow-hidden relative">
+      
+      <div className=" lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
         <div className="lg:flex my-4  gap-6 relative hidden mb-16">
           <div className="hexagon5 mt-3  min-w-[60px]">
             <img src="/assets/images/programimage2.jpg" alt="" className="" />
@@ -162,7 +160,7 @@ export default function ProgramOnePage() {
         </div>
         <div>
           <div className="rounded-2xl overflow-hidden">
-            <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between">
+            <div className="bg-[#2B0E2B] h-[70px] flex items-center px-8 justify-between">
               <div className="flex items-center gap-4">
                 <p className="text-[#FFEC86]"> </p>
               </div>
@@ -171,7 +169,7 @@ export default function ProgramOnePage() {
                 <img src="/assets/images/info.png" alt="" />
               </div>
             </div>
-            <div className="bg-[#0A273D] px-6 pt-6 pb-10">
+            <div className="bg-[#3D0436] px-6 pt-6 pb-10">
 
               <p className="sm:text-[16px] text-[14px] font-[400]">
                 {programData?.notes}
@@ -181,7 +179,7 @@ export default function ProgramOnePage() {
         </div>
         <h2 className="my-[10px] sm:text-[20px] text-[16px] w-[600]">Reward</h2>
         <div className="rounded-2xl overflow-hidden">
-    <div className="bg-[#001D34] h-[70px] items-center px-8 flex">
+    <div className="bg-[#2B0E2B] h-[70px] items-center px-8 flex">
       <div className="my-8 flex justify-between flex-1">
         <div className={`flex items-center gap-4 `}>
           <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
@@ -210,7 +208,7 @@ export default function ProgramOnePage() {
       </div>
     </div>
 
-    <div className="bg-[#0A273D] px-8 border-b border-black py-4">
+    <div className="bg-[#3D0436] px-8 border-b border-black py-4">
       {Array.from({ length: maxLength }).map((_, i) => (
         <div key={i} className="mb-4">
           <div className="flex lg:flex-row items-center justify-between gap-4">
@@ -271,17 +269,17 @@ export default function ProgramOnePage() {
     </div>
   </div>
         <h2 className="my-[10px] sm:text-[20px] text-[16px] w-[600]">Policy</h2>
-        <div className="bg-[#0A273D] h-[365px] rounded-xl p-4">
+        <div className="bg-[#3D0436] h-[365px] rounded-xl p-4">
           {" "}
           {programData?.policy}
         </div>
-        <div className="bg-[#001D34] mt-7 h-[70px] flex items-center px-8 justify-between">
+        <div className="bg-[#2B0E2B] mt-7 h-[70px] flex items-center px-8 justify-between">
             <div className="flex items-center gap-4">
               <img src="/assets/stricty.svg" alt="" />
               <p className="">Stricty Prohibet</p>
             </div>
           </div>
-        <div className="bg-[#0A273D] h-[365px] rounded-xl p-4 flex flex-wrap">
+        <div className="bg-[#3D0436] h-[365px] p-4 flex flex-wrap">
         <ul className="w-1/2">
           {programData?.prohibits
             .slice(0, Math.ceil(programData?.prohibits.length / 2))
@@ -289,7 +287,7 @@ export default function ProgramOnePage() {
               <li className=" flex items-center gap-2 py-3 px-2" key={index}>
                 <div className="min-w-[40px]">
                   <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5] ">
-                    <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#0A273D]">
+                    <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#3D0436]">
                       {index + 1}
                     </div>
                   </div>
@@ -304,7 +302,7 @@ export default function ProgramOnePage() {
               <li className="flex items-start gap-2 py-4 px-3" key={index}>
                 <div className="min-w-[40px]">
                   <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5] ">
-                    <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#0A273D]">
+                    <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#3D0436]">
                       {index + 1 + Math.ceil(programData?.prohibits.length / 2)}
                     </div>
                   </div>
@@ -314,13 +312,13 @@ export default function ProgramOnePage() {
       </div>
 
         <div className="mt-10">
-          <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between">
+          <div className="bg-[#2B0E2B] h-[70px] flex items-center px-8 justify-between">
             <div className="flex items-center gap-4">
               <img src="/assets/stroke.svg" alt="" />
               <p className="">Scope</p>
             </div>
           </div>
-          <div className="bg-[#0A273D] p-8 rounded-xl">
+          <div className="bg-[#3D0436] p-8">
               <div className="gap-12 flex  flex-col lg:flex-row">
                 <div>
                   <h3 className="mb-6">Out of Scope</h3>

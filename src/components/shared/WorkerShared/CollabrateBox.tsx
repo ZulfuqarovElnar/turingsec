@@ -65,7 +65,7 @@ export default function CollabrateBox({
   
 
   return (
-    <div className="bg-[#0A273D]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
+    <div className="bg-[#3D0436]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
       {!(index == 0) && (
         <button
           className="absolute top-2 right-6 text-red-600"
@@ -93,7 +93,7 @@ export default function CollabrateBox({
       >
         <input
           type="number"
-          className="w-[50px] py-1 px-3 bg-[#001D34] border-r border-white text-white focus:outline-none focus-visible:ring-0"
+          className="w-[50px] py-1 px-3 bg-[#FFDE31] border-r border-black text-black focus:outline-none focus-visible:ring-0"
           value={value || ""}
           onChange={handleChange}
           style={{
@@ -106,7 +106,7 @@ export default function CollabrateBox({
         />
 
         <div
-          className="bg-[#001D34] w-[50px]   flex items-center 
+          className="bg-[#FFDE31] w-[50px] text-black  flex items-center 
      
       justify-center "
         >

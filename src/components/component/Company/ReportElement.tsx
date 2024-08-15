@@ -8,7 +8,7 @@ export default function ReportElement({
   img: string;
 }) {
   return (
-    <div className="bg-[#023059] flex flex-col text-center items-center py-10 rounded-3xl w-[340px]">
+    <div className="bg-[#3D0436] flex flex-col text-center items-center py-10 rounded-3xl w-[340px]">
       <div className="hexagon4 m-auto md:m-0">
         <img
           src={`${img ? img : "/assets/images/profileimage.jpeg"}`}
@@ -33,6 +33,14 @@ export default function ReportElement({
         >
           Hall of Fame
         </Button>
+      </div>
+      <div className="flex gap-2">
+      <Button className="hover:scale-110 transition-all duration-300 rounded-full h-[50px]  sm:h-[55px] w-[180px] sm:w-[150px] bg-[#200F23] text-white  sm:text-[14px] font-[600] text-[16px]   hover:bg-[#200F23]">
+        Contact with company
+      </Button>
+      <Button className="hover:scale-110 transition-all duration-300 rounded-full h-[50px]  sm:h-[55px] w-[180px] sm:w-[150px] bg-[#FFDE31] text-white  sm:text-[14px] font-[600] text-[16px]   hover:bg-[#FFDE31]">
+        See Details
+      </Button>
       </div>
       <div className="flex justify-between gap-4 ">
         <Button

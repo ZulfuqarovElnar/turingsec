@@ -4,7 +4,7 @@ export default function CompanyNavbar() {
   const url = `/${useLocation().pathname.split("/")[2]}`;
 
   return (
-    <div className="bg-[#023059] py-14 h-screen fixed  z-30 md:w-[270px] w-[74px] left-0">
+    <div className="bg-[#3D0436] py-14 h-screen fixed  z-30 md:w-[270px] w-[74px] left-0">
       <ul>
         <Link className="hidden md:block px-10 " to={"/"}>
           <img src="/assets/images/newlogo.png" alt="logo" width={200} />
@@ -20,8 +20,8 @@ export default function CompanyNavbar() {
         <div className="mt-10 ">
           <Link
             to={"dashboard"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600]  ${
-              url == "/dashboard" ? "bg-[#2451F5]" : ""
+            className={`flex items-center text-[22px] gap-5 font-[600]  ${
+              url == "/dashboard" ? "bg-[#FFDE31] text-black" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -33,8 +33,8 @@ export default function CompanyNavbar() {
           </Link>
           <Link
             to={"programs"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/programs" ? "bg-[#2451F5]" : ""
+            className={`flex items-center text-[22px] gap-5 font-[600] ${
+              url == "/programs" ? "bg-[#FFDE31] text-black" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -47,8 +47,8 @@ export default function CompanyNavbar() {
 
           <Link
             to={"report"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/report" ? "bg-[#2451F5]" : ""
+            className={`flex items-center text-[22px] gap-5 font-[600] ${
+              url == "/report" ? "bg-[#FFDE31] text-black" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -60,8 +60,8 @@ export default function CompanyNavbar() {
           </Link>
           <Link
             to={"profile"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/profile" ? "bg-[#2451F5]" : ""
+            className={`flex items-center text-[22px] gap-5 font-[600] ${
+              url == "/profile" ? "bg-[#FFDE31] text-black" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <div className="hexagon6 m-auto md:m-0">
@@ -73,8 +73,8 @@ export default function CompanyNavbar() {
         <div className="mt-14">
           <Link
             to={"notifications"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/notifications" ? "bg-[#2451F5]" : ""
+            className={`flex items-center text-[22px] gap-5 font-[600] ${
+              url == "/notifications" ? "bg-[#FFDE31] text-black" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -86,8 +86,8 @@ export default function CompanyNavbar() {
           </Link>
           <Link
             to={"inbox"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/inbox" ? "bg-[#2451F5]" : ""
+            className={`flex items-center text-[22px] gap-5 font-[600] ${
+              url == "/inbox" ? "bg-[#FFDE31] text-black" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
@@ -99,8 +99,8 @@ export default function CompanyNavbar() {
           </Link>
           <Link
             to={"settings"}
-            className={`flex items-center text-white text-[22px] gap-5 font-[600] ${
-              url == "/settings" ? "bg-[#2451F5]" : ""
+            className={`flex items-center text-[22px] gap-5 font-[600] ${
+              url == "/settings" ? "bg-[#FFDE31] text-black" : "text-white"
             } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
           >
             <img
