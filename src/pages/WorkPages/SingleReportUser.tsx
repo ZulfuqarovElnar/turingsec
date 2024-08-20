@@ -6,19 +6,20 @@ import RadioInput from "../../components/component/RadioInput";
 import { useState, useEffect, useRef } from "react";
 import { Textarea } from '../../components/ui/textarea';
 import { useGetUserReports } from '../../queryies/useGetUserReports';
+import { useGetReportsForCompanies } from '../../queryies/useGetReportsForCompany';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
 import { faVideo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SockJS from 'sockjs-client';
-import {Stomp} from '@stomp/stompjs';
+import { Stomp } from '@stomp/stompjs';
 import { CompatClient } from '@stomp/stompjs';
 // Add the icon to the library
 library.add(faFile);
 library.add(faVideo)
 
 
-export default function SingleReportUser({severityScore}) {
+export default function SingleReportUser({ severityScore }) {
     interface AttachmentType {
         url: string;
         contentType: string;
@@ -42,7 +43,7 @@ export default function SingleReportUser({severityScore}) {
         discoveryDetails: {
             timeSpend: string;
         };
-        attachments: AttachmentType[]; 
+        attachments: AttachmentType[];
         methodName: string;
         lastActivity: string;
         rewardsStatus: string;
@@ -54,7 +55,6 @@ export default function SingleReportUser({severityScore}) {
         }[];
         severity: string;
     }
-
     interface UserType {
         companyName: string;
         reports: ReportType[];
@@ -64,33 +64,93 @@ export default function SingleReportUser({severityScore}) {
         hackerUsername: string;
         collaborationPercentage: number;
     }
+
     const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
-    const [onChat,setOnChat]=useState(false)
+    const [onChat, setOnChat] = useState(false)
     const [allAssets, setAllAssets] = useState<string[]>([]);
     const [attachments, setAttachments] = useState<AttachmentType[]>([]);
     const [enlarged, setEnlarged] = useState(null);
     const [room, setRoom] = useState<string>('');
-   
     const [csrfToken, setCsrfToken] = useState('')
     const chatAreaRef = useRef(null);
     // const stompClientRef = useRef(null);
     const stompClientRef = useRef<CompatClient | null>(null);
-    const [message, setMessage]=useState("")
+    const [message, setMessage] = useState("")
     const [messages, setMessages] = useState<string[]>([]);
     const [error, setError] = useState<string[]>([]);
     const [connectionError, setConnectionError] = useState('');
-    const IamHacker = true; //static
+    const [iamHacker, setIamHacker] = useState<boolean>(true);
     const { id } = useParams();
-    const { data } = useGetUserReports();
+    const { data: dataUser } = useGetUserReports();
+    const { data: dataCompany} = useGetReportsForCompanies()
     const [filteredReport, setFilteredReport] = useState<ReportType | undefined>(undefined);
     const [collaborators, setCollaborators] = useState<CollaboratorType[]>([]);
-    const userDataString = localStorage.getItem("user");
-    const userData = userDataString ? JSON.parse(userDataString) : null;
-    const accessToken = userData?.accessToken
+    const [accessToken, setAccessToken] = useState<string | null>(null);
+
+    const [userData, setUserData] = useState<any>(null);
+    const [reports, setReports] = useState<any[]>([]);
+
     useEffect(() => {
+        const userString = localStorage.getItem("user");
+
+        if (userString) {
+            const userParsed = JSON.parse(userString);
+            setUserData(userParsed);
+            setAccessToken(userParsed?.accessToken);
+            setIamHacker(true)
+            console.log("userrrrrrrrrrrrrrrrrrrrrrr")
+            console.log(dataUser)
+            let foundReport: ReportType | undefined = undefined;
+            dataUser.forEach((user: UserType) => {
+                user.reports.forEach((report: ReportType) => {
+                    if (report.id === parseInt(`${id}`)) {
+                        foundReport = report;
+                        // console.log(foundReport)
+                    }
+                });
+            });
+            if (foundReport) {
+                setFilteredReport(foundReport);
+            }
+            // setReports(dataUser);
+            // console.log("reportssssssssssssss" + reports)
+          
+        }
+
+        // Check for 'company' in localStorage
+        const companyString = localStorage.getItem("company");
+        if (companyString) {
+            const companyParsed = JSON.parse(companyString);
+            setIamHacker(false)
+            console.log("companyyyyyyyyyyyyyyyyy")
+            let foundReport: ReportType | undefined = undefined;
+            dataCompany.forEach((user: UserType) => {
+                user.reports.forEach((report: ReportType) => {
+                    if (report.id === parseInt(`${id}`)) {
+                        foundReport = report;
+                        // console.log(foundReport)
+                    }
+                });
+            });
+            if (foundReport) {
+                setFilteredReport(foundReport);
+            }
+            setUserData((prevData: any) => ({
+                ...prevData,
+                ...companyParsed,
+            }));
+            if (!accessToken) {
+                setAccessToken(companyParsed?.accessToken);
+            }
+        }
         
+         
+    }, [])
+    useEffect(() => {
+
+        // console.log(reports)
         let foundReport: ReportType | undefined = undefined;
-        data.forEach((user: UserType) => {
+        reports.forEach((user: UserType) => {
             user.reports.forEach((report: ReportType) => {
                 if (report.id === parseInt(`${id}`)) {
                     foundReport = report;
@@ -101,16 +161,16 @@ export default function SingleReportUser({severityScore}) {
         if (foundReport) {
             setFilteredReport(foundReport);
         }
-      
-    }, [data,id]);
-    
+
+    }, [reports, id]);
+
     useEffect(() => {
         console.log("Filtered Report updated:", filteredReport);
         setCollaborators(filteredReport?.collaborators || [])
         setRoom(filteredReport?.room || '')
         setAttachments(filteredReport?.attachments || [])
         console.log("Room num: " + room)
-         
+
     }, [filteredReport]);
 
     useEffect(() => {
@@ -129,7 +189,7 @@ export default function SingleReportUser({severityScore}) {
     }, [accessToken])
     //........Connect Socket............................
 
-    const connect =(e) =>{
+    const connect = (e) => {
         console.log(csrfToken)
         console.log(room)
         setOnChat(true)
@@ -140,7 +200,7 @@ export default function SingleReportUser({severityScore}) {
         };
 
         const socket = new SockJS('http://localhost:5000/ws');
-        const stompClient = Stomp.over(()=>socket)
+        const stompClient = Stomp.over(() => socket)
         stompClient.debug = (str) => {
             console.log(str);
         };
@@ -163,6 +223,13 @@ export default function SingleReportUser({severityScore}) {
             'X-CSRF-TOKEN': csrfToken,
             'Content-Type': 'application/json'
         });
+        // for service/controller and validation exceptions
+        stompClientRef.current.subscribe('/user/queue/errors', onErrorReceived, {
+            'Authorization': `Bearer ${accessToken}`,
+            'X-CSRF-TOKEN': csrfToken,
+            'Content-Type': 'application/json'
+        });
+
 
         stompClientRef.current.subscribe(`/topic/${room}/messagesInReport`, onMessageReceived, {
             'Authorization': `Bearer ${accessToken}`,
@@ -176,7 +243,7 @@ export default function SingleReportUser({severityScore}) {
         console.log('Message received:', message);
 
         // Determine message direction based on isHacker
-        const messageClass = message.isHacker === IamHacker ? 'message-right' : 'message-left';
+        const messageClass = message.isHacker === iamHacker ? 'message-right' : 'message-left';
 
         setMessages(prevMessages => [...prevMessages, { ...message, direction: messageClass }]);
     };
@@ -205,9 +272,9 @@ export default function SingleReportUser({severityScore}) {
 
         setConnectionError('Could not connect to WebSocket server. Please refresh this page to try again!');
     };
-    
+
     //...............Send New Message ..................
-    const sendMessage = async (e) =>{
+    const sendMessage = async (e) => {
         e.preventDefault();
         if (!stompClientRef.current || !stompClientRef.current.connected) {
             console.error("Cannot send message: STOMP client is not connected.");
@@ -236,12 +303,12 @@ export default function SingleReportUser({severityScore}) {
     const handleEnlarge = (index) => {
         setEnlarged(enlarged === index ? null : index);
     };
-    
+
     const getAttachmentStyle = (index) => {
         if (enlarged === index) {
             return {
                 width: '300px',
-                height:'180px',
+                height: '180px',
                 transition: 'width 0.3s ease-in-out, height 0.3s ease-in-out',
                 zIndex: 1000,
                 position: 'relative',
@@ -311,14 +378,18 @@ export default function SingleReportUser({severityScore}) {
                             <div className="flex items-center gap-4 flex-col lg:flex-row">
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport?.asset.assetName} type="text" placeholder="Max Bounty"
+ 
+                                        <Input value={filteredReport?.asset?.assetName} type="text" placeholder="Max Bounty"
+ 
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
 
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport?.asset.assetType} type="text" placeholder="Max Bounty"
+ 
+                                        <Input value={filteredReport?.asset?.assetType} type="text" placeholder="Max Bounty"
+ 
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -390,118 +461,121 @@ export default function SingleReportUser({severityScore}) {
                             className="rounded-xl sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
                             Severity
                         </div>
-                        {filteredReport?.methodName==='CVSS'?(
+ 
+                        {filteredReport?.methodName === 'CVSS' ? (
+ 
+ 
                             <div className="bg-[#3D0436] py-8 px-8 ">
-                            <div className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4  flex-col lg:flex-row gap-4">
-                                <RadioInput name="test1" value="test2" id="test2" label="CVSS" defaultChecked/>
-                            </div>
-                            <div className="items-center gap-4 max-w-[1000px] mx-auto">
-                                <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
-                                    Calculation: {filteredReport?.score}
-                                </h2>
-                            </div>
-                            <div className="mt-4 max-w-[1000px] mx-auto">
-                                <div className="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-2 gap-4">
-                        
-                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Attack vector
-                                        </div>
-                                        <div className="">
-                                                <RadioInput name="attackvector"  value={filteredReport?.attackvector} id="Network" label={filteredReport?.attackVector} defaultChecked />
-                                        </div>
-                                    </div>
-                        
-                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Scope
-                                        </div>
-                                        <div className="">
-                                            <RadioInput name="scope" value={filteredReport?.scope} id="Low3" label={filteredReport?.scope} defaultChecked />
-                                        </div>
-                                    </div>
-                        
-                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Attack complexity
-                                        </div>
-                                        <div className="">
-                                            <RadioInput name="attackcomplexity" value={filteredReport?.attackComplexity} id="Network" label={filteredReport?.attackComplexity} defaultChecked />
-                                        </div>
-                                    </div>
-                        
-                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Confidentially
-                                        </div>
-                                        <div className="">
-                                            <RadioInput name="confidentiality" value={filteredReport?.confidentiality} id="Low2" label={filteredReport?.confidentiality} defaultChecked />
-                                        </div>
-                                    </div>
-                        
-                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            User interactions
-                                        </div>
-                                        <div className="">
-                                            <RadioInput name="userinteraction" value={filteredReport?.userInteractions} id="Network" label={filteredReport?.userInteractions} defaultChecked />
-                                        </div>
-                                    </div>
-                        
-                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Integrity
-                                        </div>
-                                        <div className="">
-                                            <RadioInput name="integrity" value={filteredReport?.integrity} id="Low4" label={filteredReport?.integrity} defaultChecked />
-                                        </div>
-                                    </div>
-                        
-                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Privileges required
-                                        </div>
-                                        <div className="">
-                                            <RadioInput name="privileges" value={filteredReport?.privilegesRequired} id="Network" label={filteredReport?.privilegesRequired} defaultChecked />
-                                        </div>
-                                    </div>
-                        
-                                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
-                                        <div className="min-w-[200px] mt-2 xl:mt-0">
-                                            Availability
-                                        </div>
-                                        <div className="">
-                                            <RadioInput name="availability" value={filteredReport?.availability} id="Low1" label={filteredReport?.availability} defaultChecked />
-                                        </div>
-                                    </div>
+                                <div className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4  flex-col lg:flex-row gap-4">
+                                    <RadioInput name="test1" value="test2" id="test2" label="CVSS" defaultChecked />
                                 </div>
-                            </div>
-                        </div>                        
-                        ):(
-                                <div className="py-8 sm:px-8 px-4">
-                                    <div
-                                        className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4 flex-col lg:flex-row gap-4 ">
-                                        <RadioInput name="test1" value="test1" id="test1" label="Manual" defaultChecked />
-                                    </div>
-                                   
-                                    <div className="mt-4 ">
-                                        <div className='flex max-w-[1000px] mx-auto'>
+                                <div className="items-center gap-4 max-w-[1000px] mx-auto">
+                                    <h2 className="sm:text-[18px] text-[16px] font-[600] mb-2">
+                                        Calculation: {filteredReport?.score}
+                                    </h2>
+                                </div>
+                                <div className="mt-4 max-w-[1000px] mx-auto">
+                                    <div className="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-2 gap-4">
 
-                                            <div
-                                                className="h-[70px]  w-full bg-[#3D0436] flex items-center justify-between px-4  border-b border-black xl:flex-row gap-4">
-                                                <div className=" mt-2 xl:mt-0">
-                                                    Manual
-                                                </div>
-                                                <div
-                                                    className="">
-                                                    <RadioInput name="manual" value={filteredReport?.rewardsStatus} id="Network" label={filteredReport?.rewardsStatus} defaultChecked />
-                                                </div>
+                                        <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Attack vector
                                             </div>
-                                         
+                                            <div className="">
+                                                <RadioInput name="attackvector" value={filteredReport?.attackvector} id="Network" label={filteredReport?.attackVector} defaultChecked />
+                                            </div>
+                                        </div>
+
+                                        <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Scope
+                                            </div>
+                                            <div className="">
+                                                <RadioInput name="scope" value={filteredReport?.scope} id="Low3" label={filteredReport?.scope} defaultChecked />
+                                            </div>
+                                        </div>
+
+                                        <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Attack complexity
+                                            </div>
+                                            <div className="">
+                                                <RadioInput name="attackcomplexity" value={filteredReport?.attackComplexity} id="Network" label={filteredReport?.attackComplexity} defaultChecked />
+                                            </div>
+                                        </div>
+
+                                        <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Confidentially
+                                            </div>
+                                            <div className="">
+                                                <RadioInput name="confidentiality" value={filteredReport?.confidentiality} id="Low2" label={filteredReport?.confidentiality} defaultChecked />
+                                            </div>
+                                        </div>
+
+                                        <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                User interactions
+                                            </div>
+                                            <div className="">
+                                                <RadioInput name="userinteraction" value={filteredReport?.userInteractions} id="Network" label={filteredReport?.userInteractions} defaultChecked />
+                                            </div>
+                                        </div>
+
+                                        <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Integrity
+                                            </div>
+                                            <div className="">
+                                                <RadioInput name="integrity" value={filteredReport?.integrity} id="Low4" label={filteredReport?.integrity} defaultChecked />
+                                            </div>
+                                        </div>
+
+                                        <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Privileges required
+                                            </div>
+                                            <div className="">
+                                                <RadioInput name="privileges" value={filteredReport?.privilegesRequired} id="Network" label={filteredReport?.privilegesRequired} defaultChecked />
+                                            </div>
+                                        </div>
+
+                                        <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                                            <div className="min-w-[200px] mt-2 xl:mt-0">
+                                                Availability
+                                            </div>
+                                            <div className="">
+                                                <RadioInput name="availability" value={filteredReport?.availability} id="Low1" label={filteredReport?.availability} defaultChecked />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="py-8 sm:px-8 px-4">
+                                <div
+                                    className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4 flex-col lg:flex-row gap-4 ">
+                                    <RadioInput name="test1" value="test1" id="test1" label="Manual" defaultChecked />
+                                </div>
+
+                                <div className="mt-4 ">
+                                    <div className='flex max-w-[1000px] mx-auto'>
+
+                                        <div
+                                            className="h-[70px]  w-full bg-[#3D0436] flex items-center justify-between px-4  border-b border-black xl:flex-row gap-4">
+                                            <div className=" mt-2 xl:mt-0">
+                                                Manual
+                                            </div>
+                                            <div
+                                                className="">
+                                                <RadioInput name="manual" value={filteredReport?.rewardsStatus} id="Network" label={filteredReport?.rewardsStatus} defaultChecked />
+                                            </div>
                                         </div>
 
                                     </div>
+
                                 </div>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -565,29 +639,29 @@ export default function SingleReportUser({severityScore}) {
                                         {attachments.map((a, index) => (
                                             (a.contentType === 'image/jpeg' || a.contentType === 'image/png') ? (
                                                 <div key={index} onClick={() => handleEnlarge(index)} >
-                                                    <img 
-                                                    className="cursor-pointer" 
-                                                    src={a.url} 
-                                                    alt={`attachment-${index}`} 
-                                                    style={getAttachmentStyle(index)} />
-                                                   
+                                                    <img
+                                                        className="cursor-pointer"
+                                                        src={a.url}
+                                                        alt={`attachment-${index}`}
+                                                        style={getAttachmentStyle(index)} />
+
 
                                                 </div>
                                             ) : a.contentType.startsWith('video/') ? (
-                                        <div key={index}>
-                                            <a href={a.url} target="_blank" rel="noopener noreferrer">
-                                                <FontAwesomeIcon icon={faVideo} size="2xl" style={{ color: "#f3f4f7" }} />
-                                                Video
-                                            </a>
-                                        </div>
-                                        ) : (
-                                        <div key={index}>
-                                            <a href={a.url} target="_blank" rel="noopener noreferrer">
-                                                <FontAwesomeIcon icon={faFile} size="2xl" style={{ color: "#f3f4f7" }} />
-                                                File
-                                            </a>
-                                        </div>
-                                        )
+                                                <div key={index}>
+                                                    <a href={a.url} target="_blank" rel="noopener noreferrer">
+                                                        <FontAwesomeIcon icon={faVideo} size="2xl" style={{ color: "#f3f4f7" }} />
+                                                        Video
+                                                    </a>
+                                                </div>
+                                            ) : (
+                                                <div key={index}>
+                                                    <a href={a.url} target="_blank" rel="noopener noreferrer">
+                                                        <FontAwesomeIcon icon={faFile} size="2xl" style={{ color: "#f3f4f7" }} />
+                                                        File
+                                                    </a>
+                                                </div>
+                                            )
 
                                         ))}
                                     </div>
@@ -628,8 +702,8 @@ export default function SingleReportUser({severityScore}) {
                     <div className="flex-1 w-full flex gap-[50px]">
                         {/* HACKERS */}
 
-                        {collaborators.map((c) => (
-                            <div className="bg-[#3D0436]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
+                        {collaborators.map((c, i) => (
+                            <div key={i} className="bg-[#3D0436]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
                                 <div className="flex items-center">
                                     <div className="hexagon5 m-auto md:m-0 ">
                                         <img src={"/assets/images/profileimage.jpeg"} alt="" />
@@ -667,16 +741,16 @@ export default function SingleReportUser({severityScore}) {
                     <div className="flex-1 w-full flex gap-[50px]">
                         {onChat ? (
                             <>
-                                <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 ">
+                                <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 w-full">
                                     <div className="flex flex-col w-full">
-                                        <div className=" rounded-xl overflow-hidden flex flex-col gap-7 bg-[#1431F5]">
+                                        <div className="rounded-xl overflow-hidden flex flex-col gap-4 bg-[#3d0436] py-8">
                                             {messages.map((msg, i) => (
-                                                <div key={i} className="bg-initial py-8 sm:px-8 px-4">
-                                                    <div className="flex flex-col gap-5">
-                                                        <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]">
+                                                <div key={i} className="bg-initial  sm:px-8 px-4" >
+                                                    <div className="flex flex-col gap-5" >
+                                                        <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]" className={msg.direction} >
                                                             <p>{msg.content}</p>
                                                         </div>
-                                            
+
                                                     </div>
                                                 </div>
                                             ))}
@@ -726,11 +800,12 @@ export default function SingleReportUser({severityScore}) {
                                 </div>
                             </div> */}
                                         </div>
-                                        <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#162764]">
+                                        <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#3d0436] my-3 px-3">
                                             <input
                                                 type="text"
                                                 className="w-8/12 outline-none h-[35px] pl-2 text-white bg-inherit"
                                                 placeholder="Send your message ..."
+                                                value={message}
                                                 onChange={(e) => setMessage(e.target.value)}
                                             />
                                             <div className="flex items-center gap-1">
@@ -761,14 +836,12 @@ export default function SingleReportUser({severityScore}) {
 
                                     </div>
                                 </div>
-                             
-                
 
                             </>
                         ) : (
-                      
+
                             <div className='py-8 rounded-2xl flex items-center justify-between w-full relative'>
-                                        <button className='bg-[#2451F5] max-w-[250px] text-white min-h-[40px] py-2 px-3 rounded-[30px]' onClick={connect}>Chat with Company</button>
+                                <button className='bg-[#2451F5] max-w-[250px] text-white min-h-[40px] py-2 px-3 rounded-[30px]' onClick={connect}>Chat with Company</button>
                             </div>
 
                         )}
@@ -779,13 +852,13 @@ export default function SingleReportUser({severityScore}) {
                 <div className="flex  flex-col  lg:flex-row lg:gap-16 gap-4  mt-4 ">
                     <div className="flex flex-col gap-4"></div>
                     <div className="flex-1 w-full flex gap-[50px]">
-                        {onChat?(
+                        {onChat ? (
                             <button className='bg-[#2451F5] max-w-[250px] text-white min-h-[40px] py-2 px-3 rounded-[30px]' onClick={closeSocket}>Stop Chat</button>
-                        ):
-                        (<></>)}
+                        ) :
+                            (<></>)}
                     </div>
                 </div>
-                
+
 
             </div>
         </div>

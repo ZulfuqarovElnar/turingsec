@@ -500,3 +500,26 @@ input[type="radio"]:checked + label:before {
 
 }
 
+.message-right {
+  text-align: right;
+  background-color: #c390ef;
+  /* Lighter green background */
+  padding: 10px;
+  border-radius: 15px;
+  margin: 5px 0;
+  display: inline-block;
+  width: 70%;
+  color: white;
+}
+
+.message-left {
+  text-align: left;
+  background-color: #fbe2e2;
+  /* Lighter red background */
+  padding: 10px;
+  border-radius: 15px;
+  margin: 5px 0;
+  display: inline-block;
+  width: 70%;
+  color: white;
+}
