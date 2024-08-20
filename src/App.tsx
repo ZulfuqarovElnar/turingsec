@@ -44,6 +44,9 @@ import SingleReport from "./pages/CompanyPages/SingleReport";
 import SingleReportUser from "./pages/WorkPages/SingleReportUser";
 import LeaderBoard from "./components/shared/LeaderBoard";
 import ContactUs from "./components/shared/ContactUs";
+import Admin from "./pages/AdminPages/Admin";
+import AdminLoginPage from "./pages/AdminPages/AdminLoginPage";
+import SingleAdminReport from "./components/component/Admin/SingleAdminReport";
 
 function App() {
   function ScrollToTop() {
@@ -107,6 +110,11 @@ function App() {
           <Route path="report/single-report/:id" element={<SingleReport/>} />
           <Route path="profile" element={<CompanyProfile />} />
         </Route>
+
+        {/* Admin */} 
+        <Route path="/adminlogin" element={<AdminLoginPage />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/singleadminreport/:reportId" element={<SingleAdminReport />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

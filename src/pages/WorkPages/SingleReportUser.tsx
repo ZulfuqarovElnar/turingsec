@@ -311,14 +311,14 @@ export default function SingleReportUser({severityScore}) {
                             <div className="flex items-center gap-4 flex-col lg:flex-row">
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.asset.assetName} type="text" placeholder="Max Bounty"
+                                        <Input value={filteredReport?.asset.assetName} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
 
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.asset.assetType} type="text" placeholder="Max Bounty"
+                                        <Input value={filteredReport?.asset.assetType} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -343,7 +343,7 @@ export default function SingleReportUser({severityScore}) {
                             <div className="flex items-center gap-4 flex-col lg:flex-row">
                                 <div className=" w-full">
                                     <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
-                                        <Input type="text" placeholder="Max Bounty" value={filteredReport.reportTemplate}
+                                        <Input type="text" placeholder="Max Bounty" value={filteredReport?.reportTemplate}
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -364,7 +364,7 @@ export default function SingleReportUser({severityScore}) {
 
                                 <div className="lg:-[40%] w-full">
                                     <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.weakness.name} type="text" placeholder="Max Bounty"
+                                        <Input value={filteredReport?.weakness.name} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -373,7 +373,7 @@ export default function SingleReportUser({severityScore}) {
 
 
                                     <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
-                                        <Input value={filteredReport.weakness.type} type="text" placeholder="Max Bounty"
+                                        <Input value={filteredReport?.weakness.type} type="text" placeholder="Max Bounty"
                                             className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                                     </Label>
                                 </div>
@@ -390,7 +390,7 @@ export default function SingleReportUser({severityScore}) {
                             className="rounded-xl sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
                             Severity
                         </div>
-                        {filteredReport.methodName==='CVSS'?(
+                        {filteredReport?.methodName==='CVSS'?(
                             <div className="bg-[#3D0436] py-8 px-8 ">
                             <div className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4  flex-col lg:flex-row gap-4">
                                 <RadioInput name="test1" value="test2" id="test2" label="CVSS" defaultChecked/>
