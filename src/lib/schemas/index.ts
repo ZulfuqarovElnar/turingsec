@@ -81,3 +81,7 @@ export const contactUsSchema = z.object({
   write: z.string().min(10, { message: "Message is too short" }),
 });
 
+export const formSchemaAdminLogin = z.object({
+  usernameOrEmail: z.string().min(1, { message: "Username or email is required" }),
+  password: z.string().min(6, { message: "Password is too short" }),
+});

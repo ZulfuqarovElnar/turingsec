@@ -34,23 +34,15 @@ export default function ReportElement({
           Hall of Fame
         </Button>
       </div>
-      <div className="flex gap-2">
-      <Button className="hover:scale-110 transition-all duration-300 rounded-full h-[50px]  sm:h-[55px] w-[180px] sm:w-[150px] bg-[#200F23] text-white  sm:text-[14px] font-[600] text-[16px]   hover:bg-[#200F23]">
-        Contact with company
-      </Button>
-      <Button className="hover:scale-110 transition-all duration-300 rounded-full h-[50px]  sm:h-[55px] w-[180px] sm:w-[150px] bg-[#FFDE31] text-white  sm:text-[14px] font-[600] text-[16px]   hover:bg-[#FFDE31]">
-        See Details
-      </Button>
-      </div>
       <div className="flex justify-between gap-4 ">
         <Button
-          className="hover:scale-110 transition-all duration-300 rounded-full h-[50px] w-[150px] bg-[#2451F5] text-white font-semibold text-[14px]
+          className="hover:scale-110 transition-all duration-300 rounded-full h-[50px] w-[140px] bg-[#2451F5] text-white font-semibold sm:text-[14px] text-[12px]
           hover:bg-[#1E3A8A] hover:text-yellow-400"
         >
           Contact With Hacker
         </Button>
         <Button
-          className="hover:scale-110 transition-all duration-300 rounded-full h-[50px] w-[150px] bg-yellow-500 text-black font-semibold text-[14px]
+          className="hover:scale-110 transition-all duration-300 rounded-full h-[50px] w-[140px] bg-yellow-500 text-black font-semibold sm:text-[14px] text-[12px]
           hover:bg-yellow-600 hover:text-white"
         >
           View Report

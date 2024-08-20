@@ -47,19 +47,23 @@ export default function Header() {
         </p>
         
         {!accessToken && (
-          <div className="flex justify-between my-6 md:w-[80%] m-auto flex-col md:flex-row space-y-4 md:space-y-0   lg:w-[100%] w-[100%] md:space-x-4 space-x-0 items-center">
-
-            <Link to={"/registerhacker"}>
-              <Button className="hover:scale-110 transition-all duration-300 rounded-3xl py-[7px] bg-[#FFFFFF] w-[220px] hover:bg-[#FFFFFF] text-black font-bold rounded-3xl">
-                Register as a hacker
-              </Button>
-            </Link>
-            <Link to={"/registercompany"}>
-              <Button className="hover:scale-110 transition-all duration-300 rounded-3xl  py-[7px] w-[220px] bg-transparent text-white  border-2 border-[#FFFFFF] font-[600] hover:bg-transparent">
-                Register as a Company
-              </Button>
-            </Link>
-          </div>
+          <div className="flex flex-wrap  gap-3 my-6 md:w-[80%] m-auto flex-col md:flex-row space-y-4 md:space-y-0 lg:w-[100%] w-[100%] space-x-0 items-center">
+          <Link to={"/registerhacker"}>
+            <Button className="hover:scale-110 transition-all duration-300 rounded-3xl py-[7px] bg-[#FFFFFF] w-[220px] hover:bg-[#FFFFFF] text-black font-bold ">
+              Register as a hacker
+            </Button>
+          </Link>
+          <Link to={"/registercompany"}>
+            <Button className="hover:scale-110 transition-all duration-300 rounded-3xl py-[7px] w-[220px] bg-transparent text-white border-2 border-[#FFFFFF] font-[600] hover:bg-transparent">
+              Register as a Company
+            </Button>
+          </Link>
+          <Link to={"/adminlogin"} className="flex justify-center w-[450px]">
+            <Button className="hover:scale-110 transition-all duration-300 rounded-3xl py-[7px] w-[220px] bg-[#007bff] text-white font-bold">
+              Admin Login
+            </Button>
+          </Link>
+        </div>
         )}
       
       </motion.div>
