@@ -5,6 +5,7 @@ import Line from "../../components/shared/WorkerShared/Line";
 import RadioInput from "../../components/component/RadioInput";
 import { useState, useEffect, useRef } from "react";
 import { Textarea } from '../../components/ui/textarea';
+import { useGetUserReports } from '../../queryies/useGetUserReports';
 import { useGetReportsForCompanies } from '../../queryies/useGetReportsForCompany';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
@@ -18,7 +19,7 @@ library.add(faFile);
 library.add(faVideo)
 
 
-export default function SingleReport() {
+export default function SingleReportUser() {
   interface AttachmentType {
     url: string;
     contentType: string;
@@ -54,7 +55,6 @@ export default function SingleReport() {
     }[];
     severity: string;
   }
-
   interface UserType {
     companyName: string;
     reports: ReportType[];
@@ -64,13 +64,13 @@ export default function SingleReport() {
     hackerUsername: string;
     collaborationPercentage: number;
   }
+
   const [proofConceptTitle, setProofConceptTitle] = useState<string>("");
   const [onChat, setOnChat] = useState(false)
   const [allAssets, setAllAssets] = useState<string[]>([]);
   const [attachments, setAttachments] = useState<AttachmentType[]>([]);
   const [enlarged, setEnlarged] = useState(null);
   const [room, setRoom] = useState<string>('');
-
   const [csrfToken, setCsrfToken] = useState('')
   const chatAreaRef = useRef(null);
   // const stompClientRef = useRef(null);
@@ -79,18 +79,78 @@ export default function SingleReport() {
   const [messages, setMessages] = useState<string[]>([]);
   const [error, setError] = useState<string[]>([]);
   const [connectionError, setConnectionError] = useState('');
-  const IamHacker = false ; //static
+  const [iamHacker, setIamHacker] = useState<boolean>(true);
   const { id } = useParams();
-  const { data } = useGetReportsForCompanies();
+  const { data: dataUser } = useGetUserReports();
+  const { data: dataCompany } = useGetReportsForCompanies()
   const [filteredReport, setFilteredReport] = useState<ReportType | undefined>(undefined);
   const [collaborators, setCollaborators] = useState<CollaboratorType[]>([]);
-  const userDataString = localStorage.getItem("company");
-  const userData = userDataString ? JSON.parse(userDataString) : null;
-  const accessToken = userData?.accessToken
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  const [userData, setUserData] = useState<any>(null);
+  const [reports, setReports] = useState<any[]>([]);
+
+  useEffect(() => {
+    const userString = localStorage.getItem("user");
+
+    if (userString) {
+      const userParsed = JSON.parse(userString);
+      setUserData(userParsed);
+      setAccessToken(userParsed?.accessToken);
+      setIamHacker(true)
+      console.log("userrrrrrrrrrrrrrrrrrrrrrr")
+      console.log(dataUser)
+      let foundReport: ReportType | undefined = undefined;
+      dataUser.forEach((user: UserType) => {
+        user.reports.forEach((report: ReportType) => {
+          if (report.id === parseInt(`${id}`)) {
+            foundReport = report;
+            // console.log(foundReport)
+          }
+        });
+      });
+      if (foundReport) {
+        setFilteredReport(foundReport);
+      }
+      // setReports(dataUser);
+      // console.log("reportssssssssssssss" + reports)
+
+    }
+
+    // Check for 'company' in localStorage
+    const companyString = localStorage.getItem("company");
+    if (companyString) {
+      const companyParsed = JSON.parse(companyString);
+      setIamHacker(false)
+      console.log("companyyyyyyyyyyyyyyyyy")
+      let foundReport: ReportType | undefined = undefined;
+      dataCompany.forEach((user: UserType) => {
+        user.reports.forEach((report: ReportType) => {
+          if (report.id === parseInt(`${id}`)) {
+            foundReport = report;
+            // console.log(foundReport)
+          }
+        });
+      });
+      if (foundReport) {
+        setFilteredReport(foundReport);
+      }
+      setUserData((prevData: any) => ({
+        ...prevData,
+        ...companyParsed,
+      }));
+      if (!accessToken) {
+        setAccessToken(companyParsed?.accessToken);
+      }
+    }
+
+
+  }, [])
   useEffect(() => {
 
+    // console.log(reports)
     let foundReport: ReportType | undefined = undefined;
-    data.forEach((user: UserType) => {
+    reports.forEach((user: UserType) => {
       user.reports.forEach((report: ReportType) => {
         if (report.id === parseInt(`${id}`)) {
           foundReport = report;
@@ -102,7 +162,7 @@ export default function SingleReport() {
       setFilteredReport(foundReport);
     }
 
-  }, [data, id]);
+  }, [reports, id]);
 
   useEffect(() => {
     console.log("Filtered Report updated:", filteredReport);
@@ -163,6 +223,13 @@ export default function SingleReport() {
       'X-CSRF-TOKEN': csrfToken,
       'Content-Type': 'application/json'
     });
+    // for service/controller and validation exceptions
+    stompClientRef.current.subscribe('/user/queue/errors', onErrorReceived, {
+      'Authorization': `Bearer ${accessToken}`,
+      'X-CSRF-TOKEN': csrfToken,
+      'Content-Type': 'application/json'
+    });
+
 
     stompClientRef.current.subscribe(`/topic/${room}/messagesInReport`, onMessageReceived, {
       'Authorization': `Bearer ${accessToken}`,
@@ -176,7 +243,7 @@ export default function SingleReport() {
     console.log('Message received:', message);
 
     // Determine message direction based on isHacker
-    const messageClass = message.isHacker === IamHacker ? 'message-right' : 'message-left';
+    const messageClass = message.isHacker === iamHacker ? 'message-right' : 'message-left';
 
     setMessages(prevMessages => [...prevMessages, { ...message, direction: messageClass }]);
   };
@@ -259,7 +326,7 @@ export default function SingleReport() {
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
 
 
-      <div className="bg-[#1E1E1E] lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
+      <div className="bg-[url(/assets/images/bg-3.png)] bg-center bg-no-repeat bg-cover lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
         <div className="lg:flex my-4  gap-6 relative hidden mb-16">
           <div className="hexagon5 mt-3  min-w-[60px]">
             <img src="/assets/images/programimage2.jpg" alt="" className="" />
@@ -300,25 +367,25 @@ export default function SingleReport() {
         </div>
 
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4  ">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
             1
           </div>
           <div className=" rounded-xl overflow-hidden  flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Asset
             </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex items-center gap-4 flex-col lg:flex-row">
                 <div className="lg:-[40%] w-full">
-                  <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                    <Input readOnly value={filteredReport?.asset?.assetName} type="text" placeholder="Max Bounty"
+                  <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
+                    <Input value={filteredReport?.asset?.assetName} type="text" placeholder="Max Bounty"
                       className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                   </Label>
                 </div>
 
                 <div className="lg:-[40%] w-full">
-                  <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                    <Input readOnly value={filteredReport?.asset?.assetType} type="text" placeholder="Max Bounty"
+                  <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
+                    <Input value={filteredReport?.asset?.assetType} type="text" placeholder="Max Bounty"
                       className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                   </Label>
                 </div>
@@ -332,18 +399,18 @@ export default function SingleReport() {
           </div>
         </div>
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
             2
           </div>
           <div className=" rounded-xl   flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Report template
             </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex items-center gap-4 flex-col lg:flex-row">
                 <div className=" w-full">
-                  <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                    <Input readOnly type="text" placeholder="Max Bounty" value={filteredReport?.reportTemplate}
+                  <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
+                    <Input type="text" placeholder="Max Bounty" value={filteredReport?.reportTemplate}
                       className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                   </Label>
                 </div>
@@ -352,19 +419,19 @@ export default function SingleReport() {
           </div>
         </div>
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
             3
           </div>
           <div className=" rounded-xl overflow-hidden  flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Weakness
             </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex items-center gap-4 flex-col lg:flex-row">
 
                 <div className="lg:-[40%] w-full">
-                  <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                    <Input readOnly value={filteredReport?.weakness?.name} type="text" placeholder="Max Bounty"
+                  <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
+                    <Input value={filteredReport?.weakness.name} type="text" placeholder="Max Bounty"
                       className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                   </Label>
                 </div>
@@ -372,8 +439,8 @@ export default function SingleReport() {
                 <div className="lg:-[40%] w-full">
 
 
-                  <Label className="flex  bg-[#2451F5] rounded-2xl px-4 w-full">
-                    <Input readOnly value={filteredReport?.weakness?.type} type="text" placeholder="Max Bounty"
+                  <Label className="flex  bg-[#2B0E2B] rounded-2xl px-4 w-full">
+                    <Input value={filteredReport?.weakness.type} type="text" placeholder="Max Bounty"
                       className="bg-transparent text-white rounded-2xl focus:outline-none focus-visible:ring-0 border-none focus-visible:ring-offset-0 placeholder:text-white py-6" />
                   </Label>
                 </div>
@@ -382,16 +449,16 @@ export default function SingleReport() {
           </div>
         </div>
         <div className="flex sm:gap-8 mt-4 flex-col sm:flex-row gap-4">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
             4
           </div>
           <div className=" overflow-hidden  flex-1">
             <div
-              className="rounded-xl sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+              className="rounded-xl sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Severity
             </div>
             {filteredReport?.methodName === 'CVSS' ? (
-              <div className="bg-[#0A273D] py-8 px-8 ">
+              <div className="bg-[#3D0436] py-8 px-8 ">
                 <div className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4  flex-col lg:flex-row gap-4">
                   <RadioInput name="test1" value="test2" id="test2" label="CVSS" defaultChecked />
                 </div>
@@ -403,7 +470,7 @@ export default function SingleReport() {
                 <div className="mt-4 max-w-[1000px] mx-auto">
                   <div className="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-2 gap-4">
 
-                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                       <div className="min-w-[200px] mt-2 xl:mt-0">
                         Attack vector
                       </div>
@@ -412,7 +479,7 @@ export default function SingleReport() {
                       </div>
                     </div>
 
-                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                       <div className="min-w-[200px] mt-2 xl:mt-0">
                         Scope
                       </div>
@@ -421,7 +488,7 @@ export default function SingleReport() {
                       </div>
                     </div>
 
-                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                       <div className="min-w-[200px] mt-2 xl:mt-0">
                         Attack complexity
                       </div>
@@ -430,7 +497,7 @@ export default function SingleReport() {
                       </div>
                     </div>
 
-                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                       <div className="min-w-[200px] mt-2 xl:mt-0">
                         Confidentially
                       </div>
@@ -439,7 +506,7 @@ export default function SingleReport() {
                       </div>
                     </div>
 
-                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                       <div className="min-w-[200px] mt-2 xl:mt-0">
                         User interactions
                       </div>
@@ -448,7 +515,7 @@ export default function SingleReport() {
                       </div>
                     </div>
 
-                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                       <div className="min-w-[200px] mt-2 xl:mt-0">
                         Integrity
                       </div>
@@ -457,7 +524,7 @@ export default function SingleReport() {
                       </div>
                     </div>
 
-                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                       <div className="min-w-[200px] mt-2 xl:mt-0">
                         Privileges required
                       </div>
@@ -466,7 +533,7 @@ export default function SingleReport() {
                       </div>
                     </div>
 
-                    <div className="h-[70px] bg-[#2B5D83] flex items-center sm:px-4 px-4 border-b border-black gap-4">
+                    <div className="h-[70px] bg-[#3D0436] flex items-center sm:px-4 px-4 border-b border-black gap-4">
                       <div className="min-w-[200px] mt-2 xl:mt-0">
                         Availability
                       </div>
@@ -478,7 +545,7 @@ export default function SingleReport() {
                 </div>
               </div>
             ) : (
-              <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+              <div className="py-8 sm:px-8 px-4">
                 <div
                   className="max-w-[1000px] mx-auto flex justify-between lg:items-center mb-4 flex-col lg:flex-row gap-4 ">
                   <RadioInput name="test1" value="test1" id="test1" label="Manual" defaultChecked />
@@ -488,7 +555,7 @@ export default function SingleReport() {
                   <div className='flex max-w-[1000px] mx-auto'>
 
                     <div
-                      className="h-[70px]  w-full bg-[#2B5D83] flex items-center justify-between px-4  border-b border-black xl:flex-row gap-4">
+                      className="h-[70px]  w-full bg-[#3D0436] flex items-center justify-between px-4  border-b border-black xl:flex-row gap-4">
                       <div className=" mt-2 xl:mt-0">
                         Manual
                       </div>
@@ -506,14 +573,14 @@ export default function SingleReport() {
           </div>
         </div>
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
             5
           </div>
           <div className=" rounded-xl overflow-hidden  flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Proof of Concept
             </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex items-center gap-4 flex-col lg:flex-col">
                 <div className="w-full">
                   <h2 className="sm:text-[18px] text-[16px] font-[600] mt-4">
@@ -549,16 +616,16 @@ export default function SingleReport() {
         </div>
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
 
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
             6
           </div>
 
           <div className=" rounded-xl overflow-hidden  flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Attachments
             </div>
 
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex gap-4 flex-col">
                 {attachments && attachments.length > 0 ? (
                   <div className="w-full flex gap-9">
@@ -600,14 +667,14 @@ export default function SingleReport() {
           </div>
         </div>
         <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4">
-          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5]">
+          <div className=" h-[30px] w-[30px] flex items-center justify-center hexagon6 !bg-[#2B0E2B]">
             7
           </div>
           <div className=" rounded-xl overflow-hidden  flex-1">
-            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#001D34] h-[60px] flex items-center px-8">
+            <div className="sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black">
               Discovery details
             </div>
-            <div className="bg-[#0A273D] py-8 sm:px-8 px-4">
+            <div className="bg-[#3D0436] py-8 sm:px-8 px-4">
               <div className="flex gap-4 flex-col">
                 <div>
                   Time Spent
@@ -628,8 +695,8 @@ export default function SingleReport() {
           <div className="flex-1 w-full flex gap-[50px]">
             {/* HACKERS */}
 
-            {collaborators && collaborators.map((c, i) => (
-              <div key={i} className="bg-[#0A273D]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
+            {collaborators.map((c, i) => (
+              <div key={i} className="bg-[#3D0436]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
                 <div className="flex items-center">
                   <div className="hexagon5 m-auto md:m-0 ">
                     <img src={"/assets/images/profileimage.jpeg"} alt="" />
@@ -642,11 +709,11 @@ export default function SingleReport() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-[#001D34] rounded-l-xl rounded-r-xl overflow-hidden flex">
+                <div className="bg-[#FFDE31] rounded-l-xl rounded-r-xl overflow-hidden flex">
                   <input type="number"
-                    className="w-[50px] py-1 px-3 bg-[#001D34] border-r border-white text-white focus:outline-none focus-visible:ring-0" value={c.collaborationPercentage} readOnly
+                    className="w-[50px] py-1 px-3 bg-[#FFDE31] border-r border-black text-white focus:outline-none focus-visible:ring-0" value={c.collaborationPercentage}
                   />
-                  <div className="bg-[#001D34] w-[50px]   flex items-center justify-center "
+                  <div className="bg-[#FFDE31] w-[50px]   flex items-center justify-center "
                   >
                     %
                   </div>
@@ -667,13 +734,13 @@ export default function SingleReport() {
           <div className="flex-1 w-full flex gap-[50px]">
             {onChat ? (
               <>
-                <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 ">
+                <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 w-full">
                   <div className="flex flex-col w-full">
-                    <div className=" rounded-xl overflow-hidden flex flex-col gap-7 bg-[#1431F5]">
+                    <div className="rounded-xl overflow-hidden flex flex-col gap-4 bg-[#3d0436] py-8">
                       {messages.map((msg, i) => (
-                        <div key={i} className="bg-initial py-8 sm:px-8 px-4">
-                          <div className="flex flex-col gap-5">
-                            <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]">
+                        <div key={i} className="bg-initial  sm:px-8 px-4" >
+                          <div className="flex flex-col gap-5" >
+                            <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]" className={msg.direction} >
                               <p>{msg.content}</p>
                             </div>
 
@@ -726,11 +793,12 @@ export default function SingleReport() {
                                 </div>
                             </div> */}
                     </div>
-                    <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#162764]">
+                    <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#3d0436] my-3 px-3">
                       <input
                         type="text"
                         className="w-8/12 outline-none h-[35px] pl-2 text-white bg-inherit"
                         placeholder="Send your message ..."
+                        value={message}
                         onChange={(e) => setMessage(e.target.value)}
                       />
                       <div className="flex items-center gap-1">
@@ -761,8 +829,6 @@ export default function SingleReport() {
 
                   </div>
                 </div>
-
-
 
               </>
             ) : (
