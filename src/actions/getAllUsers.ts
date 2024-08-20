@@ -12,12 +12,9 @@ export async function getAllUsers() {
       throw new Error("Wrong response");
     }
     const data = await res.json();
-
-
-    
     return data.data;
   } catch (err: any) {
     console.log(err);
-    throw new Error(err.message);
+    throw new Error((err as Error).message);
   }
 }
