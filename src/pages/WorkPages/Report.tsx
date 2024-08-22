@@ -18,26 +18,26 @@ export default function Report() {
 
   // Tab-lara uyğun məlumatları filtrləyin
   const filteredData = (data && Array.isArray(data)) 
-    ? data.map((company) => {
-        const filteredReports = company.reports.filter((report) => {
+    ? data.map((user) => {
+        const filteredReports = user.reports.filter((report) => {
           switch (selectedTab) {
             case "Submitted":
-              return report.status === "Submitted" && !report.isRead;
+              return report.statusForUser === "SUBMITTED";
             case "Under review":
-              return report.status === "Under review";
+              return report.statusForUser === "UNDER_REVIEW";
             case "Accepted":
-              return report.status === "Accepted";
+              return report.statusForUser === "ACCEPTED";
             case "Rejected":
-              return report.status === "Rejected";
+              return report.statusForUser === "REJECTED";
             case "All":
             default:
-              // All tab-da yalnız Submitted statuslu və ya oxunmayan reportları göstərin
-              return report.status === "Submitted" || !report.isRead;
+              return true;
           }
         });
-        return { ...company, reports: filteredReports };
+        return { ...user, reports: filteredReports };
       })
     : [];
+
 
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative min-h-screen">
