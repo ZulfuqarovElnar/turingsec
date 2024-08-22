@@ -5,7 +5,6 @@ import Line from "../../components/shared/WorkerShared/Line";
 import RadioInput from "../../components/component/RadioInput";
 import { useState, useEffect, useRef } from "react";
 import { Textarea } from '../../components/ui/textarea';
-import { useGetUserReports } from '../../queryies/useGetUserReports';
 import { useGetReportsForCompanies } from '../../queryies/useGetReportsForCompany';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
@@ -14,6 +13,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { CompatClient } from '@stomp/stompjs';
+import { Button } from '../../components/ui/button';
+import { updateReportAccept, updateReportReject } from '../../actions/updateReportStatus';
 // Add the icon to the library
 library.add(faFile);
 library.add(faVideo)
@@ -81,7 +82,7 @@ export default function SingleReportUser() {
   const [connectionError, setConnectionError] = useState('');
   const [iamHacker, setIamHacker] = useState<boolean>(true);
   const { id } = useParams();
-  const { data: dataUser } = useGetUserReports();
+
   const { data: dataCompany } = useGetReportsForCompanies()
   const [filteredReport, setFilteredReport] = useState<ReportType | undefined>(undefined);
   const [collaborators, setCollaborators] = useState<CollaboratorType[]>([]);
@@ -322,6 +323,23 @@ export default function SingleReportUser() {
     }
 
   }
+
+  const handleAccept = async () => {
+    try {
+      await updateReportAccept(filteredReport?.id);
+    } catch (error) {
+      console.error("Failed to update report status:", error);
+    }
+  };
+
+  const handleReject = async () => {
+    try {
+      await updateReportReject(filteredReport?.id);
+    } catch (error) {
+      console.error("Failed to update report status:", error);
+    }
+  };
+
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
 
@@ -852,7 +870,16 @@ export default function SingleReportUser() {
           </div>
         </div>
 
+        <div className='flex justify-end gap-4'>
+          <Button onClick={handleAccept} className="px-10 py-6 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400">
+            Accept
+          </Button>
+          <Button onClick={handleReject} className="px-10 py-6 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">
+            Reject
+          </Button>
+        </div>
 
+    
       </div>
     </div>
   );

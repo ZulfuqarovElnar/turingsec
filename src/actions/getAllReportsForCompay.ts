@@ -12,7 +12,7 @@ export async function getAllReportsForCompany() {
 
     const apiUrl = import.meta.env.VITE_APP_BASE_URL;
     const res = await fetch(
-      `${apiUrl}/api/bug-bounty-reports/reports/company`,
+      `${apiUrl}/api/bug-bounty-reports/company`,
       {
         method: "GET",
         headers: {
