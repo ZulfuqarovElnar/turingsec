@@ -1,13 +1,21 @@
 export async function getAllMessagesInReport(room: string) {
     try {
-        // console.log(room)
         const userDataString = localStorage.getItem("user");
-        if (!userDataString) {
-            throw new Error("User data not found in localStorage");
-        }
+        
+        const companyDataString = localStorage.getItem("company");
 
-        const userData = JSON.parse(userDataString);
-        const accessToken = userData.accessToken;
+        let accessToken = "";
+        if (userDataString) {
+            const userData = JSON.parse(userDataString);
+            accessToken = userData.accessToken;
+            console.log("userrrrrrrrrrrrrr")
+        } else if (companyDataString) {
+            const userData = JSON.parse(companyDataString);
+            accessToken = userData.accessToken;
+            console.log("companyyyyyyyyyyyyyyy")
+        } else {
+            throw new Error("LocalStoragedə keçərli admin və ya user tapılmadı");
+        }
         const apiUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(`${apiUrl}/api/messagesInReport?room=${room}`, {
             method: 'GET',

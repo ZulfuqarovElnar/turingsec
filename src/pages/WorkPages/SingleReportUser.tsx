@@ -79,21 +79,13 @@ export default function SingleReportUser() {
     // const stompClientRef = useRef(null);
     const stompClientRef = useRef<CompatClient | null>(null);
     const [message, setMessage] = useState("")
-    // const [messages, setMessages] = useState<string[]>([]);
+    const [newMessages, setNewMessages] = useState<string[]>([]);
     const [error, setError] = useState<string[]>([]);
     const [connectionError, setConnectionError] = useState('');
     const [iamHacker, setIamHacker] = useState<boolean>(true);
-    
-    // const { data: dataUser } = useGetUserReports();
-    // const { data: dataCompany} = useGetReportsForCompanies()
-  
-    // const [report, setReport] = useState<ReportType | undefined>(undefined);
     const [collaborators, setCollaborators] = useState<CollaboratorType[]>([]);
     const [accessToken, setAccessToken] = useState<string | null>(null);
-
     const [userData, setUserData] = useState<any>(null);
-    
-    // const [reports, setReports] = useState<any[]>([]);
     
     const { data: report } = useGetReportById(`${id}`)
     const { data: messages } = useGetAllMessagesInReport(`${room}`);
@@ -117,63 +109,8 @@ export default function SingleReportUser() {
         setAttachments(report?.attachments || [])
         console.log("Room num: " + room)
         
-        //console.log(allMessages)
-        // Check for 'company' in localStorage
-        // const companyString = localStorage.getItem("company");
-        // if (companyString) {
-        //     const companyParsed = JSON.parse(companyString);
-        //     setIamHacker(false)
-        //     console.log("companyyyyyyyyyyyyyyyyy")
-        //     let foundReport: ReportType | undefined = undefined;
-        //     dataCompany.forEach((user: UserType) => {
-        //         user.reports.forEach((report: ReportType) => {
-        //             if (report.id === parseInt(`${id}`)) {
-        //                 foundReport = report;
-        //                 // console.log(foundReport)
-        //             }
-        //         });
-        //     });
-            // if (foundReport) {
-            //     setreport(foundReport);
-            // }
-            // setUserData((prevData: any) => ({
-            //     ...prevData,
-            //     ...companyParsed,
-            // }));
-            // if (!accessToken) {
-            //     setAccessToken(companyParsed?.accessToken);
-            // }
-        //}
-        
-         
     }, [report])
-    // useEffect(() => {
-
-    //     // console.log(reports)
-    //     let foundReport: ReportType | undefined = undefined;
-    //     reports.forEach((user: UserType) => {
-    //         user.reports.forEach((report: ReportType) => {
-    //             if (report.id === parseInt(`${id}`)) {
-    //                 foundReport = report;
-    //                 // console.log(foundReport)
-    //             }
-    //         });
-    //     });
-    //     if (foundReport) {
-    //         setreport(foundReport);
-    //     }
-
-    // }, [reports, id]);
-
-    // useEffect(() => {
-    //     console.log("Filtered Report updated:", report);
-    //     setCollaborators(report?.collaborators || [])
-    //     setRoom(report?.room || '')
-    //     setAttachments(report?.attachments || [])
-    //     console.log("Room num: " + room)
-
-    // }, [report]);
-
+   
     useEffect(() => {
         //..................Taking csrf...............
         fetch('http://localhost:5000/api/csrf/csrf-token', {
@@ -246,7 +183,8 @@ export default function SingleReportUser() {
         // Determine message direction based on isHacker
         const messageClass = message.isHacker === iamHacker ? 'message-right' : 'message-left';
 
-        // setMessages(prevMessages => [...prevMessages, { ...message, direction: messageClass }]);
+        setNewMessages(prevMessages => [...prevMessages, { ...message, direction: messageClass }]);
+ 
     };
     //..........On Error
     const onErrorReceived = (payload) => {
@@ -297,6 +235,7 @@ export default function SingleReportUser() {
 
             stompClientRef.current.send(`/app/${room}/sendMessageInReport`, headers, JSON.stringify(chatMessage));
             setMessage('');
+      
         }
     }
     //..................................................
@@ -742,9 +681,9 @@ export default function SingleReportUser() {
                     <div className="flex-1 w-full flex gap-[50px]">
                         {onChat ? (
                             <>
-                                <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 w-full">
-                                    <div className="flex flex-col w-full">
-                                        <div className="rounded-xl overflow-hidden flex flex-col gap-4 bg-[#3d0436] py-8">
+                                <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 w-full ">
+                                    <div className="flex flex-col w-full ">
+                                        <div className="rounded-xl overflow-hidden flex flex-col gap-4 bg-[#3d0436] py-8 overflow-y-scroll bluescroll max-h-[380px]">
                                             {messages.map((msg, i) => (
                                                 <div key={i} className="bg-initial  sm:px-8 px-4" >
                                                     <div className="flex flex-col gap-5" >
@@ -752,55 +691,26 @@ export default function SingleReportUser() {
                                                             <p>{msg.content}</p><span className={msg.isHacker ? 'date-right' : 'date-left'}>{msg.createdAt.slice(11, 16)}</span>
 
                                                         </div>
+                                                        
                                                          
                                                     </div>
                                                 </div>
                                             ))}
-                                            {/* <div className="flex flex-col gap-5 py-2 px-2">
-                                <div className="sm:text-[18px] text-[16px] font-[600] bg-initial h-[60px] flex items-center max-[550px]:flex-col max-[550px]:items-start gap-3 justify-between px-8 ">
-                                    <div className="flex gap-5 ">
-                                        <img
-                                            src="/images/turung.jpg"
-                                            className="hexagon6"
-                                            width={50}
-                                            height={50}
-                                        />
-                                        <p className="text-[25px] text-white">Hacker</p>
-                                    </div>
-                                    <p className="text-gray-500">July 01, 2024, 5:65am UTC</p>
-                                </div>
+                                            {newMessages.map((msg, i) => (
+                                                <div key={i} className="bg-initial  sm:px-8 px-4" >
+                                                    <div className="flex flex-col gap-5" >
+                                                        <div className={msg.isHacker ? `message-right` : `message-left`} >
+                                                            <p>{msg.content}</p><span className={msg.isHacker ? 'date-right' : 'date-left'}>{msg.createdAt.slice(11, 16)}</span>
 
-                                <div className="bg-initial py-8 sm:px-8 px-4">
-                                    <div className="flex flex-col gap-5">
-                                        <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]">
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium dignissimos consectetur sint porro, eveniet dolorum!</p>
-                                        </div>
-                                        <div className="max-w-[350px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-5 py-2 px-2">
-                                <div className="sm:text-[18px] text-[16px] font-[600] bg-initial h-[60px] flex items-center max-[550px]:flex-col-reverse max-[550px]:items-end gap-3 justify-between px-8">
-                                    <p className="text-gray-500">July 01, 2024, 5:65am UTC</p>
-                                    <div className="flex gap-5">
-                                        <p className="text-[25px] text-white">Guest</p>
-                                        <img
-                                            src="/images/hacker.jpg"
-                                            className=" hexagon6 h-[50px] w-[50px]"
-                                            width={50}
-                                            height={50} />
-                                    </div>
-                                </div>
+                                                        </div>
 
-                                <div className="bg-initial py-8 sm:px-8 px-4">
-                                    <div className="flex flex-col items-end gap-5">
-                                        <div className="max-w-[550px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]">
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium ullam vero sit vitae iste saepe.</p>
-                                        </div>
-                                        <div className="max-w-[350px] text-white min-h-[40px] py-2 px-3 rounded-[30px] bg-[#2451F5]"></div>
-                                    </div>
-                                </div>
-                            </div> */}
+
+                                                    </div>
+                                                </div>
+                                            ))}
+                                            
+                                            
+                                           
                                         </div>
                                         <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#3d0436] my-3 px-3">
                                             <input

@@ -2,13 +2,21 @@ export async function getReportById(id: string) {
     try {
         const userDataString = localStorage.getItem("user");
         const adminToken = localStorage.getItem("adminAccessToken"); 
+        const companyDataString = localStorage.getItem("company");
 
         let accessToken = "";
         if (adminToken) {
             accessToken = adminToken;
+            console.log("adminnnnnnnnnnnnnnnn")
+            
         } else if (userDataString) {
             const userData = JSON.parse(userDataString);
             accessToken = userData.accessToken;
+            console.log("userrrrrrrrrrrrrr")
+        } else if (companyDataString) {
+            const userData = JSON.parse(companyDataString);
+            accessToken = userData.accessToken;
+            console.log("companyyyyyyyyyyyyyyy")
         } else {
             throw new Error("LocalStoragedə keçərli admin və ya user tapılmadı");
         }
