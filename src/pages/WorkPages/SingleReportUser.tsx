@@ -113,7 +113,8 @@ export default function SingleReportUser() {
    
     useEffect(() => {
         //..................Taking csrf...............
-        fetch('http://localhost:5000/api/csrf/csrf-token', {
+        const apiUrl = import.meta.env.VITE_APP_BASE_URL;
+        fetch(`${apiUrl}/api/csrf/csrf-token`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -137,7 +138,9 @@ export default function SingleReportUser() {
             'Content-Type': 'application/json'
         };
 
-        const socket = new SockJS('http://localhost:5000/ws');
+        const apiUrl = import.meta.env.VITE_APP_BASE_URL;
+
+        const socket = new SockJS(`${apiUrl}/ws`);
         const stompClient = Stomp.over(() => socket)
         stompClient.debug = (str) => {
             console.log(str);
