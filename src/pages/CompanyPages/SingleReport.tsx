@@ -6,6 +6,7 @@ import RadioInput from "../../components/component/RadioInput";
 import { useState, useEffect, useRef } from "react";
 import { Textarea } from '../../components/ui/textarea';
 import { useGetReportById } from '../../queryies/useGetReportById';
+import { useGetAllReportsCompanysById } from '../../queryies/useGetAllReporsCompanysById';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
 import { faVideo } from '@fortawesome/free-solid-svg-icons';

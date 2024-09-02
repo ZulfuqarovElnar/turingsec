@@ -1,14 +1,14 @@
-export async function getReportById(id: string) {
+export async function getReportsDateRange(toDate:Date, fromDate:Date) {
     try {
         const userDataString = localStorage.getItem("user");
-        const adminToken = localStorage.getItem("adminAccessToken"); 
+        const adminToken = localStorage.getItem("adminAccessToken");
         const companyDataString = localStorage.getItem("company");
 
         let accessToken = "";
         if (adminToken) {
             accessToken = adminToken;
             console.log("adminnnnnnnnnnnnnnnn")
-            
+
         } else if (userDataString) {
             const userData = JSON.parse(userDataString);
             accessToken = userData.accessToken;
@@ -22,7 +22,7 @@ export async function getReportById(id: string) {
         }
 
         const apiUrl = import.meta.env.VITE_APP_BASE_URL;
-        const res = await fetch(`${apiUrl}/api/bug-bounty-reports/${id}`, {
+        const res = await fetch(`${apiUrl}/api/bug-bounty-reports/date-range?startDate=${fromDate}&endDate=${toDate}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -36,7 +36,6 @@ export async function getReportById(id: string) {
         }
 
         const data = await res.json();
-        console.log(data.data)
         return data.data;
     } catch (err: any) {
         console.error(err);
