@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
@@ -9,16 +9,19 @@ import { Calendar } from "../../components/ui/calendar";
 import ReportElement from "../../components/component/Company/ReportElement";
 import { useGetUserReports } from "../../queryies/useGetUserReports";
 import cn from 'classnames';
-
+import { getReportsDateRange } from "../../actions/getReportsDateRange";
 export default function Report() {
-  const { data } = useGetUserReports();
-  const [fromdate, setFromDate] = useState<Date | undefined>(undefined);
-  const [todate, setToDate] = useState<Date | undefined>(undefined);
+  const { data :reports } = useGetUserReports();
+  const [fromDate, setFromDate] = useState<Date | undefined>(undefined);
+  const [toDate, setToDate] = useState<Date | undefined>(undefined);
   const [selectedTab, setSelectedTab] = useState<string>("All");
-
+  // const {data:reportsRange}=getReportsDateRange(fromDate,toDate)
+  useEffect(()=>{
+    
+  },[toDate,fromDate])
   // Tab-lara uyğun məlumatları filtrləyin
-  const filteredData = (data && Array.isArray(data)) 
-    ? data.map((user) => {
+  const filteredData = (reports && Array.isArray(reports)) 
+    ? reports.map((user) => {
         const filteredReports = user.reports.filter((report) => {
           switch (selectedTab) {
             case "Submitted":
@@ -101,11 +104,11 @@ export default function Report() {
                     variant={"outline"}
                     className={cn(
                       "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#2451F5] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white",
-                      !fromdate && "text-muted-foreground"
+                      !fromDate && "text-muted-foreground"
                     )}
                   >
-                    {fromdate ? (
-                      format(fromdate, "PPP")
+                    {fromDate ? (
+                      format(fromDate, "PPP")
                     ) : (
                       <span className="text-white">YYYY-MM-DD</span>
                     )}
@@ -119,9 +122,10 @@ export default function Report() {
                 <PopoverContent className="z-[1000000] dark">
                   <Calendar
                     mode="single"
-                    selected={fromdate}
+                    selected={fromDate}
                     onSelect={setFromDate}
                     initialFocus
+                    
                   />
                 </PopoverContent>
               </Popover>
@@ -135,11 +139,11 @@ export default function Report() {
                     variant={"outline"}
                     className={cn(
                       "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#2451F5] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white",
-                      !todate && "text-muted-foreground"
+                      !toDate && "text-muted-foreground"
                     )}
                   >
-                    {todate ? (
-                      format(todate, "PPP")
+                    {toDate ? (
+                      format(toDate, "PPP")
                     ) : (
                       <span className="text-white">YYYY-MM-DD</span>
                     )}
@@ -153,7 +157,7 @@ export default function Report() {
                 <PopoverContent className="z-[1000000] dark">
                   <Calendar
                     mode="single"
-                    selected={todate}
+                    selected={toDate}
                     onSelect={setToDate}
                     initialFocus
                   />
