@@ -1086,7 +1086,7 @@ const handleSelectChange = (selectedOption) => {
             {collabrates.map((item, i) => {
               return (
                 <CollabrateBox
-                  key={item?.id} // Assuming item.id is a unique identifier
+                  key={i} // Assuming item.id is a unique identifier
                   percent={percent}
                   globalPercentage={globalPercent}
                   setPercent={setPercent}

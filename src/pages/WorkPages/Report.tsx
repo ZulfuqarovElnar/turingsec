@@ -9,17 +9,19 @@ import { Calendar } from "../../components/ui/calendar";
 import ReportElement from "../../components/component/Company/ReportElement";
 import { useGetUserReports } from "../../queryies/useGetUserReports";
 import cn from 'classnames';
-import { getReportsDateRange } from "../../actions/getReportsDateRange";
+import { useGetReportsDateRange } from "../../queryies/useGetReportsDateRange";
 export default function Report() {
   const { data :reports } = useGetUserReports();
   const [fromDate, setFromDate] = useState<Date | undefined>(undefined);
   const [toDate, setToDate] = useState<Date | undefined>(undefined);
   const [selectedTab, setSelectedTab] = useState<string>("All");
-  // const {data:reportsRange}=getReportsDateRange(fromDate,toDate)
-  useEffect(()=>{
+  // const { data: reportsRange } = useGetReportsDateRange(toDate, fromDate)
+ 
+ 
+  // useEffect(()=>{
     
-  },[toDate,fromDate])
-  // Tab-lara uyğun məlumatları filtrləyin
+  // },[toDate,fromDate])
+  //Tab-lara uyğun məlumatları filtrləyin
   const filteredData = (reports && Array.isArray(reports)) 
     ? reports.map((user) => {
         const filteredReports = user.reports.filter((report) => {
@@ -36,8 +38,10 @@ export default function Report() {
             default:
               return true;
           }
+          
         });
         return { ...user, reports: filteredReports };
+
       })
     : [];
 

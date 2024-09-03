@@ -22,7 +22,9 @@ export async function getReportsDateRange(toDate:Date, fromDate:Date) {
         }
 
         const apiUrl = import.meta.env.VITE_APP_BASE_URL;
-        const res = await fetch(`${apiUrl}/api/bug-bounty-reports/date-range?startDate=${fromDate}&endDate=${toDate}`, {
+        const formattedFromDate = fromDate.toISOString(); // or any required format
+        const formattedToDate = toDate.toISOString(); // or any required format
+        const res = await fetch(`${apiUrl}/api/bug-bounty-reports/date-range?startDate=${formattedFromDate}&endDate=${formattedToDate}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
