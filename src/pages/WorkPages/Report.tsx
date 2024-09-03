@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { format } from "date-fns";
+import { format, isWithinInterval, parseISO } from "date-fns";
 import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import { Label } from "../../components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../../components/ui/popover";
@@ -15,16 +15,14 @@ export default function Report() {
   const [fromDate, setFromDate] = useState<Date | undefined>(undefined);
   const [toDate, setToDate] = useState<Date | undefined>(undefined);
   const [selectedTab, setSelectedTab] = useState<string>("All");
-  // const { data: reportsRange } = useGetReportsDateRange(toDate, fromDate)
- 
- 
-  // useEffect(()=>{
-    
-  // },[toDate,fromDate])
+   
   //Tab-lara uyğun məlumatları filtrləyin
-  const filteredData = (reports && Array.isArray(reports)) 
+  const filteredData = reports && Array.isArray(reports)
     ? reports.map((user) => {
-        const filteredReports = user.reports.filter((report) => {
+      const filteredReports = user.reports.filter((report) => {
+        const createdAt = parseISO(report.createdAt);  
+        
+        const matchesTab = (() => {
           switch (selectedTab) {
             case "Submitted":
               return report.statusForUser === "SUBMITTED";
@@ -38,11 +36,27 @@ export default function Report() {
             default:
               return true;
           }
-          
-        });
-        return { ...user, reports: filteredReports };
+        })();
 
-      })
+       
+        const withinDateRange = (() => {
+          if (fromDate && toDate) {
+            return isWithinInterval(createdAt, { start: fromDate, end: toDate });
+          }
+          if (fromDate) {
+            return createdAt >= fromDate;
+          }
+          if (toDate) {
+            return createdAt <= toDate;
+          }
+          return true; // No date filters applied
+        })();
+
+        return matchesTab && withinDateRange;
+      });
+
+      return { ...user, reports: filteredReports };
+    })
     : [];
 
 
