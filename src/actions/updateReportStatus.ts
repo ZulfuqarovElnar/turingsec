@@ -1,4 +1,5 @@
 // Review
+import toast from "react-hot-toast";
 
 export async function updateReportReview(reportId: number): Promise<void> {
     const apiUrl = import.meta.env.VITE_APP_BASE_URL;
@@ -25,6 +26,7 @@ export async function updateReportReview(reportId: number): Promise<void> {
         const errorText = await response.text();
         console.error(`Failed to update the report status: ${response.status} - ${errorText}`);
       } else {
+        toast.success("Report status updated successfully")
         console.log('Report status updated successfully');
       }
     } catch (error) {
@@ -60,6 +62,7 @@ export async function updateReportReview(reportId: number): Promise<void> {
         const errorText = await response.text();
         console.error(`Failed to update the report status: ${response.status} - ${errorText}`);
       } else {
+        toast.success("Report status updated successfully")
         console.log('Report status updated successfully');
       }
     } catch (error) {
@@ -94,6 +97,7 @@ export async function updateReportReview(reportId: number): Promise<void> {
         const errorText = await response.text();
         console.error(`Failed to update the report status: ${response.status} - ${errorText}`);
       } else {
+        toast.success("Report status updated successfully")
         console.log('Report status updated successfully');
       }
     } catch (error) {
