@@ -6,8 +6,8 @@ import { useGetUserReports } from "../../queryies/useGetUserReports";
 
 export default function Dashboard() {
   const [submittedCount, setSubmittedCount] = useState(0);
-  const [collaboratedCount, setCollaboratedCount] = useState(0);
-  const [closedCount, setClosedCount] = useState(0);
+  const [acceptedCount, setAcceptedCount] = useState(0);
+  const [underCount, setUnderCount] = useState(0);
   const [percentage, setPercentage] = useState(0);
   
   const [rewardsCount, setRewardsCount] = useState({
@@ -26,17 +26,17 @@ export default function Dashboard() {
         acc[report.statusForUser] = (acc[report.statusForUser] || 0) + 1;
         return acc;
       }, {});
-
+  
       const rewardsCounts = reports.reduce((acc, report) => {
         acc[report.rewardsStatus] = (acc[report.rewardsStatus] || 0) + 1;
         return acc;
       }, { Low: 0, Medium: 0, High: 0, Critical: 0 });
-
+  
       setSubmittedCount(reportCounts.SUBMITTED || 0);
-      setCollaboratedCount(reportCounts.ACCEPTED || 0);
-      setClosedCount(reportCounts.REJECTED || 0);
+      setAcceptedCount(reportCounts.ACCEPTED || 0);
+      setUnderCount(reportCounts.UNDER_REVIEW || 0);
       setRewardsCount(rewardsCounts);
-
+  
       const acceptedPercentage = reports.length > 0 ? Math.round((reportCounts.ACCEPTED / reports.length) * 100) : 0;
       setPercentage(acceptedPercentage);
     }
@@ -59,17 +59,13 @@ export default function Dashboard() {
       </section>
 
       <div className="bg-[url(/assets/images/bg-hacker.png)] bg-center bg-no-repeat bg-cover flex-1 lg:px-20 sm:px-8 px-3 py-16">
-        <p className="text-[20px] font-[400]">
-          Discover the programs and start hunting to report your first
-          vulnerability
-        </p>
         <div className="my-8 grid gap-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-2 xl:w-[60%] w-full ">
           <Box text="Max Bounty" />
           <Box text="Total Bounty" />
           <Box text="Average Bounty" />
           <Box text="Submitted Reports" data={submittedCount} />
-          <Box text="Collaborated Reports" data={collaboratedCount} />
-          <Box text="Closed Reports" data={closedCount} />
+          <Box text="Under Review Reports" data={underCount} />
+          <Box text="Accepted Reports" data={acceptedCount} />
         </div>
         <div className="flex flex-sm-col items-center justify-around bg-[#885389] rounded-[20px] border-[#2451F5] py-[40px] px-[20px]">
           <div style={{ width: 100 }} className="text-center">
