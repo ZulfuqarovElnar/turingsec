@@ -262,7 +262,7 @@ export default function TabContentProfileCompany() {
               />
             </div>
             <div className="flex items-center gap-8 flex-col sm:flex-row">
-              <Label className="bg-[#061724] rounded-2xl sm:w-[559px] h-[160px] w-full flex justify-center items-center">
+              <Label className="bg-[#3D0436] border rounded-2xl sm:w-[559px] h-[160px] w-full flex justify-center items-center">
                 {imageSrc && (
                   <img
                     src={imageSrc}
@@ -530,7 +530,7 @@ export default function TabContentProfileCompany() {
               />
             </div>
             <div className="sm:space-x-8 flex items-center mt-16 justify-end  flex-col sm:flex-row gap-4 sm:gap-0">
-              <Button className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[220px] bg-[#2451F5] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5]">
+              <Button className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px]  sm:h-[50px] w-full sm:w-[220px] bg-[#FFDE31] text-white  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#2451F5]">
                 Update Profile
               </Button>
             </div>
