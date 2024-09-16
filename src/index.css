@@ -501,17 +501,18 @@ input[type="radio"]:checked + label:before {
 }
 
 .message-right {
-  text-align: right;
   background-color: #c390ef;
   /* Lighter green background */
-  padding: 10px;
+  padding: 7px 15px;
   border-radius: 15px;
   margin: 5px 0;
   display: inline-block;
+  justify-content: end;
   position: relative;
   color: white;
   font-size: 20px;
   width: 70%;
+  max-width: fit-content;
 }
 .date-right{
   position: absolute;
@@ -523,13 +524,16 @@ input[type="radio"]:checked + label:before {
   text-align: left;
   background-color: #fbe2e2;
   /* Lighter red background */
-  padding: 10px;
+  padding: 7px 15px;
   border-radius: 15px;
   margin: 5px 0;
   display: inline-block;
   position: relative;
   font-size: 20px;
+
   width: 70%;
+  max-width: fit-content;
+  
   color: black;
 }
 .date-left {

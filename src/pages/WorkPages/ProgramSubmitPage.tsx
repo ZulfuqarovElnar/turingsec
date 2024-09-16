@@ -261,7 +261,7 @@ const handleManual = () => {
       if (response) {
         toast.success("Report submitted successfully");
         setTimeout(() => {
-          //window.location.href = "/work/dashboard";
+          window.location.href = "/work/report";
         }, 1000);
       } else {
          

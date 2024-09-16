@@ -31,16 +31,16 @@ export default function ProgramOnePage() {
 
   useEffect(() => {
     if (programData && programData.asset) {
-      const easyAssets = programData.asset.lowAsset.assets;
-      const mediumAssets = programData.asset.mediumAsset.assets;
-      const highAssets = programData.asset.highAsset.assets;
-      const criticalAssets = programData.asset.criticalAsset.assets;
+      const easyAssets = programData.asset.lowAsset?.assets;
+      const mediumAssets = programData.asset.mediumAsset?.assets;
+      const highAssets = programData.asset.highAsset?.assets;
+      const criticalAssets = programData.asset.criticalAsset?.assets;
 
       const lengths = [
-        easyAssets.length,
-        mediumAssets.length,
-        highAssets.length,
-        criticalAssets.length,
+        easyAssets?.length,
+        mediumAssets?.length,
+        highAssets?.length,
+        criticalAssets?.length,
       ];
 
       const maxLength = Math.max(...lengths);
@@ -215,52 +215,52 @@ export default function ProgramOnePage() {
             {/* Low Asset */}
             <div className="flex-1 text-center min-w-[100px] p-4 bg-[#00467C] rounded-lg shadow-md">
               <p className="text-[#FFDE31] font-semibold">
-                {programData.asset.lowAsset.assets[i]?.type || "-"}
+                {programData?.asset?.lowAsset?.assets[i]?.type || "-"}
               </p>
               <p className="text-white">
-                {programData.asset.lowAsset.assets[i]?.names.join(", ") || "-"}
+                {programData?.asset?.lowAsset?.assets[i]?.names.join(", ") || "-"}
               </p>
               <p className="text-white">
-                {programData.asset.lowAsset.assets[i]?.price || "-"}
+                {programData?.asset?.lowAsset?.assets[i]?.price || "-"}
               </p>
             </div>
 
             {/* Medium Asset */}
             <div className="flex-1 text-center min-w-[100px] p-4 bg-[#2342E3] rounded-lg shadow-md">
               <p className="text-[#FFDE31] font-semibold">
-                {programData.asset.mediumAsset.assets[i]?.type || "-"}
+                {programData?.asset?.mediumAsset?.assets[i]?.type || "-"}
               </p>
               <p className="text-white">
-                {programData.asset.mediumAsset.assets[i]?.names.join(", ") || "-"}
+                {programData?.asset?.mediumAsset?.assets[i]?.names.join(", ") || "-"}
               </p>
               <p className="text-white">
-                {programData.asset.mediumAsset.assets[i]?.price || "-"}
+                {programData?.asset?.mediumAsset?.assets[i]?.price || "-"}
               </p>
             </div>
 
             {/* High Asset */}
             <div className="flex-1 text-center min-w-[100px] p-4 bg-[#5AFF31] rounded-lg shadow-md">
               <p className="text-[#00467C] font-semibold">
-                {programData.asset.highAsset.assets[i]?.type || "-"}
+                {programData?.asset?.highAsset?.assets[i]?.type || "-"}
               </p>
               <p className="text-gray-900">
-                {programData.asset.highAsset.assets[i]?.names.join(", ") || "-"}
+                {programData?.asset?.highAsset?.assets[i]?.names.join(", ") || "-"}
               </p>
               <p className="text-gray-900"> 
-                {programData.asset.highAsset.assets[i]?.price || "-"}
+                {programData?.asset?.highAsset?.assets[i]?.price || "-"}
               </p>
             </div>
 
             {/* Critical Asset */}
             <div className="flex-1 text-center min-w-[100px] p-4 bg-[#E32323] rounded-lg shadow-md">
               <p className="text-[#FFDE31] font-semibold">
-                {programData.asset.criticalAsset.assets[i]?.type || "-"}
+                {programData?.asset?.criticalAsset?.assets[i]?.type || "-"}
               </p>
               <p className="text-white">
-                {programData.asset.criticalAsset.assets[i]?.names.join(", ") || "-"}
+                {programData?.asset?.criticalAsset?.assets[i]?.names.join(", ") || "-"}
               </p>
               <p className="text-white">
-                {programData.asset.criticalAsset.assets[i]?.price || "-"}
+                {programData?.asset?.criticalAsset?.assets[i]?.price || "-"}
               </p>
             </div> 
           </div>
@@ -280,35 +280,42 @@ export default function ProgramOnePage() {
             </div>
           </div>
         <div className="bg-[#3D0436] h-[365px] p-4 flex flex-wrap">
-        <ul className="w-1/2">
-          {programData?.prohibits
-            .slice(0, Math.ceil(programData?.prohibits.length / 2))
-            .map((item, index) => (
-              <li className=" flex items-center gap-2 py-3 px-2" key={index}>
-                <div className="min-w-[40px]">
-                  <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5] ">
-                    <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#3D0436]">
-                      {index + 1}
-                    </div>
-                  </div>
-                </div>
-                {item.prohibitAdded}</li>
-            ))}
-        </ul>
-        <ul className="w-1/2">
-          {programData?.prohibits
-            .slice(Math.ceil(programData?.prohibits.length / 2))
-            .map((item, index) => (
-              <li className="flex items-start gap-2 py-4 px-3" key={index}>
-                <div className="min-w-[40px]">
-                  <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5] ">
-                    <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#3D0436]">
-                      {index + 1 + Math.ceil(programData?.prohibits.length / 2)}
-                    </div>
-                  </div>
-                </div>{item.prohibitAdded}</li>
-            ))}
-        </ul>
+          {programData?.prohibits?.length > 0 ?(
+            <>
+              <ul className="w-1/2">
+                {programData?.prohibits
+                  .slice(0, Math.ceil(programData?.prohibits?.length / 2))
+                  .map((item, index) => (
+                    <li className=" flex items-center gap-2 py-3 px-2" key={index}>
+                      <div className="min-w-[40px]">
+                        <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5] ">
+                          <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#3D0436]">
+                            {index + 1}
+                          </div>
+                        </div>
+                      </div>
+                      {item.prohibitAdded}</li>
+                  ))}
+              </ul>
+              <ul className="w-1/2">
+                {programData?.prohibits
+                  .slice(Math.ceil(programData?.prohibits?.length / 2))
+                  .map((item, index) => (
+                    <li className="flex items-start gap-2 py-4 px-3" key={index}>
+                      <div className="min-w-[40px]">
+                        <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5] ">
+                          <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#3D0436]">
+                            {index + 1 + Math.ceil(programData?.prohibits?.length / 2)}
+                          </div>
+                        </div>
+                      </div>{item.prohibitAdded}</li>
+                  ))}
+              </ul>
+            </>
+          ):(
+              <p>No prohibits available</p>
+          )}
+        
       </div>
 
         <div className="mt-10">
@@ -323,7 +330,7 @@ export default function ProgramOnePage() {
                 <div>
                   <h3 className="mb-6">Out of Scope</h3>
                 <div className="list-disc ml-6">
-                  {programData?.outOfScope.map((item, index) => (
+                  {programData?.outOfScope?.map((item, index) => (
                     <div className="flex gap-4 mt-4" key={index}>
                       <div className="bg-yellow-500 min-w-[8px] h-[8px] rounded-full mt-2"></div>
                       <span key={index}>{item}</span>
@@ -334,7 +341,7 @@ export default function ProgramOnePage() {
                 <div>
                   <h3 className="mb-6">In of Scope</h3>
                   <div className="list-disc ml-6">
-                    {programData?.inScope.map((item, index) => (
+                    {programData?.inScope?.map((item, index) => (
                       <div className="flex gap-4 mt-4" key={index}>
                         <div className="bg-yellow-500 min-w-[8px] h-[8px] rounded-full mt-2"></div>
                         <span  key={index}>{item}</span>
