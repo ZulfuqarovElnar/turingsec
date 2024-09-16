@@ -690,31 +690,33 @@ export default function SingleReportUser() {
               <>
                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 w-full">
                   <div className="flex flex-col w-full">
-                    <div className="rounded-xl overflow-hidden flex flex-col gap-4 bg-[#3d0436] py-8 overflow-y-scroll bluescroll max-h-[380px]">
-                      {messages.map((msg, i) => (
-                        <div key={i} className="bg-initial  sm:px-8 px-4" >
-                          <div className="flex flex-col gap-5" >
-                            <div className={msg.isHacker ? `message-left` : `message-right`} >
-                              <p>{msg.content}</p><span className={msg.isHacker ? 'date-right' : 'date-left'}>{msg.createdAt.slice(11, 16)}</span>
+                    <div className="rounded-xl overflow-hidden gap-4 bg-[#3d0436] py-8 flex max-h-[380px] justify-center">
+                      <div className=" flex flex-col gap-4 w-2/5 overflow-y-scroll bluescroll bg-[#2B0E2B]">
+                        {messages.map((msg, i) => (
+                          <div key={i} className="bg-initial  sm:px-8 px-4" >
+                            <div className={msg.isHacker ? `flex gap-5` : `flex gap-5 justify-end`} >
+                              <div className={msg.isHacker ? `message-left` : `message-right`} >
+                                <p>{msg.content}</p><span className={msg.isHacker ? 'date-right' : 'date-left'}>{msg.createdAt.slice(11, 16)}</span>
+
+                              </div>
+
 
                             </div>
-
-
                           </div>
-                        </div>
-                      ))}
-                      {newMessages.map((msg, i) => (
-                        <div key={i} className="bg-initial  sm:px-8 px-4" >
-                          <div className="flex flex-col gap-5" >
-                            <div className={msg.isHacker ? `message-left` : `message-right`} >
-                              <p>{msg.content}</p><span className={msg.isHacker ? 'date-left' : 'date-right'}>{msg.createdAt.slice(11, 16)}</span>
+                        ))}
+                        {newMessages.map((msg, i) => (
+                          <div key={i} className="bg-initial  sm:px-8 px-4" >
+                            <div className={msg.isHacker ? `flex gap-5` : `flex gap-5 justify-end`} >
+                              <div className={msg.isHacker ? `message-left` : `message-right`} >
+                                <p>{msg.content}</p><span className={msg.isHacker ? 'date-left' : 'date-right'}>{msg.createdAt.slice(11, 16)}</span>
+
+                              </div>
+
 
                             </div>
-
-
                           </div>
-                        </div>
-                      ))}
+                        ))}</div>
+                      
 
 
 

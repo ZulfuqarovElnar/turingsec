@@ -686,8 +686,7 @@ export default function SingleReportUser() {
                             <>
                                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 w-full ">
                                     <div className="flex flex-col w-full ">
-                                        <div className="rounded-xl overflow-hidden gap-4 bg-[#3d0436] py-8 
-                                         flex max-h-[380px] justify-center">
+                                        <div className="rounded-xl overflow-hidden gap-4 bg-[#3d0436] py-8 flex max-h-[380px] justify-center">
                                             <div className=" flex flex-col gap-4 w-2/5 overflow-y-scroll bluescroll bg-[#2B0E2B]">
                                                 {messages.map((msg, i) => (
                                                     <div key={i} className="bg-initial sm:px-8 px-4 " >
