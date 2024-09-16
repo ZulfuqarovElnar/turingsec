@@ -22,19 +22,35 @@ export default function Dashboard() {
   useEffect(() => {
     if (data?.length > 0) {
       const reports = data.flatMap(item => item.reports || []);
+  
       const reportCounts = reports.reduce((acc, report) => {
         acc[report.statusForCompany] = (acc[report.statusForCompany] || 0) + 1;
         return acc;
       }, {});
   
       const rewardsCounts = reports.reduce((acc, report) => {
-        acc[report.rewardsStatus] = (acc[report.rewardsStatus] || 0) + 1;
+        const { score, rewardsStatus } = report;
+  
+        if (typeof score === 'number') {
+          if (score >= 0 && score < 3) {
+            acc.Low = (acc.Low || 0) + 1;
+          } else if (score >= 3 && score < 6) {
+            acc.Medium = (acc.Medium || 0) + 1;
+          } else if (score >= 6 && score < 8) {
+            acc.High = (acc.High || 0) + 1;
+          } else if (score >= 8 && score <= 10) {
+            acc.Critical = (acc.Critical || 0) + 1;
+          }
+        } else {
+          acc[rewardsStatus] = (acc[rewardsStatus] || 0) + 1;
+        }
+  
         return acc;
       }, { Low: 0, Medium: 0, High: 0, Critical: 0 });
   
       setSubmittedCount(reportCounts.SUBMITTED || 0);
       setAcceptedCount(reportCounts.ASSESSED || 0);
-      setUnderCount(reportCounts.UNREVIEWED || 0);
+      setUnderCount(reportCounts.REVIEWED || 0);
       setRewardsCount(rewardsCounts);
   
       const acceptedPercentage = reports.length > 0 ? Math.round((reportCounts.ASSESSED / reports.length) * 100) : 0;

@@ -22,9 +22,9 @@ export default function ReportCompany() {
         const filteredReports = company.reports.filter((report) => {
           switch (selectedTab) {
             case "Submitted":
-              return report.statusForCompany === "REVIEWED";
+              return report.statusForCompany === "SUBMITTED";
             case "Under review":
-              return report.statusForCompany === "UNREVIEWED";
+              return report.statusForCompany === "REVIEWED";
             case "Accepted":
               return report.statusForCompany === "ASSESSED";
             case "Rejected":
@@ -38,13 +38,15 @@ export default function ReportCompany() {
       }).filter(company => company.reports.length > 0)
     : [];
 
-  const handleReportClick = async (reportId: number) => {
-    try {
-      await updateReportReview(reportId);
-    } catch (error) {
-      console.error(`Failed to update report status: ${error}`);
-    }
-  };
+    const handleReportClick = async (reportId: number, reportStatus: string) => {
+      if (reportStatus === "SUBMITTED") {
+        try {
+          await updateReportReview(reportId);
+        } catch (error) {
+          console.error(`Failed to update report status: ${error}`);
+        }
+      }
+    };
 
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative min-h-screen">
@@ -174,14 +176,17 @@ export default function ReportCompany() {
           <div className="grid 2xl:grid-cols-3 2lg:grid-cols-2 grid-cols-1 gap-4">
             {filteredData &&
               filteredData.map((company) =>
-                company.reports.map((report) => (
-                  <Link to={`single-report/${report.id}`} key={report.id} onClick={() => handleReportClick(report.id)}>
-                    <ReportElement
-                      name={company.companyName}
-                      img="img"
-                    />
-                  </Link>
-                ))
+                company.reports
+                  .slice() 
+                  .reverse() 
+                  .map((report) => (
+                    <Link to={`single-report/${report.id}`} key={report.id} onClick={() => handleReportClick(report.id, report.statusForCompany)}>
+                      <ReportElement
+                        name={company.user.firstName}
+                        img="img"
+                      />
+                    </Link>
+                  ))
               )}
           </div>
         </div>

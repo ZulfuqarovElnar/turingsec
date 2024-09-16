@@ -189,17 +189,20 @@ export default function Report() {
           <div className="grid 2xl:grid-cols-3 2lg:grid-cols-2 grid-cols-1 gap-4">
             {filteredData &&
               filteredData.map((company) =>
-                company.reports.map((report) => (
-                  <Link to={`single-report/${report.id}`} key={report.id}>
-                    <ReportElement
-                      key={report.id}
-                      name={company.companyName}
-                      img="img"
-                    />
-                  </Link>
-                ))
-              )}
-          </div>
+                company.reports
+                  .slice() 
+                  .reverse() 
+                  .map((report) => (
+                    <Link to={`single-report/${report.id}`} key={report.id}>
+                      <ReportElement
+                        key={report.id}
+                        name={company.companyName}
+                        img="img"
+                      />
+                    </Link>
+                  ))
+                )}
+            </div>
         </div>
       </div>
     </div>
