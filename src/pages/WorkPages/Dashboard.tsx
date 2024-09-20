@@ -28,9 +28,26 @@ export default function Dashboard() {
       }, {});
   
       const rewardsCounts = reports.reduce((acc, report) => {
-        acc[report.rewardsStatus] = (acc[report.rewardsStatus] || 0) + 1;
+        const { score, rewardsStatus } = report;
+  
+        if (typeof score === 'number') {
+          if (score === 0) {
+          } else if (score >= 0.1 && score < 3.9) {
+            acc.Low = (acc.Low || 0) + 1;
+          } else if (score >= 4 && score < 6.9) {
+            acc.Medium = (acc.Medium || 0) + 1;
+          } else if (score >= 6 && score < 8.9) {
+            acc.High = (acc.High || 0) + 1;
+          } else if (score >= 9 && score <= 10) {
+            acc.Critical = (acc.Critical || 0) + 1;
+          }
+        } else {
+          acc[rewardsStatus] = (acc[rewardsStatus] || 0) + 1;
+        }
+  
         return acc;
       }, { Low: 0, Medium: 0, High: 0, Critical: 0 });
+  
   
       setSubmittedCount(reportCounts.SUBMITTED || 0);
       setAcceptedCount(reportCounts.ACCEPTED || 0);
