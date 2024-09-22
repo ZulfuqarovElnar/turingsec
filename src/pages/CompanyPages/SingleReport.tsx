@@ -15,7 +15,8 @@ import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { CompatClient } from '@stomp/stompjs';
 import { Button } from '../../components/ui/button';
-import { useGetAllMessagesInReport } from '../../queryies/useGetAllMessagesInReport';
+import { useQuery } from 'react-query';
+import {getAllMessagesInReport} from '../../actions/getAllMessagesInReport'
 import { updateReportAccept, updateReportReject } from '../../actions/updateReportStatus';
 // Add the icon to the library
 library.add(faFile);
@@ -90,8 +91,21 @@ export default function SingleReportUser() {
   const [userData, setUserData] = useState<any>(null);
 
   const { data: report } = useGetReportById(`${id}`)
-  const { data: messages } = useGetAllMessagesInReport(`${room}`);
- 
+  const [messagesFetched, setMessagesFetched] = useState(false);
+  const { data: messages } = useQuery(
+    ['messages', room],      
+    () => getAllMessagesInReport(room),  
+    {
+        enabled: !!room && !messagesFetched,   
+        onSuccess: (fetchedMessages) => {
+            console.log('Messages fetched:', fetchedMessages);
+            setMessagesFetched(true)
+        },
+        onError: (error) => {
+            console.error('Error fetching messages:', error);
+        }
+    }
+);
   useEffect(() => {
         const userString = localStorage.getItem("company");
        
