@@ -16,7 +16,7 @@ export default function CompanySettings() {
   const [page, setPageq] = useState(1);
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
-      <section className="   font-[800] bg-[#1F44CC] h-[124px] flex items-center justify-center overflow-hidden ">
+      <section className="   font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
         <img
           src="/assets/iconnav13.svg"
           alt=""
@@ -30,8 +30,8 @@ export default function CompanySettings() {
         />
       </section>
 
-      <div className="bg-[#1E1E1E] flex-1 lg:px-20 sm:px-8 px-3  py-16">
-        <div className="bg-[#0A273D]  p-8 rounded-xl">
+      <div className="bg-[url(/assets/images/bg-reports.png)] bg-center bg-no-repeat bg-cover flex-1 lg:px-20 sm:px-8 px-3  py-16">
+        <div className="bg-[#3D0436]  p-8 rounded-xl">
           <Tabs defaultValue="profile" className="w-full ">
             <TabsList className="xl:w-[80%] w-full bg-transparent relative flex md:justify-between over justify-evenly ">
               <TabsTrigger

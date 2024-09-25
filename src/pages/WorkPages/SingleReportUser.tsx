@@ -5,8 +5,6 @@ import Line from "../../components/shared/WorkerShared/Line";
 import RadioInput from "../../components/component/RadioInput";
 import { useState, useEffect, useRef } from "react";
 import { Textarea } from '../../components/ui/textarea';
-// import { useGetUserReports } from '../../queryies/useGetUserReports';
-// import { useGetReportsForCompanies } from '../../queryies/useGetReportsForCompany';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
 import { faVideo } from '@fortawesome/free-solid-svg-icons';
@@ -14,10 +12,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { CompatClient } from '@stomp/stompjs';
-import { useGetAllMessagesInReport } from '../../queryies/useGetAllMessagesInReport';
+ 
+import { useQuery } from 'react-query';
+import {getAllMessagesInReport} from '../../actions/getAllMessagesInReport'
 import { useGetReportById } from '../../queryies/useGetReportById';
+ 
 // Add the icon to the library
-
 library.add(faFile);
 library.add(faVideo)
 
@@ -75,8 +75,6 @@ export default function SingleReportUser() {
     const [enlarged, setEnlarged] = useState(null);
     const [room, setRoom] = useState<string>('');
     const [csrfToken, setCsrfToken] = useState('')
-    // const chatAreaRef = useRef(null);
-    // const stompClientRef = useRef(null);
     const stompClientRef = useRef<CompatClient | null>(null);
     const [message, setMessage] = useState("")
     const [newMessages, setNewMessages] = useState<string[]>([]);
@@ -88,11 +86,24 @@ export default function SingleReportUser() {
     const [userData, setUserData] = useState<any>(null);
     
     const { data: report } = useGetReportById(`${id}`)
-    const { data: messages } = useGetAllMessagesInReport(`${room}`);
- 
+    const [messagesFetched, setMessagesFetched] = useState(false);
+    const { data: messages } = useQuery(['messages', room],     
+    () => getAllMessagesInReport(room),  
+    {
+        enabled: !!room && !messagesFetched,     
+        onSuccess: (fetchedMessages) => {
+            console.log('Messages fetched:', fetchedMessages);
+            setMessagesFetched(true)
+        },
+        onError: (error) => {
+            console.error('Error fetching messages:', error);
+        }
+    }
+);
+
     useEffect(() => {
         const userString = localStorage.getItem("user");
-       
+    
         if (userString) {
             
             const userParsed = JSON.parse(userString);
@@ -154,6 +165,7 @@ export default function SingleReportUser() {
         if (stompClientRef.current) {
             stompClientRef.current.deactivate();
         }
+ 
     };
     //...........On Connect
     const onConnected = () => {
@@ -686,36 +698,42 @@ export default function SingleReportUser() {
                             <>
                                 <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 w-full ">
                                     <div className="flex flex-col w-full ">
-                                        <div className="rounded-xl overflow-hidden flex flex-col gap-4 bg-[#3d0436] py-8 overflow-y-scroll bluescroll max-h-[380px]">
-                                            {messages.map((msg, i) => (
-                                                <div key={i} className="bg-initial  sm:px-8 px-4" >
-                                                    <div className="flex flex-col gap-5" >
-                                                        <div className={msg.isHacker? `message-right`: `message-left`} >
-                                                            <p>{msg.content}</p><span className={msg.isHacker ? 'date-right' : 'date-left'}>{msg.createdAt.slice(11, 16)}</span>
+                                        <div className="rounded-xl overflow-hidden gap-4 bg-[#3d0436] py-8 flex max-h-[380px] justify-center">
+                                            <div className=" flex flex-col gap-4 w-2/5 overflow-y-scroll bluescroll bg-[#2B0E2B]">
+                                                {messages.map((msg, i) => (
+                                                    <div key={i} className="bg-initial sm:px-8 px-4 " >
+                                                        <div className={msg.isHacker ? `flex justify-end gap-5` : `flex gap-5` }>
+                                                            <div className={msg.isHacker ? `message-right` : `message-left`} >
+                                                                <p>{msg.content}</p><span className={msg.isHacker ? 'date-right' : 'date-left'}>{msg.createdAt.slice(11, 16)}</span>
+
+                                                            </div>
+
 
                                                         </div>
-                                                        
-                                                         
                                                     </div>
-                                                </div>
-                                            ))}
-                                            {newMessages.map((msg, i) => (
-                                                <div key={i} className="bg-initial  sm:px-8 px-4" >
-                                                    <div className="flex flex-col gap-5" >
-                                                        <div className={msg.isHacker ? `message-right` : `message-left`} >
-                                                            <p>{msg.content}</p><span className={msg.isHacker ? 'date-right' : 'date-left'}>{msg.createdAt.slice(11, 16)}</span>
+                                                ))}
+                                                {newMessages.map((msg, i) => (
+                                                    <div key={i} className="bg-initial  sm:px-8 px-4" >
+                                                        <div className={msg.isHacker ? `flex justify-end gap-5` : `flex gap-5`} >
+                                                            <div className={msg.isHacker ? `message-right` : `message-left`} >
+                                                                <p>{msg.content}</p><span className={msg.isHacker ? 'date-right' : 'date-left'}>{msg.createdAt.slice(11, 16)}</span>
+
+                                                            </div>
+
 
                                                         </div>
-
-
                                                     </div>
-                                                </div>
-                                            ))}
+                                                ))}
+                                            </div>
+                                            
                                             
                                             
                                            
                                         </div>
-                                        <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#3d0436] my-3 px-3">
+                                        <form
+                                            className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#3d0436] my-3 px-3"
+                                            onSubmit={sendMessage}
+                                        >
                                             <input
                                                 type="text"
                                                 className="w-8/12 outline-none h-[35px] pl-2 text-white bg-inherit"
@@ -736,18 +754,20 @@ export default function SingleReportUser() {
                                                     width={50}
                                                     height={50}
                                                 />
-                                                <div className="cursor-pointer flex items-center justify-center w-[75px] h-[40px] p-1 bg-[#2451F5] hover:bg-[#3690f7] rounded-[30px]" onClick={sendMessage}
+                                                <button
+                                                    type="submit"
+                                                    className="cursor-pointer flex items-center justify-center w-[75px] h-[40px] p-1 bg-[#2451F5] hover:bg-[#3690f7] rounded-[30px]"
                                                 >
                                                     <img
                                                         src="/assets/images/send.jpg"
-                                                        className=" transition ease-in-out h-[30px] w-[30px] rounded-[10px] p-1"
+                                                        className="transition ease-in-out h-[30px] w-[30px] rounded-[10px] p-1"
                                                         width={50}
                                                         height={50}
                                                     />
-                                                </div>
+                                                </button>
                                             </div>
+                                        </form>
 
-                                        </div>
 
                                     </div>
                                 </div>

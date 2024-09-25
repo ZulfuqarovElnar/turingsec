@@ -66,7 +66,7 @@ export default function ReportCompany() {
 
       <div className="bg-[url(/assets/images/bg-reports.png)] bg-center bg-no-repeat bg-cover flex-1 lg:px-20 sm:px-8 px-3 py-16">
         <Tabs defaultValue="All" onValueChange={setSelectedTab} className="">
-          <TabsList className="flex bg-[#2451F5] h-[50px] px-0 rounded-2xl pr-0 xl:w-[80%] overflow-auto-auto gap-1">
+          <TabsList className="flex bg-[#200F23] h-[50px] px-0 rounded-2xl pr-0 xl:w-[80%] overflow-auto-auto gap-1">
             <TabsTrigger
               value="All"
               className="bg-transparent sm:text-[18px] text-[16px] font-[600] data-[state=active]:bg-[#FFDE31] data-[state=active]:rounded-2xl flex-1 h-[50px]"
@@ -109,14 +109,14 @@ export default function ReportCompany() {
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#2451F5] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white",
+                      "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#FFDE31] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white",
                       !fromdate && "text-muted-foreground"
                     )}
                   >
                     {fromdate ? (
                       format(fromdate, "PPP")
                     ) : (
-                      <span className="text-white">YYYY-MM-DD</span>
+                      <span className="text-black">YYYY-MM-DD</span>
                     )}
                     <img
                       src="/assets/calendar.svg"
@@ -143,14 +143,14 @@ export default function ReportCompany() {
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#2451F5] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white",
+                      "rounded-3xl text w-[200px] text-[16px] font-[600] lg:w-auto bg-[#FFDE31] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white",
                       !todate && "text-muted-foreground"
                     )}
                   >
                     {todate ? (
                       format(todate, "PPP")
                     ) : (
-                      <span className="text-white">YYYY-MM-DD</span>
+                      <span className="text-black">YYYY-MM-DD</span>
                     )}
                     <img
                       src="/assets/calendar.svg"
