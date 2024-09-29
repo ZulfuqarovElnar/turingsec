@@ -32,13 +32,14 @@ export default function Dashboard() {
         const { score, rewardsStatus } = report;
   
         if (typeof score === 'number') {
-          if (score >= 0 && score < 3) {
+          if (score === 0) {
+          } else if (score >= 0.1 && score < 3.9) {
             acc.Low = (acc.Low || 0) + 1;
-          } else if (score >= 3 && score < 6) {
+          } else if (score >= 4 && score < 6.9) {
             acc.Medium = (acc.Medium || 0) + 1;
-          } else if (score >= 6 && score < 8) {
+          } else if (score >= 6 && score < 8.9) {
             acc.High = (acc.High || 0) + 1;
-          } else if (score >= 8 && score <= 10) {
+          } else if (score >= 9 && score <= 10) {
             acc.Critical = (acc.Critical || 0) + 1;
           }
         } else {
