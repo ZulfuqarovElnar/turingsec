@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { format } from "date-fns";
+import { format, isWithinInterval, parseISO } from "date-fns";
 import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import ReportElement from "../../components/component/Company/ReportElement";
 import { useGetReportsForCompanies } from "../../queryies/useGetReportsForCompany";
@@ -13,26 +13,45 @@ import { Link } from "react-router-dom";
 
 export default function ReportCompany() {
   const { data } = useGetReportsForCompanies();
-  const [fromdate, setFromDate] = useState<Date | undefined>(undefined);
-  const [todate, setToDate] = useState<Date | undefined>(undefined);
+  const [fromDate, setFromDate] = useState<Date | undefined>(undefined);
+  const [toDate, setToDate] = useState<Date | undefined>(undefined);
   const [selectedTab, setSelectedTab] = useState<string>("All");
 
   const filteredData = (data && Array.isArray(data))
     ? data.map((company) => {
         const filteredReports = company.reports.filter((report) => {
-          switch (selectedTab) {
-            case "Submitted":
-              return report.statusForCompany === "SUBMITTED";
-            case "Under review":
-              return report.statusForCompany === "REVIEWED";
-            case "Accepted":
-              return report.statusForCompany === "ASSESSED";
-            case "Rejected":
-              return report.statusForCompany === "REJECTED";
-            case "All":
-            default:
-              return true;
-          }
+          const createdAt = parseISO(report.createdAt);  
+          
+          const matchesTab = (() => {
+            switch (selectedTab) {
+              case "Submitted":
+                return report.statusForUser === "SUBMITTED";
+              case "Under review":
+                return report.statusForUser === "UNDER_REVIEW";
+              case "Accepted":
+                return report.statusForUser === "ACCEPTED";
+              case "Rejected":
+                return report.statusForUser === "REJECTED";
+              case "All":
+              default:
+                return true;
+            }
+          })();
+
+
+          const withinDateRange = (() => {
+            if (fromDate && toDate) {
+              return isWithinInterval(createdAt, { start: fromDate, end: toDate });
+            }
+            if (fromDate) {
+              return createdAt >= fromDate;
+            }
+            if (toDate) {
+              return createdAt <= toDate;
+            }
+            return true; // No date filters applied
+          })();
+          return matchesTab && withinDateRange;
         });
         return { ...company, reports: filteredReports };
       }).filter(company => company.reports.length > 0)
@@ -110,11 +129,11 @@ export default function ReportCompany() {
                     variant={"outline"}
                     className={cn(
                       "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#FFDE31] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white",
-                      !fromdate && "text-muted-foreground"
+                      !fromDate && "text-muted-foreground"
                     )}
                   >
-                    {fromdate ? (
-                      format(fromdate, "PPP")
+                    {fromDate ? (
+                      format(fromDate, "PPP")
                     ) : (
                       <span className="text-black">YYYY-MM-DD</span>
                     )}
@@ -128,7 +147,7 @@ export default function ReportCompany() {
                 <PopoverContent className="z-[1000000] dark">
                   <Calendar
                     mode="single"
-                    selected={fromdate}
+                    selected={fromDate}
                     onSelect={setFromDate}
                     initialFocus
                   />
@@ -144,11 +163,11 @@ export default function ReportCompany() {
                     variant={"outline"}
                     className={cn(
                       "rounded-3xl text w-[200px] text-[16px] font-[600] lg:w-auto bg-[#FFDE31] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white",
-                      !todate && "text-muted-foreground"
+                      !toDate && "text-muted-foreground"
                     )}
                   >
-                    {todate ? (
-                      format(todate, "PPP")
+                    {toDate ? (
+                      format(toDate, "PPP")
                     ) : (
                       <span className="text-black">YYYY-MM-DD</span>
                     )}
@@ -162,7 +181,7 @@ export default function ReportCompany() {
                 <PopoverContent className="z-[1000000] dark">
                   <Calendar
                     mode="single"
-                    selected={todate}
+                    selected={toDate}
                     onSelect={setToDate}
                     initialFocus
                   />
