@@ -194,19 +194,26 @@ export default function ReportCompany() {
         <div className="flex-1 gap-3 py-16">
           <div className="grid 2xl:grid-cols-3 2lg:grid-cols-2 grid-cols-1 gap-4">
             {filteredData &&
-              filteredData.map((company) =>
-                company.reports
-                  .slice() 
-                  .reverse() 
-                  .map((report) => (
-                    <Link to={`single-report/${report.id}`} key={report.id} onClick={() => handleReportClick(report.id, report.statusForCompany)}>
-                      <ReportElement
-                        name={company.user.firstName}
-                        img="img"
-                      />
-                    </Link>
-                  ))
-              )}
+              filteredData
+                .flatMap((company) => 
+                  company.reports.map((report) => ({
+                    ...report, 
+                    user: company.user
+                  }))
+                )
+                .sort((a, b) => b.id - a.id)
+                .map((report) => (
+                  <Link
+                    to={`single-report/${report.id}`}
+                    key={report.id}
+                    onClick={() => handleReportClick(report.id, report.statusForCompany)}
+                  >
+                    <ReportElement
+                      name={report.user.firstName}
+                      img="img"
+                    />
+                  </Link>
+                ))}
           </div>
         </div>
       </div>
