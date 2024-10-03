@@ -115,8 +115,8 @@ export default function Profile() {
         // console.log("userData:", userDataString);
   
         if (userDataString) {
-          const userData = JSON.parse(userDataString);
-          const { id } = userData;
+          //const userData = JSON.parse(userDataString);
+          const id  = currentUser?.hackerId;
           const apiUrl = import.meta.env.VITE_APP_BASE_URL;
            
           if (id) {
@@ -271,28 +271,38 @@ export default function Profile() {
           </h2>
           <ul className="space-y-4 max-w-[100px]">
             <li>
-              <a href={userDate?.github} className="flex items-center gap-3">
+              {userDate?.github && userDate.github.trim() !== '' && (
+                <a href={userDate?.github} className="flex items-center gap-3" target="_blank">
                 <img src="/assets/github.svg" alt="" />
                 <p className="text-[18px] font-[600]">Github</p>
               </a>
+              )}
             </li>
             <li>
-              <a href={userDate?.twitter} className="flex items-center gap-3">
-                <img src="/assets/twitter.svg" alt="" />
-                <p className="text-[18px] font-[600]">Twitter</p>
-              </a>
+              {userDate?.twitter && userDate.twitter.trim() !== '' && (
+                <a href={userDate?.twitter} className="flex items-center gap-3" target="_blank">
+                  <img src="/assets/twitter.svg" alt="" />
+                  <p className="text-[18px] font-[600]">X</p>
+                </a>
+              )}
             </li>
             <li>
-              <a href={userDate?.website} className="flex items-center gap-3">
-                <img src="/assets/website.svg" alt="" />
-                <p className="text-[18px] font-[600]">Website</p>
-              </a>
+              {
+                userDate?.website && userDate.website.trim() !== '' &&(
+                  <a href={userDate?.website} className="flex items-center gap-3" target="_blank">
+                    <img src="/assets/website.svg" alt="" />
+                    <p className="text-[18px] font-[600]">Website</p>
+                  </a>
+                )
+              }
             </li>
             <li>
-              <a href={userDate?.linkedin} className="flex items-center gap-3">
-                <img src="/assets/linkedin.svg" alt="" />
-                <p className="text-[18px] font-[600]">Linkedin</p>
-              </a>
+              {userDate?.linkedin && userDate.linkedin.trim() !== '' && (
+                <a href={userDate?.linkedin} className="flex items-center gap-3" target="_blank">
+                  <img src="/assets/linkedin.svg" alt="" />
+                  <p className="text-[18px] font-[600]">Linkedin</p>
+                </a>
+              )}
             </li>
           </ul>
         </div>

@@ -55,7 +55,7 @@ export default function TabContentProfile() {
   const [userDate, setUserDate] = useState<UserData | null>(null);
   // const [userImage, setUserImage] = useState("");
   // const [backgroundImage, setBackgroundImage] = useState("");
-  // console.log(currentUser)
+ 
   const form = useForm<z.infer<typeof formSchemaProfileUpdate>>({
     resolver: zodResolver(formSchemaProfileUpdate),
     defaultValues: {
@@ -82,8 +82,10 @@ export default function TabContentProfile() {
         // console.log("userData:", userDataString);
 
         if (userDataString) {
-          const userData = JSON.parse(userDataString);
-          const { id } = userData;
+          //const userData = JSON.parse(userDataString);
+          console.log(currentUser?.hackerId)
+          const id  = currentUser?.hackerId;
+          console.log("id: " + id)
           const apiUrl = import.meta.env.VITE_APP_BASE_URL;
 
           if (id) {
@@ -92,10 +94,11 @@ export default function TabContentProfile() {
             const fetchedData = responseData.data;
             // console.log("User data from hacker API:", fetchedData);
             setUserDate(fetchedData as UserData);
-
+            console.log(userDate)
+      
 
           } else {
-            console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
+            console.log("Kullanıcı oturum açmamış veya userId depolanmamış. 1");
           }
 
 

@@ -1,17 +1,18 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useGetUserData } from "../../../queryies/useGetUserData";
 
 export default function Navbar() {
   const url = `/${useLocation().pathname.split("/")[2]}`;
   const [userImage, setUserImage] = useState("/assets/images/default_profile_image.jpg");
-
+  const { data: currentUser } = useGetUserData();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userDataString = localStorage.getItem("user");
         if (userDataString) {
-          const userData = JSON.parse(userDataString);
-          const { id } = userData;
+          //const userData = JSON.parse(userDataString);
+          const id=currentUser?.hackerId;
           const apiUrl = import.meta.env.VITE_APP_BASE_URL;
           if (id) {
             const res2 = await fetch(`${apiUrl}/api/image-for-hacker/download/${id}`);
@@ -39,7 +40,7 @@ export default function Navbar() {
     };
 
     fetchData();
-  }, []);
+  }, [currentUser?.hackerId]);
 
 
   
