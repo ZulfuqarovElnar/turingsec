@@ -631,7 +631,7 @@ const handleSelectChange = (selectedOption) => {
           </div>
         </div>
         <div className="overflow-y-scroll mt-4 bluescroll max-h-[280px]">
-            {weaknessType ? (
+            {
               Array.isArray(weaknesses[weaknessType]) ? (
                 weaknesses[weaknessType].map((text, index) => (
                   <WeaknessLine
@@ -647,9 +647,7 @@ const handleSelectChange = (selectedOption) => {
               ) : (
                 <p className="text-white">Invalid weakness type</p>
               )
-            ) : (
-              <p className="px-8 py-4 bg-[#2B0E2B] sm:text-[16px] text-[14px] font-[600]">Weakness type seçin</p>
-            )}
+             }
           </div>
       </div>
     </div>
@@ -1072,7 +1070,7 @@ const handleSelectChange = (selectedOption) => {
             </div>
           </div>
         </div>
-        <div className="flex  flex-col    lg:flex-row lg:gap-16 gap-4  mt-4 ">
+        <div className="flex flex-col lg:flex-row lg:gap-16 gap-4  mt-4 ">
           <div className="flex flex-col gap-4">
             <h3>Add Collabrate</h3>
             <Button

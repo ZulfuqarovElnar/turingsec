@@ -65,7 +65,7 @@ export default function CollabrateBox({
   
 
   return (
-    <div className="bg-[#3D0436]  px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
+    <div className="bg-[#3D0436]  px-5 sm:px-14 py-6 rounded-2xl flex items-center justify-between w-full relative">
       {!(index == 0) && (
         <button
           className="absolute top-2 right-6 text-red-600"
@@ -106,7 +106,7 @@ export default function CollabrateBox({
         />
 
         <div
-          className="bg-[#FFDE31] w-[50px] text-black  flex items-center 
+          className="bg-[#FFDE31]  w-[50px] text-black  flex items-center 
      
       justify-center "
         >

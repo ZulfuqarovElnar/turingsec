@@ -179,8 +179,8 @@ export default function ProgramOnePage() {
         </div>
         <h2 className="my-[10px] sm:text-[20px] text-[16px] w-[600]">Reward</h2>
         <div className="rounded-2xl overflow-hidden">
-    <div className="bg-[#2B0E2B] h-[70px] items-center px-8 flex">
-      <div className="my-8 flex justify-between flex-1">
+    <div className="bg-[#2B0E2B] min-h-[70px] items-center px-8 flex">
+      <div className="my-8 flex flex-wrap justify-between flex-1">
         <div className={`flex items-center gap-4 `}>
           <div className="bg-[#00467C] h-[8px] w-[100px] rounded-full">
             <div className={`bg-[#FFDE31] h-[8px] w-[60px] rounded-full`}></div>
@@ -211,7 +211,7 @@ export default function ProgramOnePage() {
     <div className="bg-[#3D0436] px-8 border-b border-black py-4">
       {Array.from({ length: maxLength }).map((_, i) => (
         <div key={i} className="mb-4">
-          <div className="flex lg:flex-row items-center justify-between gap-4">
+          <div className="flex flex-wrap lg:flex-row items-center justify-between gap-4">
             {/* Low Asset */}
             <div className="flex-1 text-center min-w-[100px] p-4 bg-[#00467C] rounded-lg shadow-md">
               <p className="text-[#FFDE31] font-semibold">
@@ -226,7 +226,7 @@ export default function ProgramOnePage() {
             </div>
 
             {/* Medium Asset */}
-            <div className="flex-1 text-center min-w-[100px] p-4 bg-[#2342E3] rounded-lg shadow-md">
+            <div className="flex-1 flex-wrap text-center min-w-[100px] p-4 bg-[#2342E3] rounded-lg shadow-md">
               <p className="text-[#FFDE31] font-semibold">
                 {programData?.asset?.mediumAsset?.assets[i]?.type || "-"}
               </p>
@@ -239,7 +239,7 @@ export default function ProgramOnePage() {
             </div>
 
             {/* High Asset */}
-            <div className="flex-1 text-center min-w-[100px] p-4 bg-[#5AFF31] rounded-lg shadow-md">
+            <div className="flex-1 flex-wrap text-center min-w-[100px] p-4 bg-[#5AFF31] rounded-lg shadow-md">
               <p className="text-[#00467C] font-semibold">
                 {programData?.asset?.highAsset?.assets[i]?.type || "-"}
               </p>
@@ -252,7 +252,7 @@ export default function ProgramOnePage() {
             </div>
 
             {/* Critical Asset */}
-            <div className="flex-1 text-center min-w-[100px] p-4 bg-[#E32323] rounded-lg shadow-md">
+            <div className="flex-1 flex-wrap text-center min-w-[100px] p-4 bg-[#E32323] rounded-lg shadow-md">
               <p className="text-[#FFDE31] font-semibold">
                 {programData?.asset?.criticalAsset?.assets[i]?.type || "-"}
               </p>

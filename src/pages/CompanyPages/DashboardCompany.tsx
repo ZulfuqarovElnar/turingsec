@@ -84,7 +84,7 @@ export default function Dashboard() {
           <Box text="Under Review Reports" data={underCount} />
           <Box text="Accepted Reports" data={acceptedCount} />
         </div>
-        <div className="flex flex-sm-row flex-col items-center justify-around bg-[#885389] rounded-[20px] border-[#2451F5] py-[40px] px-[20px]">
+        <div className="flex flex-col md:flex-row sm:flex-row flex-wrap items-center justify-around bg-[#885389] rounded-[20px] border-[#2451F5] py-[40px] px-[20px]">
           <div style={{ width: 100 }} className="text-center">
             <CircularProgressbar
               value={isNaN(percentage) ? 0 : percentage}
