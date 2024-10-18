@@ -78,30 +78,36 @@ export default function Report() {
 
       <div className="bg-[url(/assets/images/bg-reports.png)] bg-center bg-no-repeat bg-cover flex-1 lg:px-20 sm:px-8 px-3 py-16">
         <Tabs defaultValue="All" onValueChange={setSelectedTab} className="">
-          <TabsList className="flex bg-[#2451F5] h-[50px] px-0 rounded-2xl pr-0 xl:w-[80%] overflow-auto-auto gap-1">
+        <TabsList className="flex bg-[#200F23] h-[50px] px-0 rounded-2xl pr-0 xl:w-[80%] overflow-auto-auto gap-1">
             <TabsTrigger
               value="All"
-              className="bg-transparent sm:text-[18px] text-[14px] font-[600] data-[state=active]:bg-[#FFDE31] data-[state=active]:rounded-2xl flex-1 h-[50px]"
+              className="bg-transparent sm:text-[18px] text-[16px] font-[600] data-[state=active]:bg-[#FFDE31] data-[state=active]:rounded-2xl flex-1 h-[50px]"
             >
               All
             </TabsTrigger>
             <TabsTrigger
               value="Submitted"
-              className="bg-transparent sm:text-[18px] text-[14px] font-[600] data-[state=active]:bg-[#FFDE31] data-[state=active]:rounded-2xl flex-1 h-[50px]"
+              className="bg-transparent sm:text-[18px] text-[16px] font-[600] data-[state=active]:bg-[#FFDE31] data-[state=active]:rounded-2xl flex-1 h-[50px]"
             >
-              New
+              Submitted
             </TabsTrigger>
             <TabsTrigger
               value="Under review"
-              className="bg-transparent sm:text-[18px] text-[14px] font-[600] data-[state=active]:bg-[#FFDE31] data-[state=active]:rounded-2xl flex-1 h-[50px]"
+              className="bg-transparent sm:text-[18px] text-[16px] font-[600] data-[state=active]:bg-[#FFDE31] data-[state=active]:rounded-2xl flex-1 h-[50px]"
             >
-              Closed
+              Under review
             </TabsTrigger>
             <TabsTrigger
               value="Accepted"
-              className="bg-transparent sm:text-[18px] text-[14px] font-[600] data-[state=active]:bg-[#FFDE31] data-[state=active]:rounded-2xl flex-1 h-[50px]"
+              className="bg-transparent sm:text-[18px] text-[16px] font-[600] data-[state=active]:bg-[#FFDE31] data-[state=active]:rounded-2xl flex-1 h-[50px]"
             >
               Accepted
+            </TabsTrigger>
+            <TabsTrigger
+              value="Rejected"
+              className="bg-transparent sm:text-[18px] text-[16px] font-[600] data-[state=active]:bg-[#FFDE31] data-[state=active]:rounded-2xl flex-1 h-[50px]"
+            >
+              Rejected
             </TabsTrigger>
           </TabsList>
         </Tabs>
@@ -115,7 +121,7 @@ export default function Report() {
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "rounded-3xl w-[165px] text-[14px] font-[600] lg:w-auto bg-[#2451F5] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white",
+                      "rounded-3xl w-[165px] text-[14px] font-[600] lg:w-auto bg-[#FFDE31] hover:bg-[#FFDE31] justify-start text-left border-0 hover:text-white",
                       !fromDate && "text-muted-foreground"
                     )}
                   >
@@ -150,7 +156,7 @@ export default function Report() {
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "rounded-3xl w-[165px] text-[14px] font-[600] lg:w-auto bg-[#2451F5] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white",
+                      "rounded-3xl w-[165px] text-[14px] font-[600] lg:w-auto bg-[#FFDE31] hover:bg-[#FFDE31] justify-start text-left border-0 hover:text-white",
                       !toDate && "text-muted-foreground"
                     )}
                   >

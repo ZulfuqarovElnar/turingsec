@@ -276,7 +276,7 @@ export default function ProgramOnePage() {
         <div className="bg-[#2B0E2B] mt-7 h-[70px] flex items-center px-8 justify-between">
             <div className="flex items-center gap-4">
               <img src="/assets/stricty.svg" alt="" />
-              <p className="">Stricty Prohibet</p>
+              <p className="">Stricty Prohibited</p>
             </div>
           </div>
         <div className="bg-[#3D0436] h-[365px] p-4 flex flex-wrap">

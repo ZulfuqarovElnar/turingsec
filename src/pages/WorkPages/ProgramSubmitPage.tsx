@@ -491,7 +491,7 @@ const handleSelectChange = (selectedOption) => {
                       <Line key={`${asset.id}-${index}`} text={name} asset={asset} />
                     )))
                 ) : (
-                  <p className="px-8 py-4 bg-[#2B0E2B] sm:text-[16px] text-[14px] font-[600]">Assets type seçin.</p>
+                  <p className="px-8 py-4 bg-[#2B0E2B] sm:text-[16px] text-[14px] font-[600]">Assets type</p>
                 )}
               </div>
             </div>
@@ -625,7 +625,7 @@ const handleSelectChange = (selectedOption) => {
               options={fakeWeaknessData}
               isSearchable={false}
               isClearable={true}
-              placeholder="Weakness type seçin"
+              placeholder="Weakness type"
               onChange={handleSelectChange}
             />
           </div>
@@ -645,7 +645,7 @@ const handleSelectChange = (selectedOption) => {
                   />
                 ))
               ) : (
-                <p className="text-white">Invalid weakness type</p>
+                <p className="text-white"></p>
               )
              }
           </div>

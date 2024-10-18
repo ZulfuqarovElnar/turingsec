@@ -239,12 +239,22 @@ export default function ProgramCreatePage() {
         onClose={toggleModal}
         onSubmit={onSubmitAddRewarModal}
       />
-      <div className="bg-[url('/assets/images/programimage.jpeg')] h-[100px]  bg-center bg-cover  relative w-full">
-        <div className="h-full w-full bg-black opacity-60"></div>
-      </div>
+      <section className="font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
+        <img
+          src="/assets/iconnav1.svg"
+          alt=""
+          className="absolute z-[20] lg:-left-[10%] md:-left-[34%] sm:-left-[100px] top-0 w-[294px] md:w-[392px] -left-[150px]  "
+        />
+        <p className="md:text-[30px] text-[20px]">PROGRAMS</p>
+        <img
+          src="/assets/iconnav2.svg"
+          alt=""
+          className="absolute z-[20] md:-right-[60px] top-0 lg:right-0 sm:-right-[10%] -right-[20%]   overflow-hidden w-[204px] md:w-[242px]"
+        />
+      </section>
 
       
-          <div className="bg-[#1E1E1E] lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
+          <div className="bg-[url(/assets/images/bg-3.png)] bg-center bg-no-repeat bg-cover lg:px-20 sm:px-8 px-3  pb-16 flex-1 z-[400] ">
             <div className="lg:flex my-4  gap-6 relative hidden mb-16">
               <div className="hexagon5 mt-3  min-w-[60px]">
                 <img src="/assets/images/programimage2.jpg" alt="" className="" />
@@ -326,7 +336,7 @@ export default function ProgramCreatePage() {
 
               <div className="rounded-2xl overflow-hidden">
 
-                <div className="bg-[#0A273D] px-6 pt-6 pb-10 relative">
+                <div className="bg-[#3D0436] px-6 pt-6 pb-10 relative">
                   {editDay===true?(
                 <button 
                   onClick={() => setEditDay(false)}
@@ -349,7 +359,7 @@ export default function ProgramCreatePage() {
                             disabled={editDay}
                               variant={"outline"}
                               className={cn(
-                                "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#2451F5] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white ",
+                                "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#FFDE31] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white ",
                                 !fromdate && "text-muted-foreground"
                               )}
                             >
@@ -385,7 +395,7 @@ export default function ProgramCreatePage() {
                           disabled={editDay}
                               variant={"outline"}
                               className={cn(
-                                "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#2451F5] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white ",
+                                "rounded-3xl w-[200px] text-[16px] font-[600] lg:w-auto bg-[#FFDE31] hover:bg-[#2451F5] justify-start text-left border-0 hover:text-white ",
                                 !todate && "text-muted-foreground"
                               )}
                             >
@@ -424,7 +434,7 @@ export default function ProgramCreatePage() {
                   </div>
 
                   <Textarea
-                    className="bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 border-2 border-[#2451F5] h-[160px] rounded-2xl"
+                    className="bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 border-2 border-[#FFDE31] h-[160px] rounded-2xl"
                     value={info}
                     onChange={(e) => setInfo(e.target.value)}
                     disabled={editDay}
@@ -451,7 +461,7 @@ export default function ProgramCreatePage() {
               
             </div>
             <div className="rounded-2xl overflow-hidden">
-              <div className="bg-[#001D34] h-[70px] items-center px-8 flex ">
+              <div className="bg-[#FFDE31] h-[70px] items-center px-8 flex ">
                 <div className="my-8 flex justify-between flex-1">
                   {/* <LevelBar color="#FFDE31" level={60} label="Low" />
               <LevelBar color="#2342E3" level={60} label="Medium" />
@@ -463,7 +473,7 @@ export default function ProgramCreatePage() {
                   <p className="flex-1 text-center hidden lg:block">Price</p>
                 </div>
               </div>
-              <div className="bg-[#0A273D] px-8 border-b border-black py-4">
+              <div className="bg-[#3D0436] px-8 border-b border-black py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex-1 flex justify-between flex-col lg:flex-row items-center lg:items-stretch">
                     <div className={`flex items-center gap-4  flex-1 `}>
@@ -515,7 +525,7 @@ export default function ProgramCreatePage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-[#0A273D] px-8 border-b border-black py-4">
+              <div className="bg-[#3D0436] px-8 border-b border-black py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex-1 flex justify-between flex-col lg:flex-row items-center lg:items-stretch">
                     <div className={`flex items-center gap-4 flex-1 `}>
@@ -568,7 +578,7 @@ export default function ProgramCreatePage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-[#0A273D] px-8 border-b border-black py-4">
+              <div className="bg-[#3D0436] px-8 border-b border-black py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex-1 flex justify-between items-center lg:items-stretch flex-col lg:flex-row">
                     <div className={`flex items-center gap-4 flex-1 `}>
@@ -620,7 +630,7 @@ export default function ProgramCreatePage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-[#0A273D] px-8 border-b border-black py-4">
+              <div className="bg-[#3D0436] px-8 border-b border-black py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex-1 flex justify-between flex-col lg:flex-row items-center lg:items-stretch">
                     <div className={`flex items-center gap-4 flex-1 `}>
@@ -676,7 +686,7 @@ export default function ProgramCreatePage() {
             </div>
 
             <h2 className="my-[10px] sm:text-[20px] text-[16px] w-[600]">Policy</h2>
-            <div className="bg-[#0A273D] p-8 rounded-xl relative">
+            <div className="bg-[#3D0436] p-8 rounded-xl relative">
           {editPolicy === true ? (
             <button
               onClick={() => setEditPolicy(false)}
@@ -687,7 +697,7 @@ export default function ProgramCreatePage() {
             <></>
           )}
               <Textarea
-                className="bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 border-2 border-[#2451F5] h-[160px] rounded-2xl"
+                className="bg-transparent hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 border-2 border-[#FFDE31] h-[160px] rounded-2xl"
                 disabled={editPolicy}
                 value={policy}
                 onChange={(e) => setPolicy(e.target.value)}
@@ -695,7 +705,7 @@ export default function ProgramCreatePage() {
             </div>
 
             <div className="rounded-2xl overflow-hidden mt-8">
-              <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between relative">
+              <div className="bg-[#FFDE31] h-[70px] flex items-center px-8 justify-between relative">
             {editStricty === true ? (
               <button
                 onClick={() => setEditStricty(false)}
@@ -710,12 +720,12 @@ export default function ProgramCreatePage() {
                   <p className="">Stricty Prohibet</p>
                 </div>
               </div>
-              <div className="bg-[#0A273D] p-8 grid lg:grid-cols-2 gap-12 grid-cols-1">
+              <div className="bg-[#3D0436] p-8 grid lg:grid-cols-2 gap-12 grid-cols-1">
                 {stricty.map((element, index) => (
                   <div key={index} className="flex gap-4">
                     <div className="min-w-[40px]">
-                      <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#2451F5] ">
-                        <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#0A273D]">
+                      <div className=" !h-[30px] !w-[30px] flex items-center justify-center hexagon6 !bg-[#660867] ">
+                        <div className="flex items-center justify-center hexagon6 !h-[27px] !w-[27px] !bg-[#660867]">
                           {index + 1}
                         </div>
                       </div>
@@ -756,7 +766,7 @@ export default function ProgramCreatePage() {
             </div>
 
             <div className="rounded-2xl overflow-hidden mt-8">
-              <div className="bg-[#001D34] h-[70px] flex items-center px-8 justify-between relative">
+              <div className="bg-[#FFDE31] h-[70px] flex items-center px-8 justify-between relative">
             {editScope===true?(
               <button onClick={() => setEditScope(false)}
               className="bg-[#BDBDBD] rounded-full absolute z-20 right-5 top-5 p-[8px]">
@@ -771,7 +781,7 @@ export default function ProgramCreatePage() {
                   <p className="">Scope</p>
                 </div>
               </div>
-              <div className="bg-[#0A273D] p-8  ">
+              <div className="bg-[#3D0436] p-8  ">
                 <div className="gap-12 flex  flex-col lg:flex-row">
                   <div className="flex-1">
                     <h3 className="mb-6">Out of Scope</h3>
@@ -860,14 +870,14 @@ export default function ProgramCreatePage() {
             </div>
              {data?.data.length>0?(
           <Button
-            className="hover:scale-105 transition-all mt-4 duration-300 rounded-xl  py-[9px]  bg-transparent text-white  border-2 border-[#2451F5] font-[600] hover:bg-transparent flex gap-4 px-4 w-[120px] ml-auto"
+            className="hover:scale-105 transition-all mt-4 duration-300 rounded-xl  py-[9px]  bg-transparent text-white  border-2 border-[#FFDE31] font-[600] hover:bg-transparent flex gap-4 px-4 w-[120px] ml-auto"
             onClick={createProgram}
           >
             Edit
           </Button>
              ):(       
             <Button
-              className="hover:scale-105 transition-all mt-4 duration-300 rounded-xl  py-[9px]  bg-transparent text-white  border-2 border-[#2451F5] font-[600] hover:bg-transparent flex gap-4 px-4 w-[120px] ml-auto"
+              className="hover:scale-105 transition-all mt-4 duration-300 rounded-xl  py-[9px]  bg-transparent text-white  border-2 border-[#FFDE31] font-[600] hover:bg-transparent flex gap-4 px-4 w-[120px] ml-auto"
               onClick={createProgram}
             >
               Update
