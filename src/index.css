@@ -455,11 +455,11 @@ body {
 
 .bluescroll::-webkit-scrollbar {
   width: 5px;
-  background-color: #00467c;
+  background-color: #b39a21;
 }
 
 .bluescroll::-webkit-scrollbar-thumb {
-  background: #2342e3; /* Color of the scrollbar handle */
+  background: #FFDE31; /* Color of the scrollbar handle */
 }
 
 input[type="radio"] {
@@ -498,49 +498,4 @@ input[type="radio"]:checked + label:before {
 .bg-linear-btn{
   background: linear-gradient(87.81deg, rgba(251, 55, 255, 0.13) -4.47%, rgba(171, 44, 173, 0.195) 39.64%, rgba(250, 0, 210, 0.325) 100%);
 
-}
-
-.message-right {
-  background-color: #c390ef;
-  /* Lighter green background */
-  padding: 7px 15px;
-  border-radius: 15px;
-  margin: 5px 0;
-  display: inline-block;
-  justify-content: end;
-  position: relative;
-  color: white;
-  font-size: 20px;
-  width: 70%;
-  max-width: fit-content;
-}
-.date-right{
-  position: absolute;
-  right: 20px; 
-  bottom: -25px; 
-  color: white;
-  font-size: 15px;
-}
-.message-left {
-  text-align: left;
-  background-color: #fbe2e2;
-  /* Lighter red background */
-  padding: 7px 15px;
-  border-radius: 15px;
-  margin: 5px 0;
-  display: inline-block;
-  position: relative;
-  font-size: 20px;
-
-  width: 70%;
-  max-width: fit-content;
-  
-  color: black;
-}
-.date-left {
-  position: absolute;
-  left:20px;
-  bottom:-25px;
-  color:white;   
-  font-size: 15px;
 }
