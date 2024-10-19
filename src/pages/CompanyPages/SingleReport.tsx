@@ -700,93 +700,106 @@ export default function SingleReportUser() {
           </div>
         </div>
 
-        <div className="flex  flex-col  lg:flex-row lg:gap-16 gap-4  mt-4 ">
-          <div className="flex flex-col gap-4"></div>
-          <div className="flex-1 w-full flex gap-[50px]">
-            {onChat ? (
-              <>
-                <div className="flex sm:gap-8 flex-col sm:flex-row gap-4 mt-4 w-full">
-                  <div className="flex flex-col w-full">
-                    <div className="rounded-xl overflow-hidden gap-4 bg-[#3d0436] py-8 flex max-h-[380px] justify-center">
-                      <div className=" flex flex-col gap-4 w-2/5 overflow-y-scroll bluescroll bg-[#2B0E2B]">
-                        {messages.map((msg, i) => (
-                          <div key={i} className="bg-initial  sm:px-8 px-4" >
-                            <div className={msg.isHacker ? `flex gap-5` : `flex gap-5 justify-end`} >
-                              <div className={msg.isHacker ? `message-left` : `message-right`} >
-                                <p>{msg.content}</p><span className={msg.isHacker ? 'date-right' : 'date-left'}>{msg.createdAt.slice(11, 16)}</span>
+        <div className="flex flex-col lg:flex-row lg:gap-16 gap-4 mt-4 lg:ml-14">
+                    <div className="flex-1 w-full flex gap-[50px] lg:ml-2">
+                        {onChat ? (
+                            <div className="flex flex-col gap-4 w-full">
+                                <div className="rounded-xl overflow-hiddenp-8 flex max-h-[380px] justify-center">
+                                    <div className="flex flex-col w-full p-5 overflow-y-scroll bluescroll ">
+                                        {/* Messages Rendering */}
+                                        {[...messages, ...newMessages].map((msg, i) => {
+                                            if (!msg) {
+                                                return null;
+                                            }
 
-                              </div>
+                                            return (
+                                                <div key={i} className={`flex flex-col ${msg.isHacker ? 'justify-start' : 'justify-end'} gap-5 px-3 w-full`}>
+                                                    <div className={`flex items-start gap-3 w-full ${msg.isHacker ? 'flex-row' : 'flex-row-reverse'}`}>
+                                                        {/* Message Header */}
+                                                        <div className={`flex justify-between items-center w-full ${msg.isHacker ? '' : 'flex-row-reverse'}`}>
+                                                            {/* Render Profile Image and Name only if it's different from the last message */}
+                                                            {(i === 0 || (messages[i - 1] && messages[i - 1].isHacker !== msg.isHacker)) && (
+                                                                <div className={`flex items-center gap-4 mt-4 ${msg.isHacker ? '' : 'flex-row-reverse'}`}>
+                                                                    <div className="hexagon5">
+                                                                        <img src={"/assets/images/profileimage.jpeg"} alt="" />
+                                                                    </div>
+                                                                    <span className="text-white font-bold text-lg">{msg.isHacker ? 'Hacker' : 'Company'}</span>
+                                                                </div>
+                                                            )}
 
+                                                            {/* Timestamp */}
+                                                            {(i === 0 || (messages[i - 1] && messages[i - 1].isHacker !== msg.isHacker)) && (
+                                                                <span className={`text-[#A5A5A5] text-2xl font-semibold mt-4 ${msg.isHacker ? 'text-left' : 'text-right'}`}>
+                                                                    {new Date(msg.createdAt).toLocaleString('sv-SE', { timeZone: 'Asia/Baku', hour12: false }).replace('T', ' ').slice(0, 16)} UTC
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
 
+                                                    {/* Message Body */}
+                                                    <div className={`flex ${msg.isHacker ? 'justify-start' : 'justify-end'}`}>
+                                                        <p className={`py-4 px-7 max-w-[70%] h-auto rounded-3xl text-white overflow-wrap break-words ${msg.isHacker ? 'bg-[#061723]' : 'bg-[#4A4009]'}`}>
+                                                            {msg.content}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+
+                                <form
+                                    className="flex items-center justify-between pl-4 h-[50px] rounded-[30px] w-full bg-[#0C194A] my-3 px-3"
+                                    onSubmit={sendMessage}
+                                >
+                                    <input
+                                        type="text"
+                                        className="w-8/12 outline-none h-[35px] pl-2 text-white bg-inherit"
+                                        placeholder="Send your message ..."
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                    />
+                                    <div className="flex items-center gap-2.5">
+                                        <img
+                                            src="/assets/images/fileicon.svg"
+                                            className="cursor-pointer transition ease-in-out h-[30px] w-[30px] hover:bg-sky-700 p-[5px] rounded-[25px]"
+                                            alt="File"
+                                        />
+                                        <img
+                                            src="/assets/images/cameraicon.svg"
+                                            className="cursor-pointer transition ease-in-out h-[30px] w-[30px] hover:bg-sky-700 rounded-[10px] p-1"
+                                            alt="Camera"
+                                        />
+                                        <button
+                                            type="submit"
+                                            className="cursor-pointer flex items-center justify-center w-[75px] h-[40px] p-1 bg-[#FFDE31] hover:bg-[#e4c52b] rounded-[30px]"
+                                        >
+                                            <img
+                                                src="/assets/images/sendicon.svg"
+                                                className="transition ease-in-out h-[30px] w-[30px] rounded-[10px] p-1"
+                                                alt="Send"
+                                            />
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                          </div>
-                        ))}
-                        {newMessages.map((msg, i) => (
-                          <div key={i} className="bg-initial  sm:px-8 px-4" >
-                            <div className={msg.isHacker ? `flex gap-5` : `flex gap-5 justify-end`} >
-                              <div className={msg.isHacker ? `message-left` : `message-right`} >
-                                <p>{msg.content}</p><span className={msg.isHacker ? 'date-left' : 'date-right'}>{msg.createdAt.slice(11, 16)}</span>
-
-                              </div>
-
-
+                        ) : (
+                            <div className='py-8 rounded-2xl flex items-center justify-between w-full'>
+                                <button
+                                    className='flex gap-1 items-center bg-[#FFDE31] max-w-[270px] text-black font-semibold min-h-[40px] py-4 px-9 rounded-[30px]'
+                                    onClick={connect}
+                                >
+                                    <img
+                                        src="/assets/images/messageicon.svg"
+                                        className="transition ease-in-out h-[30px] w-[30px] rounded-[10px] p-1"
+                                        alt="Message icon"
+                                    />
+                                    Chat with Hacker
+                                </button>
                             </div>
-                          </div>
-                        ))}</div>
-                      
-
-
-
+                        )}
                     </div>
-                    <div className="flex items-center justify-between overflow-hidden pl-4 h-[50px] rounded-[30px] w-full bg-[#3d0436] my-3 px-3">
-                      <input
-                        type="text"
-                        className="w-8/12 outline-none h-[35px] pl-2 text-white bg-inherit"
-                        placeholder="Send your message ..."
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                      />
-                      <div className="flex items-center gap-1">
-                        <img
-                          src="/images/file.png"
-                          className="cursor-pointer transition ease-in-out h-[30px] w-[30px] hover:bg-sky-700 p-[5px] rounded-[25px]"
-                          width={50}
-                          height={50}
-                        />
-                        <img
-                          src="/images/Vector-camera.png"
-                          className="cursor-pointer transition ease-in-out h-[30px] w-[30px] hover:bg-sky-700 rounded-[10px] p-1"
-                          width={50}
-                          height={50}
-                        />
-                        <div className="cursor-pointer flex items-center justify-center w-[75px] h-[40px] p-1 bg-[#2451F5] hover:bg-[#3690f7] rounded-[30px]" onClick={sendMessage}
-                        >
-                          <img
-                            src="/assets/images/send.jpg"
-                            className=" transition ease-in-out h-[30px] w-[30px] rounded-[10px] p-1"
-                            width={50}
-                            height={50}
-                          />
-                        </div>
-                      </div>
-
-                    </div>
-
-                  </div>
                 </div>
-
-              </>
-            ) : (
-
-              <div className='py-8 rounded-2xl flex items-center justify-between w-full relative'>
-                <button className='bg-[#2451F5] max-w-[250px] text-white min-h-[40px] py-2 px-3 rounded-[30px]' onClick={connect}>Chat with Company</button>
-              </div>
-
-            )}
-
-          </div>
-
-        </div>
         <div className="flex  flex-col  lg:flex-row lg:gap-16 gap-4  mt-4 ">
           <div className="flex flex-col gap-4"></div>
           <div className="flex-1 w-full flex gap-[50px]">
