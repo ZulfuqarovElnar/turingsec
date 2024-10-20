@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { useNavigate } from "react-router";
 import Select from "react-select";
 
 
@@ -47,6 +47,7 @@ const breakpoints = [1040, 1224];
 
 const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 export default function TabContentProfile() {
+  const navigate=useNavigate()
   const { data: currentUser } = useGetUserData();
   const [imageSrc, setImageSrc] = useState("");
   const [imageSrcUser, setImageSrcUser] = useState("");
@@ -264,15 +265,18 @@ export default function TabContentProfile() {
 
         throw new Error("Please try again later");
       }
-      if (resJson.meta && resJson.meta.message) {
-        const takingToken = resJson.meta.message;
-        const newToken = takingToken.substring(98)
-        // Update the token in local storage or where you store 
-        user.accessToken=newToken
-        localStorage.setItem("user", JSON.stringify(user));
-      }
+      // if (resJson.meta && resJson.meta.message) {
+      //   const takingToken = resJson.meta.message;
+      //   const newToken = takingToken.substring(98)
+      //   // Update the token in local storage or where you store 
+      //   user.accessToken=newToken
+      //   localStorage.setItem("user", JSON.stringify(user));
+      // }
 
       toast.success("Profile Updated");
+      setTimeout(() => {
+        navigate('/work/profile')
+      }, 1000);
       
     } catch (err: any) {
       toast.error("Error", err?.message);

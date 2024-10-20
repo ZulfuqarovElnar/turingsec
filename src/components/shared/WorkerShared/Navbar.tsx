@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useGetUserData } from "../../../queryies/useGetUserData";
 
 export default function Navbar() {
+
   const url = `/${useLocation().pathname.split("/")[2]}`;
   const [userImage, setUserImage] = useState("/assets/images/default_profile_image.jpg");
   const { data: currentUser } = useGetUserData();
@@ -40,7 +41,7 @@ export default function Navbar() {
     };
 
     fetchData();
-  }, [currentUser?.hackerId]);
+  }, [currentUser?.hackerId, userImage]);
 
 
   
