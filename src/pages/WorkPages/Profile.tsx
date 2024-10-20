@@ -109,8 +109,10 @@ export default function Profile() {
   ];
 
   useEffect(() => {
+  
     const fetchData = async () => {
       try {
+        
         const userDataString = localStorage.getItem("user");
         // console.log("userData:", userDataString);
   
@@ -130,6 +132,7 @@ export default function Profile() {
           }
   
           if (id) {
+         
             const res1 = await fetch(
               `${apiUrl}/api/background-image-for-hacker/download/${id}`
             );
