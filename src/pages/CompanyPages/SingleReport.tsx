@@ -828,7 +828,7 @@ export default function SingleReportUser() {
           </>
           ) : (
             <span className="text-lg font-bold bg-white px-10 py-3 text-black rounded-lg">
-              {report?.statusForCompany}
+              {report?.statusForCompany === 'ASSESSED' ? 'Accepted' : 'Rejected'}
             </span>
           )}
         </div>
