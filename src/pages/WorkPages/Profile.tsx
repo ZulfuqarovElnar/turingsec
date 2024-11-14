@@ -261,7 +261,7 @@ export default function Profile() {
           </p>
         </div>
         <h2 className="text-[18px] sm:text-[20px] font-[600] sm:font-[700] my-8">
-          Hactivity
+          Hacktivity
         </h2>
         <div className=" rounded-[20px] overflow-hidden">
           {fakeData.map((data, i) => (
