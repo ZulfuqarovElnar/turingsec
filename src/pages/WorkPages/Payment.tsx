@@ -21,6 +21,7 @@ export default function Payment() {
                 />
             </section>
             <div className="bg-[url(/assets/images/bg-hacktivity.png)] bg-center bg-no-repeat bg-cover flex-1 lg:px-20 sm:px-8 px-3  py-16">
+            
                 <h2 className="my-[25px] sm:text-[20px] text-[16px] w-[600]">Overview</h2>
                 <div className=" rounded-xl overflow-hidden  flex-1">
                     <div className="rounded-xl sm:text-[18px] text-[16px] font-[600] bg-[#FFDE31] h-[60px] flex items-center px-8 text-black relative">
