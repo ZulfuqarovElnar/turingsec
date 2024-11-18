@@ -1,8 +1,33 @@
 import NotificationBox from "../../components/component/NotificationBox";
 import NotificationMessage from "../../components/component/NotificationMessage";
+import { useEffect } from "react";
 // import Box from "../../components/component/Worker/Box";
 
 export default function Notification() {
+  // useEffect(() => {
+  //   const userDataString = localStorage.getItem("user");
+  
+  //   if (!userDataString) {
+  //     throw new Error("User data not found in localStorage");
+  //   }
+  //   const userData = JSON.parse(userDataString);
+  //   const accessToken = userData.accessToken;
+  //   const eventSource = new EventSource(`http://localhost:5000/api/sse/notifications`, {
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`
+  //     }
+  //   });
+
+  //   eventSource.onmessage = (event: MessageEvent) => {
+  //     const data= JSON.parse(event.data);
+  //     console.log('Notification received:', data);
+  //   };
+
+  //   eventSource.onerror = (error) => {
+  //     console.error('EventSource failed:', error);
+  //   };
+
+  // }, []);
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative min-h-screen">
       <section className="   font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">

@@ -30,8 +30,10 @@ import ReportCompany from "./pages/CompanyPages/ReportsCompany";
 import CompanyProfile from "./pages/CompanyPages/CompanyProfile";
 import Setting from "./pages/WorkPages/Setting";
 import Report from "./pages/WorkPages/Report";
-
+import Payment from "./pages/WorkPages/Payment"
+import AddCard from "./pages/WorkPages/AddCard";
 import Notification from "./pages/WorkPages/Notification";
+ 
 import Inbox from "./pages/WorkPages/Inbox";
 import ProgramOnePage from "./pages/WorkPages/ProgramOnePage";
 import ProgramSubmitPage from "./pages/WorkPages/ProgramSubmitPage";
@@ -91,6 +93,8 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Setting />} />
           <Route path="report" element={<Report />} />
+          <Route path="payment" element={<Payment/>}/>
+          <Route path="payment/card" element={<AddCard />} />
           <Route path="report/single-report/:id" element={<SingleReportUser />} />
           <Route path="programs/:programId" element={<ProgramOnePage />} />
           <Route

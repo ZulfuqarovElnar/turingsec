@@ -157,6 +157,20 @@ export default function Navbar() {
             <p className="hidden md:block">Profile</p>
           </Link>
         </li>
+        <li>
+          <Link
+            to={"payment"}
+            className={`flex items-center  text-[22px] gap-5 font-[600] ${url == "/report" ? "bg-[#FFDE31] text-dark" : "text-white"
+              } py-3  md:rounded-full rounded-[30px] md:px-10 px-2`}
+          >
+            <img
+              src="/assets/icon26.svg"
+              alt=""
+              className="md:w-[32px] w-[34px] m-auto md:m-0"
+            />
+            <p className="hidden md:block">Payment</p>
+          </Link>
+        </li>
       </ul>
       <ul>
         <li>
