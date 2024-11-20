@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { formSchemaProfileUpdate } from "../../lib/schemas";
-import Select from "react-select";
+ 
 import { Label } from "../../components/ui/label";
 import { useState } from "react";
 import { Button } from "../../components/ui/button";
@@ -30,7 +30,67 @@ export default function AddCard() {
 
         },
     });
+    //Countries
+    const countries = [
+        { value: "us", label: "United States" },
+        { value: "uk", label: "United Kingdom" },
+        { value: "az", label: "Azerbaijan" },
+        { value: "ru", label: "Russian" },
+        { value: "tr", label: "Turkiye" },
+    ];
 
+    const cities = [
+        { value: "us", label: "Miami" },
+        { value: "uk", label: "London" },
+        { value: "az", label: "Baku" },
+        { value: "ru", label: "Nizhny Novgorod" },
+        { value: "tr", label: "Ankara" },
+    ];
+
+    //Date
+    const [day, setDay] = useState("");
+    const [month, setMonth] = useState("");
+    const [year, setYear] = useState("");
+    const [error, setError] = useState("");
+
+    // Generate options for Day, Month, and Year
+    const days = Array.from({ length: 31 }, (_, i) => i + 1);
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
+    const years = Array.from({ length: 75 }, (_, i) => new Date().getFullYear() - i);
+
+    // Validate the date when all fields are selected
+    const validateDate = () => {
+        if (!day || !month || !year) {
+            setError("Please select a valid date.");
+            return false;
+        }
+
+        const selectedDate = new Date(year, month - 1, day);
+        if (
+            selectedDate.getDate() !== parseInt(day) ||
+            selectedDate.getMonth() + 1 !== parseInt(month) ||
+            selectedDate.getFullYear() !== parseInt(year)
+        ) {
+            setError("Invalid date. Please select a valid combination.");
+            return false;
+        }
+
+        setError("");
+        return true;
+    };
     return (
         <div className="text-white flex-1 flex flex-col overflow-hidden relative">
             <section className="font-[800] bg-[#200F23] h-[124px] flex items-center justify-center overflow-hidden ">
@@ -76,7 +136,7 @@ export default function AddCard() {
 
                                                                 {...field}
                                                                 //defaultValue={userDate?.first_name || ''}
-                                                                className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white py-6 h-[50px] mt-[20px] xl:min-w-[250px]"
+                                                                className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white p-[10px] h-[50px] mt-[20px] xl:min-w-[250px]"
                                                             />
                                                         </FormControl>
                                                         <FormMessage />
@@ -91,7 +151,7 @@ export default function AddCard() {
                                             </Label>
                                             <FormField
                                                 //control={form.control}
-                                                name="firstname"
+                                                name="lastname"
 
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -101,7 +161,7 @@ export default function AddCard() {
 
                                                                 {...field}
                                                                 //defaultValue={userDate?.first_name || ''}
-                                                                className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white py-6 h-[50px] mt-[20px] xl:min-w-[250px]"
+                                                                className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white p-[10px] h-[50px] mt-[20px] xl:min-w-[250px]"
                                                             />
 
                                                         </FormControl>
@@ -124,13 +184,15 @@ export default function AddCard() {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormControl>
-                                                            <input
-                                                                type="text"
-
-                                                                {...field}
-                                                                //defaultValue={userDate?.first_name || ''}
-                                                                className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white py-6 h-[50px] mt-[20px] xl:min-w-[250px]"
-                                                            />
+                                                            <select className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white p-[10px] h-[50px] mt-[20px] xl:min-w-[250px]">
+                                                                <option value="" disabled selected></option>
+                                                                {countries.map((country) => (
+                                                                    <option key={country.value} className="text-black" value={country.value}>
+                                                                        {country.label}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                             
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -147,13 +209,14 @@ export default function AddCard() {
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormControl>
-                                                            <input
-                                                                type="text"
-
-                                                                {...field}
-                                                                //defaultValue={userDate?.first_name || ''}
-                                                                className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white py-6 h-[50px] mt-[20px] xl:min-w-[250px]"
-                                                            />
+                                                            <select className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white p-[10px] h-[50px] mt-[20px] xl:min-w-[250px]">
+                                                                <option value="" disabled selected></option>
+                                                                {cities.map((city) => (
+                                                                    <option key={city.value} className="text-black" value={city.value}>
+                                                                        {city.label}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
 
                                                         </FormControl>
                                                         <FormMessage />
@@ -177,7 +240,7 @@ export default function AddCard() {
 
                                                                 {...field}
                                                                 //defaultValue={userDate?.first_name || ''}
-                                                                className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white py-6 h-[50px] mt-[20px] xl:min-w-[250px]"
+                                                                className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white p-[10px] h-[50px] mt-[20px] xl:min-w-[250px]"
                                                             />
 
                                                         </FormControl>
@@ -190,7 +253,58 @@ export default function AddCard() {
                                     </div>
 
 
+                                    <div className="flex gap-4">
+                                        {/* Day Dropdown */}
+                                        <select
+                                            value={day}
+                                            onChange={(e) => setDay(e.target.value)}
+                                            className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white py-3 h-[50px] px-4"
+                                        >
+                                            <option value="" disabled>
+                                                Day
+                                            </option>
+                                            {days.map((day) => (
+                                                <option key={day} value={day}>
+                                                    {day}
+                                                </option>
+                                            ))}
+                                        </select>
 
+                                        {/* Month Dropdown */}
+                                        <select
+                                            value={month}
+                                            onChange={(e) => setMonth(e.target.value)}
+                                            className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white py-3 h-[50px] px-4"
+                                        >
+                                            <option value="" disabled>
+                                                Month
+                                            </option>
+                                            {months.map((month, index) => (
+                                                <option key={index} value={index + 1}>
+                                                    {month}
+                                                </option>
+                                            ))}
+                                        </select>
+
+                                        {/* Year Dropdown */}
+                                        <select
+                                            value={year}
+                                            onChange={(e) => setYear(e.target.value)}
+                                            className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white py-3 h-[50px] px-4"
+                                        >
+                                            <option value="" disabled>
+                                                Year
+                                            </option>
+                                            {years.map((year) => (
+                                                <option key={year} value={year}>
+                                                    {year}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    {/* Error Message */}
+                                    {error && <p className="text-black-500 mt-2 text-sm">{error}</p>}
 
 
 
