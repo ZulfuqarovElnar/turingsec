@@ -4,10 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { formSchemaProfileUpdate } from "../../lib/schemas";
- 
+import { useNavigate } from "react-router-dom";
 import { Label } from "../../components/ui/label";
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import { Button } from "../../components/ui/button";
+import axios from "axios";
 import {
     Form,
     FormControl,
@@ -17,27 +18,48 @@ import {
 } from "../../components/ui/form";
 
 export default function AddCard() {
+    const [countriess, setCountriess] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Fetch countries using REST Countries API
+        axios
+            .get("https://restcountries.com/v3.1/all")
+            .then((response) => {
+                // Sort countries alphabetically by name.common
+                const sortedCountries = response.data.sort((a, b) =>
+                    a.name.common.localeCompare(b.name.common)
+                );
+                setCountriess(sortedCountries);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error("Error fetching countries:", error);
+                setLoading(false);
+            });
+    }, []);
+
+
+    const navigate = useNavigate();
     const [firstPart, setFirstPart] = useState(true)
     const form = useForm<z.infer<typeof formSchemaProfileUpdate>>({
         resolver: zodResolver(formSchemaProfileUpdate),
         defaultValues: {
             firstname: "",
             lastname: "",
-            website: "",
-            bio: "",
-            username: "",
+            country: "",
             city: "",
 
         },
     });
     //Countries
-    const countries = [
-        { value: "us", label: "United States" },
-        { value: "uk", label: "United Kingdom" },
-        { value: "az", label: "Azerbaijan" },
-        { value: "ru", label: "Russian" },
-        { value: "tr", label: "Turkiye" },
-    ];
+    // const countries = [
+    //     { value: "us", label: "United States" },
+    //     { value: "uk", label: "United Kingdom" },
+    //     { value: "az", label: "Azerbaijan" },
+    //     { value: "ru", label: "Russian" },
+    //     { value: "tr", label: "Turkiye" },
+    // ];
 
     const cities = [
         { value: "us", label: "Miami" },
@@ -177,6 +199,13 @@ export default function AddCard() {
                                         <div className="">
                                             <Label className="sm:text-[18px] text-[14px] font-[600] md:min-w-[130px] sm:min-w-[100px] ">Country
                                             </Label>
+                                            {/* <ul>
+                                                {countriess.map((country) => (
+                                                    <li key={country?.cca3}>
+                                                        {country?.name?.common} - {country?.region}
+                                                    </li>
+                                                ))}
+                                            </ul> */}
                                             <FormField
                                                 //control={form.control}
                                                 name="country"
@@ -186,9 +215,9 @@ export default function AddCard() {
                                                         <FormControl>
                                                             <select className="bg-[rgba(254,60,183,0.2)] border-[3px] border-solid border-[rgba(255,255,255,0.13)] text-white rounded-[25px] focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-1 placeholder:text-white p-[10px] h-[50px] mt-[20px] xl:min-w-[250px]">
                                                                 <option value="" disabled selected></option>
-                                                                {countries.map((country) => (
-                                                                    <option key={country.value} className="text-black" value={country.value}>
-                                                                        {country.label}
+                                                                {countriess.map((country) => (
+                                                                    <option key={country?.cca3} className="text-black" value={country.cca3}>
+                                                                        {country?.name?.common}
                                                                     </option>
                                                                 ))}
                                                             </select>
@@ -308,13 +337,16 @@ export default function AddCard() {
 
 
 
-                                    <div className="sm:space-x-8 flex items-center mt-16 justify-end  flex-col sm:flex-row gap-4 sm:gap-0">
-                                        <Button className="hover:scale-110 transition-all duration-300 rounded-xl h-[45px] text-black sm:h-[50px] w-full sm:w-[220px] bg-[#FFDE31]  sm:text-[18px] font-[600] text-[16px]   hover:bg-[#FFDE31]">
-                                            Add
-                                        </Button>
-                                    </div>
+                                     
                                 </form>
                             </Form>
+                            <div className="w-[600] flex  justify-center content-center">
+
+                                <Button className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-transparent text-white  border-2 border-[rgba(255,234,0,0.3)]  font-[600] hover:bg-[rgba(255,234,0,0.3)] flex gap-4 px-4 w-[160px]" onClick={() => navigate("/work/payment") }>BACK
+                                </Button>
+                                <Button className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-transparent text-white  border-2 border-[rgba(255, 255, 255, 0.1) 50%)] bg-[rgba(255,234,0,0.3)] font-[600] hover:bg-transparent flex gap-4 px-4 w-[160px] ml-[10px]" onClick={() => setFirstPart(false)}>NEXT
+                                </Button>
+                            </div>
                         </div>
                     </div>
 
@@ -322,16 +354,19 @@ export default function AddCard() {
 
 
                 ) : (
-                    <div>Second</div>
+                    <div>
+                        <h1>SECOND</h1>
+                            <div className="sm:space-x-8 flex items-center mt-16 justify-end  flex-col sm:flex-row gap-4 sm:gap-0">
+                                <Button className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-transparent text-white  border-2 border-[rgba(255,234,0,0.3)]  font-[600] hover:bg-[rgba(255,234,0,0.3)] flex gap-4 px-4 w-[160px]" onClick={() => setFirstPart(true)}>BACK
+                                </Button>
+                                <Button className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-transparent text-white  border-2 border-[rgba(255, 255, 255, 0.1) 50%)] bg-[rgba(255,234,0,0.3)] font-[600] hover:bg-transparent flex gap-4 px-4 w-[160px] ml-[10px]">
+                                    Add
+                                </Button>
+                            </div>
+                    </div>
                 )}
 
-                <div className="w-[600] flex  justify-center content-center">
-
-                    <Button className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-transparent text-white  border-2 border-[rgba(255,234,0,0.3)]  font-[600] hover:bg-[rgba(255,234,0,0.3)] flex gap-4 px-4 w-[160px]" onClick={() => setFirstPart(true)}>BACK
-                    </Button>
-                    <Button className="hover:scale-105 transition-all duration-300 rounded-3xl  py-[7px]  bg-transparent text-white  border-2 border-[rgba(255, 255, 255, 0.1) 50%)] bg-[rgba(255,234,0,0.3)] font-[600] hover:bg-transparent flex gap-4 px-4 w-[160px] ml-[10px]" onClick={() => setFirstPart(false)}>NEXT
-                    </Button>
-                </div>
+                 
 
             </div>
         </div>
