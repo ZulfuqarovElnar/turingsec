@@ -44,7 +44,7 @@ export default function SingleReportUser() {
       vulnerabilityUrl: string;
       description: string;
     };
-    discoveryDetails: {
+    discoveryDetails: { 
       timeSpend: string;
     };
     attachments: AttachmentType[];
@@ -92,6 +92,7 @@ export default function SingleReportUser() {
 
   const { data: report } = useGetReportById(`${id}`)
   const [messagesFetched, setMessagesFetched] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const { data: messages } = useQuery(
     ['messages', room],      
     () => getAllMessagesInReport(room),  
@@ -281,23 +282,27 @@ export default function SingleReportUser() {
 
   const handleAccept = async () => {
     try {
+      setButtonDisabled(true);
       await updateReportAccept(report?.id);
     } catch (error) {
       console.error("Failed to update report status:", error);
+      setButtonDisabled(false);
     }
   };
 
   const handleReject = async () => {
     try {
+      setButtonDisabled(true); 
       await updateReportReject(report?.id);
     } catch (error) {
       console.error("Failed to update report status:", error);
+      setButtonDisabled(false);
     }
   };
   const showButtons =
     report?.statusForCompany !== "ASSESSED" &&
     report?.statusForCompany !== "REJECTED" &&
-    !status; 
+    !buttonDisabled;; 
   return (
     <div className="text-white flex-1 flex flex-col overflow-hidden relative">
 
@@ -810,25 +815,35 @@ export default function SingleReportUser() {
           </div>
         </div>
 
-        <div className='flex justify-end gap-4'>
+        <div className="flex justify-end gap-4">
           {showButtons ? (
-          <>
-            <Button
-              onClick={handleAccept}
-              className="px-10 py-6 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-            >
-              Accept
-            </Button>
-            <Button
-              onClick={handleReject}
-              className="px-10 py-6 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
-            >
-              Reject
-            </Button>
-          </>
+            <>
+              <Button
+                onClick={handleAccept}
+                disabled={buttonDisabled}
+                className={`px-10 py-6 ${
+                  buttonDisabled
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-green-500 hover:bg-green-600"
+                } text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400`}
+              >
+                Accept
+              </Button>
+              <Button
+                onClick={handleReject}
+                disabled={buttonDisabled}
+                className={`px-10 py-6 ${
+                  buttonDisabled
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-red-500 hover:bg-red-600"
+                } text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400`}
+              >
+                Reject
+              </Button>
+            </>
           ) : (
             <span className="text-lg font-bold bg-white px-10 py-3 text-black rounded-lg">
-              {report?.statusForCompany === 'ASSESSED' ? 'Accepted' : 'Rejected'}
+              {report?.statusForCompany === "ASSESSED" ? "Accepted" : "Rejected"}
             </span>
           )}
         </div>
