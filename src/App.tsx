@@ -49,6 +49,9 @@ import ContactUs from "./components/shared/ContactUs";
 import Admin from "./pages/AdminPages/Admin";
 import AdminLoginPage from "./pages/AdminPages/AdminLoginPage";
 import SingleAdminReport from "./components/component/Admin/SingleAdminReport";
+import PaymentMethod from "./pages/WorkPages/PaymentMethod";
+import PaymentTransfer from "./pages/WorkPages/PaymentTransfer";
+import PaymentCards from "./pages/WorkPages/PaymentCards";
 
 function App() {
   function ScrollToTop() {
@@ -94,7 +97,10 @@ function App() {
           <Route path="settings" element={<Setting />} />
           <Route path="report" element={<Report />} />
           <Route path="payment" element={<Payment/>}/>
-          <Route path="payment/card" element={<AddCard />} />
+          <Route path="paymentmethod/card" element={<AddCard />} />
+          <Route path="payment/paymentcards" element={<PaymentCards />} />
+          <Route path="payment/addcard" element={<AddCard/>} />
+          <Route path="payment/paymenttransfer" element={<PaymentTransfer/>} />
           <Route path="report/single-report/:id" element={<SingleReportUser />} />
           <Route path="programs/:programId" element={<ProgramOnePage />} />
           <Route

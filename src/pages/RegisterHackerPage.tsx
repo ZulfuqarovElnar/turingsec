@@ -64,6 +64,17 @@ export default function RegisterHackerPage() {
           hackerId: currentUser?.hackerId,
         }),
       });
+
+      console.log({
+        usernameOrEmail: values.email,
+        password: values.password,
+        accessToken: currentUser?.accessToken,
+        hackerId: currentUser?.hackerId,
+      });
+      
+
+      console.log(response);
+      
   
       if (!response.ok) {
         const errorData =  await response.json();

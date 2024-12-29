@@ -50,6 +50,7 @@ export default function TabContentEmail() {
         password: data.password,
         newEmail: data.newEmail,
       };
+
       const res = await fetch(
         `${apiUrl}/api/auth/change-email`,
         {
@@ -66,10 +67,12 @@ export default function TabContentEmail() {
       console.log(resJson)
 
       if (res.ok) {
+
         // Handle success
         toast.success("Email changed successfully!");
-       
       } else {
+      console.log(datt);
+
 
         toast.error(`${resJson.message}`);
         // Handle error

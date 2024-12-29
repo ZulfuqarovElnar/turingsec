@@ -58,8 +58,8 @@ export default function Setting() {
                 value="email"
                 className={`data-[state=active]:bg-transparent text-white data-[state=active]:text-white
                 transition-all
-               mt-2
-               sm:text-[18px] font-[600] text-[14px]
+                mt-2
+                sm:text-[18px] font-[600] text-[14px]
                 tag
                 data-[state=active]:after:w-full
                 rounded-none 
@@ -78,8 +78,8 @@ export default function Setting() {
                 value="password"
                 className={`data-[state=active]:bg-transparent text-white data-[state=active]:text-white
                 transition-all
-               mt-2
-               sm:text-[18px] font-[600] text-[14px]
+                mt-2
+                sm:text-[18px] font-[600] text-[14px]
                 tag
                 data-[state=active]:after:w-full
                 rounded-none 

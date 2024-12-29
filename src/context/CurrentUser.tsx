@@ -37,6 +37,8 @@
   // Custom hook to use the current user context
   const useCurrentUser = () => {
     const context = useContext(CurrentUserContext);
+    // console.log(context);
+    
     if (!context) {
       throw new Error("useCurrentUser must be used within a CurrentUserProvider");
     }
@@ -57,9 +59,6 @@
           
           if (userString) {
             const user = JSON.parse(userString);
-       
-            // console.log(user.accessToken);
-
       
             const apiUrl = import.meta.env.VITE_APP_BASE_URL;
             const res = await fetch(
@@ -71,6 +70,11 @@
                 },
               }
             );
+
+            if (!user?.accessToken) {
+              console.error("Access token not found. User needs to log in again.");
+              return;
+            }
       
             if (res.ok) {
               const updatedUser = await res.json();

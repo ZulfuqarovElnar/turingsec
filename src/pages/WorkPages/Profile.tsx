@@ -120,7 +120,6 @@ export default function Profile() {
           //const userData = JSON.parse(userDataString);
           const id  = currentUser?.hackerId;
           const apiUrl = import.meta.env.VITE_APP_BASE_URL;
-           
           if (id) {
             const res = await fetch(`${apiUrl}/api/hacker/${id}`);
             const responseData = await res.json();
@@ -132,7 +131,6 @@ export default function Profile() {
           }
   
           if (id) {
-         
             const res1 = await fetch(
               `${apiUrl}/api/background-image-for-hacker/download/${id}`
             );

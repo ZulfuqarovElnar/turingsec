@@ -50,6 +50,7 @@ export default function SignupAsHacker() {
   async function onSubmit(values: z.infer<typeof formSchemaHackerRegister>) {
     try {
       const apiUrl = import.meta.env.VITE_APP_BASE_URL;
+      console.log("API Base URL:", import.meta.env.VITE_APP_BASE_URL);
   
       const response = await fetch(`${apiUrl}/api/auth/register/hacker`, {
         method: "POST",
@@ -75,21 +76,28 @@ export default function SignupAsHacker() {
       const result = await response.json();
       toast.success(result.meta.message);
   
-      const { userId, access_token, username } = result;
+      const { userId, access_token, username,firstName, lastName, country } = result;
       localStorage.setItem(
         "user",
         JSON.stringify({
           username: username,
           userId: userId,
           accessToken: access_token,
+          firstName: firstName,
+          lastName: lastName,
+          country: country,
+  
         })
-      );  
+      );
+      
       navigate("/");
     } catch (error: any) {
       console.error("An error occurred:", error);
       toast.error("An unexpected error occurred.");
     }
   }
+
+  
   
 
   return (

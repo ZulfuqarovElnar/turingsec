@@ -42,87 +42,45 @@ interface UserData {
   imageId: string;
 }
 
-
 const breakpoints = [1040, 1224];
-
 const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
+
 export default function TabContentProfile() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const { data: currentUser } = useGetUserData();
   const [imageSrc, setImageSrc] = useState("");
   const [imageSrcUser, setImageSrcUser] = useState("");
-  const [imageRealSrc, setImageRealSrc] = useState("");
-  const [imageRealSrcUser, setImageRealSrcUser] = useState("");
   const [userDate, setUserDate] = useState<UserData | null>(null);
-  // const [userImage, setUserImage] = useState("");
-  // const [backgroundImage, setBackgroundImage] = useState("");
- 
+  
   const form = useForm<z.infer<typeof formSchemaProfileUpdate>>({
     resolver: zodResolver(formSchemaProfileUpdate),
     defaultValues: {
-      firstname: userDate?.first_name || "",
-      lastname: userDate?.last_name || "",
-      website: userDate?.website || "",
-      bio: userDate?.bio || "",
-      username: userDate?.username || "",
-      city: userDate?.city || "",
-      linkedin: userDate?.linkedin || "",
-      twitter: userDate?.twitter || "",
-      github: userDate?.github || "",
-      country: userDate?.country
-        ? { value: userDate?.country, label: userDate?.country }
-        : { value: "", label: "Select Country..." },
+      firstname: "",
+      lastname: "",
+      bio: "",
+      username: "",
+      linkedin: "",
+      twitter: "",
+      github: "",
+      country: { value: "", label: "Select Country..." },
     },
   });
+
   const options = useMemo(() => countryList().getData(), []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userDataString = localStorage.getItem("user");
-        // console.log("userData:", userDataString);
-
         if (userDataString) {
-          //const userData = JSON.parse(userDataString);
-          console.log(currentUser?.hackerId)
-          const id  = currentUser?.hackerId;
-          console.log("id: " + id)
+          const id = currentUser?.hackerId;
           const apiUrl = import.meta.env.VITE_APP_BASE_URL;
-
           if (id) {
             const res = await fetch(`${apiUrl}/api/hacker/${id}`);
             const responseData = await res.json();
-            const fetchedData = responseData.data;
-            // console.log("User data from hacker API:", fetchedData);
-            setUserDate(fetchedData as UserData);
-            console.log(userDate)
-      
-
-          } else {
-            console.log("Kullanıcı oturum açmamış veya userId depolanmamış. 1");
+            console.log(responseData);
+            setUserDate(responseData.data as UserData);
           }
-
-
-          if (id) {
-            const res1 = await fetch(
-              `${apiUrl}/api/background-image-for-hacker/download/${id}`
-            );
-
-            const backgroundImageBlob = await res1.blob();
-
-            const res2 = await fetch(
-              `${apiUrl}/api/image-for-hacker/download/${id}`
-            );
-
-            const userImageBlob = await res2.blob();
-
-            setImageSrcUser(URL.createObjectURL(userImageBlob));
-            setImageSrc(URL.createObjectURL(backgroundImageBlob));
-          } else {
-            console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
-          }
-        } else {
-          console.log("Kullanıcı oturum açmamış veya userId depolanmamış.");
         }
       } catch (error) {
         console.log(error);
@@ -133,101 +91,83 @@ export default function TabContentProfile() {
   }, [currentUser?.hackerId]);
 
   useEffect(() => {
-    if (currentUser) {
-      const country = options.filter(
-        (a) => a.value === userDate?.country
-      );
+    console.log("Fetched userDate:", userDate);
+    if (userDate) {
+      // const country = options.find(a => {
+      //   console.log('Value:', a.value, 'User Date Country:', userDate?.country);
+      //   return a.value === userDate?.country;
+      // });
+      
+      // console.log('Found Country:', country);
+      
+      
+      // console.log(options);
+      // console.log(country);
+      // console.log(typeof userDate?.country); // Check type of userDate?.country
+      // console.log(options.map(option => typeof option.value)); // Check types of values in options
 
-      form.setValue("firstname", userDate?.first_name || "");
-      form.setValue("lastname", userDate?.last_name || "");
-      form.setValue("username", currentUser?.username || "");
-      form.setValue("website", userDate?.website || "");
-      form.setValue("bio", userDate?.bio || "");
-      form.setValue("city", userDate?.city || "");
-      form.setValue("linkedin", userDate?.linkedin || "");
-      form.setValue("twitter", userDate?.twitter || "");
-      form.setValue("github", userDate?.github || "");
+
+      
+      form.setValue("firstname", userDate.first_name || "");
+      form.setValue("lastname", userDate.last_name || "");
+      form.setValue("username", userDate.username || "");
+      form.setValue("bio", userDate.bio || "");
+      form.setValue("linkedin", userDate.linkedin || "");
+      form.setValue("twitter", userDate.twitter || "");
+      form.setValue("github", userDate.github || "");
       form.setValue("country", {
-        value: country[0]?.value || "",
-        label: country[0]?.label || "Select Country...",
+        value: userDate.country || "",
+        label: userDate.country || "Select Country...",
       });
     }
-  }, [userDate]);
+  }, [userDate, options, form]);
+
+  
 
   const handleFileChange = (e) => {
-    // console.log(e);
     const file = e.target.files[0];
-    setImageRealSrc(file);
     const reader = new FileReader();
-    reader.onload = () => {
-      setImageSrc(reader.result);
-      // console.log(reader.result);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-    console.log(imageRealSrc)
+    reader.onload = () => setImageSrc(reader.result as string);
+    if (file) reader.readAsDataURL(file);
   };
+
   const handleFileChangeUser = (e) => {
     const file = e.target.files[0];
-    setImageRealSrcUser(file);
     const reader = new FileReader();
-    reader.onload = () => {
-      setImageSrcUser(reader.result);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-    console.log(imageRealSrcUser)
-  }
-
+    reader.onload = () => setImageSrcUser(reader.result as string);
+    if (file) reader.readAsDataURL(file);
+  };
 
   async function onSubmit(data: z.infer<typeof formSchemaProfileUpdate>) {
-    console.log("submitttttttttttttttttttttttttt")
     if (!imageSrc || !imageSrcUser) {
       toast.error("Please upload images");
       return;
     }
 
-    // console.log(data)
-    // console.log(imageSrc) 
-    // console.log(imageSrcUser);
     try {
       const user = JSON.parse(localStorage.getItem("user") || "");
-      
       const formData = new FormData();
-      const apiUrl = import.meta.env.VITE_APP_BASE_URL;
-      console.log("yesssssssssssssssssssssssssssssssssssssssssssss")
-      console.log(imageRealSrcUser)
-      formData.append("file", imageRealSrcUser);
-
-
+      formData.append("file", imageSrcUser);
       const res2 = await fetch(
-        `${apiUrl}/api/image-for-hacker/upload`,
+        `${import.meta.env.VITE_APP_BASE_URL}/api/image-for-hacker/upload`,
         {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${user.accessToken}` },
           body: formData,
         }
       );
+
       const formData2 = new FormData();
-      formData2.append("file", imageRealSrc);
+      formData2.append("file", imageSrc);
       const res3 = await fetch(
-        `${apiUrl}/api/background-image-for-hacker/upload`,
+        `${import.meta.env.VITE_APP_BASE_URL}/api/background-image-for-hacker/upload`,
         {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
+          headers: { Authorization: `Bearer ${user.accessToken}` },
           body: formData2,
         }
       );
-      // console.log(res2, res3);
 
-      const data3 = await res2.json(); // Parsing response JSON
-      console.log(data3);
       const payload = {
         firstName: data.firstname,
         lastName: data.lastname,
@@ -236,51 +176,34 @@ export default function TabContentProfile() {
         linkedin: data.linkedin,
         github: data.github,
         twitter: data.twitter,
-        city: data.city,
-        website: data.website,
-        bio: data.bio
-      }
-      const res = await fetch(
-        `${apiUrl}/api/auth/update-profile`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-          body: JSON.stringify(payload),
-        }
-      );
-      // console.log(res3);
-      // console.log(res2);
-
-      const resJson = await res.json(); // Parsing the response JSON
-      if (res.status === 422) {
-        const values = Object.values(resJson)
-        toast.error(`${values[0]}`)
+        bio: data.bio,
       };
-      console.log(resJson);
+
+      console.log(payload);
+
+      const res = await fetch(`${import.meta.env.VITE_APP_BASE_URL}/api/auth/update-profile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const resJson = await res.json();
+      if (res.status === 422) {
+        const values = Object.values(resJson);
+        toast.error(`${values[0]}`);
+      }
 
       if (!res.ok) {
-
         throw new Error("Please try again later");
       }
-      // if (resJson.meta && resJson.meta.message) {
-      //   const takingToken = resJson.meta.message;
-      //   const newToken = takingToken.substring(98)
-      //   // Update the token in local storage or where you store 
-      //   user.accessToken=newToken
-      //   localStorage.setItem("user", JSON.stringify(user));
-      // }
 
       toast.success("Profile Updated");
-      setTimeout(() => {
-        navigate('/work/profile')
-      }, 1000);
-      
+      setTimeout(() => navigate('/work/profile'), 1000);
     } catch (err: any) {
       toast.error("Error", err?.message);
-      console.log(err);
     }
   }
 
@@ -353,34 +276,9 @@ export default function TabContentProfile() {
                     <FormControl>
                       <InputCompany
                         type="text"
-                        placeholder="Usernamee"
+                        placeholder="Username"
                         {...field}
                         defaultValue={userDate?.username || ""}
-                        className="xl:min-w-[350px] scale-r-125"
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="flex sm:items-center gap-4 flex-col sm:flex-row">
-              <Label className="sm:text-[18px] text-[14px] font-[600] md:min-w-[130px] sm:min-w-[100px]">
-                Website
-              </Label>
-
-              <FormField
-                control={form.control}
-                name="website"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <InputCompany
-                        type="text"
-                        placeholder=""
-                        {...field}
-                        defaultValue={userDate?.website || ""}
                         className="xl:min-w-[350px] scale-r-125"
                       />
                     </FormControl>
@@ -542,26 +440,6 @@ export default function TabContentProfile() {
                           }}
                         />
                       </FormControl>
-
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="city"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <InputCompany
-                          type="text"
-                          placeholder="City"
-                          {...field}
-                          defaultValue={userDate?.city || ""}
-                          className="xl:min-w-[250px]"
-                        />
-                      </FormControl>
-
                       <FormMessage />
                     </FormItem>
                   )}
@@ -586,7 +464,6 @@ export default function TabContentProfile() {
                       />
                     </FormControl>
 
-                    <FormMessage />
                   </FormItem>
                 )}
               />

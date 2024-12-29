@@ -463,12 +463,12 @@ body {
 }
 
 input[type="radio"] {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  /* appearance: none; */
+  /* -webkit-appearance: none; */
+  /* -moz-appearance: none; */
   outline: none; /* Remove default outline */
   border: none;
-  display: none;
+  /* display: none; */
   background-color: transparent;
 }
 input[type="radio"] + label:before {

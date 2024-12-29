@@ -23,7 +23,8 @@ export async function getUserData() {
 
         if (res.ok) {
             const currentUser = await res.json();
-         
+            console.log(currentUser);
+            
             return currentUser.data;
 
         } else {
