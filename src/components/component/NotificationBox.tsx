@@ -1,6 +1,7 @@
-export default function NotificationBox({ active, text, date }) {
+export default function NotificationBox({ active, text, date, onClick  }) {
   return (
-    <div
+    <div 
+      onClick={onClick}
       className={`flex gap-4 ${
         active ? "bg-[#885389]" : ""
       }   lg:py-6 py-4 xl:px-4 px-2 w-full cursor-pointer xl:flex-row flex-col hover:bg-[#885389] transition-all duration-300`}
