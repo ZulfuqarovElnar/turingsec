@@ -7,19 +7,20 @@ export async function getNotification() {
         }
 
         const userData = JSON.parse(userDataString);
-        const accessToken = userData.accessToken;
+        const accessToken = userData.accessToken; 
         const apiUrl = import.meta.env.VITE_APP_BASE_URL;
         const res = await fetch(
-            `${apiUrl}/api/sse/notifications`,
+            `${apiUrl}/api/notification`,
             {
                 method: "GET",
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`, 
                 },
             }
         );
 
-        // console.log(res);
+       console.log(res);
 
         if (res.ok) {
             const currentUser = await res.json();

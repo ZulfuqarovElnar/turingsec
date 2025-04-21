@@ -15,7 +15,7 @@ export async function updateReportReview(reportId: number): Promise<void> {
   
     try {
       const response = await fetch(`${apiUrl}/api/bug-bounty-reports/${reportId}/company/review`, {
-        method: 'PATCH',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${accessToken}`,
@@ -51,7 +51,7 @@ export async function updateReportReview(reportId: number): Promise<void> {
   
     try {
       const response = await fetch(`${apiUrl}/api/bug-bounty-reports/${reportId}/company/accept`, {
-        method: 'PATCH',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${accessToken}`,
