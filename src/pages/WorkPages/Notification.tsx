@@ -39,8 +39,7 @@ export default function Notification() {
           {notifications.map((item, index) => (
             <div onClick={() => {
               setSelectedNotification(item);
-            }}>
-
+            }}> 
               <NotificationBox
                 key={index}
                 active={selectedNotification === item}
